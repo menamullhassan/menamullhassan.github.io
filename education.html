@@ -107,8 +107,8 @@
     const stops = [
       { name: 'Jashore', ll: [23.1664, 89.2081], anchor: [30, 18], color: '#0F4C81', text: '<b>Jashore, Bangladesh</b><br>Hometown' },
       { name: 'Dhaka', ll: [23.7340, 90.3928], anchor: [0, 12], color: '#BB2649', text: '<b>University of Dhaka</b><br>B.A. &amp; M.A. in Linguistics' },
-      { name: 'Muncie', ll: [40.2033, -85.4086], color: '#A47864', text: '<b>Ball State University</b><br>M.A. in TESOL &amp; Linguistics' },
-      { name: 'Boston', ll: [42.3134, -71.0385], color: '#6667AB', text: '<b>UMass Boston</b><br>Ph.D. in Applied Linguistics' }
+      { name: 'Muncie', ll: [40.2033, -85.4086], anchor: [28, 18], color: '#A47864', text: '<b>Ball State University</b><br>M.A. in TESOL &amp; Linguistics' },
+      { name: 'Boston', ll: [42.3134, -71.0385], anchor: [2, 12], color: '#6667AB', text: '<b>UMass Boston</b><br>Ph.D. in Applied Linguistics' }
     ];
     const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const map = L.map('journey-map', { scrollWheelZoom: false, worldCopyJump: false, zoomSnap: 0.25 });
