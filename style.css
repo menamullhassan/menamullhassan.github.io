@@ -404,15 +404,23 @@
   .explore-card:nth-child(7) { border-top-color: var(--illuminating); }
   .explore-card:nth-child(8) { border-top-color: var(--viva-magenta); }
 
-  /* Contact page: Classic Blue instead of peach */
-  body:has(.contact-page) { background: #0F4C81; }
-  .contact.contact-page { background: #0F4C81; color: #fff; }
-  .contact-page h2 { color: #fff; }
-  .contact-page .sec-label { color: #FFBE98; opacity: 1; }
-  .contact-page .contact-links a { color: #fff; border-bottom-color: rgba(255,255,255,.22); }
-  .contact-page .contact-links a span { color: rgba(255,255,255,.7); opacity: 1; }
-  .contact-page .contact-links a:hover { color: #FFBE98; }
-  body:has(.contact-page) footer { background: #0F4C81; color: #fff; }
+  /* Contact page: soft blue, low contrast */
+  body:has(.contact-page) { background: #E3EBF4; }
+  .contact.contact-page { background: #E3EBF4; color: #1b2a3a; }
+  .contact-page h2 { color: #0F4C81; }
+  .contact-page .sec-label { color: #5b7896; opacity: 1; }
+  .contact-page .contact-links a { color: #1b2a3a; border-bottom-color: rgba(15,76,129,.18); }
+  .contact-page .contact-links a span { color: #5b7896; opacity: 1; }
+  .contact-page .contact-links a:hover { color: #0F4C81; }
+  body:has(.contact-page) footer { background: #E3EBF4; color: #5b7896; }
+  @media (prefers-color-scheme: dark) {
+    body:has(.contact-page), .contact.contact-page, body:has(.contact-page) footer { background: #1c2a3b; }
+    .contact.contact-page, .contact-page .contact-links a { color: #dfe7f0; }
+    .contact-page h2 { color: #bcd2ea; }
+    .contact-page .sec-label, .contact-page .contact-links a span, body:has(.contact-page) footer { color: #8fa8c2; }
+    .contact-page .contact-links a { border-bottom-color: rgba(255,255,255,.14); }
+    .contact-page .contact-links a:hover { color: #8fb6de; }
+  }
 
   /* Navigation: switch to the Menu button earlier now that there are 9 links */
   nav ul { gap: 22px; }
