@@ -541,3 +541,10 @@
     .contact-cards { grid-template-columns: 1fr; }
     .contact-page { padding: 56px 0 80px; }
   }
+
+  /* ---------- Footer band: orange, matching the headline highlight (all pages) ---------- */
+  footer, body:has(.contact-page) footer { background: var(--highlight); color: #fff; }
+  footer .wrap { opacity: 1; font-weight: 500; }
+  @media (prefers-color-scheme: dark) {
+    footer, body:has(.contact-page) footer { background: var(--highlight); color: #2a1206; }
+  }
