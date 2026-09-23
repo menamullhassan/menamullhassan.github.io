@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills | M Enam Ull Hassan</title>
+<meta name="description" content="Training, certifications, and tools of M Enam Ull Hassan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan<span>.</span></a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html" aria-current="page">Skills</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal">Skills</p>
+    <h1 class="reveal">Training and <em>tools</em>.</h1>
+    <p class="lead reveal">Professional development and the software I use for teaching and research.</p>
+  </div>
+
+  <section id="skills">
+    <div class="wrap sec-head">
+      <div class="sec-label">Training &amp; Skills</div>
+      <div class="cols">
+        <div class="reveal">
+          <h3 style="margin-bottom:12px">Training</h3>
+          <ul class="list">
+            <li><span>SIOP Leadership Training</span><span>MERCIndy, 2024</span></li>
+            <li><span>ACCESS for ELLs: Administration</span><span>WIDA, 2024</span></li>
+            <li><span>ACT on FACTS (Suicide Prevention)</span><span>SPTS, 2024</span></li>
+            <li><span>First Aid / CPR / AED</span><span>Red Cross, 2024</span></li>
+            <li><span>Introduction to Statistics Methods</span><span>Ball State, 2023</span></li>
+            <li><span>EdTech in the English Classroom</span><span>Iowa State, 2019</span></li>
+            <li><span>Teaching Grammar Communicatively</span><span>World Learning, 2019</span></li>
+            <li><span>Foreign Language Training Centers</span><span>MoE Bangladesh, 2011</span></li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h3 style="margin-bottom:20px">Tools</h3>
+          <div class="skill-group"><h4>Research &amp; analysis</h4><div class="tags" style="margin-top:0"><span class="tag">SPSS</span><span class="tag">Jamovi</span><span class="tag">Praat</span><span class="tag">AntConc</span><span class="tag">Qualtrics</span></div></div>
+          <div class="skill-group"><h4>Teaching platforms</h4><div class="tags" style="margin-top:0"><span class="tag">Canvas</span><span class="tag">Google Classroom</span><span class="tag">Zoom</span><span class="tag">Webex</span></div></div>
+          <div class="skill-group"><h4>Digital &amp; design</h4><div class="tags" style="margin-top:0"><span class="tag">Microsoft 365</span><span class="tag">Google Workspace</span><span class="tag">WordPress</span><span class="tag">Wix</span><span class="tag">Photoshop</span><span class="tag">Illustrator</span><span class="tag">Canva</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> M Enam Ull Hassan · Boston, MA</div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

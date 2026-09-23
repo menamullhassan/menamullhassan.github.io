@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experience | M Enam Ull Hassan</title>
+<meta name="description" content="Professional experience of M Enam Ull Hassan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan<span>.</span></a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="experience.html" aria-current="page">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal">Experience</p>
+    <h1 class="reveal">Teaching, research, and <em>writing</em> support.</h1>
+    <p class="lead reveal">Roles across universities, a public high school, and writing centers in Indiana and Massachusetts.</p>
+  </div>
+
+  <section id="experience">
+    <div class="wrap sec-head">
+      <div class="sec-label">Experience</div>
+      <div>
+        <div class="role reveal">
+          <div class="when">Sep 2026 – Present</div>
+          <div>
+            <h3>Research Assistant</h3>
+            <p class="where">University of Massachusetts Boston</p>
+            <ul>
+              <li>Support faculty members with their ongoing research projects.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role reveal">
+          <div class="when">Sep 2025 – Present</div>
+          <div>
+            <h3>Writing Consultant</h3>
+            <p class="where">UMass Boston Writing Center</p>
+            <ul>
+              <li>One-on-one consultations with undergraduate and graduate writers across disciplines, at every stage of writing.</li>
+              <li>Support multilingual writers and students with disabilities on long-term projects.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role reveal">
+          <div class="when">Sep 2025 – May 2026</div>
+          <div>
+            <h3>Graduate Teaching Assistant</h3>
+            <p class="where">University of Massachusetts Boston</p>
+            <ul>
+              <li>Supported three graduate-level online courses in Canvas, from module preparation to accessibility-compliant materials.</li>
+              <li>Held writing conferences and gave rubric-based feedback on discussions, assignments, and final papers.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role reveal">
+          <div class="when">Aug 2024 – May 2025</div>
+          <div>
+            <h3>Multilingual Teacher</h3>
+            <p class="where">Warren Central High School, Indianapolis</p>
+            <ul>
+              <li>Taught English 9 &amp; 10, Algebra I, and U.S. History to multilingual students using sheltered instruction.</li>
+              <li>Designed language-integrated lessons and built a restorative, culturally responsive classroom.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role reveal">
+          <div class="when">Jan 2024 – May 2024</div>
+          <div>
+            <h3>Language Instructor</h3>
+            <p class="where">Intensive English Institute, Ball State University</p>
+            <ul>
+              <li>Taught speaking courses to beginner and intermediate English learners with communicative, performance-based assessment.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role reveal">
+          <div class="when">Aug 2023 – May 2024</div>
+          <div>
+            <h3>Graduate Assistant Director of the Writing Program</h3>
+            <p class="where">Ball State University</p>
+            <ul>
+              <li>Coordinated workshops and speaker series; assisted curriculum review for first-year writing.</li>
+              <li>Led focus groups with international students and reported support needs to administrators.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role reveal">
+          <div class="when">Aug 2021 – May 2024</div>
+          <div>
+            <h3>Graduate Teaching Assistant</h3>
+            <p class="where">Ball State University</p>
+            <ul>
+              <li>Taught first-year Rhetoric &amp; Writing: syllabi, class sessions, peer review, and detailed feedback.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role reveal">
+          <div class="when">May 2022 – Jun 2023</div>
+          <div>
+            <h3>Graduate Research Assistant</h3>
+            <p class="where">Ball State University</p>
+            <ul>
+              <li>Researched vocabulary learning: data collection, coding, and analysis; presented findings at an academic conference.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role reveal">
+          <div class="when">Aug 2021 – Jul 2023</div>
+          <div>
+            <h3>Writing Center Tutor</h3>
+            <p class="where">Ball State University</p>
+            <ul>
+              <li>Tutored undergraduate and graduate writers, working closely with multilingual students.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> M Enam Ull Hassan · Boston, MA</div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

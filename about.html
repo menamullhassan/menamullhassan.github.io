@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | M Enam Ull Hassan</title>
+<meta name="description" content="About M Enam Ull Hassan, doctoral student in Applied Linguistics at UMass Boston.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan<span>.</span></a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html" aria-current="page">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal">About</p>
+    <h1 class="reveal">A little about <em>me</em>.</h1>
+    <p class="lead reveal">Doctoral student, writing consultant, and teacher of multilingual learners.</p>
+  </div>
+
+  <section id="about">
+    <div class="wrap sec-head">
+      <div class="sec-label">About</div>
+      <div class="reveal">
+        <h2>Language, writing, and the learners who move between languages.</h2>
+        <p>I am a doctoral student in Applied Linguistics at the University of Massachusetts Boston. My work centers on multilingual learners: how they read, write, and build academic confidence, and how teaching can make room for the languages and experiences they bring.</p>
+        <p>Before Boston, I taught multilingual students in English, Algebra, and U.S. History at a public high school in Indianapolis, taught speaking courses at Ball State University's Intensive English Institute, and spent three years teaching first-year Rhetoric &amp; Writing. I hold master's degrees in TESOL &amp; Linguistics (Ball State University) and Linguistics (University of Dhaka).</p>
+        <div class="tags">
+          <span class="tag">Multilingual learners</span>
+          <span class="tag">Second language writing</span>
+          <span class="tag">Vocabulary learning</span>
+          <span class="tag">Sheltered instruction</span>
+          <span class="tag">Writing center pedagogy</span>
+          <span class="tag">Culturally responsive teaching</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> M Enam Ull Hassan · Boston, MA</div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
