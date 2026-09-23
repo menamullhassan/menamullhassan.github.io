@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semantic Map Builder | M Enam Ull Hassan</title>
+<meta name="description" content="Build and style semantic maps of words: meanings, synonyms, word forms, and collocations. Free, in your browser, with high-resolution image download.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=11">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan<span>.</span></a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero sm-hero">
+    <p class="eyebrow reveal"><a class="crumb" href="resources.html">Resources</a> · Visual tool</p>
+    <h1 class="reveal">Semantic Map <em>Builder</em></h1>
+    <p class="lead reveal">Map a word's meaning, synonyms, word forms, and collocations. Add words, connect them, and style them like in an image editor, then save your map as an image.</p>
+  </div>
+
+  <section class="sm-section">
+    <div class="wrap">
+      <div class="sm-app" id="sm-app">
+        <div class="sm-toolbar" role="toolbar" aria-label="Map tools">
+          <div class="sm-tgroup">
+            <div class="sm-menu">
+              <button type="button" class="sm-tb" id="sm-new" aria-haspopup="true" aria-expanded="false" title="Start a new map">
+                <svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span>New</span></button>
+              <div class="sm-dropdown" id="sm-new-menu" hidden>
+                <button type="button" data-tpl="word">Word map <small>A word with meaning, synonyms, forms…</small></button>
+                <button type="button" data-tpl="concept">Concept map <small>Ideas linked with labeled arrows</small></button>
+                <button type="button" data-tpl="blank">Blank map <small>Start with one word</small></button>
+              </div>
+            </div>
+            <button type="button" class="sm-tb" id="sm-add" title="Add a word (Tab adds a connected word)">
+              <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="5"/><path d="M12 10v4M10 12h4"/></svg><span>Add word</span></button>
+            <button type="button" class="sm-tb" id="sm-connect" aria-pressed="false" title="Connect two words">
+              <svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="3"/><circle cx="19" cy="12" r="3"/><path d="M8 12h8"/></svg><span>Connect</span></button>
+          </div>
+          <div class="sm-tgroup">
+            <button type="button" class="sm-tb icon" id="sm-undo" title="Undo (Ctrl+Z)" aria-label="Undo">
+              <svg viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg></button>
+            <button type="button" class="sm-tb icon" id="sm-redo" title="Redo (Ctrl+Y)" aria-label="Redo">
+              <svg viewBox="0 0 24 24"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 000 12h3"/></svg></button>
+            <button type="button" class="sm-tb icon" id="sm-del" title="Delete (Delete key)" aria-label="Delete">
+              <svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
+          </div>
+          <div class="sm-tgroup">
+            <button type="button" class="sm-tb icon" id="sm-zoom-out" title="Zoom out" aria-label="Zoom out">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M20 20l-4-4"/></svg></button>
+            <button type="button" class="sm-tb" id="sm-fit" title="Fit the whole map on screen"><span id="sm-zoom-label">100%</span></button>
+            <button type="button" class="sm-tb icon" id="sm-zoom-in" title="Zoom in" aria-label="Zoom in">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M11 8v6M20 20l-4-4"/></svg></button>
+          </div>
+          <div class="sm-tgroup sm-right">
+            <button type="button" class="sm-tb" id="sm-open" title="Open a saved map file">
+              <svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v10H3z"/></svg><span>Open</span></button>
+            <button type="button" class="sm-tb" id="sm-save" title="Save your map as a file you can open later">
+              <svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h8V3M8 21v-7h8v7"/></svg><span>Save</span></button>
+            <button type="button" class="sm-tb primary" id="sm-export" title="Download your map as a picture">
+              <svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Save as image</span></button>
+            <input type="file" id="sm-file" accept=".json,application/json" hidden>
+          </div>
+        </div>
+
+        <div class="sm-main">
+          <div class="sm-canvas-wrap" id="sm-wrap">
+            <svg class="sm-canvas" id="sm-svg" aria-label="Semantic map canvas" role="img">
+              <g id="sm-world"><g id="sm-edges"></g><g id="sm-nodes"></g><g id="sm-overlay"></g></g>
+            </svg>
+            <textarea class="sm-editor" id="sm-editor" rows="1" spellcheck="true" hidden aria-label="Edit word"></textarea>
+            <p class="sm-hint" id="sm-hint">Double-click empty space to add a word · Drag a word's <b>+</b> handle to connect it · Double-click a word to edit it</p>
+          </div>
+
+          <aside class="sm-panel" id="sm-panel" aria-label="Style options"></aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tw-toast" id="tw-toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  const NS = 'http://www.w3.org/2000/svg';
+  const $ = (id) => document.getElementById(id);
+  const svg = $('sm-svg'), world = $('sm-world'), gE = $('sm-edges'), gN = $('sm-nodes'), gO = $('sm-overlay');
+  const wrap = $('sm-wrap'), editor = $('sm-editor'), panel = $('sm-panel');
+  const FONTS = { sans: 'Arial, "Helvetica Neue", Helvetica, sans-serif', serif: 'Georgia, "Times New Roman", Times, serif' };
+  const FONT = FONTS.sans;
+  const STORE = 'semantic-map-v1';
+
+  // ---------- Palettes ----------
+  const TEXT_COLORS = ['#1b1d24', '#ffffff', '#0F4C81', '#A11F3E', '#0B6B57', '#7A5444', '#4F5096', '#D2622A'];
+  const FILLS = ['#ffffff', '#DDE6F0', '#F6E3EA', '#DDEFE9', '#EFE4DE', '#E5E5F3', '#FBE3D3', '#FAF1C4',
+                 '#0F4C81', '#A11F3E', '#0B6B57', '#7A5444', '#4F5096', '#D2622A', '#1b1d24'];
+  const BORDERS = ['none', '#c9c4ba', '#0F4C81', '#A11F3E', '#0B6B57', '#7A5444', '#4F5096', '#D2622A', '#1b1d24'];
+  const HIGHLIGHTS = ['none', '#FFE58A', '#BDF0C8', '#FFC6D9', '#BFE3FF', '#FFD3B0'];
+  const LINE_COLORS = ['#8a857c', '#1b1d24', '#0F4C81', '#A11F3E', '#0B6B57', '#7A5444', '#4F5096', '#D2622A'];
+  const DARK_FILLS = new Set(['#0F4C81', '#A11F3E', '#0B6B57', '#7A5444', '#4F5096', '#D2622A', '#1b1d24']);
+
+  // ---------- State ----------
+  let doc = { nodes: [], edges: [] };
+  let sel = { type: null, ids: new Set() };
+  let view = { x: 0, y: 0, k: 1 };
+  let connectMode = false, connectFrom = null;
+  let history = [], hIndex = -1;
+  let uid = 1;
+  const newId = (p) => p + (uid++) + '_' + Math.random().toString(36).slice(2, 6);
+
+  function node(o) {
+    return Object.assign({ id: newId('n'), x: 0, y: 0, text: 'word', shape: 'pill', fill: '#ffffff', border: '#c9c4ba', color: '#1b1d24',
+      bold: false, italic: false, underline: false, highlight: 'none', size: 16, font: 'sans' }, o);
+  }
+  function edge(o) { return Object.assign({ id: newId('e'), from: null, to: null, label: '', color: '#8a857c', style: 'solid', arrow: 'none', width: 2 }, o); }
+
+  // ---------- Templates ----------
+  function tplWord() {
+    const n = [], e = [];
+    const c = node({ text: 'happy', x: 0, y: 0, shape: 'ellipse', fill: '#0F4C81', border: 'none', color: '#ffffff', bold: true, size: 26 });
+    n.push(c);
+    const cats = [
+      ['Meaning', '#0F4C81', '#DDE6F0', ['feeling or showing\npleasure']],
+      ['Synonyms', '#0B6B57', '#DDEFE9', ['joyful', 'cheerful', 'content']],
+      ['Antonyms', '#A11F3E', '#F6E3EA', ['sad', 'unhappy', 'miserable']],
+      ['Word forms', '#4F5096', '#E5E5F3', ['happiness (n.)', 'happily (adv.)', 'unhappy (adj.)']],
+      ['Collocations', '#D2622A', '#FBE3D3', ['happy ending', 'happy to help', 'perfectly happy']],
+      ['Example', '#7A5444', '#EFE4DE', ['She was happy with\nher final draft.']]
+    ];
+    cats.forEach(([name, dark, light, leaves], i) => {
+      const a = -Math.PI / 2 + i * (2 * Math.PI / cats.length);
+      const cat = node({ text: name, x: Math.cos(a) * 250, y: Math.sin(a) * 190, fill: light, border: dark, color: dark, bold: true, size: 16 });
+      n.push(cat); e.push(edge({ from: c.id, to: cat.id, color: dark, width: 2.5 }));
+      const dx = Math.cos(a), dy = Math.sin(a);
+      const dist = Math.abs(dx) * 210 + Math.abs(dy) * 115;
+      const gap = Math.abs(dy) * 165 + Math.abs(dx) * 56;
+      leaves.forEach((t, j) => {
+        const off = (j - (leaves.length - 1) / 2) * gap;
+        const leaf = node({ text: t, x: Math.round(cat.x + dx * dist - dy * off), y: Math.round(cat.y + dy * dist + dx * off), size: 14, border: light === '#ffffff' ? '#c9c4ba' : light });
+        n.push(leaf); e.push(edge({ from: cat.id, to: leaf.id, color: dark, width: 1.5, style: 'dashed' }));
+      });
+    });
+    const syn = n.find((x) => x.text === 'joyful'); if (syn) syn.highlight = '#FFE58A';
+    return { nodes: n, edges: e };
+  }
+  function tplConcept() {
+    const a = node({ text: 'Multilingual\nlearners', x: -260, y: 0, shape: 'rect', fill: '#0F4C81', border: 'none', color: '#fff', bold: true, size: 18 });
+    const b = node({ text: 'Home languages', x: 60, y: -150, fill: '#DDEFE9', border: '#0B6B57', color: '#0B6B57', bold: true });
+    const c = node({ text: 'Academic English', x: 60, y: 150, fill: '#FBE3D3', border: '#D2622A', color: '#D2622A', bold: true });
+    const d = node({ text: 'Translanguaging', x: 360, y: 0, shape: 'ellipse', fill: '#E5E5F3', border: '#4F5096', color: '#4F5096', bold: true, italic: true });
+    return { nodes: [a, b, c, d], edges: [
+      edge({ from: a.id, to: b.id, label: 'bring', arrow: 'end', color: '#0B6B57' }),
+      edge({ from: a.id, to: c.id, label: 'develop', arrow: 'end', color: '#D2622A' }),
+      edge({ from: b.id, to: d.id, label: 'support', arrow: 'end', color: '#4F5096' }),
+      edge({ from: c.id, to: d.id, label: 'connect through', arrow: 'end', color: '#4F5096', style: 'dashed' })] };
+  }
+  function tplBlank() { return { nodes: [node({ text: 'your word', shape: 'ellipse', fill: '#0F4C81', border: 'none', color: '#ffffff', bold: true, size: 24 })], edges: [] }; }
+
+  // ---------- Measuring ----------
+  const mctx = document.createElement('canvas').getContext('2d');
+  function measure(n) {
+    const lines = String(n.text || ' ').split('\n');
+    mctx.font = (n.italic ? 'italic ' : '') + (n.bold ? '700 ' : '400 ') + n.size + 'px ' + (FONTS[n.font] || FONT);
+    const widths = lines.map((l) => mctx.measureText(l || ' ').width);
+    const lh = n.size * 1.3;
+    let w = Math.max(...widths) + 36, h = lines.length * lh + 20;
+    if (n.shape === 'circle') { const d = Math.max(w, h) + 8; w = h = d; }
+    if (n.shape === 'ellipse') { w = w * 1.22 + 10; h = h * 1.45 + 6; }
+    return { lines, widths, lh, w: Math.max(w, 60), h: Math.max(h, 36) };
+  }
+
+  // ---------- Rendering ----------
+  function el(tag, attrs, parent) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) if (attrs[k] !== undefined && attrs[k] !== null) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e); return e;
+  }
+  function boundary(n, m, tx, ty) {
+    const dx = tx - n.x, dy = ty - n.y, hw = m.w / 2, hh = m.h / 2;
+    if (!dx && !dy) return { x: n.x, y: n.y };
+    let t;
+    if (n.shape === 'circle' || n.shape === 'ellipse') t = 1 / Math.sqrt((dx / hw) ** 2 + (dy / hh) ** 2);
+    else t = Math.min(dx ? hw / Math.abs(dx) : Infinity, dy ? hh / Math.abs(dy) : Infinity);
+    return { x: n.x + dx * t, y: n.y + dy * t };
+  }
+  function arrowHead(parent, x, y, fx, fy, color, w) {
+    const a = Math.atan2(y - fy, x - fx), s = 7 + w * 2;
+    const p = [[x, y], [x - s * Math.cos(a - 0.45), y - s * Math.sin(a - 0.45)], [x - s * Math.cos(a + 0.45), y - s * Math.sin(a + 0.45)]];
+    el('polygon', { points: p.map((q) => q.join(',')).join(' '), fill: color }, parent);
+  }
+  function drawEdge(parent, ed, byId, interactive) {
+    const a = byId[ed.from], b = byId[ed.to]; if (!a || !b) return;
+    const ma = measure(a), mb = measure(b);
+    const p1 = boundary(a, ma, b.x, b.y), p2 = boundary(b, mb, a.x, a.y);
+    const g = el('g', { 'data-edge': ed.id, class: 'sm-edge' + (sel.type === 'edge' && sel.ids.has(ed.id) && interactive ? ' is-sel' : '') }, parent);
+    const pad = (ed.arrow !== 'none') ? 4 : 0;
+    const L = Math.hypot(p2.x - p1.x, p2.y - p1.y) || 1, ux = (p2.x - p1.x) / L, uy = (p2.y - p1.y) / L;
+    const s = { x: p1.x + ux * (ed.arrow === 'both' ? pad : 0), y: p1.y + uy * (ed.arrow === 'both' ? pad : 0) };
+    const t = { x: p2.x - ux * pad, y: p2.y - uy * pad };
+    if (interactive) el('line', { x1: s.x, y1: s.y, x2: t.x, y2: t.y, class: 'sm-hit' }, g);
+    const dash = ed.style === 'dashed' ? (ed.width * 4) + ' ' + (ed.width * 3) : ed.style === 'dotted' ? '1 ' + (ed.width * 3) : null;
+    const lineEnd = ed.arrow !== 'none' ? { x: t.x - ux * (6 + ed.width * 2), y: t.y - uy * (6 + ed.width * 2) } : t;
+    const lineStart = ed.arrow === 'both' ? { x: s.x + ux * (6 + ed.width * 2), y: s.y + uy * (6 + ed.width * 2) } : s;
+    el('line', { x1: lineStart.x, y1: lineStart.y, x2: lineEnd.x, y2: lineEnd.y, stroke: ed.color, 'stroke-width': ed.width, 'stroke-linecap': 'round', 'stroke-dasharray': dash }, g);
+    if (ed.arrow !== 'none') arrowHead(g, t.x, t.y, s.x, s.y, ed.color, ed.width);
+    if (ed.arrow === 'both') arrowHead(g, s.x, s.y, t.x, t.y, ed.color, ed.width);
+    if (ed.label) {
+      const mx = (s.x + t.x) / 2, my = (s.y + t.y) / 2;
+      mctx.font = 'italic 500 13px ' + FONT; const lw = mctx.measureText(ed.label).width + 14;
+      el('rect', { x: mx - lw / 2, y: my - 11, width: lw, height: 22, rx: 11, fill: '#ffffff', stroke: ed.color, 'stroke-width': 1 }, g);
+      const tx = el('text', { x: mx, y: my + 4.5, 'text-anchor': 'middle', 'font-family': FONT, 'font-size': 13, 'font-style': 'italic', 'font-weight': 500, fill: ed.color }, g);
+      tx.textContent = ed.label;
+    }
+    if (interactive && sel.type === 'edge' && sel.ids.has(ed.id)) {
+      el('circle', { cx: s.x, cy: s.y, r: 4, class: 'sm-end' }, g); el('circle', { cx: t.x, cy: t.y, r: 4, class: 'sm-end' }, g);
+    }
+  }
+  function drawNode(parent, n, interactive) {
+    const m = measure(n);
+    const g = el('g', { 'data-node': n.id, class: 'sm-node', transform: 'translate(' + n.x + ',' + n.y + ')' }, parent);
+    const x = -m.w / 2, y = -m.h / 2;
+    const stroke = n.border === 'none' ? 'none' : n.border;
+    const common = { fill: n.fill, stroke, 'stroke-width': stroke === 'none' ? 0 : 1.5 };
+    if (n.shape === 'circle' || n.shape === 'ellipse') el('ellipse', Object.assign({ cx: 0, cy: 0, rx: m.w / 2, ry: m.h / 2 }, common), g);
+    else el('rect', Object.assign({ x, y, width: m.w, height: m.h, rx: n.shape === 'pill' ? m.h / 2 : 6 }, common), g);
+    const top = -((m.lines.length - 1) * m.lh) / 2;
+    if (n.highlight && n.highlight !== 'none') {
+      m.lines.forEach((l, i) => {
+        const w = m.widths[i] + 8, cy = top + i * m.lh;
+        el('rect', { x: -w / 2, y: cy - n.size * 0.62, width: w, height: n.size * 1.2, rx: 3, fill: n.highlight }, g);
+      });
+    }
+    const t = el('text', { 'text-anchor': 'middle', 'font-family': FONTS[n.font] || FONT, 'font-size': n.size, 'font-weight': n.bold ? 700 : 400,
+      'font-style': n.italic ? 'italic' : 'normal', 'text-decoration': n.underline ? 'underline' : null, fill: n.color }, g);
+    m.lines.forEach((l, i) => { const ts = el('tspan', { x: 0, y: top + i * m.lh + n.size * 0.35 }, t); ts.textContent = l; });
+    if (interactive && sel.type === 'node' && sel.ids.has(n.id)) {
+      el('rect', { x: x - 6, y: y - 6, width: m.w + 12, height: m.h + 12, rx: 10, class: 'sm-sel' }, g);
+      if (sel.ids.size === 1) {
+        const h = el('g', { class: 'sm-handle', 'data-handle': n.id, transform: 'translate(' + (m.w / 2 + 20) + ',0)' }, g);
+        el('circle', { r: 11 }, h); el('path', { d: 'M-5 0h10M0 -5v10' }, h);
+        const title = el('title', {}, h); title.textContent = 'Drag to connect a new or existing word';
+      }
+    }
+    return g;
+  }
+  function render() {
+    gE.innerHTML = ''; gN.innerHTML = '';
+    const byId = Object.fromEntries(doc.nodes.map((n) => [n.id, n]));
+    doc.edges.forEach((e) => drawEdge(gE, e, byId, true));
+    doc.nodes.forEach((n) => drawNode(gN, n, true));
+    world.setAttribute('transform', 'translate(' + view.x + ',' + view.y + ') scale(' + view.k + ')');
+    wrap.style.setProperty('--gx', view.x + 'px'); wrap.style.setProperty('--gy', view.y + 'px'); wrap.style.setProperty('--gs', (22 * view.k) + 'px');
+    $('sm-zoom-label').textContent = Math.round(view.k * 100) + '%';
+    $('sm-undo').disabled = hIndex <= 0; $('sm-redo').disabled = hIndex >= history.length - 1;
+    $('sm-del').disabled = !sel.ids.size;
+    $('sm-connect').setAttribute('aria-pressed', connectMode);
+    wrap.classList.toggle('connecting', connectMode);
+    renderPanel();
+  }
+
+  // ---------- History & storage ----------
+  function snapshot() { return JSON.stringify(doc); }
+  function commit() {
+    history = history.slice(0, hIndex + 1); history.push(snapshot()); hIndex = history.length - 1;
+    if (history.length > 120) { history.shift(); hIndex--; }
+    try { localStorage.setItem(STORE, history[hIndex]); } catch (e) {}
+    render();
+  }
+  function restore(i) {
+    if (i < 0 || i >= history.length) return;
+    hIndex = i; doc = JSON.parse(history[i]);
+    sel.ids.forEach((id) => { if (!doc.nodes.some((n) => n.id === id) && !doc.edges.some((e) => e.id === id)) sel.ids.delete(id); });
+    if (!sel.ids.size) sel.type = null;
+    try { localStorage.setItem(STORE, history[hIndex]); } catch (e) {}
+    render();
+  }
+  function load(d, fit) { doc = d; sel = { type: null, ids: new Set() }; history = []; hIndex = -1; commit(); if (fit) fitView(); }
+
+  // ---------- View ----------
+  function toWorld(cx, cy) { const r = svg.getBoundingClientRect(); return { x: (cx - r.left - view.x) / view.k, y: (cy - r.top - view.y) / view.k }; }
+  function bbox(nodes) {
+    if (!nodes.length) return { x1: -100, y1: -100, x2: 100, y2: 100 };
+    let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
+    nodes.forEach((n) => { const m = measure(n); x1 = Math.min(x1, n.x - m.w / 2); y1 = Math.min(y1, n.y - m.h / 2); x2 = Math.max(x2, n.x + m.w / 2); y2 = Math.max(y2, n.y + m.h / 2); });
+    return { x1, y1, x2, y2 };
+  }
+  function fitView() {
+    const r = svg.getBoundingClientRect(), b = bbox(doc.nodes), pad = 50;
+    const minK = r.width < 600 ? 0.5 : 0.25;
+    const k = Math.min(1.4, Math.max(minK, Math.min((r.width - pad * 2) / (b.x2 - b.x1 || 1), (r.height - pad * 2) / (b.y2 - b.y1 || 1))));
+    view.k = k; view.x = r.width / 2 - ((b.x1 + b.x2) / 2) * k; view.y = r.height / 2 - ((b.y1 + b.y2) / 2) * k; render();
+  }
+  function zoomAt(f, cx, cy) {
+    const r = svg.getBoundingClientRect();
+    if (cx === undefined) { cx = r.left + r.width / 2; cy = r.top + r.height / 2; }
+    const k = Math.min(3, Math.max(0.2, view.k * f)); const px = cx - r.left, py = cy - r.top;
+    view.x = px - (px - view.x) * (k / view.k); view.y = py - (py - view.y) * (k / view.k); view.k = k; render();
+  }
+
+  // ---------- Selection helpers ----------
+  const selNodes = () => sel.type === 'node' ? doc.nodes.filter((n) => sel.ids.has(n.id)) : [];
+  const selEdges = () => sel.type === 'edge' ? doc.edges.filter((e) => sel.ids.has(e.id)) : [];
+  function select(type, id, add) {
+    if (!add || sel.type !== type) sel = { type, ids: new Set() };
+    if (id) { if (add && sel.ids.has(id)) sel.ids.delete(id); else sel.ids.add(id); }
+    if (!sel.ids.size) sel.type = null;
+    render();
+  }
+  function nodeAt(p) {
+    for (let i = doc.nodes.length - 1; i >= 0; i--) { const n = doc.nodes[i], m = measure(n); if (Math.abs(p.x - n.x) <= m.w / 2 && Math.abs(p.y - n.y) <= m.h / 2) return n; }
+    return null;
+  }
+
+  // ---------- Actions ----------
+  function addNode(p, from, edit) {
+    const base = from || null;
+    const n = node({ text: 'new word', x: p.x, y: p.y, size: 15,
+      fill: base && !DARK_FILLS.has(base.fill) ? base.fill : '#ffffff', border: base && base.border !== 'none' ? base.border : '#c9c4ba' });
+    doc.nodes.push(n);
+    if (base) { const col = base.border !== 'none' ? base.border : (DARK_FILLS.has(base.fill) ? base.fill : '#8a857c'); doc.edges.push(edge({ from: base.id, to: n.id, color: col })); }
+    sel = { type: 'node', ids: new Set([n.id]) }; commit();
+    if (edit) startEdit(n, true);
+    return n;
+  }
+  function freeSpotNear(n) {
+    const tries = 12;
+    for (let i = 0; i < tries; i++) {
+      const a = (i / tries) * Math.PI * 2, r = 190 + Math.floor(i / tries) * 60;
+      const p = { x: n.x + Math.cos(a) * r, y: n.y + Math.sin(a) * r * 0.7 };
+      if (!doc.nodes.some((o) => Math.hypot(o.x - p.x, o.y - p.y) < 90)) return p;
+    }
+    return { x: n.x + 200, y: n.y + 60 };
+  }
+  function deleteSel() {
+    if (sel.type === 'node') { doc.nodes = doc.nodes.filter((n) => !sel.ids.has(n.id)); doc.edges = doc.edges.filter((e) => !sel.ids.has(e.from) && !sel.ids.has(e.to)); }
+    else if (sel.type === 'edge') doc.edges = doc.edges.filter((e) => !sel.ids.has(e.id));
+    else return;
+    sel = { type: null, ids: new Set() }; commit();
+  }
+  function duplicateSel() {
+    const ns = selNodes(); if (!ns.length) return;
+    const copies = ns.map((n) => Object.assign({}, n, { id: newId('n'), x: n.x + 30, y: n.y + 30 }));
+    doc.nodes.push(...copies); sel = { type: 'node', ids: new Set(copies.map((c) => c.id)) }; commit();
+  }
+  function applyNodes(fn) { const ns = selNodes(); if (!ns.length) return; ns.forEach(fn); commit(); }
+  function applyEdges(fn) { const es = selEdges(); if (!es.length) return; es.forEach(fn); commit(); }
+
+  // ---------- Inline text editing ----------
+  let editing = null, editingIsNew = false;
+  function startEdit(n, isNew) {
+    editing = { kind: 'node', id: n.id }; editingIsNew = !!isNew;
+    const m = measure(n);
+    editor.value = n.text; editor.hidden = false;
+    editor.style.fontSize = (n.size * view.k) + 'px'; editor.style.fontWeight = n.bold ? 700 : 400; editor.style.fontStyle = n.italic ? 'italic' : 'normal'; editor.style.fontFamily = FONTS[n.font] || FONT;
+    placeEditor(n.x, n.y, Math.max(m.w, 160), m.h);
+    editor.focus(); editor.select();
+  }
+  function startEditEdge(e) {
+    const byId = Object.fromEntries(doc.nodes.map((n) => [n.id, n])); const a = byId[e.from], b = byId[e.to];
+    editing = { kind: 'edge', id: e.id }; editingIsNew = false;
+    editor.value = e.label; editor.hidden = false; editor.style.fontFamily = FONT; editor.style.fontSize = (13 * view.k) + 'px'; editor.style.fontWeight = 500; editor.style.fontStyle = 'italic';
+    editor.placeholder = 'label (e.g. is a type of)';
+    placeEditor((a.x + b.x) / 2, (a.y + b.y) / 2, 180, 30);
+    editor.focus(); editor.select();
+  }
+  function placeEditor(x, y, w, h) {
+    const sw = w * view.k, sh = h * view.k;
+    editor.style.left = (x * view.k + view.x - sw / 2) + 'px'; editor.style.top = (y * view.k + view.y - sh / 2) + 'px';
+    editor.style.width = sw + 'px'; editor.style.height = Math.max(sh, 32) + 'px';
+  }
+  function endEdit(save) {
+    if (!editing) return;
+    const val = editor.value.replace(/\s+$/g, '');
+    if (editing.kind === 'node') {
+      const n = doc.nodes.find((x) => x.id === editing.id);
+      if (n && save) { if (!val.trim()) { doc.nodes = doc.nodes.filter((x) => x !== n); doc.edges = doc.edges.filter((e) => e.from !== n.id && e.to !== n.id); sel = { type: null, ids: new Set() }; } else n.text = val; }
+      else if (n && editingIsNew && !save) { /* keep default text */ }
+    } else {
+      const e = doc.edges.find((x) => x.id === editing.id); if (e && save) e.label = val.trim();
+    }
+    editing = null; editor.hidden = true; editor.placeholder = ''; commit();
+  }
+  editor.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); endEdit(true); }
+    else if (ev.key === 'Escape') { ev.preventDefault(); endEdit(false); }
+    ev.stopPropagation();
+  });
+  editor.addEventListener('blur', () => { if (editing) endEdit(true); });
+
+  // ---------- Pointer interactions ----------
+  let drag = null;
+  svg.addEventListener('pointerdown', (ev) => {
+    if (editing) endEdit(true);
+    const p = toWorld(ev.clientX, ev.clientY);
+    const handle = ev.target.closest('[data-handle]');
+    const ng = ev.target.closest('[data-node]');
+    const eg = ev.target.closest('[data-edge]');
+    svg.setPointerCapture(ev.pointerId);
+    if (handle) {
+      const n = doc.nodes.find((x) => x.id === handle.dataset.handle);
+      drag = { mode: 'link', from: n, line: el('line', { x1: n.x, y1: n.y, x2: p.x, y2: p.y, class: 'sm-temp' }, gO) };
+      return;
+    }
+    if (ng) {
+      const n = doc.nodes.find((x) => x.id === ng.dataset.node);
+      if (connectMode) {
+        if (!connectFrom) { connectFrom = n; select('node', n.id); toast('Now tap the word to connect it to'); }
+        else if (connectFrom.id !== n.id) {
+          if (!doc.edges.some((e) => (e.from === connectFrom.id && e.to === n.id) || (e.from === n.id && e.to === connectFrom.id)))
+            doc.edges.push(edge({ from: connectFrom.id, to: n.id }));
+          connectFrom = null; connectMode = false; sel = { type: 'node', ids: new Set([n.id]) }; commit();
+        }
+        return;
+      }
+      if (!sel.ids.has(n.id) || sel.type !== 'node') select('node', n.id, ev.shiftKey);
+      else if (ev.shiftKey) select('node', n.id, true);
+      const starts = selNodes().map((s) => ({ n: s, x: s.x, y: s.y }));
+      drag = { mode: 'move', start: p, starts, moved: false };
+      return;
+    }
+    if (eg) { select('edge', eg.dataset.edge, ev.shiftKey); drag = null; return; }
+    drag = { mode: 'pan', sx: ev.clientX, sy: ev.clientY, vx: view.x, vy: view.y, moved: false };
+  });
+  svg.addEventListener('pointermove', (ev) => {
+    if (!drag) return;
+    if (drag.mode === 'pan') {
+      const dx = ev.clientX - drag.sx, dy = ev.clientY - drag.sy;
+      if (Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
+      view.x = drag.vx + dx; view.y = drag.vy + dy;
+      world.setAttribute('transform', 'translate(' + view.x + ',' + view.y + ') scale(' + view.k + ')');
+      wrap.style.setProperty('--gx', view.x + 'px'); wrap.style.setProperty('--gy', view.y + 'px');
+    } else if (drag.mode === 'move') {
+      const p = toWorld(ev.clientX, ev.clientY), dx = p.x - drag.start.x, dy = p.y - drag.start.y;
+      if (Math.abs(dx) + Math.abs(dy) > 2) drag.moved = true;
+      drag.starts.forEach((s) => { s.n.x = Math.round(s.x + dx); s.n.y = Math.round(s.y + dy); });
+      render();
+    } else if (drag.mode === 'link') {
+      const p = toWorld(ev.clientX, ev.clientY); drag.line.setAttribute('x2', p.x); drag.line.setAttribute('y2', p.y);
+    }
+  });
+  svg.addEventListener('pointerup', (ev) => {
+    if (!drag) return;
+    const d = drag; drag = null;
+    if (d.mode === 'pan' && !d.moved) { if (!connectMode) select(null); }
+    else if (d.mode === 'move' && d.moved) commit();
+    else if (d.mode === 'link') {
+      d.line.remove();
+      const p = toWorld(ev.clientX, ev.clientY), target = nodeAt(p);
+      if (target && target.id !== d.from.id) {
+        if (!doc.edges.some((e) => (e.from === d.from.id && e.to === target.id) || (e.from === target.id && e.to === d.from.id)))
+          doc.edges.push(edge({ from: d.from.id, to: target.id, color: d.from.border !== 'none' ? d.from.border : '#8a857c' }));
+        commit();
+      } else if (!target) {
+        const dist = Math.hypot(p.x - d.from.x, p.y - d.from.y);
+        addNode(dist < 60 ? freeSpotNear(d.from) : p, d.from, true);
+      }
+    }
+  });
+  svg.addEventListener('dblclick', (ev) => {
+    const ng = ev.target.closest('[data-node]'), eg = ev.target.closest('[data-edge]');
+    if (ng) { const n = doc.nodes.find((x) => x.id === ng.dataset.node); select('node', n.id); startEdit(n); }
+    else if (eg) { const e = doc.edges.find((x) => x.id === eg.dataset.edge); select('edge', e.id); startEditEdge(e); }
+    else addNode(toWorld(ev.clientX, ev.clientY), null, true);
+  });
+  svg.addEventListener('wheel', (ev) => { ev.preventDefault(); zoomAt(ev.deltaY < 0 ? 1.1 : 1 / 1.1, ev.clientX, ev.clientY); }, { passive: false });
+
+  // ---------- Keyboard ----------
+  document.addEventListener('keydown', (ev) => {
+    if (editing || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+    const mod = ev.ctrlKey || ev.metaKey, k = ev.key.toLowerCase();
+    if (mod && k === 'z' && !ev.shiftKey) { ev.preventDefault(); restore(hIndex - 1); }
+    else if (mod && (k === 'y' || (k === 'z' && ev.shiftKey))) { ev.preventDefault(); restore(hIndex + 1); }
+    else if (!wrap.closest('.sm-app').contains(document.activeElement) && document.activeElement !== document.body) return;
+    else if (k === 'delete' || k === 'backspace') { if (sel.ids.size) { ev.preventDefault(); deleteSel(); } }
+    else if (mod && k === 'b') { ev.preventDefault(); applyNodes((n) => { n.bold = !n.bold; }); }
+    else if (mod && k === 'i') { ev.preventDefault(); applyNodes((n) => { n.italic = !n.italic; }); }
+    else if (mod && k === 'u') { ev.preventDefault(); applyNodes((n) => { n.underline = !n.underline; }); }
+    else if (mod && k === 'd') { ev.preventDefault(); duplicateSel(); }
+    else if (k === 'enter' && sel.type === 'node' && sel.ids.size === 1) { ev.preventDefault(); startEdit(selNodes()[0]); }
+    else if (k === 'tab' && sel.type === 'node' && sel.ids.size === 1) { ev.preventDefault(); const n = selNodes()[0]; addNode(freeSpotNear(n), n, true); }
+    else if (k === 'escape') { connectMode = false; connectFrom = null; select(null); }
+  });
+
+  // ---------- Toolbar ----------
+  const newBtn = $('sm-new'), newMenu = $('sm-new-menu');
+  newBtn.addEventListener('click', () => { const open = newMenu.hidden; newMenu.hidden = !open; newBtn.setAttribute('aria-expanded', open); });
+  document.addEventListener('click', (ev) => { if (!ev.target.closest('.sm-menu')) { newMenu.hidden = true; newBtn.setAttribute('aria-expanded', false); } });
+  newMenu.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-tpl]'); if (!b) return;
+    newMenu.hidden = true;
+    const t = b.dataset.tpl; load(t === 'word' ? tplWord() : t === 'concept' ? tplConcept() : tplBlank(), true);
+    toast(t === 'blank' ? 'New blank map' : 'Template loaded. Double-click any word to change it');
+  });
+  $('sm-add').addEventListener('click', () => {
+    const n = selNodes()[0];
+    if (n) addNode(freeSpotNear(n), n, true);
+    else { const r = svg.getBoundingClientRect(); addNode(toWorld(r.left + r.width / 2, r.top + r.height / 2), null, true); }
+  });
+  $('sm-connect').addEventListener('click', () => {
+    connectMode = !connectMode; connectFrom = null;
+    const n = selNodes()[0];
+    if (connectMode && n && sel.ids.size === 1) { connectFrom = n; toast('Now tap the word to connect it to'); }
+    else if (connectMode) toast('Tap the first word, then the second');
+    render();
+  });
+  $('sm-undo').addEventListener('click', () => restore(hIndex - 1));
+  $('sm-redo').addEventListener('click', () => restore(hIndex + 1));
+  $('sm-del').addEventListener('click', deleteSel);
+  $('sm-zoom-in').addEventListener('click', () => zoomAt(1.2));
+  $('sm-zoom-out').addEventListener('click', () => zoomAt(1 / 1.2));
+  $('sm-fit').addEventListener('click', fitView);
+
+  $('sm-save').addEventListener('click', () => {
+    download(new Blob([JSON.stringify({ app: 'semantic-map', version: 1, map: doc }, null, 2)], { type: 'application/json' }), mapName() + '.semanticmap.json');
+    toast('Map saved as a file. Use Open to edit it again later');
+  });
+  $('sm-open').addEventListener('click', () => $('sm-file').click());
+  $('sm-file').addEventListener('change', async (ev) => {
+    const f = ev.target.files[0]; ev.target.value = ''; if (!f) return;
+    try {
+      const j = JSON.parse(await f.text()); const m = j.map || j;
+      if (!Array.isArray(m.nodes) || !Array.isArray(m.edges)) throw new Error('bad');
+      load({ nodes: m.nodes.map((n) => node(n)), edges: m.edges.map((e) => edge(e)) }, true); toast('Map opened');
+    } catch (e) { toast('That file isn’t a saved semantic map'); }
+  });
+  $('sm-export').addEventListener('click', exportPNG);
+
+  function mapName() {
+    const c = doc.nodes.slice().sort((a, b) => b.size - a.size)[0];
+    return 'semantic-map-' + ((c && c.text) || 'map').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 30);
+  }
+  function download(blob, name) {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+  function exportPNG() {
+    const b = bbox(doc.nodes), pad = 40, W = b.x2 - b.x1 + pad * 2, H = b.y2 - b.y1 + pad * 2;
+    const out = document.createElementNS(NS, 'svg');
+    out.setAttribute('xmlns', NS); out.setAttribute('width', W); out.setAttribute('height', H);
+    out.setAttribute('viewBox', (b.x1 - pad) + ' ' + (b.y1 - pad) + ' ' + W + ' ' + H);
+    el('rect', { x: b.x1 - pad, y: b.y1 - pad, width: W, height: H, fill: '#ffffff' }, out);
+    const byId = Object.fromEntries(doc.nodes.map((n) => [n.id, n]));
+    const ge = el('g', {}, out), gn = el('g', {}, out);
+    doc.edges.forEach((e) => drawEdge(ge, e, byId, false)); doc.nodes.forEach((n) => drawNode(gn, n, false));
+    const data = new XMLSerializer().serializeToString(out);
+    const MIN = 2000, MAX = 8000;
+    let scale = Math.max(2, MIN / W, MIN / H);
+    if (Math.max(W, H) * scale > MAX) scale = MAX / Math.max(W, H);
+    const cw = Math.max(MIN, Math.round(W * scale)), ch = Math.max(MIN, Math.round(H * scale));
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = cw; c.height = ch;
+      const ctx = c.getContext('2d'); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cw, ch);
+      ctx.drawImage(img, (cw - W * scale) / 2, (ch - H * scale) / 2, W * scale, H * scale);
+      c.toBlob((blob) => { download(blob, mapName() + '.png'); toast('High-resolution image downloaded (' + cw + ' × ' + ch + ' px)'); }, 'image/png');
+    };
+    img.onerror = () => toast('Sorry, the image couldn’t be created in this browser');
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(data);
+  }
+
+  // ---------- Style panel ----------
+  const ICON = {
+    bold: '<b>B</b>', italic: '<i>I</i>', underline: '<u>U</u>',
+    pill: '<svg viewBox="0 0 28 18"><rect x="2" y="3" width="24" height="12" rx="6"/></svg>',
+    rect: '<svg viewBox="0 0 28 18"><rect x="3" y="3" width="22" height="12" rx="2"/></svg>',
+    ellipse: '<svg viewBox="0 0 28 18"><ellipse cx="14" cy="9" rx="12" ry="7"/></svg>',
+    circle: '<svg viewBox="0 0 28 18"><circle cx="14" cy="9" r="7.5"/></svg>'
+  };
+  function swatches(list, current, attr) {
+    return '<div class="sm-swatches">' + list.map((c) => '<button type="button" class="sm-sw' + (c === 'none' ? ' none' : '') + (c.toLowerCase() === String(current).toLowerCase() ? ' on' : '') +
+      '" data-' + attr + '="' + c + '" style="--c:' + (c === 'none' ? 'transparent' : c) + '" title="' + (c === 'none' ? 'None' : c) + '" aria-label="' + (c === 'none' ? 'None' : c) + '"></button>').join('') + '</div>';
+  }
+  function fontButtons(cur, attr) {
+    return [['sans', 'Sans serif'], ['serif', 'Serif']].map(([f, t]) => '<button type="button" class="sm-pb sm-font' + (cur === f ? ' on' : '') + '" data-' + attr + '="' + f + '" style="font-family:' + FONTS[f].replace(/"/g, '&quot;') + '" aria-pressed="' + (cur === f) + '">' + t + '</button>').join('');
+  }
+  function renderPanel() {
+    const ns = selNodes(), es = selEdges();
+    let h = '';
+    if (ns.length) {
+      const n = ns[0];
+      h += '<p class="sm-ptitle">' + (ns.length > 1 ? ns.length + ' words selected' : 'Word') + '</p>' +
+        '<div class="sm-sec"><h4>Text</h4><div class="sm-row">' +
+        ['bold', 'italic', 'underline'].map((k) => '<button type="button" class="sm-pb' + (n[k] ? ' on' : '') + '" data-toggle="' + k + '" title="' + k[0].toUpperCase() + k.slice(1) + ' (Ctrl+' + k[0].toUpperCase() + ')" aria-pressed="' + !!n[k] + '">' + ICON[k] + '</button>').join('') +
+        '<span class="sm-size"><button type="button" class="sm-pb" data-size="-2" aria-label="Smaller text">A−</button><span>' + n.size + '</span><button type="button" class="sm-pb" data-size="2" aria-label="Larger text">A+</button></span></div>' +
+        '<div class="sm-row sm-fonts">' + fontButtons(n.font, 'font') + '</div>' +
+        (ns.length === 1 ? '<button type="button" class="sm-wide" data-act="edit">Edit text</button>' : '') + '</div>' +
+        '<div class="sm-sec"><h4>Text color</h4>' + swatches(TEXT_COLORS, n.color, 'color') + '</div>' +
+        '<div class="sm-sec"><h4>Highlight</h4>' + swatches(HIGHLIGHTS, n.highlight, 'highlight') + '</div>' +
+        '<div class="sm-sec"><h4>Fill</h4>' + swatches(FILLS, n.fill, 'fill') + '</div>' +
+        '<div class="sm-sec"><h4>Border</h4>' + swatches(BORDERS, n.border, 'border') + '</div>' +
+        '<div class="sm-sec"><h4>Shape</h4><div class="sm-row">' + ['pill', 'rect', 'ellipse', 'circle'].map((s) =>
+          '<button type="button" class="sm-pb shape' + (n.shape === s ? ' on' : '') + '" data-shape="' + s + '" title="' + s + '" aria-label="' + s + ' shape">' + ICON[s] + '</button>').join('') + '</div></div>' +
+        '<div class="sm-sec sm-actions">' +
+          (ns.length === 1 ? '<button type="button" class="sm-wide" data-act="child">+ Add connected word</button>' : '') +
+          '<div class="sm-row"><button type="button" class="sm-wide" data-act="dup">Duplicate</button><button type="button" class="sm-wide" data-act="front">Bring to front</button></div>' +
+          '<button type="button" class="sm-wide danger" data-act="del">Delete</button></div>';
+    } else if (es.length) {
+      const e = es[0];
+      h += '<p class="sm-ptitle">Connecting line</p>' +
+        '<div class="sm-sec"><h4>Label</h4><input class="sm-input" id="sm-label" type="text" placeholder="e.g. is a type of" value="' + (e.label || '').replace(/"/g, '&quot;') + '"></div>' +
+        '<div class="sm-sec"><h4>Color</h4>' + swatches(LINE_COLORS, e.color, 'lcolor') + '</div>' +
+        '<div class="sm-sec"><h4>Style</h4><div class="sm-row">' + [['solid', '<svg viewBox="0 0 28 10"><path d="M2 5h24"/></svg>'], ['dashed', '<svg viewBox="0 0 28 10"><path d="M2 5h24" stroke-dasharray="6 4"/></svg>'], ['dotted', '<svg viewBox="0 0 28 10"><path d="M2 5h24" stroke-dasharray="1 4"/></svg>']].map(([s, ic]) =>
+          '<button type="button" class="sm-pb line' + (e.style === s ? ' on' : '') + '" data-lstyle="' + s + '" aria-label="' + s + '">' + ic + '</button>').join('') + '</div></div>' +
+        '<div class="sm-sec"><h4>Arrow</h4><div class="sm-row">' + [['none', 'None'], ['end', '→'], ['both', '↔']].map(([s, t]) =>
+          '<button type="button" class="sm-pb' + (e.arrow === s ? ' on' : '') + '" data-arrow="' + s + '">' + t + '</button>').join('') + '</div></div>' +
+        '<div class="sm-sec"><h4>Thickness</h4><div class="sm-row">' + [1, 1.5, 2.5, 4].map((w) =>
+          '<button type="button" class="sm-pb' + (e.width === w ? ' on' : '') + '" data-width="' + w + '" aria-label="Thickness ' + w + '"><svg viewBox="0 0 28 10"><path d="M2 5h24" style="stroke-width:' + w + '"/></svg></button>').join('') + '</div></div>' +
+        '<div class="sm-sec sm-actions"><button type="button" class="sm-wide danger" data-act="del">Delete line</button></div>';
+    } else {
+      h += '<p class="sm-ptitle">How it works</p><ul class="sm-tips">' +
+        '<li><b>Add a word:</b> double-click empty space, or use <i>Add word</i>.</li>' +
+        '<li><b>Connect:</b> select a word and drag its <b>+</b> handle to another word, or into empty space for a new one.</li>' +
+        '<li><b>Edit:</b> double-click a word or line label.</li>' +
+        '<li><b>Style:</b> select a word to bold, highlight, recolor, or reshape it.</li>' +
+        '<li><b>Move:</b> drag words; drag the background to move around.</li>' +
+        '<li><b>Shortcuts:</b> Tab adds a connected word, Ctrl+B/I/U, Ctrl+Z to undo, Delete.</li></ul>' +
+        '<div class="sm-sec"><h4>Font for all words</h4><div class="sm-row sm-fonts">' + fontButtons(doc.nodes.every((x) => x.font === 'serif') ? 'serif' : doc.nodes.every((x) => (x.font || 'sans') === 'sans') ? 'sans' : '', 'allfont') + '</div></div>' +
+        '<p class="sm-note">Your map is saved in this browser automatically. Use <i>Save</i> to keep a copy as a file.</p>';
+    }
+    panel.innerHTML = h;
+    const lab = $('sm-label');
+    if (lab) { lab.addEventListener('change', () => applyEdges((x) => { x.label = lab.value.trim(); })); lab.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') lab.blur(); }); }
+  }
+  panel.addEventListener('click', (ev) => {
+    const b = ev.target.closest('button'); if (!b) return; const d = b.dataset;
+    if (d.toggle) { const on = !selNodes()[0][d.toggle]; applyNodes((n) => { n[d.toggle] = on; }); }
+    else if (d.size) applyNodes((n) => { n.size = Math.max(10, Math.min(48, n.size + Number(d.size))); });
+    else if (d.font) applyNodes((n) => { n.font = d.font; });
+    else if (d.allfont) { doc.nodes.forEach((n) => { n.font = d.allfont; }); commit(); }
+    else if (d.color) applyNodes((n) => { n.color = d.color; });
+    else if (d.highlight) applyNodes((n) => { n.highlight = d.highlight; });
+    else if (d.fill) applyNodes((n) => { n.fill = d.fill; if (DARK_FILLS.has(d.fill) && n.color === '#1b1d24') n.color = '#ffffff'; if (!DARK_FILLS.has(d.fill) && n.color === '#ffffff') n.color = '#1b1d24'; });
+    else if (d.border) applyNodes((n) => { n.border = d.border; });
+    else if (d.shape) applyNodes((n) => { n.shape = d.shape; });
+    else if (d.lcolor) applyEdges((e) => { e.color = d.lcolor; });
+    else if (d.lstyle) applyEdges((e) => { e.style = d.lstyle; });
+    else if (d.arrow) applyEdges((e) => { e.arrow = d.arrow; });
+    else if (d.width) applyEdges((e) => { e.width = Number(d.width); });
+    else if (d.act === 'edit') startEdit(selNodes()[0]);
+    else if (d.act === 'child') { const n = selNodes()[0]; addNode(freeSpotNear(n), n, true); }
+    else if (d.act === 'dup') duplicateSel();
+    else if (d.act === 'front') { const ids = sel.ids; doc.nodes = doc.nodes.filter((n) => !ids.has(n.id)).concat(doc.nodes.filter((n) => ids.has(n.id))); commit(); }
+    else if (d.act === 'del') deleteSel();
+  });
+
+  // ---------- Toast ----------
+  const toastEl = $('tw-toast'); let tt;
+  function toast(m) { toastEl.textContent = m; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toastEl.classList.remove('show'), 2200); }
+
+  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
+    $('sm-hint').innerHTML = 'Tap a word to style it · Drag its <b>+</b> handle to connect · Drag the background to move around';
+  }
+  // ---------- Start ----------
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) {}
+  const start = () => {
+    if (saved && Array.isArray(saved.nodes) && saved.nodes.length) load({ nodes: saved.nodes.map((n) => node(n)), edges: (saved.edges || []).map((e) => edge(e)) }, true);
+    else load(tplWord(), true);
+  };
+  start();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => render());
+  window.addEventListener('resize', () => render());
+  window.__sm = { get doc() { return doc; }, get view() { return view; }, get sel() { return sel; }, fitView, exportSVGString: null };
+})();
+</script>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> M Enam Ull Hassan · Boston, MA</div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
