@@ -36,32 +36,29 @@
   <div class="wrap page-hero">
     <p class="eyebrow reveal"><a class="crumb" href="resources.html">Resources</a> · Writing tool</p>
     <h1 class="reveal">Transition Word <em>Finder</em></h1>
-    <p class="lead reveal">Find the right connecting word for adding, contrasting, concluding, and more. Words are grouped by purpose and by how they fit into a sentence, with tips on grammar and punctuation.</p>
+    <p class="lead reveal">Choose what you want your sentence to do, and find the right word to connect your ideas. Tap any word to copy it.</p>
   </div>
 
   <section id="finder">
     <div class="wrap sec-head">
-      <div class="sec-label">Find a word</div>
-      <div class="tw-panel reveal">
-        <label class="tw-search">
+      <div class="sec-label">Search</div>
+      <div>
+        <label class="tw-search reveal">
           <span class="visually-hidden">Search for a word</span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-          <input id="tw-q" type="search" placeholder="Search a word, e.g. however" autocomplete="off">
+          <input id="tw-q" type="search" placeholder="Already have a word in mind? Type it, e.g. however" autocomplete="off">
         </label>
-        <h4>Where it goes</h4>
-        <div class="tw-tags" id="tw-pos" role="group" aria-label="Where the word goes">
-          <button type="button" data-pos="all" class="on">All positions</button>
-          <button type="button" data-pos="starter">Sentence starters</button>
-          <button type="button" data-pos="joiner">Joining words</button>
-          <button type="button" data-pos="noun">Before a noun or -ing</button>
-          <button type="button" data-pos="other">Other</button>
-        </div>
-        <h4>Purpose</h4>
-        <div class="tw-tags" id="tw-cats" role="group" aria-label="Purpose"></div>
-        <div class="tw-foot">
-          <label class="tw-toggle"><input id="tw-formal" type="checkbox"> <span>Formal writing only</span></label>
-          <p class="tw-count" id="tw-count" aria-live="polite"></p>
-        </div>
+        <div id="tw-search-results" class="tw-sresults" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="browse">
+    <div class="wrap sec-head">
+      <div class="sec-label" id="tw-label">What do you want to do?</div>
+      <div>
+        <div id="tw-picker"></div>
+        <div id="tw-detail" hidden></div>
       </div>
     </div>
   </section>
@@ -77,131 +74,119 @@
     </div>
   </section>
 
-  <section id="words">
-    <div class="wrap sec-head">
-      <div class="sec-label">Words &amp; phrases</div>
-      <div>
-        <div id="tw-results" class="course-list"></div>
-        <p id="tw-empty" class="tw-empty" hidden>No matches. Try a different word, or clear the filters.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="tw-modal" id="tw-modal" hidden>
-    <div class="tw-backdrop" data-close></div>
-    <div class="tw-dialog" role="dialog" aria-modal="true" aria-labelledby="tw-m-word">
-      <button type="button" class="tw-close" data-close aria-label="Close">×</button>
-      <p class="tw-m-cat" id="tw-m-cat"></p>
-      <h3 id="tw-m-word"></h3>
-      <div class="tw-m-tags" id="tw-m-tags"></div>
-      <h4>How to use it</h4>
-      <p id="tw-m-pos"></p>
-      <div id="tw-m-note-wrap"><h4>Note</h4><p id="tw-m-note"></p></div>
-      <h4>Example of this purpose</h4>
-      <p class="tw-m-ex" id="tw-m-ex"></p>
-      <button type="button" class="btn primary tw-copy" id="tw-copy">Copy word</button>
-    </div>
-  </div>
+  <div class="tw-toast" id="tw-toast" role="status" aria-live="polite"></div>
 
 <script>
 const TW_DATA = [{"id": "adding", "name": "Adding information", "color": "#0F4C81", "desc": "Add another point, reason, or detail that supports what you just said.", "example": "The course builds reading skills. **Moreover,** it prepares students for college writing.", "groups": [{"pos": "starter", "words": [["Furthermore"], ["Moreover"], ["In addition"], ["Additionally"], ["Also"], ["Besides"], ["What is more"], ["Further"], ["Equally important"], ["Beyond this"], ["Another point is that"], ["Not only that", "informal"], ["On top of that", "informal"], ["Plus", "informal"]]}, {"pos": "joiner", "words": [["and"], ["not only … but also"], ["both … and"], ["nor", "", "after a negative clause: “They did not revise, nor did they ask for feedback.”"], ["neither … nor"]]}, {"pos": "noun", "words": [["in addition to"], ["besides"], ["as well as"], ["along with"], ["together with"], ["coupled with"], ["not to mention"], ["to say nothing of"], ["let alone", "", "after a negative: “Few students had read the article, let alone the book.”"]]}, {"pos": "end", "words": [["too"], ["as well"], ["also", "", "can also go before the main verb: “Students also wrote reflections.”"]]}]}, {"id": "similarity", "name": "Showing similarity", "color": "#6667AB", "desc": "Show that two ideas, people, or situations are alike.", "example": "Multilingual writers draw on all their languages. **Similarly,** readers use prior knowledge to make meaning.", "groups": [{"pos": "starter", "words": [["Similarly"], ["Likewise"], ["In the same way"], ["In a similar way"], ["In a similar fashion"], ["By the same token"], ["Correspondingly"], ["Equally"], ["Along the same lines"], ["In the same vein"], ["In like manner", "formal"], ["Analogously", "formal"]]}, {"pos": "joiner", "words": [["just as … so"], ["in the same way that"], ["just as"]]}, {"pos": "noun", "words": [["like"], ["similar to"], ["as with"], ["in common with"], ["akin to", "formal"], ["comparable to"]]}]}, {"id": "contrast", "name": "Showing contrast", "color": "#BB2649", "desc": "Show that two ideas or facts are different.", "example": "Some students revise heavily; others, **by contrast,** make few changes.", "groups": [{"pos": "starter", "words": [["However"], ["In contrast"], ["By contrast"], ["On the other hand", "", "compares two sides of the same issue; it can be paired with “On the one hand” in the sentence before"], ["Conversely"], ["On the contrary", "", "rejects the previous statement rather than just adding a difference: “The task wasn’t easy. On the contrary, it was very demanding.”"], ["Then again"]]}, {"pos": "joiner", "words": [["but"], ["yet"], ["whereas"], ["while"], ["whilst", "", "British English"]]}, {"pos": "noun", "words": [["unlike"], ["in contrast to"], ["as opposed to"], ["contrary to"], ["compared with"], ["compared to"], ["in comparison with"], ["as distinct from", "formal"]]}]}, {"id": "concession", "name": "Conceding a point", "color": "#A47864", "desc": "Admit that something is true, then push back or add a stronger point.", "example": "**Although** the sample was small, the findings are promising.", "groups": [{"pos": "starter", "words": [["Nevertheless"], ["Nonetheless"], ["Even so"], ["Still"], ["All the same"], ["Admittedly"], ["Granted"], ["Of course"], ["To be sure"], ["That said"], ["Having said that"], ["At the same time"], ["Even then"], ["In any case"], ["Regardless"], ["Be that as it may", "formal"], ["Mind you", "informal"], ["Anyway", "informal"]]}, {"pos": "joiner", "words": [["although"], ["though", "", "can also go at the end: “It was hard. We finished, though.”"], ["even though"], ["while"], ["much as", "", "“Much as I enjoy the course, it is demanding.”"], ["despite the fact that"], ["in spite of the fact that"], ["while it is true that"]]}, {"pos": "noun", "words": [["despite"], ["in spite of"], ["notwithstanding", "formal"], ["regardless of"], ["irrespective of", "formal"], ["for all", "", "“For all its flaws, the study is useful.”"], ["albeit", "formal", "before an adjective or short phrase: “a small, albeit important, change”"]]}]}, {"id": "cause", "name": "Giving a cause or reason", "color": "#0B6B57", "desc": "Explain why something happens or is true.", "example": "Many students struggled **because of** unfamiliar academic vocabulary.", "groups": [{"pos": "starter", "words": [["This is because"], ["The reason for this is that"], ["This is due to"], ["This can be explained by"]]}, {"pos": "joiner", "words": [["because"], ["since"], ["as"], ["for", "formal", "only in the middle of a sentence, after a comma: “We paused, for the room was noisy.”"], ["given that"], ["seeing that"], ["now that"], ["considering that"], ["in that"], ["on the grounds that"], ["due to the fact that"], ["owing to the fact that"], ["inasmuch as", "formal"]]}, {"pos": "noun", "words": [["because of"], ["due to"], ["owing to"], ["on account of"], ["as a result of"], ["thanks to"], ["in view of"], ["in light of"], ["given"], ["considering"], ["out of", "", "“out of curiosity”, “out of necessity”"], ["through", "", "“through practice”"], ["by virtue of", "formal"]]}]}, {"id": "result", "name": "Showing a result", "color": "#0F4C81", "desc": "Show what happens because of something you just described.", "example": "Students received feedback on every draft; **as a result,** their arguments became clearer.", "groups": [{"pos": "starter", "words": [["Therefore"], ["Thus"], ["Consequently"], ["As a result"], ["As a consequence"], ["Hence"], ["Accordingly"], ["For this reason"], ["For that reason"], ["Because of this"], ["Given this"], ["In view of this"], ["In light of this"], ["It follows that"], ["That is why"], ["This means that"], ["In turn"], ["In consequence", "formal"], ["Ergo", "formal", "rare in academic writing"], ["So", "informal", "at the start of a sentence"]]}, {"pos": "joiner", "words": [["so"], ["and so"], ["so … that", "", "“The text was so long that few finished it.”"], ["such … that", "", "“It was such a long text that few finished it.”"], ["which means that"], ["with the result that"], ["so much so that"]]}, {"pos": "after", "words": [["resulting in"], ["leading to"], ["giving rise to"], ["contributing to"], ["thereby", "", "followed by an -ing verb: “…, thereby reducing errors.”"], ["thus", "", "followed by an -ing verb: “…, thus reducing errors.”"]]}]}, {"id": "purpose", "name": "Stating a purpose", "color": "#6667AB", "desc": "Explain why someone does something or what an action is meant to achieve.", "example": "I used semantic maps **in order to** show how words connect.", "groups": [{"pos": "starter", "words": [["To this end"], ["To that end"], ["With this in mind"], ["With this goal in mind"], ["For this purpose"]]}, {"pos": "verb", "words": [["to"], ["in order to"], ["so as to"], ["in an effort to"], ["in an attempt to"], ["in order not to"], ["so as not to"]]}, {"pos": "joiner", "words": [["so that"], ["in order that", "formal"], ["so", "informal", "“Bring a laptop so you can write in class.”"], ["in case", "", "for a precaution: “Save a copy in case the file is lost.”"], ["lest", "formal", "“Save a copy lest the file be lost.”"]]}, {"pos": "noun", "words": [["for the purpose of"], ["with the aim of"], ["with the intention of"], ["with a view to", "formal", "followed by -ing: “with a view to improving access”"], ["for the sake of"], ["for fear of"]]}]}, {"id": "condition", "name": "Setting a condition", "color": "#BB2649", "desc": "Say that one thing depends on another.", "example": "**Unless** students revise, feedback has little effect.", "groups": [{"pos": "starter", "words": [["Otherwise", "", "meaning “if not”: “Submit by Friday. Otherwise, you will lose points.”"], ["If so"], ["If not"], ["In that case"], ["In such cases"], ["Under these conditions"], ["Failing that"]]}, {"pos": "joiner", "words": [["if"], ["unless"], ["provided that"], ["providing that"], ["as long as"], ["so long as"], ["on condition that", "formal"], ["only if"], ["even if"], ["in the event that"], ["assuming that"], ["supposing that"], ["whether or not"]]}, {"pos": "noun", "words": [["in the event of"], ["in case of"], ["without", "", "“Without support, students may struggle.”"], ["with", "", "“With practice, fluency improves.”"], ["but for", "formal", "“But for the grant, the study would not exist.”"], ["barring", "", "“Barring delays, we will finish in May.”"]]}]}, {"id": "example", "name": "Giving examples", "color": "#A47864", "desc": "Introduce an example or illustration of the point you are making.", "example": "Some compounds are ambiguous. **For instance,** “chocolate box” can mean a box made of chocolate or a box for chocolates.", "groups": [{"pos": "starter", "words": [["For example"], ["For instance"], ["To illustrate"], ["As an illustration"], ["By way of example"], ["To give an example"], ["As an example"], ["One example is"], ["A case in point is"], ["Take, for example"], ["Consider"], ["This can be seen in"], ["This is illustrated by"]]}, {"pos": "mid", "words": [["such as"], ["including"], ["like", "informal"], ["e.g.", "", "use inside parentheses: “(e.g., Bengali and Hindi)”"], ["in particular"], ["particularly"], ["especially"], ["notably"], ["among others"], ["for one", "", "“Several students, Maria for one, disagreed.”"]]}]}, {"id": "emphasis", "name": "Emphasizing", "color": "#0B6B57", "desc": "Highlight a point as especially important or certain.", "example": "**Above all,** students need time to practice.", "groups": [{"pos": "starter", "words": [["Indeed"], ["In fact"], ["Above all"], ["Most importantly"], ["More importantly"], ["Even more importantly"], ["Importantly"], ["Crucially"], ["Significantly"], ["Notably"], ["Clearly"], ["Certainly"], ["Undoubtedly"], ["Undeniably"], ["Without a doubt"], ["Obviously"], ["Evidently"], ["Needless to say"], ["It should be noted that"], ["It is worth noting that"], ["It is important to note that"]]}, {"pos": "mid", "words": [["even"], ["truly"], ["definitely"], ["absolutely"], ["really", "informal"]]}]}, {"id": "clarifying", "name": "Clarifying or restating", "color": "#0F4C81", "desc": "Say the same idea in a different or more precise way.", "example": "The results were not significant. **In other words,** the difference may be due to chance.", "groups": [{"pos": "starter", "words": [["In other words"], ["That is"], ["That is to say"], ["Put differently"], ["To put it another way"], ["Put simply"], ["Simply put"], ["To put it simply"], ["In simpler terms"], ["In plain terms"], ["More precisely"], ["More specifically"], ["To be more specific"], ["To clarify"], ["What this means is that"]]}, {"pos": "mid", "words": [["namely", "", "names exactly who or what: “two skills, namely reading and writing”"], ["i.e.", "", "means “that is”; use inside parentheses: “(i.e., first-year students)”"], ["or rather", "", "corrects what you just said: “in May, or rather early June”"], ["which is to say"], ["specifically"]]}]}, {"id": "sequence", "name": "Ordering steps or points", "color": "#6667AB", "desc": "Put steps, stages, or points in order.", "example": "**First,** identify the claim. **Next,** find the evidence. **Finally,** evaluate the reasoning.", "groups": [{"pos": "starter", "label": "Beginning", "words": [["First"], ["Firstly"], ["First of all"], ["To begin with"], ["To start with"], ["In the first place"], ["Initially"], ["The first step is"]]}, {"pos": "starter", "label": "Middle", "words": [["Second"], ["Secondly"], ["Third"], ["Thirdly"], ["Next"], ["Then"], ["After that"], ["Afterward"], ["Following this"], ["Subsequently"], ["Later"], ["In the second place"]]}, {"pos": "starter", "label": "End", "words": [["Finally"], ["Lastly"], ["Last"], ["Last but not least"], ["The final step is"]]}, {"pos": "joiner", "words": [["before"], ["after"], ["once"], ["as soon as"], ["until"]]}]}, {"id": "time", "name": "Showing time", "color": "#BB2649", "desc": "Show when something happens, or how events relate in time.", "example": "**Previously,** the course met only in person; **now,** it also meets online.", "groups": [{"pos": "starter", "label": "At the same time", "words": [["Meanwhile"], ["In the meantime"], ["Simultaneously"], ["At the same time"], ["Concurrently", "formal"]]}, {"pos": "starter", "label": "Earlier", "words": [["Previously"], ["Formerly"], ["Earlier"], ["Beforehand"], ["Originally"], ["In the past"], ["Until then"], ["Up to that point"], ["By then"]]}, {"pos": "starter", "label": "Later", "words": [["Afterward"], ["Later"], ["Subsequently"], ["Thereafter", "formal"], ["Since then"], ["From then on"], ["Eventually"], ["In time"], ["In due course"], ["Soon after"], ["Shortly after"], ["Henceforth", "formal"]]}, {"pos": "starter", "label": "Now", "words": [["Currently"], ["Presently"], ["At present"], ["Now"], ["Nowadays"], ["Today"], ["At the moment"], ["At this point"], ["To date"], ["So far"], ["As of now"], ["Recently"], ["Lately"], ["These days", "informal"]]}, {"pos": "joiner", "words": [["when"], ["whenever"], ["while"], ["as"], ["as soon as"], ["once"], ["until"], ["till", "informal"], ["by the time"], ["since"], ["the moment that"], ["every time"], ["now that"], ["before"], ["after"]]}, {"pos": "noun", "words": [["during"], ["throughout"], ["prior to", "formal"], ["following"], ["after"], ["before"], ["since"], ["until"]]}]}, {"id": "place", "name": "Describing place", "color": "#A47864", "desc": "Show where things are, especially in descriptive writing.", "example": "**In the background,** students are working in small groups.", "groups": [{"pos": "noun", "words": [["above"], ["below"], ["beneath"], ["under"], ["over"], ["beside"], ["next to"], ["near"], ["adjacent to"], ["opposite"], ["across from"], ["in front of"], ["behind"], ["beyond"], ["between"], ["among"], ["around"], ["inside"], ["outside"], ["along"], ["alongside"], ["throughout"]]}, {"pos": "starter", "words": [["Nearby"], ["At the center"], ["In the foreground"], ["In the background"], ["In the distance"], ["On the left"], ["On the right"], ["To the north"], ["Further on"], ["Here"], ["There"], ["Elsewhere"]]}]}, {"id": "generalizing", "name": "Generalizing", "color": "#0B6B57", "desc": "Make a general statement that is true in most cases.", "example": "**On the whole,** participants found the maps helpful.", "groups": [{"pos": "starter", "words": [["In general"], ["Generally"], ["Generally speaking"], ["On the whole"], ["Overall"], ["As a rule"], ["As a general rule"], ["For the most part"], ["In most cases"], ["In many cases"], ["By and large"], ["Broadly speaking"], ["Typically"], ["Usually"], ["Normally"], ["Commonly"], ["To a large extent"], ["In most respects"]]}, {"pos": "mid", "words": [["mostly"], ["largely"], ["mainly"], ["chiefly"], ["predominantly"]]}]}, {"id": "hedging", "name": "Hedging a claim", "color": "#0F4C81", "desc": "Soften a claim so it is careful and accurate. This is essential in academic writing.", "example": "These findings **suggest that** semantic mapping **may** support long-term retention.", "groups": [{"pos": "starter", "words": [["Arguably"], ["Possibly"], ["Perhaps"], ["Presumably"], ["Apparently"], ["Seemingly"], ["It appears that"], ["It seems that"], ["It may be that"], ["It is possible that"], ["One could argue that"], ["This suggests that"], ["To some extent"], ["To a certain degree"], ["In some cases"]]}, {"pos": "mid", "words": [["likely"], ["probably"], ["may"], ["might"], ["could"], ["tends to"], ["appears to"], ["seems to"], ["relatively"], ["somewhat"], ["partly"]]}]}, {"id": "attitude", "name": "Showing your attitude", "color": "#6667AB", "desc": "Show how you feel about, or how you judge, the point that follows.", "example": "**Interestingly,** beginners benefited more than advanced learners.", "groups": [{"pos": "starter", "words": [["Fortunately"], ["Unfortunately"], ["Surprisingly"], ["Not surprisingly"], ["Unsurprisingly"], ["Interestingly"], ["Remarkably"], ["Strikingly"], ["Curiously"], ["Oddly"], ["Ironically"], ["Understandably"], ["Predictably"], ["Regrettably", "formal"], ["Ideally"], ["Hopefully", "informal", "avoid in formal academic writing"]]}]}, {"id": "alternatives", "name": "Offering alternatives", "color": "#BB2649", "desc": "Present another option or choice.", "example": "Students can write a traditional essay. **Alternatively,** they can create a multimodal project.", "groups": [{"pos": "starter", "words": [["Alternatively"], ["Instead"], ["Rather", "", "after a negative statement: “It is not a test. Rather, it is a practice task.”"], ["As an alternative"]]}, {"pos": "joiner", "words": [["or"], ["or else"], ["either … or"], ["whether … or"]]}, {"pos": "noun", "words": [["instead of"], ["rather than"], ["as an alternative to"]]}]}, {"id": "exception", "name": "Stating an exception", "color": "#A47864", "desc": "Name something that a general statement does not include.", "example": "All participants, **with the exception of** two, completed the survey.", "groups": [{"pos": "noun", "words": [["except"], ["except for"], ["apart from"], ["aside from"], ["other than"], ["but", "", "meaning “except”: “everyone but the instructor”"], ["with the exception of"], ["excluding"], ["not counting"], ["save", "formal"], ["save for", "formal"]]}, {"pos": "joiner", "words": [["except that"], ["with the exception that", "formal"]]}]}, {"id": "topic", "name": "Changing or introducing a topic", "color": "#0B6B57", "desc": "Turn to a new topic, or say which topic you are talking about.", "example": "**Turning to** the second research question, the results were mixed.", "groups": [{"pos": "noun", "words": [["Regarding"], ["With regard to"], ["In regard to"], ["As regards", "formal"], ["Concerning"], ["As for"], ["As to"], ["With respect to"], ["In relation to"], ["In terms of"], ["When it comes to"], ["As far as … is concerned"], ["Turning to"], ["Moving on to"], ["Speaking of", "informal"]]}, {"pos": "starter", "words": [["In this respect"], ["In this regard"], ["On a related note"], ["Relatedly"], ["On another note"], ["Incidentally"], ["By the way", "informal"]]}]}, {"id": "sources", "name": "Bringing in sources and evidence", "color": "#0F4C81", "desc": "Introduce what a source says, or link your point to evidence.", "example": "**As Nation (2001) explains,** knowing a word involves its form, meaning, and use.", "groups": [{"pos": "starter", "label": "Introducing a source", "words": [["According to"], ["In the words of"], ["As reported by"], ["As [author] states"], ["As [author] notes"], ["As [author] argues"], ["As [author] explains"], ["As [author] suggests"], ["As [author] points out"], ["As [author] observes"], ["As [author] claims"], ["As [author] contends", "formal"], ["As [author] emphasizes"], ["Drawing on"], ["Following"], ["Building on"]]}, {"pos": "starter", "label": "Linking to evidence", "words": [["As shown in"], ["As seen in"], ["As evidenced by"], ["Based on"], ["In line with"], ["Consistent with"], ["This is supported by"], ["Research shows that"], ["Research suggests that"], ["Evidence suggests that"], ["The data indicate that"], ["[Author] found that"], ["[Author] demonstrates that"]]}]}, {"id": "concluding", "name": "Summarizing and concluding", "color": "#6667AB", "desc": "Wrap up a paragraph or essay, or sum up the main points.", "example": "**Taken together,** these results show that feedback and revision go hand in hand.", "groups": [{"pos": "starter", "words": [["In conclusion"], ["To conclude"], ["In summary"], ["To summarize"], ["To sum up"], ["In sum"], ["In short"], ["In brief"], ["Briefly"], ["Overall"], ["All in all"], ["All things considered"], ["Taken together"], ["Altogether"], ["Ultimately"], ["In the end"], ["On the whole"], ["In essence"], ["Essentially"], ["Finally"], ["Lastly"], ["To recap"], ["Given these points"], ["As has been shown"], ["As noted above"], ["As discussed"], ["In a nutshell", "informal"], ["The bottom line is", "informal"]]}]}];
 (function () {
-  const POS = {
-    starter: { label: 'Sentence starters', tip: 'Put it at the start of a sentence, or after a semicolon. Single words and short phrases usually take a comma after them (“However, …”). Phrases that end in “that”, “to”, “is”, or “by” lead straight into the rest of the sentence (“This is because …”).' },
-    joiner:  { label: 'Joining words', tip: 'Use it inside one sentence to connect two ideas. Words such as and, but, so, yet, and or go between the two parts, usually with a comma before them when both parts are full sentences. Words such as because, although, if, and when can start the sentence; if they do, put a comma after the first part (“Although it was hard, we finished.”).' },
-    noun:    { label: 'Before a noun or -ing', tip: 'Follow it with a noun phrase or an -ing form, not a full sentence: “Despite the rain, …”, not “Despite it rained, …”.' },
-    end:     { label: 'At the end', tip: 'Put it at the end of a clause: “Students wrote reflections too.”' },
-    verb:    { label: 'Before a verb', tip: 'Follow it with the base form of a verb: “in order to show how words connect”.' },
-    mid:     { label: 'Inside a sentence', tip: 'Use it within the sentence, usually right before the word or phrase it refers to.' },
-    after:   { label: 'After a comma, to add an effect', tip: 'Add it after a comma at the end of a sentence to name an effect: “…, resulting in higher scores.”' }
+  const FAMILIES = [
+    { name: 'Adding and supporting', cls: 'c1', color: '#0F4C81', ids: ['adding', 'similarity', 'example', 'emphasis', 'clarifying'] },
+    { name: 'Contrasting and conceding', cls: 'c2', color: '#A11F3E', ids: ['contrast', 'concession', 'alternatives', 'exception'] },
+    { name: 'Cause and effect', cls: 'c5', color: '#0B6B57', ids: ['cause', 'result', 'purpose', 'condition'] },
+    { name: 'Order, time, and place', cls: 'c4', color: '#4F5096', ids: ['sequence', 'time', 'place'] },
+    { name: 'Academic voice', cls: 'c3', color: '#7A5444', ids: ['generalizing', 'hedging', 'attitude', 'sources', 'topic'] },
+    { name: 'Wrapping up', cls: 'c1', color: '#0F4C81', ids: ['concluding'] }
+  ];
+  const ASK = {
+    adding: 'Add another point', similarity: 'Show two things are alike', example: 'Give an example',
+    emphasis: 'Stress an important point', clarifying: 'Say it another way', contrast: 'Show a difference',
+    concession: 'Admit a point, then push back', alternatives: 'Offer another option', exception: 'Leave something out',
+    cause: 'Explain why', result: 'Show a result', purpose: 'Explain the goal', condition: 'Say what it depends on',
+    sequence: 'Put steps in order', time: 'Show when', place: 'Show where', generalizing: 'Make a general statement',
+    hedging: 'Soften a claim', attitude: 'Show how you feel about it', sources: 'Bring in a source',
+    topic: 'Change or name the topic', concluding: 'Sum up or conclude'
   };
-  const OTHER = ['end', 'verb', 'mid', 'after'];
-  const state = { q: '', pos: 'all', formal: false, cat: 'all' };
+  const POS = {
+    starter: { label: 'Start a sentence', tip: 'Begin a new sentence with it. Put a comma after single words and short phrases.' },
+    joiner:  { label: 'Join two ideas', tip: 'Use it inside one sentence to connect two ideas.' },
+    noun:    { label: 'Before a noun or -ing', tip: 'Follow it with a noun or an -ing word, not a full sentence.' },
+    end:     { label: 'At the end', tip: 'Put it at the end of the sentence or clause.' },
+    verb:    { label: 'Before a verb', tip: 'Follow it with a verb, such as “to show” or “in order to explain”.' },
+    mid:     { label: 'Inside a sentence', tip: 'Use it inside the sentence, next to the words it refers to.' },
+    after:   { label: 'After a comma', tip: 'Add it after a comma at the end of a sentence to name an effect.' }
+  };
+  const byId = {};
+  TW_DATA.forEach((c) => { byId[c.id] = c; });
+  FAMILIES.forEach((f) => f.ids.forEach((id) => { byId[id].fam = f; }));
   const $ = (id) => document.getElementById(id);
-  const PALETTE = ['#0F4C81', '#A11F3E', '#7A5444', '#4F5096', '#0B6B57'];
-  TW_DATA.forEach((c, i) => { c.cls = 'c' + ((i % 5) + 1); c.color = PALETTE[i % 5]; });
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const md = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  const countOf = (c) => c.groups.reduce((n, g) => n + g.words.length, 0);
+  let formalOnly = false;
 
-  // Purpose chips
-  const cats = $('tw-cats');
-  cats.innerHTML = '<button type="button" class="on" data-cat="all">All purposes</button>' +
-    TW_DATA.map((c) => '<button type="button" data-cat="' + c.id + '"><i style="background:' + c.color + '"></i>' + esc(c.name) + '</button>').join('');
-  cats.addEventListener('click', (e) => {
-    const b = e.target.closest('button'); if (!b) return;
-    state.cat = b.dataset.cat;
-    cats.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b));
-    render();
-  });
-  document.querySelectorAll('#tw-pos button').forEach((b) => b.addEventListener('click', () => {
-    state.pos = b.dataset.pos;
-    document.querySelectorAll('#tw-pos button').forEach((x) => x.classList.toggle('on', x === b));
-    render();
-  }));
-  $('tw-q').addEventListener('input', (e) => { state.q = e.target.value.trim().toLowerCase(); render(); });
-  $('tw-formal').addEventListener('change', (e) => { state.formal = e.target.checked; render(); });
+  // Picker
+  $('tw-picker').innerHTML = FAMILIES.map((f) =>
+    '<div class="tw-family reveal"><h4 style="color:' + f.color + '">' + esc(f.name) + '</h4><div class="tw-goals">' +
+    f.ids.map((id) => { const c = byId[id];
+      return '<a class="tw-goal" href="#' + id + '" style="--c:' + f.color + '"><span class="q">' + esc(ASK[id]) + '</span><span class="n">' + esc(c.name) + ' · ' + countOf(c) + '</span><span class="arrow">→</span></a>'; }).join('') +
+    '</div></div>').join('');
 
-  const posMatch = (p) => state.pos === 'all' || (state.pos === 'other' ? OTHER.includes(p) : p === state.pos);
-  const norm = (s) => s.toLowerCase().replace(/[’']/g, "'");
-
-  function render() {
-    let html = '', count = 0;
-    TW_DATA.forEach((c, ci) => {
-      if (state.cat !== 'all' && state.cat !== c.id) return;
-      let groups = '';
-      c.groups.forEach((g, gi) => {
-        if (!posMatch(g.pos)) return;
-        const chips = g.words.map((w, wi) => {
-          const reg = w[1] || '';
-          if (state.formal && reg === 'informal') return '';
-          if (state.q && !norm(w[0]).includes(norm(state.q))) return '';
-          count++;
-          return '<button type="button" class="tw-word' + (reg ? ' ' + reg : '') + '" data-ref="' + ci + '.' + gi + '.' + wi + '">' + esc(w[0]) + (reg ? '<small>' + reg + '</small>' : '') + '</button>';
-        }).join('');
-        if (!chips) return;
-        const title = g.label ? esc(g.label) + ' <span>· ' + POS[g.pos].label + '</span>' : POS[g.pos].label;
-        groups += '<h4>' + title + '</h4><div class="tw-words">' + chips + '</div>';
-      });
-      if (!groups) return;
-      html += '<article class="course ' + c.cls + '"><h3>' + esc(c.name) + '</h3><p class="meta">' + esc(c.desc) + '</p>' +
-        '<h4>Example</h4><p class="tw-ex">' + md(c.example) + '</p>' + groups + '</article>';
+  // Detail
+  function showDetail(id, focusWord) {
+    const c = byId[id];
+    if (!c) { $('tw-detail').hidden = true; $('tw-picker').hidden = false; $('tw-label').textContent = 'What do you want to do?'; return; }
+    const f = c.fam;
+    let html = '<a class="tw-back" href="#">← All goals</a>' +
+      '<article class="course ' + f.cls + ' tw-box"><p class="tw-fam">' + esc(f.name) + '</p><h3>' + esc(ASK[id]) + '</h3>' +
+      '<p class="meta">' + esc(c.desc) + '</p><p class="tw-ex">' + md(c.example) + '</p>' +
+      '<label class="tw-toggle"><input type="checkbox" id="tw-formal"' + (formalOnly ? ' checked' : '') + '> <span>Formal writing only</span></label></article>';
+    c.groups.forEach((g) => {
+      const words = g.words.filter((w) => !(formalOnly && w[1] === 'informal'));
+      if (!words.length) return;
+      const notes = words.filter((w) => w[2]);
+      html += '<div class="tw-block">' +
+        '<div class="tw-block-head"><h4>' + (g.label ? esc(g.label) + ' · ' : '') + POS[g.pos].label + '</h4><p>' + POS[g.pos].tip + '</p></div>' +
+        '<div class="tw-words">' + words.map((w) =>
+          '<button type="button" class="tw-word' + (w[1] ? ' ' + w[1] : '') + (focusWord && w[0] === focusWord ? ' hit' : '') + '" data-w="' + esc(w[0]) + '">' + esc(w[0]) +
+          (w[1] ? '<small>' + w[1] + '</small>' : '') + (w[2] ? '<sup aria-hidden="true">*</sup>' : '') + '</button>').join('') + '</div>' +
+        (notes.length ? '<ul class="tw-notes">' + notes.map((w) => '<li><strong>' + esc(w[0]) + ':</strong> ' + esc(cap(w[2])) + '</li>').join('') + '</ul>' : '') +
+        '</div>';
     });
-    $('tw-results').innerHTML = html;
-    $('tw-empty').hidden = count > 0;
-    $('tw-count').textContent = count + (count === 1 ? ' word or phrase' : ' words and phrases');
+    $('tw-detail').innerHTML = html;
+    $('tw-detail').hidden = false; $('tw-picker').hidden = true;
+    $('tw-label').textContent = c.name;
+    $('tw-formal').addEventListener('change', (e) => { formalOnly = e.target.checked; showDetail(id); });
   }
 
-  // Detail dialog
-  const modal = $('tw-modal');
-  let lastFocus = null, current = '';
-  $('tw-results').addEventListener('click', (e) => {
+  function route() {
+    const id = decodeURIComponent(location.hash.slice(1)).split('|');
+    showDetail(id[0], id[1]);
+    if (id[0] && byId[id[0]]) {
+      const top = $('browse').getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top, behavior: 'smooth' });
+      const hit = document.querySelector('.tw-word.hit'); if (hit) setTimeout(() => hit.focus({ preventScroll: true }), 400);
+    }
+  }
+  window.addEventListener('hashchange', route);
+
+  // Copy on tap
+  const toast = $('tw-toast'); let tt;
+  function say(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1600); }
+  $('tw-detail').addEventListener('click', async (e) => {
     const b = e.target.closest('.tw-word'); if (!b) return;
-    const [ci, gi, wi] = b.dataset.ref.split('.').map(Number);
-    const c = TW_DATA[ci], g = c.groups[gi], w = g.words[wi];
-    current = w[0].replace(/ … /g, ' ... ');
-    $('tw-m-cat').textContent = c.name + (g.label ? ' · ' + g.label : '');
-    $('tw-m-cat').style.color = c.color;
-    $('tw-m-word').textContent = w[0];
-    $('tw-m-tags').innerHTML = '<span>' + POS[g.pos].label + '</span>' + (w[1] ? '<span class="' + w[1] + '">' + w[1] + '</span>' : '');
-    $('tw-m-pos').textContent = POS[g.pos].tip;
-    $('tw-m-note-wrap').hidden = !w[2];
-    $('tw-m-note').textContent = w[2] ? w[2].charAt(0).toUpperCase() + w[2].slice(1) : '';
-    $('tw-m-ex').innerHTML = md(c.example);
-    $('tw-copy').textContent = 'Copy word';
-    lastFocus = b;
-    modal.hidden = false;
-    document.body.classList.add('tw-lock');
-    modal.querySelector('.tw-close').focus();
-  });
-  function close() { modal.hidden = true; document.body.classList.remove('tw-lock'); if (lastFocus) lastFocus.focus(); }
-  modal.addEventListener('click', (e) => { if (e.target.closest('[data-close]')) close(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) close(); });
-  $('tw-copy').addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(current); $('tw-copy').textContent = 'Copied ✓'; }
-    catch (err) { $('tw-copy').textContent = 'Select and copy the word above'; }
+    const text = b.dataset.w.replace(/ … /g, ' ... ');
+    try { await navigator.clipboard.writeText(text); say('Copied “' + b.dataset.w + '”'); }
+    catch (err) { say('Couldn’t copy. Select the word instead.'); }
   });
 
-  render();
+  // Search
+  const norm = (s) => s.toLowerCase().replace(/[’']/g, "'");
+  $('tw-q').addEventListener('input', (e) => {
+    const q = norm(e.target.value.trim()); const box = $('tw-search-results');
+    if (q.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
+    const hits = [];
+    TW_DATA.forEach((c) => c.groups.forEach((g) => g.words.forEach((w) => { if (norm(w[0]).includes(q)) hits.push({ c, g, w }); })));
+    hits.sort((a, b) => (norm(a.w[0]).startsWith(q) ? 0 : 1) - (norm(b.w[0]).startsWith(q) ? 0 : 1));
+    box.hidden = false;
+    box.innerHTML = hits.length ? hits.slice(0, 12).map((h) =>
+      '<a class="tw-srow" href="#' + h.c.id + '|' + encodeURIComponent(h.w[0]) + '"><span class="w">' + esc(h.w[0]) + '</span><span class="m"><i style="background:' + h.c.fam.color + '"></i>' + esc(ASK[h.c.id]) + ' · ' + POS[h.g.pos].label + (h.w[1] ? ' · ' + h.w[1] : '') + '</span></a>').join('') +
+      (hits.length > 12 ? '<p class="tw-more">' + (hits.length - 12) + ' more. Keep typing to narrow it down.</p>' : '')
+      : '<p class="tw-more">No matches. Try another word, or choose a goal below.</p>';
+  });
+  $('tw-search-results').addEventListener('click', (e) => { if (e.target.closest('.tw-srow')) { $('tw-q').value = ''; $('tw-search-results').hidden = true; } });
+
+  route();
 })();
 </script>
 </main>
