@@ -523,3 +523,8 @@
   .tool.soon { cursor: default; background: transparent; border-style: dashed; filter: grayscale(1); opacity: .55; }
   .tool.soon:hover { transform: none; box-shadow: none; }
   .tool.soon .status { color: var(--muted); }
+
+  /* ---------- Headline highlight: warm orange (all pages) ---------- */
+  :root { --highlight: #D2622A; }
+  @media (prefers-color-scheme: dark) { :root { --highlight: #F2995C; } }
+  .hero h1 em, .page-hero h1 em { color: var(--highlight); }
