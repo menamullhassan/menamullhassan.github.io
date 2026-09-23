@@ -39,39 +39,51 @@
     <p class="lead reveal">Find the right connecting word for adding, contrasting, concluding, and more. Words are grouped by purpose and by how they fit into a sentence, with tips on grammar and punctuation.</p>
   </div>
 
-  <section id="tool" class="tw-section">
-    <div class="wrap">
-      <div class="tw-controls">
+  <section id="finder">
+    <div class="wrap sec-head">
+      <div class="sec-label">Find a word</div>
+      <div class="tw-panel reveal">
         <label class="tw-search">
           <span class="visually-hidden">Search for a word</span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
           <input id="tw-q" type="search" placeholder="Search a word, e.g. however" autocomplete="off">
         </label>
-        <div class="tw-row">
-          <div class="tw-seg" role="group" aria-label="Where the word goes">
-            <button type="button" data-pos="all" class="on">All positions</button>
-            <button type="button" data-pos="starter">Sentence starters</button>
-            <button type="button" data-pos="joiner">Joining words</button>
-            <button type="button" data-pos="noun">Before a noun or -ing</button>
-            <button type="button" data-pos="other">Other</button>
-          </div>
+        <h4>Where it goes</h4>
+        <div class="tw-tags" id="tw-pos" role="group" aria-label="Where the word goes">
+          <button type="button" data-pos="all" class="on">All positions</button>
+          <button type="button" data-pos="starter">Sentence starters</button>
+          <button type="button" data-pos="joiner">Joining words</button>
+          <button type="button" data-pos="noun">Before a noun or -ing</button>
+          <button type="button" data-pos="other">Other</button>
+        </div>
+        <h4>Purpose</h4>
+        <div class="tw-tags" id="tw-cats" role="group" aria-label="Purpose"></div>
+        <div class="tw-foot">
           <label class="tw-toggle"><input id="tw-formal" type="checkbox"> <span>Formal writing only</span></label>
+          <p class="tw-count" id="tw-count" aria-live="polite"></p>
         </div>
-        <div class="tw-chips" id="tw-cats" role="group" aria-label="Purpose"></div>
-        <p class="tw-count" id="tw-count" aria-live="polite"></p>
       </div>
+    </div>
+  </section>
 
-      <details class="tw-guide">
-        <summary>Punctuation guide</summary>
-        <div class="tw-guide-grid">
-          <div><h4>Sentence starters</h4><p>Begin a new sentence, or follow a semicolon. Most take a comma after them.</p><p class="ex">The data were limited. <strong>However,</strong> the trend was clear.<br>The data were limited; <strong>however,</strong> the trend was clear.</p></div>
-          <div><h4>Joining words</h4><p>Link two ideas in one sentence. If the joining word starts the sentence, put a comma after the first part.</p><p class="ex">The data were limited, <strong>but</strong> the trend was clear.<br><strong>Although</strong> the data were limited, the trend was clear.</p></div>
-          <div><h4>Before a noun or -ing</h4><p>Follow with a noun phrase or an -ing form, not a full sentence.</p><p class="ex"><strong>Despite</strong> the limited data, the trend was clear.<br><s>Despite the data were limited</s></p></div>
-        </div>
-      </details>
+  <section id="guide">
+    <div class="wrap sec-head">
+      <div class="sec-label">Punctuation guide</div>
+      <div class="tw-guide-grid">
+        <div class="card reveal"><div class="deg">Sentence starters</div><p class="inst">Begin a new sentence, or follow a semicolon. Most take a comma after them.</p><p class="tw-gex">The data were limited. <strong>However,</strong> the trend was clear.</p></div>
+        <div class="card reveal"><div class="deg">Joining words</div><p class="inst">Link two ideas in one sentence. If the sentence starts with one, put a comma after the first part.</p><p class="tw-gex"><strong>Although</strong> the data were limited, the trend was clear.</p></div>
+        <div class="card reveal"><div class="deg">Before a noun or -ing</div><p class="inst">Follow with a noun phrase or an -ing form, not a full sentence.</p><p class="tw-gex"><strong>Despite</strong> the limited data, the trend was clear.</p></div>
+      </div>
+    </div>
+  </section>
 
-      <div id="tw-results" class="tw-results"></div>
-      <p id="tw-empty" class="tw-empty" hidden>No matches. Try a different word, or clear the filters.</p>
+  <section id="words">
+    <div class="wrap sec-head">
+      <div class="sec-label">Words &amp; phrases</div>
+      <div>
+        <div id="tw-results" class="course-list"></div>
+        <p id="tw-empty" class="tw-empty" hidden>No matches. Try a different word, or clear the filters.</p>
+      </div>
     </div>
   </section>
 
@@ -106,22 +118,24 @@ const TW_DATA = [{"id": "adding", "name": "Adding information", "color": "#0F4C8
   const OTHER = ['end', 'verb', 'mid', 'after'];
   const state = { q: '', pos: 'all', formal: false, cat: 'all' };
   const $ = (id) => document.getElementById(id);
+  const PALETTE = ['#0F4C81', '#A11F3E', '#7A5444', '#4F5096', '#0B6B57'];
+  TW_DATA.forEach((c, i) => { c.cls = 'c' + ((i % 5) + 1); c.color = PALETTE[i % 5]; });
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const md = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
   // Purpose chips
   const cats = $('tw-cats');
-  cats.innerHTML = '<button type="button" class="tw-chip on" data-cat="all">All purposes</button>' +
-    TW_DATA.map((c) => '<button type="button" class="tw-chip" data-cat="' + c.id + '"><i style="background:' + c.color + '"></i>' + esc(c.name) + '</button>').join('');
+  cats.innerHTML = '<button type="button" class="on" data-cat="all">All purposes</button>' +
+    TW_DATA.map((c) => '<button type="button" data-cat="' + c.id + '"><i style="background:' + c.color + '"></i>' + esc(c.name) + '</button>').join('');
   cats.addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
     state.cat = b.dataset.cat;
     cats.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b));
     render();
   });
-  document.querySelectorAll('.tw-seg button').forEach((b) => b.addEventListener('click', () => {
+  document.querySelectorAll('#tw-pos button').forEach((b) => b.addEventListener('click', () => {
     state.pos = b.dataset.pos;
-    document.querySelectorAll('.tw-seg button').forEach((x) => x.classList.toggle('on', x === b));
+    document.querySelectorAll('#tw-pos button').forEach((x) => x.classList.toggle('on', x === b));
     render();
   }));
   $('tw-q').addEventListener('input', (e) => { state.q = e.target.value.trim().toLowerCase(); render(); });
@@ -146,11 +160,11 @@ const TW_DATA = [{"id": "adding", "name": "Adding information", "color": "#0F4C8
         }).join('');
         if (!chips) return;
         const title = g.label ? esc(g.label) + ' <span>· ' + POS[g.pos].label + '</span>' : POS[g.pos].label;
-        groups += '<div class="tw-group"><h4>' + title + '</h4><div class="tw-words">' + chips + '</div></div>';
+        groups += '<h4>' + title + '</h4><div class="tw-words">' + chips + '</div>';
       });
       if (!groups) return;
-      html += '<article class="tw-cat" style="--c:' + c.color + '"><header><h3>' + esc(c.name) + '</h3><p>' + esc(c.desc) + '</p></header>' +
-        '<p class="tw-ex">' + md(c.example) + '</p>' + groups + '</article>';
+      html += '<article class="course ' + c.cls + '"><h3>' + esc(c.name) + '</h3><p class="meta">' + esc(c.desc) + '</p>' +
+        '<h4>Example</h4><p class="tw-ex">' + md(c.example) + '</p>' + groups + '</article>';
     });
     $('tw-results').innerHTML = html;
     $('tw-empty').hidden = count > 0;
