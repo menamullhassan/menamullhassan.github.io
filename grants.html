@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grants &amp; Scholarships | M Enam Ull Hassan</title>
+<meta name="description" content="Grants, travel funds, and scholarships awarded to M Enam Ull Hassan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan<span>.</span></a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html" aria-current="page">Grants</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal">Grants &amp; Scholarships</p>
+    <h1 class="reveal">Support for my <em>research</em> and study.</h1>
+    <p class="lead reveal">Research funds, travel grants, and scholarships from UMass Boston, Ball State University, and the Ministry of Education, Bangladesh.</p>
+  </div>
+
+  <section id="grants">
+    <div class="wrap sec-head">
+      <div class="sec-label">Awards</div>
+      <div class="course-list">
+        <article class="course c1 reveal">
+          <h3>University of Massachusetts Boston</h3>
+          <div class="award-list">
+            <div class="award"><span class="code">2026</span><div><div class="award-name">Graduate Student Summer Research Fund</div><div class="award-by">College of Liberal Arts</div></div></div>
+            <div class="award"><span class="code">2026</span><div><div class="award-name">Scholarly Support Fund</div><div class="award-by">Graduate Employee Organization</div></div></div>
+            <div class="award"><span class="code">2026</span><div><div class="award-name">Dean&rsquo;s Office Travel Fund</div><div class="award-by">College of Liberal Arts</div></div></div>
+          </div>
+        </article>
+        <article class="course c2 reveal">
+          <h3>Ball State University</h3>
+          <div class="award-list">
+            <div class="award"><span class="code">2023</span><div><div class="award-name">Aspire Travel Grant</div><div class="award-by">Ball State University</div></div></div>
+            <div class="award"><span class="code">2023</span><div><div class="award-name">English Department Research Fund</div><div class="award-by">Department of English</div></div></div>
+          </div>
+        </article>
+        <article class="course c5 reveal">
+          <h3>Ministry of Education, Bangladesh</h3>
+          <div class="award-list">
+            <div class="award"><span class="code">2005 · 2008 · 2010</span><div><div class="award-name">Jessore Education Board Merit Scholarship</div><div class="award-by">Awarded three times</div></div></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> M Enam Ull Hassan · Boston, MA</div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
