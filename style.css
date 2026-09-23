@@ -548,3 +548,12 @@
   @media (prefers-color-scheme: dark) {
     footer, body:has(.contact-page) footer { background: #2b1d15; color: #F2995C; border-top-color: var(--highlight); }
   }
+
+  /* ---------- Background texture: very subtle dot grid (all pages) ---------- */
+  :root { --dot: rgba(27, 29, 36, .07); }
+  @media (prefers-color-scheme: dark) { :root { --dot: rgba(255, 255, 255, .05); } }
+  body, body:has(.contact-page) {
+    background-image: radial-gradient(var(--dot) 1px, transparent 1.4px);
+    background-size: 22px 22px;
+    background-position: 0 0;
+  }
