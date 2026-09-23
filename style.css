@@ -46,7 +46,8 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
-  a { color: inherit; }
+  a { color: inherit; text-decoration: none; }
+  a:hover, a:focus, a:visited { text-decoration: none; }
   .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
 
   /* Nav */
@@ -431,7 +432,8 @@
 
   /* ---------- Transition Word Finder ---------- */
   .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .crumb { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; }
+  .crumb { color: inherit; text-decoration: none; }
+  .crumb:hover { opacity: .75; }
   .tool.live { border-color: var(--accent); }
   .tool.live .status { color: var(--accent); }
 
@@ -459,7 +461,7 @@
   .tw-goal:hover .arrow { transform: translateX(4px); }
 
   .tw-back { display: inline-block; margin-bottom: 16px; font-size: var(--fs-body); font-weight: 500; color: var(--accent); text-decoration: none; }
-  .tw-back:hover { text-decoration: underline; }
+  .tw-back:hover { opacity: .75; }
   .tw-box .tw-fam { font-size: var(--fs-label); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #FFBE98; margin-bottom: 8px; }
   .tw-box .meta { font-size: var(--fs-body); }
   .course .tw-ex { margin-top: 16px; background: rgba(255,255,255,.1); border-left: 3px solid #FFBE98; border-radius: 8px; padding: 10px 14px; font-style: italic; }
