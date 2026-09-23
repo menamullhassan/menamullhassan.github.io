@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Verb Finder | M Enam Ull Hassan</title>
+<meta name="description" content="Find precise academic verbs for reporting sources, describing research, and building an argument, with grammar patterns and common-mistake tips.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=10">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan<span>.</span></a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal"><a class="crumb" href="resources.html">Resources</a> · Writing tool</p>
+    <h1 class="reveal">Academic Verb <em>Finder</em></h1>
+    <p class="lead reveal">Choose what you want to say, and find a precise academic verb, with the grammar pattern that follows it and tips on common mistakes. Tap any verb to copy it.</p>
+  </div>
+
+  <section id="finder">
+    <div class="wrap sec-head">
+      <div class="sec-label">Search</div>
+      <div>
+        <label class="tw-search reveal">
+          <span class="visually-hidden">Search for a verb</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input id="tw-q" type="search" placeholder="Already have a verb in mind? Type it, e.g. argue" autocomplete="off">
+        </label>
+        <div id="tw-search-results" class="tw-sresults" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="browse">
+    <div class="wrap sec-head">
+      <div class="sec-label" id="tw-label">What do you want to do?</div>
+      <div>
+        <div id="tw-picker"></div>
+        <div id="tw-detail" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="guide">
+    <div class="wrap sec-head">
+      <div class="sec-label">Grammar guide</div>
+      <div class="tw-guide-grid">
+        <div class="card reveal"><div class="deg">+ that + clause</div><p class="inst">Many reporting verbs are followed by <em>that</em> and a full clause.</p><p class="tw-gex">Smith <strong>argues that</strong> feedback improves revision.</p></div>
+        <div class="card reveal"><div class="deg">+ noun</div><p class="inst">Research verbs usually take a direct object, with no preposition after them.</p><p class="tw-gex">The study <strong>examines</strong> the data. <span class="no">not “examines about”</span></p></div>
+        <div class="card reveal"><div class="deg">Present or past?</div><p class="inst">Use the present to report ideas, and the past to describe what a study did.</p><p class="tw-gex">Nation <strong>argues</strong>… / The study <strong>found</strong>…</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tw-toast" id="tw-toast" role="status" aria-live="polite"></div>
+
+<script>
+const AV_DATA = [{"id": "report", "fam": "A", "strength": "Neutral", "ask": "Report what a source says", "name": "Reporting neutrally", "desc": "Say what a source states or describes, without showing whether you agree.", "example": "Nation (2001) **notes that** learners need repeated exposure to new words.", "groups": [{"pos": "that", "words": [["state"], ["note"], ["observe"], ["explain"], ["point out"], ["report"], ["mention"], ["remark"], ["comment"], ["write"], ["add"], ["indicate"]]}, {"pos": "noun", "words": [["describe"], ["outline"], ["present"], ["summarize"], ["define"], ["identify"], ["report"], ["note"], ["list"], ["discuss", "no “about”: “discusses the results,” not “discusses about the results”"], ["explain", "explain something to someone: “explains the method to readers,” not “explains readers the method”"], ["mention", "no “about”: “mentions the study,” not “mentions about the study”"]]}, {"pos": "as", "words": [["describe"], ["define"], ["characterize"], ["refer to"], ["view"], ["regard"], ["see"], ["portray"], ["present"]]}]}, {"id": "tentative", "fam": "A", "strength": "Tentative", "ask": "Report a cautious idea", "name": "Suggesting tentatively", "desc": "Report an idea that a source puts forward carefully, as a possibility rather than a fact.", "example": "Some researchers **suggest that** motivation plays a larger role than aptitude.", "groups": [{"pos": "that", "words": [["suggest"], ["propose"], ["imply", "the writer hints at something; the reader “infers” it"], ["hypothesize"], ["speculate"], ["posit"], ["hint"], ["assume"], ["presume"], ["predict"], ["suspect"], ["believe"], ["estimate"]]}, {"pos": "noun", "words": [["propose"], ["suggest"], ["hypothesize"], ["posit"], ["put forward"], ["raise"], ["advance", "“advance an argument / a theory”"]]}, {"pos": "wh", "words": [["wonder", "“wonder whether / how,” not “wonder that”"], ["ask"], ["consider"]]}]}, {"id": "strong", "fam": "A", "strength": "Strong", "ask": "Report a strong claim", "name": "Making a strong claim", "desc": "Report a claim that a source makes firmly and confidently.", "example": "Cummins (2000) **argues that** a strong first language supports second language learning.", "groups": [{"pos": "that", "words": [["argue"], ["maintain"], ["contend"], ["assert"], ["insist"], ["emphasize"], ["stress"], ["affirm"], ["declare"], ["hold"], ["claim", "can signal that you doubt the source; use “argue” or “state” if you don’t"]]}, {"pos": "noun", "words": [["advocate"], ["defend"], ["champion"], ["underscore"], ["emphasize", "no “on”: “emphasizes the need,” not “emphasizes on the need”"], ["stress", "no “on”: “stresses the importance,” not “stresses on the importance”"]]}, {"pos": "prep", "words": [["argue for"], ["argue against"], ["insist on"], ["call for"], ["advocate for"]]}]}, {"id": "agree", "fam": "A", "ask": "Show a source agrees or supports", "name": "Agreeing and supporting", "desc": "Show that a source agrees with, supports, or confirms another idea or finding.", "example": "These results **corroborate** earlier findings on vocabulary retention.", "groups": [{"pos": "that", "words": [["agree"], ["acknowledge"], ["accept"], ["confirm"], ["recognize"], ["concede"], ["admit"]]}, {"pos": "noun", "words": [["support"], ["confirm"], ["endorse"], ["corroborate"], ["reinforce"], ["echo"], ["validate"], ["uphold"], ["share"], ["accept"], ["acknowledge"], ["adopt"], ["substantiate"]]}, {"pos": "prep", "words": [["agree with", "agree with a person or idea: “agrees with Nation,” not “agrees Nation”"], ["concur with"], ["side with"], ["build on"], ["draw on"], ["align with"], ["be consistent with"], ["be in line with"]]}]}, {"id": "disagree", "fam": "A", "ask": "Show a source disagrees or questions", "name": "Disagreeing and questioning", "desc": "Show that a source doubts, challenges, or rejects an idea.", "example": "Later studies **challenged** this view, pointing to its small sample.", "groups": [{"pos": "that", "words": [["deny"], ["dispute"], ["doubt"], ["object"], ["counter"]]}, {"pos": "noun", "words": [["challenge"], ["question"], ["dispute"], ["reject"], ["contest"], ["rebut"], ["contradict"], ["oppose"], ["dismiss"], ["undermine"], ["call into question"], ["refute", "means “prove wrong”; if a source only argues against an idea, use “dispute” or “challenge”"], ["criticize", "criticize someone for + -ing: “criticized the study for ignoring context”"]]}, {"pos": "prep", "words": [["disagree with", "not “disagree” + noun: “disagrees with this view”"], ["take issue with"], ["cast doubt on"], ["argue against"], ["object to", "followed by a noun or -ing: “object to using,” not “object to use”"]]}, {"pos": "wh", "words": [["question whether"], ["doubt whether"], ["ask whether"], ["wonder whether"]]}]}, {"id": "investigate", "fam": "B", "ask": "Say what a study looks at", "name": "Investigating", "desc": "Describe what a study, or your own paper, looks into.", "example": "This study **examines how** multilingual students use feedback during revision.", "groups": [{"pos": "noun", "words": [["examine"], ["explore"], ["assess"], ["evaluate"], ["measure"], ["study"], ["review"], ["survey"], ["test"], ["observe"], ["monitor"], ["track"], ["trace"], ["interpret"], ["scrutinize"], ["probe"], ["investigate", "no “about”: “investigates the effect,” not “investigates about the effect”"], ["analyze", "“analyse” in British English"]]}, {"pos": "wh", "words": [["examine"], ["investigate"], ["explore"], ["assess"], ["determine"], ["establish"], ["consider"], ["ask"], ["ascertain", "formal: “ascertain whether the scores changed”"]]}]}, {"id": "methods", "fam": "B", "ask": "Describe your methods", "name": "Describing methods", "desc": "Say what was done in a study. In methods sections these verbs are often passive: “Data were collected…”", "example": "Data **were collected** through interviews and **coded** thematically.", "groups": [{"pos": "noun", "words": [["conduct"], ["collect"], ["gather"], ["administer"], ["recruit"], ["select"], ["sample"], ["interview"], ["record"], ["transcribe"], ["code"], ["design"], ["pilot"], ["adapt"], ["adopt"], ["employ"], ["use"], ["apply"], ["implement"], ["distribute"], ["obtain"], ["calculate"], ["compute"], ["triangulate"], ["utilize", "often just means “use”; prefer “use” unless you mean making practical use of something"]]}, {"pos": "to", "words": [["aim"], ["seek"], ["set out"], ["attempt"], ["intend"]]}]}, {"id": "findings", "fam": "B", "ask": "Report what a study found", "name": "Reporting findings", "desc": "Report what a study found or showed.", "example": "The analysis **revealed that** students revised more after conferences.", "groups": [{"pos": "that", "words": [["find"], ["show"], ["demonstrate"], ["reveal"], ["confirm"], ["establish"], ["indicate", "more cautious than “show”"], ["prove", "rarely used for research data; “demonstrate” or “show” is safer"]]}, {"pos": "noun", "words": [["yield"], ["identify"], ["uncover"], ["produce"], ["generate"], ["detect"], ["document"], ["record"], ["reveal"], ["show"]]}, {"pos": "as", "words": [["identify", "“identified feedback as a key factor”"], ["emerge", "no object: “Motivation emerged as a key theme”"]]}, {"pos": "to", "words": [["be found", "“was found to improve scores”"], ["be shown", "“was shown to reduce errors”"]]}]}, {"id": "cautious", "fam": "B", "ask": "Be careful about results", "name": "Being cautious", "desc": "Soften a claim about results so it is careful and accurate.", "example": "These patterns **appear to** reflect differences in prior instruction.", "groups": [{"pos": "to", "words": [["appear"], ["seem"], ["tend"]]}, {"pos": "that", "words": [["it appears"], ["it seems"], ["suggest"], ["indicate"], ["imply"]]}, {"pos": "modal", "words": [["may indicate"], ["may suggest"], ["may reflect"], ["might explain"], ["could point to"], ["could be attributed to"], ["can be interpreted as"]]}]}, {"id": "cause", "fam": "C", "ask": "Explain causes and effects", "name": "Explaining causes and effects", "desc": "Show how one thing causes, shapes, or depends on another.", "example": "Limited feedback may **contribute to** lower revision quality.", "groups": [{"pos": "noun", "words": [["cause"], ["influence"], ["determine"], ["shape"], ["trigger"], ["produce"], ["generate"], ["prompt"], ["drive"], ["facilitate"], ["hinder"], ["impede"], ["prevent"], ["promote"], ["foster"], ["bring about"], ["affect", "verb; “effect” is usually the noun: “affects scores,” “has an effect on scores”"]]}, {"pos": "prep", "words": [["lead to"], ["contribute to"], ["give rise to"], ["stem from"], ["arise from"], ["derive from"], ["account for"], ["depend on"], ["result in", "“A results in B” means A causes B"], ["result from", "“B results from A” means B is caused by A"]]}, {"pos": "objto", "words": [["enable"], ["allow"], ["cause"], ["lead"], ["prompt"], ["encourage"], ["require"], ["motivate"], ["force"]]}]}, {"id": "compare", "fam": "C", "ask": "Compare and contrast", "name": "Comparing and contrasting", "desc": "Show how things are similar or different.", "example": "Beginners' responses **differed from** those of advanced learners.", "groups": [{"pos": "noun", "words": [["compare"], ["contrast"], ["differentiate"], ["parallel"], ["mirror"], ["match"], ["resemble", "no preposition: “resembles earlier findings,” not “resembles to”"], ["distinguish", "“distinguish X from Y” or “distinguish between X and Y”"]]}, {"pos": "prep", "words": [["compare with", "to examine similarities and differences"], ["compare to", "to point out a likeness"], ["differ from", "not “differ than”"], ["differ in"], ["contrast with"], ["correspond to"], ["diverge from"], ["deviate from"], ["coincide with"], ["vary across"], ["vary by"]]}, {"pos": "intrans", "words": [["differ"], ["vary"], ["diverge"], ["overlap"], ["converge"], ["coincide"]]}]}, {"id": "define", "fam": "C", "ask": "Define or classify", "name": "Defining and classifying", "desc": "Say what something is, what it contains, or which group it belongs to.", "example": "The sample **comprises** 40 undergraduate students.", "groups": [{"pos": "noun", "words": [["define"], ["classify"], ["categorize"], ["characterize"], ["label"], ["group"], ["sort"], ["divide"], ["include"], ["constitute"], ["represent"], ["comprise", "no “of”: “comprises 40 students,” not “comprises of”"]]}, {"pos": "as", "words": [["define"], ["classify"], ["categorize"], ["label"], ["characterize"], ["identify"], ["describe"], ["treat"]]}, {"pos": "prep", "words": [["consist of", "never passive: “consists of,” not “is consisted of”"], ["be composed of"], ["belong to"], ["fall into"], ["divide into"], ["refer to"]]}]}, {"id": "change", "fam": "C", "ask": "Describe change", "name": "Describing change", "desc": "Describe how something increases, decreases, or changes, especially in data.", "example": "Average scores **rose by** 12% after the intervention.", "groups": [{"pos": "intrans", "words": [["decrease"], ["decline"], ["grow"], ["drop"], ["fluctuate"], ["stabilize"], ["remain stable"], ["peak"], ["level off"], ["plateau"], ["double"], ["shift"], ["evolve"], ["fall"], ["increase", "“increased by 10%” (the amount of change) vs “increased to 60%” (the new level)"], ["rise", "no object: “scores rose”; use “raise” with an object"]]}, {"pos": "noun", "words": [["increase"], ["reduce"], ["lower"], ["expand"], ["extend"], ["enhance"], ["improve"], ["strengthen"], ["weaken"], ["diminish"], ["minimize"], ["maximize"], ["modify"], ["alter"], ["adjust"], ["transform"], ["raise", "needs an object: “raised awareness”; without an object, use “rise”"]]}]}, {"id": "illustrate", "fam": "C", "ask": "Illustrate or highlight", "name": "Illustrating and highlighting", "desc": "Point to an example or draw attention to something important.", "example": "This excerpt **illustrates** how students negotiate meaning across languages.", "groups": [{"pos": "noun", "words": [["illustrate"], ["highlight"], ["underscore"], ["underline"], ["reflect"], ["represent"], ["capture"], ["embody"], ["typify"], ["depict"], ["portray"], ["exemplify", "be a typical example of: “Her essay exemplifies this pattern”"]]}, {"pos": "that", "words": [["highlight"], ["underscore"], ["illustrate"], ["show"], ["demonstrate"]]}, {"pos": "wh", "words": [["illustrate"], ["show"], ["demonstrate"], ["reveal"]]}]}, {"id": "structure", "fam": "D", "ask": "Introduce and structure", "name": "Introducing and structuring", "desc": "Tell readers what each part of your paper does.", "example": "This section **outlines** the study design and **turns to** the findings.", "groups": [{"pos": "noun", "words": [["introduce"], ["present"], ["address"], ["examine"], ["consider"], ["review"], ["outline"], ["describe"], ["explore"], ["summarize"], ["discuss", "no “about”: “discusses the findings”"]]}, {"pos": "prep", "words": [["focus on", "not “focus in”"], ["turn to"], ["return to"], ["touch on"], ["dwell on"], ["deal with"], ["concentrate on"], ["move on to"], ["begin with"], ["end with"], ["conclude with"]]}]}, {"id": "conclude", "fam": "D", "ask": "Conclude or recommend", "name": "Concluding and recommending", "desc": "Draw a conclusion, or say what should happen next.", "example": "Based on these findings, we **recommend that** instructors schedule regular conferences.", "groups": [{"pos": "that", "words": [["conclude"], ["propose"], ["suggest"], ["deduce"], ["infer", "the reader draws a conclusion; the writer “implies” it"], ["recommend", "“recommend that instructors be trained,” not “recommend instructors to be trained”"]]}, {"pos": "noun", "words": [["recommend"], ["propose"], ["advocate"], ["call for"], ["warrant"], ["merit"]]}, {"pos": "ing", "words": [["recommend", "“recommend revising,” not “recommend to revise”"], ["suggest", "“suggest revising,” not “suggest to revise”"], ["propose"], ["advocate"], ["consider"]]}, {"pos": "objto", "words": [["urge"], ["encourage"], ["invite"], ["advise"]]}]}, {"id": "upgrade", "fam": "D", "ask": "Upgrade everyday verbs", "name": "Upgrading everyday verbs", "desc": "Replace informal or phrasal verbs with more precise academic ones.", "example": "Instead of “we **looked at** the data,” write “we **examined** the data.”", "groups": [{"pos": "upgrade", "words": [["examine", "look at"], ["investigate", "look into"], ["determine", "find out"], ["discover", "find out"], ["obtain", "get"], ["receive", "get"], ["increase", "go up"], ["decrease", "go down"], ["discuss", "talk about"], ["consider", "think about"], ["demonstrate", "show"], ["require", "need"], ["attempt", "try"], ["assist", "help"], ["facilitate", "make easier"], ["establish", "set up"], ["eliminate", "get rid of"], ["reduce", "cut down"], ["tolerate", "put up with"], ["postpone", "put off"], ["continue", "keep on"], ["clarify", "clear up"], ["constitute", "make up"], ["raise", "bring up"], ["address", "deal with"], ["resolve", "sort out"], ["calculate", "work out"], ["develop", "come up with"], ["encounter", "come across"], ["observe", "see"], ["select", "pick"], ["improve", "make better"], ["exceed", "go over"], ["comprehend", "get"], ["acquire", "pick up"], ["assemble", "put together"], ["maintain", "keep up"], ["predict", "guess"], ["recover", "get back"], ["originate", "come from"]]}]}];
+(function () {
+  const FAMILIES = [
+    { id: 'A', name: 'Reporting what sources say', cls: 'c1', color: '#0F4C81' },
+    { id: 'B', name: 'Describing research', cls: 'c5', color: '#0B6B57' },
+    { id: 'C', name: 'Building an argument', cls: 'c2', color: '#A11F3E' },
+    { id: 'D', name: 'Organizing your writing', cls: 'c4', color: '#4F5096' }
+  ];
+  const POS = {
+    that:    { label: '+ that + clause', tip: 'Follow with “that” and a full clause: “argues that feedback helps.”' },
+    noun:    { label: '+ noun', tip: 'Follow with a noun or noun phrase, with no preposition: “examines the data.”' },
+    as:      { label: 'With “as”', tip: 'Use “as” before the description: “defines literacy as…”, “emerged as a theme.”' },
+    wh:      { label: '+ whether / how / why', tip: 'Follow with a question word and a clause: “examines how students revise.”' },
+    prep:    { label: 'With a fixed preposition', tip: 'Always use the preposition shown: “focus on,” not “focus in.”' },
+    to:      { label: '+ to + verb', tip: 'Follow with “to” and a verb: “aims to identify,” “appears to reflect.”' },
+    objto:   { label: '+ someone/something + to + verb', tip: 'Name who or what, then “to” and a verb: “enables students to revise.”' },
+    ing:     { label: '+ -ing', tip: 'Follow with an -ing verb, not “to”: “recommend revising.”' },
+    intrans: { label: 'No object needed', tip: 'Can end the clause: “Scores increased.” Add “by” or “to” for amounts.' },
+    modal:   { label: 'With may, might, or could', tip: 'Pair with a modal verb to soften the claim.' },
+    upgrade: { label: 'Instead of an everyday verb', tip: 'The everyday verb is shown under each academic verb. Tap to copy the academic one.' }
+  };
+  const STRENGTH = ['report', 'tentative', 'strong'];
+  const byId = {};
+  AV_DATA.forEach((c) => { byId[c.id] = c; c.f = FAMILIES.find((f) => f.id === c.fam); });
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const md = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  const countOf = (c) => c.groups.reduce((n, g) => n + g.words.length, 0);
+
+  $('tw-picker').innerHTML = FAMILIES.map((f) =>
+    '<div class="tw-family reveal"><h4 style="color:' + f.color + '">' + esc(f.name) + '</h4><div class="tw-goals">' +
+    AV_DATA.filter((c) => c.fam === f.id).map((c) =>
+      '<a class="tw-goal" href="#' + c.id + '" style="--c:' + f.color + '"><span class="q">' + esc(c.ask) + '</span><span class="n">' +
+      (c.strength ? c.strength + ' · ' : '') + countOf(c) + ' verbs</span><span class="arrow">→</span></a>').join('') +
+    '</div></div>').join('');
+
+  function showDetail(id, focusWord) {
+    const c = byId[id];
+    if (!c) { $('tw-detail').hidden = true; $('tw-picker').hidden = false; $('tw-label').textContent = 'What do you want to do?'; return; }
+    let html = '<a class="tw-back" href="#">← All goals</a>' +
+      '<article class="course ' + c.f.cls + ' tw-box"><p class="tw-fam">' + esc(c.f.name) + '</p><h3>' + esc(c.ask) + '</h3>' +
+      '<p class="meta">' + esc(c.desc) + '</p><p class="tw-ex">' + md(c.example) + '</p>';
+    if (c.strength) {
+      html += '<div class="av-strength" role="group" aria-label="Strength of reporting verb"><span>Strength</span>' +
+        STRENGTH.map((s) => '<a href="#' + s + '"' + (s === id ? ' class="on" aria-current="true"' : '') + '>' + byId[s].strength + '</a>').join('') + '</div>';
+    }
+    html += '</article>';
+    c.groups.forEach((g) => {
+      const notes = g.pos === 'upgrade' ? [] : g.words.filter((w) => w[1]);
+      html += '<div class="tw-block"><div class="tw-block-head"><h4>' + POS[g.pos].label + '</h4><p>' + POS[g.pos].tip + '</p></div>' +
+        '<div class="tw-words">' + g.words.map((w) => {
+          const hit = focusWord && w[0] === focusWord ? ' hit' : '';
+          if (g.pos === 'upgrade') return '<button type="button" class="tw-word av-up' + hit + '" data-w="' + esc(w[0]) + '">' + esc(w[0]) + '<small>not “' + esc(w[1]) + '”</small></button>';
+          return '<button type="button" class="tw-word' + hit + '" data-w="' + esc(w[0]) + '">' + esc(w[0]) + (w[1] ? '<sup aria-hidden="true">*</sup>' : '') + '</button>';
+        }).join('') + '</div>' +
+        (notes.length ? '<ul class="tw-notes">' + notes.map((w) => '<li><strong>' + esc(w[0]) + ':</strong> ' + esc(cap(w[1])) + '</li>').join('') + '</ul>' : '') +
+        '</div>';
+    });
+    $('tw-detail').innerHTML = html;
+    $('tw-detail').hidden = false; $('tw-picker').hidden = true;
+    $('tw-label').textContent = c.name;
+  }
+
+  function route() {
+    const id = decodeURIComponent(location.hash.slice(1)).split('|');
+    showDetail(id[0], id[1]);
+    if (id[0] && byId[id[0]]) {
+      const top = $('browse').getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top, behavior: 'smooth' });
+      const hit = document.querySelector('.tw-word.hit'); if (hit) setTimeout(() => hit.focus({ preventScroll: true }), 400);
+    }
+  }
+  window.addEventListener('hashchange', route);
+
+  const toast = $('tw-toast'); let tt;
+  function say(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1600); }
+  $('tw-detail').addEventListener('click', async (e) => {
+    const b = e.target.closest('.tw-word'); if (!b) return;
+    try { await navigator.clipboard.writeText(b.dataset.w); say('Copied “' + b.dataset.w + '”'); }
+    catch (err) { say('Couldn’t copy. Select the word instead.'); }
+  });
+
+  const norm = (s) => s.toLowerCase().replace(/[’']/g, "'");
+  $('tw-q').addEventListener('input', (e) => {
+    const q = norm(e.target.value.trim()); const box = $('tw-search-results');
+    if (q.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
+    const hits = [];
+    AV_DATA.forEach((c) => c.groups.forEach((g) => g.words.forEach((w) => {
+      if (norm(w[0]).includes(q) || (g.pos === 'upgrade' && norm(w[1]).includes(q))) hits.push({ c, g, w });
+    })));
+    hits.sort((a, b) => (norm(a.w[0]).startsWith(q) ? 0 : 1) - (norm(b.w[0]).startsWith(q) ? 0 : 1));
+    box.hidden = false;
+    box.innerHTML = hits.length ? hits.slice(0, 12).map((h) =>
+      '<a class="tw-srow" href="#' + h.c.id + '|' + encodeURIComponent(h.w[0]) + '"><span class="w">' + esc(h.w[0]) +
+      (h.g.pos === 'upgrade' ? ' <em class="av-inst">instead of “' + esc(h.w[1]) + '”</em>' : '') + '</span><span class="m"><i style="background:' + h.c.f.color + '"></i>' +
+      esc(h.c.ask) + ' · ' + POS[h.g.pos].label + '</span></a>').join('') +
+      (hits.length > 12 ? '<p class="tw-more">' + (hits.length - 12) + ' more. Keep typing to narrow it down.</p>' : '')
+      : '<p class="tw-more">No matches. Try another verb, or choose a goal below.</p>';
+  });
+  $('tw-search-results').addEventListener('click', (e) => { if (e.target.closest('.tw-srow')) { $('tw-q').value = ''; $('tw-search-results').hidden = true; } });
+
+  route();
+})();
+</script>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> M Enam Ull Hassan · Boston, MA</div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

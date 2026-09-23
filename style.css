@@ -557,3 +557,15 @@
     background-size: 22px 22px;
     background-position: 0 0;
   }
+
+  /* ---------- Academic Verb Finder ---------- */
+  .av-strength { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
+  .av-strength span { font-size: var(--fs-label); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #FFBE98; margin-right: 4px; }
+  .av-strength a { font-size: 14px; font-weight: 500; padding: 5px 14px; border-radius: 999px; background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.2); }
+  .av-strength a:hover { background: rgba(255,255,255,.22); }
+  .av-strength a.on { background: #fff; color: var(--classic-blue); border-color: #fff; }
+  .tw-word.av-up { flex-direction: column; align-items: flex-start; gap: 0; border-radius: 12px; padding: 6px 14px 7px; line-height: 1.3; }
+  .tw-word.av-up small { background: none; padding: 0; font-size: 12px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--muted); }
+  .tw-word.av-up:hover small, .tw-word.av-up.hit small { color: rgba(255,255,255,.85); }
+  .av-inst { font-family: var(--sans); font-style: normal; font-size: var(--fs-meta); font-weight: 400; color: var(--muted); }
+  .tw-gex .no { color: var(--muted); font-style: normal; }
