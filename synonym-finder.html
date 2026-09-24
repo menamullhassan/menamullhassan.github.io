@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synonym Finder | M Enam Ull Hassan</title>
+<meta name="description" content="Type any English word to find its synonyms and alternative phrases, grouped by meaning. Free and works in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=11">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan<span>.</span></a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal"><a class="crumb" href="resources.html">Resources</a> · Writing tool</p>
+    <h1 class="reveal">Synonym <em>Finder</em></h1>
+    <p class="lead reveal">Type any English word and press Enter to see its synonyms and alternative phrases, grouped by meaning. Tap a word to copy it.</p>
+  </div>
+
+  <section id="finder">
+    <div class="wrap sec-head">
+      <div class="sec-label">Find synonyms</div>
+      <div>
+        <form class="sy-form reveal" id="sy-form" autocomplete="off">
+          <label class="tw-search sy-search">
+            <span class="visually-hidden">Type a word</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+            <input id="sy-q" type="search" enterkeyhint="search" placeholder="Type a word, e.g. important" spellcheck="false" autocapitalize="off">
+            <button type="submit" class="sy-go-btn">Find</button>
+          </label>
+        </form>
+        <p class="sy-status" id="sy-status" aria-live="polite"></p>
+        <div id="sy-out" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about-data">
+    <div class="wrap sec-head">
+      <div class="sec-label">Good to know</div>
+      <div class="tw-guide-grid">
+        <div class="card reveal"><div class="deg">Check the meaning</div><p class="inst">Synonyms are grouped by meaning. Pick the group that matches your sentence before choosing a word.</p></div>
+        <div class="card reveal"><div class="deg">Check the fit</div><p class="inst">Few synonyms are perfect swaps. Words can differ in tone, formality, and grammar, so try each one in your sentence.</p></div>
+        <div class="card reveal"><div class="deg">Explore further</div><p class="inst">Tap the small arrow next to any word to look up <em>its</em> synonyms.</p></div>
+      </div>
+      <p class="sy-credit">Word data: <a href="https://wordnet.princeton.edu/" rel="noopener">WordNet 3.0</a>, © 2006 Princeton University, used under the <a href="https://wordnet.princeton.edu/license-and-commercial-use" rel="noopener">WordNet license</a>.</p>
+    </div>
+  </section>
+
+  <div class="tw-toast" id="tw-toast" role="status" aria-live="polite"></div>
+
+<style>
+  .sy-search { padding-right: 6px; }
+  .sy-search input { font-size: 18px; }
+  .sy-go-btn { font: inherit; font-size: 15px; font-weight: 600; color: #fff; background: var(--accent); border: 0; border-radius: 999px; padding: 10px 20px; cursor: pointer; }
+  .sy-go-btn:hover { filter: brightness(1.1); }
+  .sy-status { min-height: 1.4em; margin: 10px 4px 0; font-size: var(--fs-meta); color: var(--muted); }
+  .sy-status b { color: var(--ink); font-weight: 600; }
+  .sy-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin: 18px 0 6px; }
+  .sy-head h2 { margin: 0; font-size: var(--fs-h2); }
+  .sy-note { font-size: var(--fs-meta); color: var(--muted); }
+  .sy-block { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; margin-top: 16px; }
+  .sy-block > h3 { margin: 0 0 2px; font-size: var(--fs-h4); font-family: var(--sans); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: var(--fs-label); color: var(--label); }
+  .sy-sub { margin: 16px 0 0; font-size: var(--fs-label); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .sy-chip { display: inline-flex; align-items: stretch; border-radius: 999px; background: var(--accent-soft); }
+  .sy-chip .tw-word { background: transparent; border-radius: 999px 0 0 999px; padding-right: 8px; }
+  .sy-chip .tw-word:hover { background: var(--accent); color: #fff; }
+  .sy-look { font: inherit; border: 0; background: transparent; color: var(--accent); border-radius: 0 999px 999px 0; padding: 0 12px 0 6px; cursor: pointer; display: grid; place-items: center; border-left: 1px solid rgba(15,76,129,.15); }
+  .sy-look svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .sy-look:hover { background: var(--accent); color: #fff; }
+  .sy-look:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .sy-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .sy-filter { font: inherit; font-size: 14px; font-weight: 500; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+  .sy-filter.on { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .sy-filter span { opacity: .6; margin-left: 4px; }
+  .sy-sense { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--pc, var(--accent)); border-radius: 14px; padding: 20px 22px; margin-top: 12px; }
+  .sy-sense[data-pos="n"] { --pc: var(--classic-blue); }
+  .sy-sense[data-pos="v"] { --pc: #0B6B57; }
+  .sy-sense[data-pos="a"] { --pc: #A11F3E; }
+  .sy-sense[data-pos="r"] { --pc: #4F5096; }
+  .sy-pos { font-size: var(--fs-label); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--pc); }
+  .sy-def { font-family: var(--serif); font-size: 18px; line-height: 1.4; margin-top: 4px; }
+  .sy-ex { font-style: italic; color: var(--muted); margin-top: 4px; font-size: var(--fs-body); }
+  .sy-sense .tw-words { margin-top: 10px; }
+  .sy-sense .sy-sub { margin-top: 12px; }
+  .sy-more { font: inherit; font-size: 14px; font-weight: 500; margin-top: 14px; padding: 8px 16px; border-radius: 999px; border: 1px dashed var(--line); background: transparent; color: var(--accent); cursor: pointer; }
+  .sy-none { color: var(--muted); font-size: var(--fs-body); margin: 6px 0 0; }
+  .sy-credit { grid-column: 2; margin-top: 18px; font-size: 13px; color: var(--muted); }
+  .sy-credit a { color: var(--accent); }
+  .sy-empty { margin-top: 18px; }
+  @media (max-width: 720px) { .sy-credit { grid-column: auto; } .sy-block { padding: 18px; } .sy-sense { padding: 16px 16px; } }
+  @media (prefers-color-scheme: dark) {
+    .sy-look { border-left-color: rgba(255,255,255,.12); }
+    .sy-sense[data-pos="v"] { --pc: #3fb394; } .sy-sense[data-pos="a"] { --pc: #ef7d98; } .sy-sense[data-pos="r"] { --pc: #9d9ee0; } .sy-sense[data-pos="n"] { --pc: #7fb0e0; }
+  }
+</style>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const form = $('sy-form'), q = $('sy-q'), statusEl = $('sy-status'), out = $('sy-out');
+  const POSNAME = { n: 'noun', v: 'verb', a: 'adjective', r: 'adverb' };
+  const POSPLURAL = { n: 'Nouns', v: 'Verbs', a: 'Adjectives', r: 'Adverbs' };
+  let S = null, IDX = null, EXC = null, KEYS_BY_LETTER = null, CNT = null;
+  const freq = (w) => (CNT && CNT.get(w.toLowerCase())) || 0;
+  const tier = (w) => { const f = freq(w); return f >= 3 ? 0 : f >= 1 ? 1 : 2; };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // ---------- load the dictionary once ----------
+  statusEl.textContent = 'Loading the dictionary…';
+  const ready = fetch('thesaurus.json').then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }).then((d) => {
+    EXC = d.x; CNT = new Map(Object.entries(d.c || {})); IDX = new Map(); S = new Array(d.s.length);
+    d.s.forEach((row, i) => {
+      const f = row.split('\t');
+      const lem = f[1].split('|').map((x) => { const k = x.lastIndexOf(':'); return k > 0 && /^\d+$/.test(x.slice(k + 1)) ? [x.slice(0, k), +x.slice(k + 1)] : [x, 1]; });
+      S[i] = { pos: f[0], lem, def: f[2], ex: f[3], sim: f[4], up: f[5], ant: f[6] };
+      lem.forEach(([w, sn]) => { const key = w.toLowerCase(); let a = IDX.get(key); if (!a) IDX.set(key, a = []); a.push([i, sn]); });
+    });
+    statusEl.textContent = '';
+    return true;
+  }).catch(() => { statusEl.innerHTML = 'Sorry, the dictionary couldn’t be loaded. Please refresh the page.'; return false; });
+
+  const ids = (s) => s ? s.split(',').map((x) => parseInt(x, 36)) : [];
+  const words = (i) => S[i].lem.map((l) => l[0]);
+
+  // ---------- turning what was typed into a dictionary word ----------
+  const RULES = { n: [['s', ''], ['ses', 's'], ['xes', 'x'], ['zes', 'z'], ['ches', 'ch'], ['shes', 'sh'], ['men', 'man'], ['ies', 'y']],
+    v: [['s', ''], ['ies', 'y'], ['es', 'e'], ['es', ''], ['ed', 'e'], ['ed', ''], ['ing', 'e'], ['ing', '']],
+    a: [['er', ''], ['est', ''], ['er', 'e'], ['est', 'e']] };
+  function lookupKey(raw) {
+    const w = raw.toLowerCase().trim().replace(/\s+/g, ' ').replace(/[’']/g, "'");
+    if (!w) return null;
+    if (IDX.has(w)) return { key: w };
+    const cands = [w.replace(/-/g, ' '), w.replace(/ /g, '-'), w.replace(/[- ]/g, '')];
+    for (const c of cands) if (IDX.has(c)) return { key: c };
+    if (EXC[w]) { const b = EXC[w].split('|').find((x) => IDX.has(x)); if (b) return { key: b, from: w }; }
+    for (const pos of ['v', 'n', 'a']) for (const [suf, rep] of RULES[pos]) {
+      if (w.endsWith(suf) && w.length > suf.length + 1) { const b = w.slice(0, -suf.length) + rep; if (IDX.has(b)) return { key: b, from: w }; }
+    }
+    // doubled consonant: running → run, stopped → stop, bigger → big
+    const m = w.match(/^(.*([bdgklmnprt]))\2(ing|ed|er|est)$/); if (m && IDX.has(m[1])) return { key: m[1], from: w };
+    return null;
+  }
+  function suggestions(w) {
+    w = w.toLowerCase().trim(); if (!w) return [];
+    if (!KEYS_BY_LETTER) { KEYS_BY_LETTER = {}; for (const k of IDX.keys()) { if (/[ ]/.test(k)) continue; (KEYS_BY_LETTER[k[0]] = KEYS_BY_LETTER[k[0]] || []).push(k); } }
+    const pool = (KEYS_BY_LETTER[w[0]] || []).filter((k) => Math.abs(k.length - w.length) <= 2);
+    const d = (a, b) => { const m = a.length, n = b.length; let prev = Array.from({ length: n + 1 }, (_, j) => j); let pp = prev;
+      for (let i = 1; i <= m; i++) { const cur = [i]; for (let j = 1; j <= n; j++) { cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+        if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) cur[j] = Math.min(cur[j], pp[j - 2] + 1); }
+        pp = prev; prev = cur; } return prev[n]; };
+    return pool.map((k) => [k, d(w, k), freq(k)]).filter((x) => x[1] <= 2).sort((a, b) => a[1] - b[1] || b[2] - a[2]).slice(0, 6).map((x) => x[0]);
+  }
+
+  // ---------- building the results ----------
+  const look = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M19.5 19.5l-4.5-4.5"/></svg>';
+  function chip(w) {
+    return '<span class="sy-chip"><button type="button" class="tw-word" data-copy="' + esc(w) + '" title="Copy “' + esc(w) + '”">' + esc(w) + '</button>' +
+      '<button type="button" class="sy-look" data-look="' + esc(w) + '" aria-label="Find synonyms of ' + esc(w) + '" title="Find synonyms of “' + esc(w) + '”">' + look + '</button></span>';
+  }
+  const chips = (list) => '<div class="tw-words">' + list.map(chip).join('') + '</div>';
+  function gather(idList, self, limit) {
+    const seen = new Set([self]), out = [];
+    idList.forEach((i) => words(i).forEach((w) => { const k = w.toLowerCase(); if (!seen.has(k)) { seen.add(k); out.push(w); } }));
+    return limit ? out.slice(0, limit) : out;
+  }
+  let current = null, filter = 'all';
+  function show(word, pushHash) {
+    if (!IDX) { ready.then((ok) => ok && show(word, pushHash)); return; }
+    const raw = word.trim(); q.value = raw;
+    if (!raw) { out.innerHTML = ''; statusEl.textContent = ''; return; }
+    const hit = lookupKey(raw);
+    if (pushHash !== false) { try { history.replaceState(null, '', '#' + encodeURIComponent(raw)); } catch (e) {} }
+    if (!hit) {
+      const sug = suggestions(raw);
+      statusEl.innerHTML = '';
+      out.innerHTML = '<div class="sy-block sy-empty"><h3>No match</h3><p class="sy-none">“' + esc(raw) + '” isn’t in the dictionary. Check the spelling, or try the base form of the word (for example <i>decide</i> instead of <i>decisively</i>).</p>' +
+        (sug.length ? '<p class="sy-sub">Did you mean</p>' + chips(sug) : '') + '</div>';
+      return;
+    }
+    const key = hit.key;
+    const senses = IDX.get(key).slice();
+    // parts of speech: the one with the most meanings first
+    const count = {}; senses.forEach(([i]) => { const p = S[i].pos; count[p] = (count[p] || 0) + 1; });
+    const posOrder = Object.keys(count).sort((a, b) => count[b] - count[a] || 'nvar'.indexOf(a) - 'nvar'.indexOf(b));
+    senses.sort((x, y) => posOrder.indexOf(S[x[0]].pos) - posOrder.indexOf(S[y[0]].pos) || x[1] - y[1]);
+    current = { key, senses, posOrder, from: hit.from };
+    filter = 'all';
+    render();
+    statusEl.innerHTML = hit.from ? 'Showing results for <b>' + esc(key) + '</b>, the base form of “' + esc(hit.from) + '”.' : '';
+  }
+  function render() {
+    const { key, senses, posOrder } = current;
+    // quick list: synonyms and similar words across all meanings, most common meanings first
+    const quick = [], seen = new Set([key]);
+    const add = (w) => { const k = w.toLowerCase(); if (!seen.has(k)) { seen.add(k); quick.push(w); } };
+    senses.forEach(([i]) => words(i).forEach(add));
+    senses.forEach(([i]) => ids(S[i].sim).forEach((j) => words(j).forEach(add)));
+    // common words first (keeping the order of meanings within each band), rare ones last
+    const ranked = quick.map((w, i) => [w, tier(w), i]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).map((x) => x[0]);
+    const single = ranked.filter((w) => !/[ ]/.test(w)), phrases = ranked.filter((w) => / /.test(w));
+    let h = '<div class="sy-head"><h2>' + esc(key) + '</h2><span class="sy-note">' + senses.length + (senses.length === 1 ? ' meaning' : ' meanings') + ' · ' + posOrder.map((p) => POSNAME[p]).join(', ') + '</span></div>';
+    h += '<div class="sy-block"><h3>Synonyms</h3>';
+    const QN = 20;
+    if (single.length) h += chips(single.slice(0, QN)) + (single.length > QN ? '<div class="sy-rest" hidden>' + chips(single.slice(QN)) + '</div><button type="button" class="sy-more" data-rest>Show ' + (single.length - QN) + ' less common words</button>' : '');
+    else h += '<p class="sy-none">No single-word synonyms. Try the meanings below for related words.</p>';
+    if (phrases.length) h += '<p class="sy-sub">Alternative phrases</p>' + chips(phrases.slice(0, 16));
+    h += '</div>';
+    if (posOrder.length > 1) {
+      h += '<div class="sy-filters" role="group" aria-label="Filter by part of speech"><button type="button" class="sy-filter' + (filter === 'all' ? ' on' : '') + '" data-filter="all">All meanings</button>' +
+        posOrder.map((p) => '<button type="button" class="sy-filter' + (filter === p ? ' on' : '') + '" data-filter="' + p + '">' + POSPLURAL[p] + '<span>' + senses.filter(([i]) => S[i].pos === p).length + '</span></button>').join('') + '</div>';
+    } else h += '<div class="sy-filters"></div>';
+    const list = senses.filter(([i]) => filter === 'all' || S[i].pos === filter);
+    const LIMIT = 8;
+    list.forEach(([i], n) => {
+      const s = S[i];
+      const byFreq = (a) => a.map((w, k) => [w, tier(w), k]).sort((x, y) => x[1] - y[1] || x[2] - y[2]).map((x) => x[0]);
+      const syn = byFreq(gather([i], key).filter((w) => w.toLowerCase() !== key));
+      const sim = byFreq(gather(ids(s.sim), key)).slice(0, 14), ant = gather(ids(s.ant), key, 8), up = gather(ids(s.up), key, 6);
+      h += '<article class="sy-sense" data-pos="' + s.pos + '"' + (n >= LIMIT ? ' hidden data-extra' : '') + '>' +
+        '<div class="sy-pos">' + POSNAME[s.pos] + '</div>' +
+        (s.def ? '<div class="sy-def">' + esc(s.def) + '</div>' : '') +
+        (s.ex ? '<div class="sy-ex">“' + esc(s.ex) + '”</div>' : '') +
+        (syn.length ? '<p class="sy-sub">Same meaning</p>' + chips(syn) : '') +
+        (sim.length ? '<p class="sy-sub">Similar</p>' + chips(sim) : '') +
+        (ant.length ? '<p class="sy-sub">Opposite</p>' + chips(ant) : '') +
+        (!syn.length && !sim.length && up.length ? '<p class="sy-sub">More general</p>' + chips(up) : '') +
+        (!syn.length && !sim.length && !up.length && !ant.length ? '<p class="sy-none">No close alternatives for this meaning.</p>' : '') +
+        '</article>';
+    });
+    if (list.length > LIMIT) h += '<button type="button" class="sy-more" data-more>Show ' + (list.length - LIMIT) + ' more meanings</button>';
+    out.innerHTML = h;
+  }
+
+  // ---------- events ----------
+  form.addEventListener('submit', (e) => { e.preventDefault(); show(q.value); q.blur(); });
+  const toastEl = $('tw-toast'); let tt;
+  function toast(m) { toastEl.textContent = m; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toastEl.classList.remove('show'), 1800); }
+  out.addEventListener('click', async (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.copy) {
+      try { await navigator.clipboard.writeText(b.dataset.copy); toast('Copied “' + b.dataset.copy + '”'); }
+      catch (err) { toast('“' + b.dataset.copy + '”'); }
+    } else if (b.dataset.look) { show(b.dataset.look); window.scrollTo({ top: $('finder').offsetTop - 80, behavior: 'smooth' }); }
+    else if (b.dataset.filter) { filter = b.dataset.filter; render(); }
+    else if (b.hasAttribute('data-rest')) { b.previousElementSibling.hidden = false; b.remove(); }
+    else if (b.hasAttribute('data-more')) { out.querySelectorAll('[data-extra]').forEach((x) => x.hidden = false); b.remove(); }
+  });
+  const fromHash = () => { const w = decodeURIComponent(location.hash.slice(1) || ''); if (w) show(w, false); };
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+  window.__sy = { show, lookupKey: (w) => lookupKey(w), ready };
+})();
+</script>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> M Enam Ull Hassan · Boston, MA</div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
