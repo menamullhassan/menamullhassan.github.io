@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syntax Tree Generator | M Enam Ull Hassan</title>
+<meta name="description" content="Type an English sentence to see its phrase structure tree, with every reading of ambiguous sentences. Edit trees and download them as high-resolution images.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=11">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan<span>.</span></a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal"><a class="crumb" href="resources.html">Resources</a> · Linguistics tool</p>
+    <h1 class="reveal">Syntax Tree <em>Generator</em></h1>
+    <p class="lead reveal">Type an English sentence to see its phrase structure tree. If the sentence can be read in more than one way, you'll see every reading.</p>
+  </div>
+
+  <section id="tree">
+    <div class="wrap sec-head">
+      <div class="sec-label">Your sentence</div>
+      <div>
+        <form class="st-form reveal" id="st-form" autocomplete="off">
+          <label class="tw-search st-search">
+            <span class="visually-hidden">Type a sentence</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v5M12 8L6 14M12 8l6 6M6 14v4M18 14v4"/><circle cx="12" cy="3" r="1.5"/></svg>
+            <input id="st-q" type="text" enterkeyhint="go" placeholder="Type a sentence, e.g. The dog chased the cat." spellcheck="true">
+            <button type="submit" class="st-go">Draw tree</button>
+          </label>
+        </form>
+        <div class="st-examples reveal" id="st-examples" aria-label="Example sentences">
+          <span>Try:</span>
+          <button type="button">She gave him a book.</button>
+          <button type="button">I saw the man with the telescope.</button>
+          <button type="button">The student who won the prize left early.</button>
+          <button type="button">What did you see?</button>
+          <button type="button">The book was written by a famous author.</button>
+          <button type="button">I think that she is right.</button>
+        </div>
+        <p class="st-status" id="st-status" aria-live="polite"></p>
+        <div id="st-out"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="conventions">
+    <div class="wrap sec-head">
+      <div class="sec-label">How trees are drawn</div>
+      <div>
+        <p class="st-intro reveal">Trees use basic phrase structure. Different textbooks draw some structures differently, so here are the conventions this tool follows.</p>
+        <div class="tw-guide-grid st-conv">
+          <div class="card reveal"><div class="deg">Clauses</div><p class="inst">S → NP (Aux) (Neg) VP. The first auxiliary sits under S; any further auxiliaries head their own VP: <em>might [have [left]]</em>.</p></div>
+          <div class="card reveal"><div class="deg">“be”</div><p class="inst">As the main verb (<em>is happy</em>), <em>be</em> is V. Before a verb (<em>is reading</em>, <em>was written</em>), it is Aux.</p></div>
+          <div class="card reveal"><div class="deg">Embedded clauses</div><p class="inst">Clauses introduced by <em>that, whether, because, when…</em> are CP → C S. Wh-questions and relative clauses are also CPs.</p></div>
+          <div class="card reveal"><div class="deg">Infinitives</div><p class="inst"><em>to</em> is labeled Inf: [VP [Inf to] [VP leave]]. Gerunds are VPs inside an NP when they are subjects.</p></div>
+          <div class="card reveal"><div class="deg">Phrasal verbs</div><p class="inst">Particles are labeled Part: <em>gave [Part up]</em>, <em>turn [Part off] the lights</em>.</p></div>
+          <div class="card reveal"><div class="deg">Not shown</div><p class="inst">Traces, empty categories, and X-bar levels (N′, V′) are not drawn. Punctuation is ignored.</p></div>
+        </div>
+        <div class="st-legend reveal">
+          <h4>Labels</h4>
+          <dl>
+            <div><dt>S</dt><dd>sentence / clause</dd></div><div><dt>NP</dt><dd>noun phrase</dd></div><div><dt>VP</dt><dd>verb phrase</dd></div><div><dt>PP</dt><dd>prepositional phrase</dd></div>
+            <div><dt>AdjP</dt><dd>adjective phrase</dd></div><div><dt>AdvP</dt><dd>adverb phrase</dd></div><div><dt>CP</dt><dd>complementizer phrase</dd></div><div><dt>Det</dt><dd>determiner</dd></div>
+            <div><dt>N</dt><dd>noun</dd></div><div><dt>Pro</dt><dd>pronoun</dd></div><div><dt>V</dt><dd>verb</dd></div><div><dt>Aux</dt><dd>auxiliary / modal</dd></div>
+            <div><dt>Adj</dt><dd>adjective</dd></div><div><dt>Adv</dt><dd>adverb</dd></div><div><dt>P</dt><dd>preposition</dd></div><div><dt>C</dt><dd>complementizer</dd></div>
+            <div><dt>Conj</dt><dd>conjunction</dd></div><div><dt>Deg</dt><dd>degree word (<em>very</em>)</dd></div><div><dt>Num</dt><dd>number</dd></div><div><dt>Neg</dt><dd>negation</dd></div>
+            <div><dt>Inf</dt><dd>infinitive <em>to</em></dd></div><div><dt>Part</dt><dd>particle</dd></div><div><dt>Poss</dt><dd>possessive <em>'s</em></dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="accuracy">
+    <div class="wrap sec-head">
+      <div class="sec-label">How accurate is it?</div>
+      <div>
+        <div class="card reveal st-acc">
+          <p>The trees are generated automatically, so <strong>always check them</strong>. The tool was tested against 233 hand-checked trees of sentences like those in introductory linguistics and grammar courses. On test sentences it had not seen before, it produced exactly the right tree (and every reading for ambiguous sentences) about <strong>95% of the time</strong>.</p>
+          <p>It is most reliable for short and medium-length sentences. Long sentences with many phrases are more likely to contain a mistake, most often in where a prepositional phrase attaches (<em>workshop on writing</em> vs. <em>attended … on Monday</em>). If a tree is wrong, choose <b>Edit tree</b> and fix the brackets.</p>
+          <p class="st-credit">Word information: <a href="https://wordnet.princeton.edu/" rel="noopener">WordNet 3.0</a>, © 2006 Princeton University, used under the <a href="https://wordnet.princeton.edu/license-and-commercial-use" rel="noopener">WordNet license</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tw-toast" id="tw-toast" role="status" aria-live="polite"></div>
+
+<style>
+  #tree .sec-head > div, #conventions .sec-head > div, #accuracy .sec-head > div { min-width: 0; }
+  .st-card { max-width: 100%; }
+  .st-scroll { margin: 0; padding: 0 18px 8px; font-size: 13px; color: var(--muted); }
+  .st-search { padding-right: 6px; }
+  .st-search input { font-size: 17px; }
+  .st-search svg { stroke-linejoin: round; }
+  .st-go { font: inherit; font-size: 15px; font-weight: 600; color: #fff; background: var(--accent); border: 0; border-radius: 999px; padding: 10px 20px; cursor: pointer; white-space: nowrap; }
+  .st-go:hover { filter: brightness(1.1); }
+  .st-examples { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 14px; }
+  .st-examples span { font-size: var(--fs-meta); color: var(--muted); margin-right: 2px; }
+  .st-examples button { font: inherit; font-size: 13.5px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+  .st-examples button:hover { border-color: var(--accent); color: var(--accent); }
+  .st-status { min-height: 1.4em; margin: 12px 4px 0; font-size: var(--fs-meta); color: var(--muted); }
+  .st-card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; margin-top: 8px; overflow: hidden; }
+  .st-amb { padding: 16px 22px; border-bottom: 1px solid var(--line); background: #FBE3D3; color: #3a2016; }
+  .st-amb b { font-weight: 600; }
+  .st-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .st-tab { font: inherit; font-size: 14px; font-weight: 500; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(58,32,22,.25); background: rgba(255,255,255,.6); color: #3a2016; cursor: pointer; }
+  .st-tab.on { background: #3a2016; color: #fff; border-color: #3a2016; }
+  .st-why { margin-top: 10px; font-size: var(--fs-meta); }
+  .st-canvas { overflow-x: auto; padding: 22px 16px 12px; -webkit-overflow-scrolling: touch; }
+  .st-canvas svg { display: block; margin: 0 auto; }
+  .st-actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 18px 16px; border-top: 1px solid var(--line); }
+  .st-btn { font: inherit; font-size: 14px; font-weight: 500; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+  .st-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .st-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .st-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .st-btn.primary:hover { color: #fff; filter: brightness(1.1); }
+  .st-edit { padding: 0 18px 18px; }
+  .st-edit textarea { width: 100%; min-height: 110px; font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); resize: vertical; box-sizing: border-box; }
+  .st-edit textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .st-edit p { font-size: var(--fs-meta); color: var(--muted); margin: 8px 2px; }
+  .st-err { color: var(--viva-magenta); font-size: var(--fs-meta); margin: 8px 2px 0; min-height: 1.2em; }
+  .st-none { padding: 22px; }
+  .st-none h3 { margin: 0 0 6px; font-size: var(--fs-h4); }
+  .st-none ul { margin: 8px 0 0; padding-left: 20px; color: var(--muted); }
+  .st-intro { margin: 0 0 16px; color: var(--muted); }
+  .st-legend { margin-top: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; }
+  .st-legend h4 { margin: 0 0 10px; font-size: var(--fs-label); letter-spacing: .12em; text-transform: uppercase; color: var(--label); }
+  .st-legend dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px 18px; margin: 0; }
+  .st-legend dl div { display: flex; gap: 10px; align-items: baseline; }
+  .st-legend dt { font-weight: 600; color: var(--accent); min-width: 42px; font-size: 14px; }
+  .st-legend dd { margin: 0; font-size: 14px; color: var(--muted); }
+  .st-acc p { margin: 0 0 10px; line-height: 1.6; }
+  .st-acc p:last-child { margin-bottom: 0; }
+  .st-credit { font-size: 13px; color: var(--muted); }
+  .st-credit a { color: var(--accent); }
+  .st-tree .ph { fill: var(--classic-blue); font: 600 15px Inter, system-ui, sans-serif; }
+  .st-tree .pt { fill: #A11F3E; font: 600 14px Inter, system-ui, sans-serif; }
+  .st-tree .wd { fill: var(--ink); font: 400 17px Fraunces, Georgia, serif; }
+  .st-tree line { stroke: #9a948a; stroke-width: 1.3; }
+  @media (max-width: 640px) { .st-go { padding: 10px 14px; } .st-amb { padding: 14px 16px; } }
+  @media (prefers-color-scheme: dark) {
+    .st-amb { background: #3a2a22; color: #f3e3d8; }
+    .st-tab { color: #f3e3d8; background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.2); }
+    .st-tab.on { background: #f3e3d8; color: #3a2016; }
+    .st-tree .ph { fill: #8fb8e0; } .st-tree .pt { fill: #ef7d98; } .st-tree line { stroke: #6e6a63; }
+  }
+</style>
+<script>
+// Syntax Tree parser: basic phrase structure (S, NP, VP, PP, AdjP, AdvP, CP).
+// A hand-written grammar + a k-best chart parser. Lower cost = more likely analysis.
+(function (root) {
+  'use strict';
+
+  // ---------------- closed-class words ----------------
+  const CLOSED = {};
+  const add = (words, pt, cost) => words.split(' ').forEach((w) => { (CLOSED[w] = CLOSED[w] || []).push([pt, cost || 0]); });
+  add('the a an every each either neither no', 'Det');
+  add('this that these those', 'Det', 0.3);
+  add('my your his her its our their', 'Det');
+  add('some any many much few several all both enough more most less least another other', 'Det', 0.2);
+  add('all both half', 'Predet', 0.1);
+  add('what which whose', 'DetWh', 0.4);
+  add('one two three four five six seven eight nine ten eleven twelve twenty thirty forty fifty hundred thousand million', 'Num', 0.3);
+  add('i he she we they', 'ProNom');
+  add('me him us them', 'ProAcc');
+  add('her', 'ProAcc', 0.4);
+  add('you it', 'ProAny');
+  add('this that these those', 'ProAny', 0.9);
+  add('myself yourself himself herself itself ourselves yourselves themselves', 'ProAcc');
+  add('mine yours hers ours theirs', 'ProAny');
+  add('someone somebody something everyone everybody everything anyone anybody anything nobody nothing none', 'ProAny');
+  add('some many much few several all both each either neither more most one', 'ProQ', 0.8);
+  add('there', 'ProThere', 0.2);
+  add('who whom what which', 'ProWh');
+  add('who which whom', 'ProRel', 0.1);
+  add('that', 'RelThat', 0.3);
+  add('where when why how', 'AdvWh');
+  add('where when', 'AdvRel', 0.3);
+  add('how', 'DegHow', 0.3);
+  add('very too so quite rather extremely really fairly pretty somewhat more most less least as', 'Deg', 0.2);
+  add('and or but nor', 'Conj');
+  add('yet so', 'Conj', 1.2);
+  add('that', 'C', 0.2);
+  add('whether if', 'CWh');
+  add('because although though while whereas unless if since until before after when once as whenever wherever', 'Csub', 0.3);
+  add('not', 'Neg');
+  add('please', 'Adv');
+  add('week month year day night morning afternoon evening weekend semester summer winter spring autumn fall hour minute decade century moment time', 'NT', 0.2);
+  add('today tonight yesterday tomorrow', 'NT', 0.1);
+  add('noon midnight dawn dusk monday tuesday wednesday thursday friday saturday sunday january february march april june july august september october november december', 'NT', 0.1);
+  add('never', 'Neg', 1.5);
+  add('to', 'Inf', 0);
+  add("'s '", 'Poss', 0.2);
+  add('to', 'P', 0.4);
+  add('in on at by for with about against between into through during before after above below from up down of off over under across behind beyond near since until without within among around along toward towards upon despite except like via onto inside outside throughout beside besides past per amid than out', 'P', 0.1);
+  // auxiliaries
+  add("can could will would shall should may might must 'll 'd can't cannot couldn't won't wouldn't shouldn't mustn't mightn't shan't needn't", 'Mod');
+  add("do does did don't doesn't didn't", 'DoF');
+  add("has have had 've 'd hasn't haven't hadn't", 'HaveF', 0.1);
+  add("'s", 'HaveF', 1.2);
+  add("am is are was were 'm 're 's isn't aren't wasn't weren't ain't", 'BeF', 0.1);
+  add('have', 'HaveB', 0.1); add('be', 'BeB'); add('been', 'BeEn'); add('being', 'BeIng'); add('having', 'HaveIng', 0.3);
+  // copula "be" used as the main verb
+  add("am is are was were 'm 're 's isn't aren't wasn't weren't ain't", 'VBeF', 0.1);
+  add('be', 'VBeB'); add('been', 'VBeEn'); add('being', 'VBeIng', 0.3);
+  // words that also keep their ordinary (dictionary) readings
+  const OPEN_TOO = new Set(['noon', 'midnight', 'dawn', 'dusk', 'march', 'may', 'august', 'please', 'week', 'month', 'year', 'day', 'night', 'morning', 'afternoon', 'evening', 'weekend', 'semester', 'summer', 'winter', 'spring', 'autumn', 'fall', 'hour', 'minute', 'decade', 'century', 'moment', 'time', 'today', 'tonight', 'yesterday', 'tomorrow', 'like', 'well', 'round', 'last', 'next', 'second', 'past', 'near', 'out', 'up', 'down', 'off', 'over', 'back', 'all', 'more', 'most', 'less', 'least', 'enough', 'yet', 'so', 'as', 'since', 'once', 'rather', 'pretty', 'fairly', 'really', 'quite', 'extremely', 'somewhat', 'too', 'very', 'before', 'after', 'about', 'inside', 'outside', 'behind', 'above', 'below', 'across', 'along', 'around', 'through', 'under', 'ten', 'one', 'first', 'can', 'will', 'must', 'may', 'might', 'have', 'has', 'had', 'do', 'does', 'did', 'having', 'there', 'other', 'another', 'much', 'many', 'few', 'several', 'both', 'each', 'either', 'neither', 'less', 'no', 'never', 'when', 'where', 'while', 'though', 'although']);
+  // only these open readings are kept for those words
+  const OPEN_KEEP = { noon: 'n', midnight: 'n', dawn: 'nv', dusk: 'n', march: 'nv', august: 'a', please: 'v', week: 'n', month: 'n', year: 'n', day: 'n', night: 'n', morning: 'n', afternoon: 'n', evening: 'n', weekend: 'nv', semester: 'n', summer: 'nv', winter: 'nv', spring: 'nv', autumn: 'n', fall: 'nv', hour: 'n', minute: 'na', decade: 'n', century: 'n', moment: 'n', time: 'nv', today: 'nr', tonight: 'nr', yesterday: 'nr', tomorrow: 'nr', can: 'v', will: 'v', must: '', may: '', might: '', have: 'v', has: 'v', had: 'v', do: 'v', does: 'v', did: 'v', having: 'v', there: 'r', well: 'ra', like: 'va', past: 'an', near: 'ar', out: 'r', up: 'r', down: 'r', off: 'r', over: 'r', back: 'rn', round: 'an', last: 'va', next: 'a', second: 'an', first: 'r', one: 'n', ten: 'n', before: 'r', after: 'r', about: 'r', inside: 'rn', outside: 'rn', behind: 'r', above: 'r', below: 'r', across: 'r', along: 'r', around: 'r', through: 'r', under: 'r', all: '', more: 'r', most: 'r', less: 'r', least: 'r', enough: 'r', yet: 'r', so: 'r', as: 'r', since: 'r', once: 'r', rather: '', pretty: 'a', fairly: '', really: '', quite: '', extremely: '', somewhat: '', too: 'r', very: '', other: 'a', another: '', much: 'r', many: '', few: '', several: '', both: '', each: '', either: '', neither: '', no: '', never: '', when: '', where: '', while: 'n', though: 'r', although: '' };
+  const PARTICLES = new Set(['up', 'down', 'out', 'off', 'in', 'on', 'over', 'away', 'back', 'around', 'about', 'through', 'along', 'across', 'aside', 'apart', 'forward', 'together']);
+
+  const DISPLAY = { AdjIng: 'Adj', Predet: 'Det', NT: 'N', Det: 'Det', DetWh: 'Det', Num: 'Num', N: 'N', ProNom: 'Pro', ProAcc: 'Pro', ProAny: 'Pro', ProQ: 'Pro', ProThere: 'Pro', ProWh: 'Pro', ProRel: 'Pro',
+    RelThat: 'C', AdvWh: 'Adv', AdvRel: 'Adv', DegHow: 'Deg', Deg: 'Deg', Conj: 'Conj', C: 'C', CWh: 'C', Csub: 'C', Neg: 'Neg', Inf: 'Inf', Poss: 'Poss', P: 'P', Part: 'Part',
+    Mod: 'Aux', DoF: 'Aux', HaveF: 'Aux', BeF: 'Aux', HaveB: 'Aux', BeB: 'Aux', BeEn: 'Aux', BeIng: 'Aux', HaveIng: 'Aux',
+    VBeF: 'V', VBeB: 'V', VBeEn: 'V', VBeIng: 'V', Vbase: 'V', V3s: 'V', Vpast: 'V', Ven: 'V', Ving: 'V', Adj: 'Adj', Adv: 'Adv' };
+
+  // ---------------- lexicon ----------------
+  function Lexicon(data) {
+    this.lex = new Map();
+    data.L.split('\n').forEach((line) => {
+      const [w, pos, fr] = line.split('\t'); const e = { n: 0, v: 0, a: 0, r: 0, fr: fr || '' };
+      pos.replace(/([nvar])(\d+)\.(\d+)/g, (_, c, k, tg) => { e[c] = +tg + 0.5 * +k + 0.3; e['t' + c] = +tg; });
+      this.lex.set(w, e);
+    });
+    this.exc = data.x; this.phr = new Set((data.p || '').split('|'));
+  }
+  Lexicon.prototype.entry = function (w) { return this.lex.get(w); };
+
+  const lg = (x) => Math.log(x);
+  // open-class analyses of a word: list of [pt, cost, frames]
+  function openAnalyses(L, w, capitalizedMid) {
+    const res = [];
+    const push = (pt, cost, fr) => res.push([pt, cost, fr]);
+    const e = L.entry(w);
+    const share = (e, c) => { const tot = e.n + e.v + e.a + e.r; return -lg((e[c] + 0.4) / (tot + 1.6)); };
+    if (e) {
+      if (e.n) push('N', share(e, 'n'));
+      if (e.v) { push('Vbase', share(e, 'v'), e.fr); }
+      if (e.a) push('Adj', share(e, 'a'));
+      if (e.r) push('Adv', share(e, 'r'));
+    }
+    // irregular inflections
+    const x = L.exc[w];
+    if (x) x.split('|').forEach((s) => {
+      const [c, b] = s.split(':'); const be = L.entry(b) || { n: 1, v: 1, a: 1, r: 1, fr: '' };
+      if (c === 'v') { const fr = be.fr; const cost = 0.2; if (/ing$/.test(w)) push('Ving', cost, fr); else { push('Vpast', cost + 0.1, fr); push('Ven', cost + 0.1, fr); } }
+      if (c === 'n') push('N', 0.2, 'pl');
+      if (c === 'a') push('Adj', 0.3);
+      if (c === 'r') push('Adv', 0.4);
+    });
+    // regular inflections
+    const tryBase = (b) => L.entry(b);
+    const vb = (cands) => { for (const b of cands) { const be = tryBase(b); if (be && be.v) return be; } return null; };
+    const nb = (cands) => { for (const b of cands) { if (b.length < 2) continue; const be = tryBase(b); if (be) return be; } return null; };
+    const dbl = (stem) => (stem.length > 2 && stem[stem.length - 1] === stem[stem.length - 2] && !/[aeiouslz]/.test(stem[stem.length - 1])) ? stem.slice(0, -1) : null;
+    if (/s$/.test(w) && w.length > 2 && !/ss$/.test(w)) {
+      const cands = [w.slice(0, -1)]; if (/es$/.test(w)) cands.push(w.slice(0, -2)); if (/ies$/.test(w)) cands.push(w.slice(0, -3) + 'y');
+      const v = vb(cands); if (v) { const e2 = v; push('V3s', -lg((e2.v + 0.4) / (e2.n + e2.v + 0.8)) + 0.05, e2.fr); }
+      const nn = nb(cands); if (nn && nn.n) push('N', -lg((nn.n + 0.4) / (nn.n + nn.v + 0.8)) + 0.05, 'pl');
+      if (!nn && !e && !/(us|is|ss)$/.test(w)) push('N', 0.3, 'pl');
+    }
+    if (/ed$/.test(w) && w.length > 3) {
+      const st = w.slice(0, -2); const cands = [st, w.slice(0, -1)]; if (/ied$/.test(w)) cands.push(w.slice(0, -3) + 'y'); const d = dbl(st); if (d) cands.push(d);
+      const v = vb(cands); if (v) { push('Vpast', 0.25, v.fr); push('Ven', 0.25, v.fr); }
+      else if (!e) { push('Vpast', 1.2, '*'); push('Ven', 1.2, '*'); }
+    }
+    if (/ing$/.test(w) && w.length > 4) {
+      const st = w.slice(0, -3); const cands = [st, st + 'e']; const d = dbl(st); if (d) cands.push(d); if (/ying$/.test(w)) cands.push(w.slice(0, -4) + 'ie');
+      const v = vb(cands); if (v) push('Ving', 0.1, v.fr); else if (!e) push('Ving', 1.0, '*');
+    }
+    if (/(er|est)$/.test(w) && w.length > 4) {
+      const st = w.replace(/(er|est)$/, ''); const cands = [st, st + 'e']; const d = dbl(st); if (d) cands.push(d); if (/ier$|iest$/.test(w)) cands.push(w.replace(/(ier|iest)$/, 'y'));
+      for (const b of cands) { const be = tryBase(b); if (be && be.a) { push('Adj', 0.3); break; } }
+    }
+    if (/ly$/.test(w) && !e) push('Adv', 0.4);
+    // words missing from the list (which leaves out noun-only words) can always be nouns
+    if (!e && res.length && !res.some((r) => r[0] === 'N')) {
+      const vbase = res.find((r) => /^V/.test(r[0]));
+      const strongVerb = vbase && (() => { for (const b of baseOf(L, w)) { const be = L.entry(b); if (be && be.tv >= 5) return true; } return false; })();
+      push('N', strongVerb ? 1.6 : 0.6);
+    }
+    if (!res.length) {
+      // not in the dictionary: most likely a noun (or a name)
+      push('N', capitalizedMid ? 0 : 0.2);
+      if (!capitalizedMid) { push('Adj', 3.0); push('Vbase', 3.2, '*'); }
+    }
+    const hasVen = res.some((r) => r[0] === 'Ven'), hasVing = res.some((r) => r[0] === 'Ving');
+    const vingR = res.find((r) => r[0] === 'Ving');
+    const transOnly = vingR && vingR[2] && /T/.test(vingR[2]) && !/I/.test(vingR[2]);
+    if ((hasVen && !(e && e.ta >= 5)) || (hasVing && !(e && e.ta >= 20) && !(transOnly && e && e.a))) res.forEach((r) => { if (r[0] === 'Adj') r[1] += 1.5; });
+    // keep the best cost per category
+    const best = {}; res.forEach(([pt, c, fr]) => { const k = pt + (fr === 'pl' ? 'pl' : ''); if (!best[k] || best[k][1] > c) best[k] = [pt, c, fr]; });
+    return Object.values(best);
+  }
+
+  // ---------------- tokenizer ----------------
+  function tokenize(text) {
+    let t = ' ' + text.replace(/[‘’ʼ]/g, "'").replace(/[“”]/g, '"') + ' ';
+    const endQ = /\?\s*$/.test(text);
+    t = t.replace(/([.,;:!?"()\[\]])/g, ' $1 ');
+    t = t.replace(/(\w)'(m|re|s|ve|ll|d)\b/gi, "$1 '$2");
+    t = t.replace(/(s)'(\s)/gi, "$1 '$2");
+    const toks = t.split(/\s+/).filter((x) => x && !/^[.,;:!?"()\[\]]$/.test(x));
+    return { toks, question: endQ };
+  }
+
+  // ---------------- grammar ----------------
+  // rhs symbols: name with optional ? * + suffix. LABEL null = transparent (children go straight to the parent).
+  const G = {}, LABEL = {};
+  function R(lhs, label, rhs, cost, frame) {
+    (G[lhs] = G[lhs] || []).push({ label, rhs: rhs.split(' ').filter(Boolean).map((s) => { const m = s.match(/^(.+?)([?*+]?)$/); return { sym: m[1], mod: m[2] }; }), cost: cost || 0, frame: frame || null });
+  }
+  const T = (x) => x; // readability
+
+  // Top level
+  R('TOP', null, 'S', 0); R('TOP', null, 'Sq', 0); R('TOP', null, 'Swh', 0); R('TOP', null, 'Simp', 0.6); R('TOP', null, 'Scoord', 0.2);
+  R('Scoord', 'S', 'S Conj S', 0); R('Scoord', 'S', 'S Conj S Conj S', 0.2);
+
+  // Declarative clause: S -> (adjuncts) NP (Aux) (Neg) VP (adverbial clause)
+  R('S', 'S', 'PRE* NPsubj PRED CPadv*', 0);
+  R('PRE', null, 'AdvP', 0.3); R('PRE', null, 'PP', 0.5); R('PRE', null, 'CPadv', 0.3);
+  // PRED: the auxiliary + verb phrase part (transparent)
+  R('PRED', null, 'VPfin', 0);
+  R('PRED', null, 'VPfinC', 0.1);
+  R('PRED', null, 'AuxFin Neg? AdvP? VPx', 0);
+  R('PRED', null, 'AdvP VPfin', 0.4);
+
+  // Finite auxiliary + the verb phrase it selects
+  R('AuxFin', null, 'Mod', 0); R('AuxFin', null, 'DoF', 0.1); R('AuxFin', null, 'HaveF', 0); R('AuxFin', null, 'BeF', 0);
+  // VPx: verb phrase matching the auxiliary before it (checked after parsing)
+  R('VPx', null, 'VPbase', 0); R('VPx', null, 'VPen', 0); R('VPx', null, 'VPing', 0); R('VPx', null, 'VPpass', 0);
+  R('VPx', null, 'VPbaseC', 0.1); R('VPx', null, 'VPingC', 0.1);
+
+  // Verb phrases by verb form. COMP = complements chosen by the verb, ADJ = optional modifiers after them.
+  const VFORMS = { fin: ['V3s', 'Vpast', 'Vbase'], base: ['Vbase'], en: ['Ven'], ing: ['Ving'] };
+  const COMPS = [
+    ['', 'I', 0], ['NPobj', 'T', 0], ['NPobj NPobj', 'D', 0.6], ['AdjPpred', 'A', 0.2], ['NPobj AdjPpred', 'O', 0.8],
+    ['CPthat', 'C', 0], ['Sbare', 'C', 0.8], ['CPwhEmb', 'C', 0.3], ['NPobj CPthat', 'C', 0.5],
+    ['VPinf', 'V', 0], ['NPobj VPinf', 'V', 0.4], ['VPingComp', 'G', 0.3], ['NPobj VPbareComp', 'V', 1.0],
+    ['Part', 'P', 0], ['Part NPobj', 'P', 0], ['NPobj Part', 'P', 0.1],
+  ];
+  const VPNAME = { fin: 'VPfin', base: 'VPbase', en: 'VPen', ing: 'VPing' };
+  for (const f in VFORMS) {
+    for (const v of VFORMS[f]) {
+      for (const [c, fr, cost] of COMPS) {
+        R(VPNAME[f], 'VP', ('AdvPpre? ' + v + ' ' + c + ' ADJ*').replace(/\s+/g, ' '), cost, fr);
+        // versions with one noun phrase missing (for questions and relative clauses: "what did you see __")
+        if (/NPobj/.test(c)) {
+          const idxs = []; c.split(' ').forEach((s, k) => { if (s === 'NPobj') idxs.push(k); });
+          idxs.forEach((k) => { const cc = c.split(' '); cc[k] = 'GAP'; R(VPNAME[f] + 'G', 'VP', ('AdvPpre? ' + v + ' ' + cc.join(' ') + ' ADJ*').replace(/\s+/g, ' '), cost + 0.05, fr); });
+        }
+        if (c === 'VPinf') R(VPNAME[f] + 'G', 'VP', 'AdvPpre? ' + v + ' VPinfG ADJ*', cost + 0.1, fr);
+        if (c === '' || c === 'NPobj') R(VPNAME[f] + 'G', 'VP', ('AdvPpre? ' + v + ' ' + c + ' ADJ* PPG ADJ*').replace(/\s+/g, ' '), cost + 0.3, fr);
+      }
+    }
+  }
+  // copula "be" as the main verb: is happy / is a teacher / is in the garden
+  const BEV = { fin: 'VBeF', base: 'VBeB', en: 'VBeEn', ing: 'VBeIng' };
+  for (const f in BEV) {
+    R(VPNAME[f], 'VP', 'AdvPpre? ' + BEV[f] + ' Neg? AdvP? BECOMP ADJ*', 0);
+    R(VPNAME[f] + 'G', 'VP', 'AdvPpre? ' + BEV[f] + ' Neg? GAP ADJ*', 0.1);
+    R(VPNAME[f] + 'G', 'VP', 'AdvPpre? ' + BEV[f] + ' Neg? BECOMP ADJ* PPG', 0.4);
+  }
+  R('BECOMP', null, 'NPobj', 0); R('BECOMP', null, 'AdjPpred', 0); R('BECOMP', null, 'PP', 0.1); R('BECOMP', null, 'CPthat', 0.4); R('BECOMP', null, 'VPinf', 0.8);
+  R('BECOMP', null, 'NPobj PP', 0.2);
+  // stacked auxiliaries after the first one: might [have [been [working]]]
+  R('VPbase', 'VP', 'HaveB VPen', 0); R('VPbase', 'VP', 'BeB VPing', 0); R('VPbase', 'VP', 'BeB VPpass', 0);
+  R('VPen', 'VP', 'BeEn VPing', 0); R('VPen', 'VP', 'BeEn VPpass', 0);
+  R('VPing', 'VP', 'BeIng VPpass', 0.1); R('VPing', 'VP', 'HaveIng VPen', 0.2);
+  R('VPbaseG', 'VP', 'HaveB VPenG', 0); R('VPbaseG', 'VP', 'BeB VPingG', 0); R('VPbaseG', 'VP', 'BeB VPpassG', 0);
+  R('VPenG', 'VP', 'BeEn VPingG', 0); R('VPenG', 'VP', 'BeEn VPpassG', 0);
+  // passive: (was) eaten (by the dog); gave -> was given a book
+  R('VPpass', 'VP', 'AdvPpre? Ven ADJ*', 0.1, 'T'); R('VPpass', 'VP', 'AdvPpre? Ven NPobj ADJ*', 0.5, 'D');
+  R('VPpass', 'VP', 'AdvPpre? Ven VPinf ADJ*', 0.6, 'V'); R('VPpass', 'VP', 'AdvPpre? Ven Part ADJ*', 0.3, 'P');
+  R('VPpassG', 'VP', 'AdvPpre? Ven GAP ADJ*', 0.5, 'D');
+  // gapped finite predicates
+  R('PREDG', null, 'VPfinG', 0); R('PREDG', null, 'AuxFin Neg? AdvP? VPxG', 0);
+  R('VPxG', null, 'VPbaseG', 0); R('VPxG', null, 'VPenG', 0); R('VPxG', null, 'VPingG', 0); R('VPxG', null, 'VPpassG', 0);
+  // coordinated verb phrases: sings and dances
+  R('VPfinC', 'VP', 'VPfin Conj VPfin', 0.1); R('VPbaseC', 'VP', 'VPbase Conj VPbase', 0.1); R('VPingC', 'VP', 'VPing Conj VPing', 0.1);
+  // to-infinitive, bare infinitive, gerund complements
+  R('VPinf', 'VP', 'Inf Neg? VPbase', 0); R('VPinf', 'VP', 'Inf VPbaseC', 0.1);
+  R('VPinfG', 'VP', 'Inf VPbaseG', 0);
+  R('VPbareComp', null, 'VPbase', 0);
+  R('VPingComp', null, 'VPing', 0);
+  R('AdvPpre', null, 'AdvP', 0.8);
+  // modifiers inside VP: PPs, adverbs, time phrases
+  R('ADJ', null, 'PPv', 0); R('ADJ', null, 'AdvP', 0.1); R('ADJ', null, 'NPtime', 0.2);
+
+  // noun phrases
+  R('NPsubj', null, 'NP', 0); R('NPsubj', null, 'NPnom', 0); R('NPsubj', null, 'NPany', 0); R('NPsubj', null, 'NPthere', 0.1); R('NPsubj', null, 'NPc', 0); R('NPsubj', null, 'NPger', 0.7);
+  R('NPobj', null, 'NP', 0); R('NPobj', null, 'NPacc', 0); R('NPobj', null, 'NPany', 0); R('NPobj', null, 'NPc', 0);
+  R('NPnom', 'NP', 'ProNom', 0); R('NPacc', 'NP', 'ProAcc', 0); R('NPany', 'NP', 'ProAny', 0); R('NPany', 'NP', 'ProAny CPrel', 0.3); R('NPany', 'NP', 'ProAny AdjPpost', 0.5);
+  R('NPany', 'NP', 'ProQ', 0.3); R('NPany', 'NP', 'ProQ PPn', 0);
+  R('NPthere', 'NP', 'ProThere', 0);
+  R('NPger', 'NP', 'VPing', 0);
+  // Det (Num) AdjP* N+ (PP*) (CP)
+  R('NP', 'NP', 'DETS? Num? AdjPpre* Nseq NPMOD*', 0.1);
+  R('NP', 'NP', 'Det Num', 0.6); R('NP', 'NP', 'Num', 0.4);
+  R('DETS', null, 'Det', 0); R('DETS', null, 'Predet Det', 0.3); R('DETS', null, 'Predet NPposs', 0.5); R('DETS', null, 'NPposs', 0);
+  R('NPposs', 'NP', 'Det? AdjPpre* Nseq Poss', 0); R('NPposs', 'NP', 'NPany Poss', 0.6);
+  R('Nseq', null, 'N', 0); R('Nseq', null, 'NT', 0); R('Nseq', null, 'N N', 0.35); R('Nseq', null, 'N N N', 0.9);
+  R('NPMOD', null, 'PPn', 0); R('NPMOD', null, 'CPrel', 0.1); R('NPMOD', null, 'VPinfMod', 1.3); R('NPMOD', null, 'VPpartMod', 1.0);
+    R('VPinfMod', null, 'VPinf', 0);
+  R('VPpartMod', null, 'VPing', 0);
+  R('NPc', 'NP', 'NPconj Conj NPconj', 0); R('NPc', 'NP', 'NPconj NPconj Conj NPconj', 0.6);
+  R('NPconj', null, 'NP', 0); R('NPconj', null, 'NPnom', 0); R('NPconj', null, 'NPacc', 0); R('NPconj', null, 'NPany', 0);
+  R('NPtime', 'NP', 'Det? AdjPpre? NT', 0.5);
+
+  // adjective and adverb phrases
+  R('AdjPpre', 'AdjP', 'DEG? Adj', 0); R('AdjPpre', 'AdjP', 'AdjIng', 0);
+  R('AdjPpred', 'AdjP', 'DEG? Adj ACOMP?', 0); R('AdjPpred', 'AdjP', 'AdjPpredSimple Conj AdjPpredSimple', 0.1);
+  R('AdjPpredSimple', 'AdjP', 'DEG? Adj', 0);
+  R('AdjPpost', 'AdjP', 'Adj', 0);
+  R('ACOMP', null, 'PP', 0.1); R('ACOMP', null, 'VPinf', 0.1); R('ACOMP', null, 'CPthat', 0.2);
+  R('DEG', null, 'Deg', 0); R('DEG', null, 'AdvPdeg', 0.4);
+  R('AdvPdeg', 'AdvP', 'Adv', 0);
+  R('AdvP', 'AdvP', 'Deg? Adv', 0); R('AdvP', 'AdvP', 'Adv Conj Adv', 0.4);
+
+  // prepositional phrases
+  R('PP', 'PP', 'P NPobj', 0); R('PP', 'PP', 'P VPing', 0.4); R('PP', 'PP', 'P CPwhEmb', 0.8); R('PP', 'PP', 'P PP', 1.0);
+  R('PP', 'PP', 'Deg P NPobj', 0.8);
+  R('PPG', 'PP', 'P GAP', 0.1);
+  R('PPn', 'PP', 'P NPobj', 0); R('PPn', 'PP', 'P VPing', 0.4); R('PPn', 'PP', 'P CPwhEmb', 0.8);
+  R('PPv', 'PP', 'P NPobj', 0); R('PPv', 'PP', 'P VPing', 0.4); R('PPv', 'PP', 'P CPwhEmb', 0.8); R('PPv', 'PP', 'P PP', 1.0);
+
+  // clauses inside clauses
+  R('CPthat', 'CP', 'C S', 0);
+  R('Sbare', null, 'S', 0);
+  R('CPadv', 'CP', 'Csub S', 0); R('CPadv', 'CP', 'Csub VPing', 0.5);
+  R('CPwhEmb', 'CP', 'CWh S', 0); R('CPwhEmb', 'CP', 'CWh VPinf', 0.2);
+  R('CPwhEmb', 'CP', 'WHNP SG', 0); R('CPwhEmb', 'CP', 'WHADV S', 0); R('CPwhEmb', 'CP', 'WHNPsubj SsubjG', 0); R('CPwhEmb', 'CP', 'WHNP VPinfG', 0.2); R('CPwhEmb', 'CP', 'WHADV VPinf', 0.2);
+  // relative clauses: the student who won / the book (that) I read / the house where we lived
+  R('CPrel', 'CP', 'RELSUBJ SsubjG', 0); R('CPrel', 'CP', 'RELOBJ SG', 0.1); R('CPrel', 'CP', 'SG', 1.2); R('CPrel', 'CP', 'RELADV S', 0.2);
+  R('CPrel', 'CP', 'RELWHOSE SsubjG', 0.2); R('CPrel', 'CP', 'RELWHOSE SG', 0.2); R('CPrel', 'CP', 'P RELNP SG', 0.3);
+  R('RELSUBJ', null, 'RelNP', 0); R('RELSUBJ', null, 'RelThat', 0);
+  R('RELOBJ', null, 'RelNP', 0); R('RELOBJ', null, 'RelThat', 0);
+  R('RelNP', 'NP', 'ProRel', 0); R('RELNP', 'NP', 'ProRel', 0);
+  R('RELWHOSE', 'NP', 'DetWh Nseq', 0.2);
+  R('RELADV', 'AdvP', 'AdvRel', 0);
+  R('SsubjG', 'S', 'PREDsub', 0); R('PREDsub', null, 'PRED', 0);
+  R('SG', 'S', 'NPsubj PREDG', 0);
+
+  // questions
+  R('Sq', 'S', 'AuxFin NPsubj Neg? AdvP? VPx', 0); R('Sq', 'S', 'VBeF NPsubj Neg? BECOMP ADJ*', 0);
+  R('SqG', 'S', 'AuxFin NPsubj Neg? VPxG', 0); R('SqG', 'S', 'VBeF NPsubj GAP', 0.1); R('SqG', 'S', 'VBeF NPsubj BECOMP PPG', 0.4);
+  R('SqAdv', 'S', 'VBeF NPsubj', 0.2);
+  R('Swh', 'CP', 'WHNP SqG', 0); R('Swh', 'CP', 'WHADV Sq', 0); R('Swh', 'CP', 'WHADV SqAdv', 0); R('Swh', 'CP', 'WHADJ SqG', 0.2);
+  R('Swh', null, 'SwhSubj', 0);
+  R('SwhSubj', 'S', 'WHNPsubj PRED', 0);
+  R('PPfor', null, 'PP', 0);
+  R('WHNP', 'NP', 'ProWh', 0); R('WHNP', 'NP', 'DetWh Nseq', 0); R('WHNPsubj', 'NP', 'ProWh', 0); R('WHNPsubj', 'NP', 'DetWh Nseq', 0);
+  R('WHADV', 'AdvP', 'AdvWh', 0); R('WHADJ', 'AdjP', 'DegHow Adj', 0); R('WHADV', 'AdvP', 'DegHow Adv', 0.1);
+  R('GAP', null, '', 0);
+
+  // imperatives: Close the door. / Don't touch it.
+  R('Simp', 'S', 'AdvP? VPbase', 0); R('Simp', 'S', 'DoF Neg? VPbase', 0.2); R('Simp', 'S', 'VPbaseC', 0.2);
+
+  // ---------------- chart parser (k-best) ----------------
+  const K = 6;
+  const PPN_COST = { of: 0, about: 0.1, with: 0.25, for: 1.0, from: 1.1, like: 0.4, than: 0.2 };
+  const PPV_COST = { of: 1.2, about: 0.9, with: 0.25, like: 0.3, than: 0.8 };
+  const isTimeWord = (w) => { const x = String(w).toLowerCase(); const t = (y) => CLOSED[y] && CLOSED[y].some(([pt]) => pt === 'NT'); return t(x) || (/s$/.test(x) && t(x.slice(0, -1))) || /^\d{3,4}s?$/.test(x); };
+  const NOT_PREVERBAL = new Set(['here', 'there', 'home', 'inside', 'outside', 'away', 'back', 'today', 'tomorrow', 'yesterday', 'tonight', 'upstairs', 'downstairs', 'abroad', 'late', 'early', 'hard', 'fast', 'well', 'badly', 'loudly', 'quietly']);
+  const TIME_P = new Set(['in', 'on', 'at', 'during', 'for', 'since', 'until', 'till', 'before', 'after', 'by', 'over', 'throughout', 'within', 'from', 'to', 'through', 'around', 'about']);
+  const ADJ_COMP_P2 = new Set(['about', 'of', 'with', 'at', 'to', 'for', 'from', 'in', 'on', 'by', 'than', 'like', 'toward', 'towards']);
+  const ADJ_COMP_P = new Set(['about', 'of', 'with', 'at', 'to', 'for', 'from']);
+  const PREP_NOT_PART = new Set(['in', 'on', 'about', 'at']);
+  const BRIDGE = new Set(['think', 'believe', 'say', 'know', 'hope', 'feel', 'guess', 'suppose', 'wish', 'bet', 'realize', 'realise', 'notice', 'mean', 'suggest', 'claim', 'argue', 'admit', 'agree', 'decide', 'find', 'expect', 'fear', 'learn', 'remember', 'forget', 'show', 'understand', 'promise', 'pretend', 'assume', 'imagine', 'figure', 'predict', 'hear', 'see', 'tell', 'doubt', 'worry', 'reckon', 'insist', 'explain', 'discover', 'prove', 'hope', 'feel', 'report', 'state', 'mention', 'note', 'recall', 'deny', 'confirm', 'sense', 'dream', 'swear', 'warn']);
+  const NP_CP = new Set(['tell', 'show', 'convince', 'remind', 'inform', 'promise', 'warn', 'teach', 'assure', 'persuade', 'notify', 'advise', 'ask', 'bet', 'write', 'email']);
+  const CAUSATIVE = new Set(['make', 'let', 'have', 'help', 'see', 'hear', 'watch', 'feel', 'notice']);
+  const AUX_SELECT = { Mod: ['VPbase', 'VPbaseC'], DoF: ['VPbase', 'VPbaseC'], HaveF: ['VPen'], BeF: ['VPing', 'VPpass', 'VPingC'] };
+  const FRAME_PEN = { O: 2.2, I: 1.4, T: 1.6, D: 2.2, A: 2.4, C: 2.2, V: 2.2, G: 2.2, P: 2.5 };
+
+  function Parser(lexData) { this.L = new Lexicon(lexData); }
+  Parser.prototype.lexOptions = function (tok, idx) {
+    const lower = tok.toLowerCase();
+    const capMid = idx > 0 && /^[A-Z]/.test(tok);
+    let opts = [];
+    if (/^\d+([.,]\d+)?%?$/.test(tok)) return [['Num', 0]];
+    if (CLOSED[lower] && !(capMid && !/^i$/.test(lower) && lower.length > 1 && !CLOSED[lower].some(([pt]) => /^Pro/.test(pt)))) {
+      opts = CLOSED[lower].map(([pt, c]) => [pt, c]);
+      if (OPEN_TOO.has(lower)) {
+        const keep = OPEN_KEEP[lower] || '';
+        openAnalyses(this.L, lower, false).forEach(([pt, c, fr]) => {
+          const cls = pt === 'N' ? 'n' : pt === 'Adj' ? 'a' : pt === 'Adv' ? 'r' : 'v';
+          if (keep.includes(cls)) opts.push([pt, c + (/^(week|month|year|day|night|morning|afternoon|evening|weekend|semester|summer|winter|spring|autumn|fall|hour|minute|decade|century|moment|time|today|tonight|yesterday|tomorrow|please)$/.test(lower) ? 0 : (cls === 'r' && /^(inside|outside|around|behind|above|below|along|across|through|over|back|up|down|out|off|before|after|near)$/.test(lower)) ? 0.3 : 0.9), fr]);
+        });
+      }
+      if (PARTICLES.has(lower)) opts.push(['Part', 0.4]);
+    } else {
+      opts = openAnalyses(this.L, lower, capMid);
+      if (/s$/.test(lower) && CLOSED[lower.slice(0, -1)] && CLOSED[lower.slice(0, -1)].some(([pt]) => pt === 'NT')) opts.push(['NT', 0, 'pl']);
+      if (capMid) opts = opts.map(([pt, c, fr]) => [pt, pt === 'N' ? Math.min(c, 0.05) : pt === 'NT' ? c : c + 1.5, fr]);
+      if (PARTICLES.has(lower)) opts.push(['Part', 0.4]);
+    }
+    if (tok === "'s" && idx > 0) {
+      const prev = this._toks[idx - 1].toLowerCase();
+      if (!CLOSED[prev] || !CLOSED[prev].some(([pt]) => /^Pro/.test(pt))) opts = opts.map(([pt, c, fr]) => [pt, /^(BeF|VBeF|HaveF)$/.test(pt) ? c + 1.0 : c, fr]);
+    }
+    // an -ing participle can modify a noun like an adjective (a barking dog)
+    const ving = opts.find((o) => o[0] === 'Ving');
+    if (ving && !opts.some((o) => o[0] === 'Adj' && o[1] < ving[1] + 0.9)) opts.push(['AdjIng', ving[1] + 0.9]);
+    // main-verb have/do
+    if (/^(has|have|had|having|do|does|did|done|doing)$/.test(lower)) {
+      const base = /^ha/.test(lower) ? 'have' : 'do'; const fr = (this.L.entry(base) || {}).fr || 'T';
+      const f = { has: 'V3s', have: 'Vbase', had: 'Vpast', having: 'Ving', do: 'Vbase', does: 'V3s', did: 'Vpast', done: 'Ven', doing: 'Ving' }[lower];
+      opts.push([f, 0.3, fr]); if (lower === 'had') opts.push(['Ven', 0.3, fr]);
+    }
+    if (/^(get|got|gets|getting)$/.test(lower)) { /* fine via dictionary */ }
+    return opts;
+  };
+
+  Parser.prototype.parse = function (text) {
+    const { toks, question } = tokenize(text);
+    const n = toks.length;
+    if (!n) return { tokens: [], readings: [] };
+    if (n > 40) return { tokens: toks, readings: [], error: 'long' };
+    this._toks = toks;
+    const lexs = toks.map((t, i) => this.lexOptions(t, i));
+    const Lx = this.L;
+    const memo = new Map();
+    const PT = new Set(Object.keys(DISPLAY));
+    let work = 0;
+
+    function leaf(pt, i, cost, fr) { return { cost, node: { label: DISPLAY[pt], pt, word: toks[i], i, fr: fr || '' } }; }
+    // all derivations of symbol sym starting at i: Map(j -> [{cost,node}])
+    function span(sym, i) {
+      if (sym === 'GAP') return new Map([[i, [{ cost: 0, node: { gap: true } }]]]);
+      if (PT.has(sym)) {
+        const m = new Map();
+        if (i < n) { const l = lexs[i].filter((o) => o[0] === sym).map((o) => leaf(o[0], i, o[1], o[2])); if (l.length) m.set(i + 1, l); }
+        return m;
+      }
+      const key = sym + '|' + i;
+      if (memo.has(key)) return memo.get(key);
+      const out = new Map(); memo.set(key, out);
+      const rules = G[sym]; if (!rules) throw new Error('No rule for ' + sym);
+      for (const rule of rules) {
+        if (++work > 4e6) throw new Error('too-complex');
+        const fin = seq(rule.rhs, i);
+        for (const [j, list] of fin) {
+          for (const p of list) {
+            let c = p.cost + rule.cost;
+            const kids = p.kids;
+            if (rule.frame) {
+              const v = kids.find((k) => k.pt && /^V(base|3s|past|en|ing)$/.test(k.pt));
+              if (v && rule.frame !== 'P' && v.fr !== '*' && !v.fr.includes(rule.frame)) c += v.fr.includes(rule.frame.toLowerCase()) ? FRAME_PEN[rule.frame] * 0.5 : FRAME_PEN[rule.frame];
+              if (rule.frame === 'P' && v) { const nx = kids.find((k) => k.pt === 'Part'); if (nx) { const b = baseOf(Lx, v.word.toLowerCase()); if (!b.some((bb) => Lx.phr.has(bb + ' ' + nx.word.toLowerCase()))) c += 2.2; } }
+            }
+            c += postCost(sym, rule, kids);
+            // an auxiliary must be followed by the right verb form
+            if (sym === 'PRED' || sym === 'PREDG' || sym === 'Sq' || sym === 'SqG') {
+              const aux = kids.find((k) => k.pt && AUX_SELECT[k.pt]);
+              if (aux) { const vp = kids[kids.length - 1]; if (!vp || !vp.vform || !AUX_SELECT[aux.pt].some((s) => vp.vform === s || vp.vform === s + 'G')) continue; }
+            }
+            let node;
+            if (rule.label) node = { label: rule.label, children: kids.filter((k) => !(k.gap && !k.label)), vform: VFORM_OF[sym] || null, gap: kids.some((k) => k.gap && !k.label) };
+            else node = kids.length === 1 ? Object.assign({}, kids[0], { vform: VFORM_OF[sym] || kids[0].vform }) : { multi: kids, vform: VFORM_OF[sym] || null };
+            addTo(out, j, { cost: c, node });
+          }
+        }
+      }
+      return out;
+    }
+    function postCost(sym, rule, kids) {
+      let c = 0;
+      if (sym === 'PPn' || sym === 'PPv') {
+        const p = kids[0] && kids[0].word ? kids[0].word.toLowerCase() : '';
+        c += (sym === 'PPn' ? PPN_COST : PPV_COST)[p] !== undefined ? (sym === 'PPn' ? PPN_COST : PPV_COST)[p] : (sym === 'PPn' ? 1.1 : 0.3);
+      }
+      if (rule.label === 'VP') {
+        const v = kids.find((k) => k.pt && /^V(base|3s|past|en|ing)$/.test(k.pt));
+        if (v) {
+          const bases = baseOf(Lx, v.word.toLowerCase());
+          const vi = kids.indexOf(v), nx = kids[vi + 1];
+          // in / on / about / at before a noun phrase are prepositions, not particles
+          const part = kids.find((k) => k.pt === 'Part');
+          if (part && PREP_NOT_PART.has(part.word.toLowerCase()) && kids.some((k) => k.label === 'NP')) c += 2.0;
+          // modifiers after a to-infinitive or -ing complement belong to that lower verb phrase
+          const ci = kids.findIndex((k, q) => q > vi && (k.label === 'VP' || k.label === 'CP' || k.label === 'S'));
+          if (ci >= 0) kids.slice(ci + 1).forEach((k) => { if (k.label === 'PP' || k.label === 'AdvP' || k.label === 'NP') c += 1.0; });
+          if (nx && nx.label === 'PP' && nx.children && nx.children[0].word && bases.some((b) => Lx.phr.has(b + ' ' + nx.children[0].word.toLowerCase()))) c += 0.9;
+          if (rule.rhs.some((r) => r.sym === 'VPbareComp') && bases.some((b) => CAUSATIVE.has(b))) c -= 0.7;
+          const rs = rule.rhs.map((r) => r.sym).join(' ');
+          // verbs that take -ing complements (enjoy, stop, finish) prefer the gerund
+          if (/\bVPingComp\b/.test(rs) && /G/.test(v.fr)) c -= 0.4;
+          // to + a bare word that can be a verb, after a verb taking to-infinitives: infinitive, not PP (started to rain)
+          kids.forEach((k) => {
+            if (k.label === 'PP' && k.children[0].word && k.children[0].word.toLowerCase() === 'to' && k.children[1] && k.children[1].label === 'NP' && k.children[1].children.length === 1) {
+              const nw = k.children[1].children[0];
+              if (nw.i !== undefined && lexs[nw.i].some((o) => o[0] === 'Vbase')) c += /V/.test(v.fr) ? 1.0 : 0.4;
+            }
+          });
+          // double objects: the first object is normally short (gave him a book)
+          if (/NPobj NPobj/.test(rs)) { const o1 = kids[vi + 1]; if (o1 && o1.children && o1.children.some((k) => k.label === 'PP' || k.label === 'CP')) c += 0.8; }
+          if (/\bSbare\b/.test(rs) && !bases.some((b) => BRIDGE.has(b))) c += 2.0;
+          if (/NPobj CPthat/.test(rs) && !bases.some((b) => NP_CP.has(b))) c += 2.0;
+          // linking verbs (seem, feel, look...) take adjectives: feel better
+          if (/A/.test(v.fr) && nx && nx.label === 'AdvP' && nx.children.length === 1 && lexs[nx.children[0].i] && lexs[nx.children[0].i].some((o) => o[0] === 'Adj')) c += 0.5;
+        }
+        const vbe = kids.find((k) => k.pt && /^VBe/.test(k.pt));
+        if (vbe) {
+          // be + participle adjective followed by a by-phrase: that's a passive
+          {
+            const ap = kids.find((k) => k.label === 'AdjP');
+            const head = ap && ap.children && ap.children.find((k) => k.pt === 'Adj');
+            const hasBy = (x) => x && x.children && x.children.some((k) => (k.label === 'PP' && k.children[0].word && k.children[0].word.toLowerCase() === 'by') || hasBy(k));
+            if (head && lexs[head.i].some((o) => o[0] === 'Ven')) {
+              if (hasBy({ children: kids })) c += 1.2;
+              else {
+                // a participle followed by a modifier ("was built in 1990") describes an event: passive
+                const e = Lx.entry(head.word.toLowerCase());
+                const eventive = (k) => /^(AdvP|NP)$/.test(k.label) || (k.label === 'PP' && k.children[0].word && !ADJ_COMP_P.has(k.children[0].word.toLowerCase()));
+                const modified = kids.some((k) => k !== ap && eventive(k)) || ap.children.some(eventive);
+                if (modified && !(e && e.ta >= 20)) c += 2.0;
+              }
+            }
+          }
+        }
+      }
+      if (rule.label === 'NP' && kids.length === 1 && kids[0].pt === 'N' && lexs[kids[0].i].some((o) => o[0] === 'Adj' && o[1] < 2.5)) c += 0.8;
+      if (rule.label === 'NP' && kids.length === 1 && kids[0].pt === 'N' && lexs[kids[0].i].some((o) => o[0] === 'Ving')) c += 0.6;
+      // PPs after a predicate adjective: complements of the adjective, except time phrases (at noon, in 1990)
+      const isTimePP = (k) => { const leaves = []; const walk = (x) => { if (x.pt) leaves.push(x); else (x.children || []).forEach(walk); }; walk(k); return leaves.some((l) => l.pt === 'NT' || l.pt === 'Num' || isTimeWord(l.word)); };
+      if (sym === 'AdjPpred') kids.forEach((k) => { if (k.label === 'PP' && (isTimePP(k) || !(k.children[0].word && ADJ_COMP_P2.has(k.children[0].word.toLowerCase())))) c += 1.2; });
+      if (rule.label === 'VP') kids.forEach((k, q) => { if (q > 0 && k.label === 'PP' && kids[q - 1].label === 'AdjP' && !isTimePP(k) && k.children[0].word && ADJ_COMP_P2.has(k.children[0].word.toLowerCase())) c += 0.7; });
+      if (sym === 'Nseq' && kids.length > 1) kids.slice(0, -1).forEach((k) => { if (lexs[k.i] && lexs[k.i].some((o) => (o[0] === 'Adj' && o[1] < 2) || o[0] === 'Ving')) c += 0.8; });
+      if ((sym === 'S' || sym === 'Sq' || sym === 'SqG' || sym === 'SG') ) c += agreement(kids);
+      // place/time adverbs don't come between the subject and the verb (*The people here are...* is a different structure)
+      if ((sym === 'PRED' || rule.label === 'VP') && kids[0] && kids[0].label === 'AdvP' && kids[0].children.length === 1 && NOT_PREVERBAL.has(String(kids[0].children[0].word).toLowerCase())) c += 1.2;
+      if (sym === 'S') kids.forEach((k, q) => { if (q > 0 && k.label === 'AdvP' && kids[q - 1].label === 'NP' && k.children.length === 1 && NOT_PREVERBAL.has(String(k.children[0].word).toLowerCase())) c += 1.2; });
+      // today / tomorrow / yesterday / tonight never take determiners or adjectives
+      if (rule.label === 'NP' && kids.length > 1 && kids.some((k) => k.word && /^(today|tomorrow|yesterday|tonight)$/i.test(k.word))) c += 1.5;
+      // a time phrase (all day, last week) is not the object of a place preposition
+      if ((sym === 'PPv' || sym === 'PPn' || sym === 'PP') && kids[0] && kids[0].word && !TIME_P.has(kids[0].word.toLowerCase()) && kids[1] && kids[1].label === 'NP' && kids[1].children.some((k) => k.word && isTimeWord(k.word))) c += 3.0;
+      // a bare time noun works as an adverbial only for today / tomorrow / yesterday / tonight and weekdays
+      if (sym === 'NPtime' && kids.length === 1 && !/^(today|tomorrow|yesterday|tonight|mondays?|tuesdays?|wednesdays?|thursdays?|fridays?|saturdays?|sundays?)$/i.test(kids[0].word)) c += 1.5;
+      // "every day", "last semester", "next week" are time adverbials, not objects
+      if ((sym === 'NPobj' || sym === 'BECOMP') && kids.length === 1 && kids[0].label === 'NP' && kids[0].children) {
+        const ch = kids[0].children, hd = ch[ch.length - 1];
+        if (hd && hd.word && isTimeWord(hd.word) && ch.some((k) => k.word && /^(every|each|all|last|next|this)$/i.test(k.word))) c += 1.0;
+      }
+      // last / next / first come before other adjectives
+      if (rule.label === 'NP') { const aps = kids.filter((k) => k.label === 'AdjP'); aps.forEach((ap, q) => { if (q > 0 && ap.children.length === 1 && /^(last|next|first|second|third)$/i.test(ap.children[0].word)) c += 1.5; }); }
+      if (sym === 'SwhSubj') { const vp = kids[kids.length - 1]; if (vp && vp.children && vp.children[0] && vp.children[0].pt === 'VBeF') c += 0.8; }
+      return c;
+    }
+    // subject-verb agreement (singular vs plural); a strong preference, not a hard rule
+    function npNumber(np) {
+      if (!np || np.label !== 'NP' || !np.children) return null;
+      const ch = np.children;
+      if (ch.some((k) => k.pt === 'Conj' && k.word.toLowerCase() === 'and')) return 'pl';
+      if (ch.length === 1 && ch[0].label === 'VP') return 'sg';
+      const pro = ch.find((k) => k.pt && /^Pro/.test(k.pt));
+      if (pro && ch.length <= 2) { const w = pro.word.toLowerCase(); if (/^(i|you|we|they|these|those|both|many|several|few)$/.test(w)) return 'pl'; if (/^(he|she|it|this|that|someone|somebody|something|everyone|everybody|everything|anyone|anybody|anything|nobody|nothing|each|either|neither|one|who|what)$/.test(w)) return 'sg'; return null; }
+      if (ch.some((k) => k.pt === 'Poss') ) return null;
+      const heads = ch.filter((k) => k.pt === 'N' || k.pt === 'NT');
+      if (!heads.length) return null;
+      const h = heads[heads.length - 1];
+      const dets = ch.filter((k) => k.pt === 'Det').map((k) => k.word.toLowerCase());
+      if (dets.some((d) => /^(these|those|many|several|few|both)$/.test(d))) return 'pl';
+      if (dets.some((d) => /^(a|an|this|that|every|each|another|either|neither)$/.test(d))) return 'sg';
+      return h.fr === 'pl' ? 'pl' : 'sg';
+    }
+    function finNumber(k) {
+      if (!k) return null;
+      if (k.label === 'VP' && k.children) return finNumber(k.children.find((x) => x.pt));
+      const w = (k.word || '').toLowerCase(), pt = k.pt;
+      if (pt === 'V3s') return 'sg';
+      if (pt === 'Vbase') return 'pl';
+      if (/^(is|was|'s|isn't|wasn't|has|hasn't|does|doesn't)$/.test(w)) return 'sg';
+      if (/^(are|were|'re|aren't|weren't|have|'ve|haven't|do|don't)$/.test(w)) return 'pl';
+      return null;
+    }
+    function agreement(kids) {
+      const np = kids.find((k) => k.label === 'NP'); if (!np) return 0;
+      const ni = kids.indexOf(np);
+      const fin = kids[ni - 1] && kids[ni - 1].pt && /^(Mod|DoF|HaveF|BeF|VBeF)$/.test(kids[ni - 1].pt) ? kids[ni - 1] : kids.slice(ni + 1).find((k) => (k.pt && /^(Mod|DoF|HaveF|BeF|VBeF)$/.test(k.pt)) || k.label === 'VP');
+      const a = npNumber(np), b = finNumber(fin);
+      if (!a || !b) return 0;
+      const pron = np.children.find((k) => k.pt && /^Pro/.test(k.pt));
+      if (pron && /^(i|you)$/i.test(pron.word) && b === 'pl') return 0;
+      return a === b ? 0 : 1.5;
+    }
+    function addTo(m, j, d) {
+      let l = m.get(j); if (!l) m.set(j, l = []);
+      const k = keyOf(d.node);
+      const ex = l.findIndex((x) => x.key === k);
+      if (ex >= 0) { if (l[ex].cost > d.cost) l[ex] = Object.assign(d, { key: k }); else return; }
+      else l.push(Object.assign(d, { key: k }));
+      l.sort((a, b) => a.cost - b.cost); if (l.length > K) l.length = K;
+    }
+    function seq(rhs, i) {
+      let front = new Map([[i, [{ cost: 0, kids: [] }]]]);
+      for (const { sym, mod } of rhs) {
+        const step = (fr) => {
+          const nx = new Map();
+          for (const [pos, parts] of fr) {
+            const d = span(sym, pos);
+            for (const [j, derivs] of d) {
+              for (const p of parts) for (const dv of derivs) {
+                const kids = p.kids.concat(dv.node.multi ? dv.node.multi : [dv.node]);
+                push(nx, j, { cost: p.cost + dv.cost, kids });
+              }
+            }
+          }
+          return nx;
+        };
+        if (mod === '') front = step(front);
+        else if (mod === '?') { const s = step(front); front = merge(front, s); }
+        else { let cur = mod === '+' ? step(front) : front; let acc = cur; for (let g = 0; g < n + 1; g++) { const s = step(cur); if (!s.size) break; acc = merge(acc, s); cur = s; } front = acc; }
+        if (!front.size) return front;
+      }
+      return front;
+    }
+    function push(m, j, p) { let l = m.get(j); if (!l) m.set(j, l = []); l.push(p); if (l.length > K * 3) { l.sort((a, b) => a.cost - b.cost); l.length = K; } }
+    function merge(a, b) { const m = new Map(a); for (const [j, l] of b) m.set(j, (m.get(j) || []).concat(l)); return m; }
+
+    let res;
+    try { res = span('TOP', 0).get(n) || []; } catch (e) { if (e.message === 'too-complex') return { tokens: toks, readings: [], error: 'complex' }; throw e; }
+    let readings = res.map((d) => ({ cost: d.cost + (question && !/^(Sq|CP)$/.test(topKind(d.node)) && !isWhS(d.node) ? 1.5 : 0) + (!question && (topKind(d.node) === 'Sq') ? 1.0 : 0), tree: clean(d.node) }));
+    readings.sort((a, b) => a.cost - b.cost);
+    // de-duplicate identical trees
+    const seen = new Set(); readings = readings.filter((r) => { const k = toBrackets(r.tree); if (seen.has(k)) return false; seen.add(k); return true; });
+    const bySig = new Map();
+    readings.forEach((r) => { const k = signature(r.tree); if (!bySig.has(k)) bySig.set(k, r); });
+    readings = [...bySig.values()];
+    return { tokens: toks, readings };
+  };
+  const VFORM_OF = { VPfin: 'VPfin', VPbase: 'VPbase', VPen: 'VPen', VPing: 'VPing', VPpass: 'VPpass', VPfinG: 'VPfinG', VPbaseG: 'VPbaseG', VPenG: 'VPenG', VPingG: 'VPingG', VPpassG: 'VPpassG', VPbaseC: 'VPbaseC', VPingC: 'VPingC', VPfinC: 'VPfin' };
+  function topKind(node) { return node.label === 'S' && node.children && node.children[0] && /^(Aux|V)$/.test(node.children[0].label) ? 'Sq' : node.label; }
+  function isWhS(node) { return node.label === 'S' && node.children && node.children[0] && node.children[0].children && node.children[0].children[0] && node.children[0].children[0].pt === 'ProWh'; }
+  function baseOf(L, w) {
+    const out = [w];
+    const x = L.exc[w]; if (x) x.split('|').forEach((s) => { const [c, b] = s.split(':'); if (c === 'v') out.push(b); });
+    [[/ies$/, 'y'], [/es$/, ''], [/s$/, ''], [/ied$/, 'y'], [/ed$/, ''], [/ed$/, 'e'], [/ing$/, ''], [/ing$/, 'e']].forEach(([re, r]) => { if (re.test(w)) out.push(w.replace(re, r)); });
+    const m = w.match(/^(.*([bdgklmnprt]))\2(ing|ed)$/); if (m) out.push(m[1]);
+    return out;
+  }
+  function keyOf(nd) {
+    if (nd.gap && !nd.label) return '_';
+    if (nd.multi) return '{' + nd.multi.map(keyOf).join(' ') + '}' + (nd.vform || '');
+    if (nd.word !== undefined) return nd.pt + ':' + nd.i;
+    return '[' + nd.label + (nd.vform ? '/' + nd.vform : '') + (nd.gap ? '_' : '') + ' ' + nd.children.map(keyOf).join(' ') + ']';
+  }
+  function clean(node) {
+    if (node.word !== undefined) return { label: node.label, word: node.word };
+    return { label: node.label, children: node.children.map(clean) };
+  }
+  // structure only: any constituent covering a single word is reduced to that word
+  function signature(t) {
+    const words = (x) => x.word !== undefined ? [x.word] : x.children.flatMap(words);
+    const sig = (x) => { const w = words(x); if (w.length === 1) return w[0]; return '(' + x.label + ' ' + x.children.map(sig).join(' ') + ')'; };
+    return sig(t);
+  }
+  function toBrackets(t) { return t.word !== undefined ? '[' + t.label + ' ' + t.word + ']' : '[' + t.label + ' ' + t.children.map(toBrackets).join(' ') + ']'; }
+  function fromBrackets(s) {
+    let i = 0; const src = s.trim();
+    function ws() { while (i < src.length && /\s/.test(src[i])) i++; }
+    function node() {
+      ws(); if (src[i] !== '[') throw new Error('Expected “[” at position ' + (i + 1));
+      i++; ws(); let lab = ''; while (i < src.length && !/[\s\[\]]/.test(src[i])) lab += src[i++];
+      if (!lab) throw new Error('Missing label at position ' + (i + 1));
+      const kids = []; let words = [];
+      for (;;) {
+        ws(); if (i >= src.length) throw new Error('A “]” is missing: every “[” needs a matching “]”.');
+        if (src[i] === ']') { i++; break; }
+        if (src[i] === '[') { if (words.length) { kids.push({ word: words.join(' ') }); words = []; } kids.push(node()); continue; }
+        let w = ''; while (i < src.length && !/[\s\[\]]/.test(src[i])) w += src[i++]; words.push(w);
+      }
+      if (words.length && !kids.length) return { label: lab, word: words.join(' ') };
+      if (words.length) kids.push({ word: words.join(' ') });
+      return { label: lab, children: kids.map((k) => k.label ? k : { label: '', word: k.word }) };
+    }
+    const t = node(); ws(); if (i < src.length) throw new Error('There is extra text after the last “]”.');
+    return t;
+  }
+  const api = { Parser, tokenize, toBrackets, fromBrackets };
+  if (typeof module !== 'undefined') module.exports = api; else root.SyntaxParser = api;
+})(this);
+</script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const form = $('st-form'), q = $('st-q'), statusEl = $('st-status'), out = $('st-out');
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const SP = window.SyntaxParser;
+  const DELTA = 0.6, MAXR = 4;
+  let parser = null, state = null;
+
+  statusEl.textContent = 'Loading the word list…';
+  const ready = fetch('lexicon.json').then((r) => { if (!r.ok) throw 0; return r.json(); })
+    .then((d) => { parser = new SP.Parser(d); statusEl.textContent = ''; return true; })
+    .catch(() => { statusEl.textContent = 'Sorry, the word list couldn’t be loaded. Please refresh the page.'; return false; });
+
+  // ---------- drawing ----------
+  const mctx = document.createElement('canvas').getContext('2d');
+  const FONT = { ph: '600 15px Inter, system-ui, sans-serif', pt: '600 14px Inter, system-ui, sans-serif', wd: '400 17px Fraunces, Georgia, serif' };
+  const tw = (t, f) => { mctx.font = FONT[f]; return mctx.measureText(t).width; };
+  const LEVEL = 62, GAP = 16, WORDGAP = 26;
+  function layout(tree) {
+    let maxDepth = 0;
+    function lay(n, depth) {
+      n.depth = depth; maxDepth = Math.max(maxDepth, depth);
+      if (n.word !== undefined) {
+        const w = Math.max(tw(n.label, 'pt'), tw(n.word, 'wd'));
+        n.w = w + GAP; return n.w;
+      }
+      let sum = 0; n.children.forEach((c) => { sum += lay(c, depth + 1); });
+      n.w = Math.max(sum, tw(n.label, 'ph') + GAP); return n.w;
+    }
+    function place(n, x0) {
+      if (n.word !== undefined) { n.x = x0 + n.w / 2; return; }
+      const sum = n.children.reduce((a, c) => a + c.w, 0);
+      let x = x0 + (n.w - sum) / 2;
+      n.children.forEach((c) => { place(c, x); x += c.w; });
+      n.x = (n.children[0].x + n.children[n.children.length - 1].x) / 2;
+    }
+    lay(tree, 0); place(tree, 0);
+    return { w: tree.w, h: (maxDepth + 1) * LEVEL + WORDGAP + 10, maxDepth };
+  }
+  function nodesOf(t) { const a = []; (function walk(n) { a.push(n); (n.children || []).forEach(walk); })(t); return a; }
+  function svgTree(tree) {
+    const L = layout(tree), pad = 16, W = Math.ceil(L.w + pad * 2), H = Math.ceil(L.h + pad);
+    let s = '<svg class="st-tree" xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Syntax tree">';
+    const Y = (d) => pad + 14 + d * LEVEL;
+    nodesOf(tree).forEach((n) => {
+      const x = n.x + pad, y = Y(n.depth);
+      (n.children || []).forEach((c) => { s += '<line x1="' + x.toFixed(1) + '" y1="' + (y + 7) + '" x2="' + (c.x + pad).toFixed(1) + '" y2="' + (Y(c.depth) - 17) + '"/>'; });
+      if (n.word !== undefined) {
+        s += '<text class="pt" x="' + x.toFixed(1) + '" y="' + y + '" text-anchor="middle">' + esc(n.label) + '</text>';
+        s += '<line x1="' + x.toFixed(1) + '" y1="' + (y + 7) + '" x2="' + x.toFixed(1) + '" y2="' + (y + WORDGAP - 8) + '"/>';
+        s += '<text class="wd" x="' + x.toFixed(1) + '" y="' + (y + WORDGAP + 8) + '" text-anchor="middle">' + esc(n.word) + '</text>';
+      } else s += '<text class="ph" x="' + x.toFixed(1) + '" y="' + y + '" text-anchor="middle">' + esc(n.label) + '</text>';
+    });
+    return s + '</svg>';
+  }
+  // high-resolution image drawn straight onto a canvas (uses the page's fonts)
+  function pngTree(tree) {
+    const L = layout(tree), pad = 40, W = L.w + pad * 2, H = L.h + pad * 2;
+    const scale = Math.min(8, Math.max(2, 2000 / W, 2000 / H));
+    const cw = Math.max(2000, Math.round(W * scale)), ch = Math.max(2000, Math.round(H * scale));
+    const c = document.createElement('canvas'); c.width = cw; c.height = ch;
+    const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, cw, ch);
+    x.translate((cw - W * scale) / 2, (ch - H * scale) / 2); x.scale(scale, scale);
+    const Y = (d) => pad + 14 + d * LEVEL;
+    x.lineWidth = 1.3; x.strokeStyle = '#9a948a'; x.textAlign = 'center';
+    const line = (a, b, c2, d) => { x.beginPath(); x.moveTo(a, b); x.lineTo(c2, d); x.stroke(); };
+    nodesOf(tree).forEach((n) => {
+      const nx = n.x + pad, y = Y(n.depth);
+      (n.children || []).forEach((ch2) => line(nx, y + 7, ch2.x + pad, Y(ch2.depth) - 17));
+      if (n.word !== undefined) {
+        x.font = FONT.pt; x.fillStyle = '#A11F3E'; x.fillText(n.label, nx, y);
+        line(nx, y + 7, nx, y + WORDGAP - 8);
+        x.font = FONT.wd; x.fillStyle = '#1b1d24'; x.fillText(n.word, nx, y + WORDGAP + 8);
+      } else { x.font = FONT.ph; x.fillStyle = '#0F4C81'; x.fillText(n.label, nx, y); }
+    });
+    return { c, cw, ch };
+  }
+
+  // ---------- explaining how readings differ ----------
+  function words(n) { return n.word !== undefined ? [n.word] : n.children.flatMap(words); }
+  function headWord(n) {
+    if (n.word !== undefined) return n.word;
+    const pref = { NP: ['N', 'Pro'], VP: ['V'], AdjP: ['Adj'], AdvP: ['Adv'], PP: ['P'], S: [], CP: [] }[n.label] || [];
+    const kids = n.children;
+    if (n.label === 'NP') { const ns = kids.filter((k) => pref.includes(k.label)); if (ns.length) return ns[ns.length - 1].word; }
+    for (const k of kids) if (pref.includes(k.label) && k.word !== undefined) return k.word;
+    for (const k of kids) if (k.label === n.label) return headWord(k);
+    return words(n).join(' ');
+  }
+  function parents(t) { const m = new Map(); (function walk(n, p) { if (p && n.children) m.set(words(n).join(' ') + '|' + n.label, p); (n.children || []).forEach((c) => walk(c, n)); })(t, null); return m; }
+  function describe(r, others) {
+    const mine = parents(r);
+    for (const o of others) {
+      const theirs = parents(o);
+      for (const [k, p] of mine) {
+        const [phrase, lab] = k.split('|');
+        if (!/^(PP|CP|AdvP|NP|AdjP)$/.test(lab) || phrase.split(' ').length < 2) continue;
+        const q = theirs.get(k);
+        if (q && words(q).join(' ') !== words(p).join(' ')) {
+          const pw = words(p), ph = phrase.split(' ');
+          const target = p.label === 'VP' ? 'the verb “' + headWord(p) + '”' : p.label === 'NP' ? '“' + pw.slice(0, pw.length - ph.length).join(' ') + '”' : p.label === 'S' ? 'the whole clause' : '“' + headWord(p) + '”';
+          return '“' + phrase + '” goes with ' + target + '.';
+        }
+      }
+    }
+    return 'The words are grouped differently.';
+  }
+
+  // ---------- rendering results ----------
+  function show(sentence) {
+    if (!parser) { ready.then((ok) => ok && show(sentence)); return; }
+    const text = sentence.trim(); q.value = text;
+    if (!text) { out.innerHTML = ''; return; }
+    try { history.replaceState(null, '', '#' + encodeURIComponent(text)); } catch (e) {}
+    const res = parser.parse(text);
+    statusEl.textContent = '';
+    if (!res.readings.length) { renderNone(res); return; }
+    const best = res.readings[0].cost;
+    const rs = res.readings.filter((r) => r.cost <= best + DELTA).slice(0, MAXR).map((r) => r.tree);
+    state = { sentence: text, readings: rs, cur: 0, edited: null };
+    render();
+  }
+  function renderNone(res) {
+    state = { sentence: q.value, readings: [], cur: 0, edited: null };
+    const why = res.error === 'long' ? 'This sentence is too long for the tool (the limit is 40 words). Try splitting it into shorter sentences.'
+      : 'This may not be a complete sentence, or it may use a structure the tool doesn’t cover yet.';
+    out.innerHTML = '<div class="st-card"><div class="st-none"><h3>No tree for this sentence</h3><p>' + why + '</p>' +
+      '<ul><li>Check that it has a subject and a verb (fragments like <em>In the park.</em> have no tree).</li><li>Check the spelling.</li><li>Very informal or unusual structures may not be covered.</li></ul></div>' +
+      '<div class="st-actions"><button type="button" class="st-btn" data-act="edit-blank"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Draw it yourself with brackets</button></div>' + editBox('') + '</div>';
+    out.querySelector('.st-edit').hidden = true;
+  }
+  function editBox(val) {
+    return '<div class="st-edit" hidden><textarea id="st-br" spellcheck="false" aria-label="Tree in labeled brackets">' + esc(val) + '</textarea>' +
+      '<p>Format: <code>[S [NP [Det the] [N dog]] [VP [V barked]]]</code>. Every [ needs a matching ].</p>' +
+      '<div class="st-err" id="st-err" aria-live="polite"></div>' +
+      '<div class="st-row"><button type="button" class="st-btn primary" data-act="redraw">Redraw tree</button> <button type="button" class="st-btn" data-act="reset">Back to automatic tree</button></div></div>';
+  }
+  function render() {
+    const { readings, cur } = state;
+    const tree = state.edited || readings[cur];
+    let h = '<div class="st-card">';
+    if (readings.length > 1 && !state.edited) {
+      h += '<div class="st-amb"><b>This sentence is ambiguous.</b> It has ' + readings.length + ' possible structures:' +
+        '<div class="st-tabs" role="tablist">' + readings.map((_, k) => '<button type="button" role="tab" class="st-tab' + (k === cur ? ' on' : '') + '" aria-selected="' + (k === cur) + '" data-reading="' + k + '">Reading ' + (k + 1) + '</button>').join('') + '</div>' +
+        '<div class="st-why">' + esc(describe(readings[cur], readings.filter((_, k) => k !== cur))) + '</div></div>';
+    }
+    if (state.edited) h += '<div class="st-amb"><b>Your edited tree.</b> <button type="button" class="st-tab" data-act="reset">Back to automatic tree</button></div>';
+    h += '<div class="st-canvas">' + svgTree(tree) + '</div>';
+    h += '<div class="st-actions">' +
+      '<button type="button" class="st-btn primary" data-act="png"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download image</button>' +
+      '<button type="button" class="st-btn" data-act="copy"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V4h12"/></svg>Copy brackets</button>' +
+      '<button type="button" class="st-btn" data-act="edit"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Edit tree</button></div>';
+    h += editBox(SP.toBrackets(tree)) + '</div>';
+    out.innerHTML = h;
+    const cv = out.querySelector('.st-canvas');
+    if (cv && cv.scrollWidth > cv.clientWidth + 4) cv.insertAdjacentHTML('afterend', '<p class="st-scroll">Scroll sideways to see the whole tree, or download the image.</p>');
+  }
+
+  // ---------- events ----------
+  form.addEventListener('submit', (e) => { e.preventDefault(); show(q.value); });
+  $('st-examples').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) show(b.textContent); });
+  const toastEl = $('tw-toast'); let tt;
+  function toast(m) { toastEl.textContent = m; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toastEl.classList.remove('show'), 2000); }
+  function current() { return state && (state.edited || state.readings[state.cur]); }
+  function fileName() { return 'syntax-tree-' + (state.sentence || 'tree').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40); }
+  out.addEventListener('click', async (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.reading) { state.cur = +b.dataset.reading; render(); return; }
+    const act = b.dataset.act;
+    if (act === 'png') {
+      const t = current(); if (!t) return;
+      const { c, cw, ch } = pngTree(t);
+      c.toBlob((blob) => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fileName() + '.png'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); toast('Image downloaded (' + cw + ' × ' + ch + ' px)'); }, 'image/png');
+    } else if (act === 'copy') {
+      const t = current(); if (!t) return;
+      try { await navigator.clipboard.writeText(SP.toBrackets(t)); toast('Brackets copied'); } catch (err) { toast('Couldn’t copy. Use Edit tree to select them'); }
+    } else if (act === 'edit' || act === 'edit-blank') {
+      const box = out.querySelector('.st-edit'); box.hidden = !box.hidden; if (!box.hidden) box.querySelector('textarea').focus();
+    } else if (act === 'redraw') {
+      const ta = $('st-br'), err = $('st-err');
+      try { const t = SP.fromBrackets(ta.value); checkTree(t); state.edited = t; render(); out.querySelector('.st-edit').hidden = false; }
+      catch (ex) { err.textContent = ex.message; }
+    } else if (act === 'reset') { state.edited = null; if (state.readings.length) render(); }
+  });
+  function checkTree(t) {
+    (function walk(n) {
+      if (n.word === undefined && (!n.children || !n.children.length)) throw new Error('The label “' + n.label + '” has nothing under it.');
+      if (n.label === '') throw new Error('Every word needs a label, e.g. [N dog].');
+      (n.children || []).forEach(walk);
+    })(t);
+  }
+  const fromHash = () => { const s = decodeURIComponent(location.hash.slice(1) || ''); if (s) show(s); };
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+  window.__st = { show, ready, get state() { return state; } };
+})();
+</script>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> M Enam Ull Hassan · Boston, MA</div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
