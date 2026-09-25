@@ -26,6 +26,51 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  /* Resource cards: the tool name fills the card; details appear on hover */
+  .rtools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .rtool {
+    display: grid; grid-template-columns: minmax(0, 1fr); min-height: 240px; padding: 28px 30px; border-radius: 20px;
+    color: #fff; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .rtool.c1 { background: #0F4C81; }
+  .rtool.c2 { background: #A11F3E; }
+  .rtool.c3 { background: #7A5444; }
+  .rtool.c4 { background: #4F5096; }
+  .rtool.c5 { background: #0B6B57; }
+  /* Both layers share one grid cell, so the card never changes size on hover */
+  .rtool .rt-face, .rtool .rt-more { grid-area: 1 / 1; display: flex; flex-direction: column; transition: opacity .3s ease, transform .3s ease; }
+  .rtool .rt-face { justify-content: flex-end; min-width: 0; }
+  .rtool .rt-more { min-width: 0; }
+  .rtool .rt-name {
+    font-family: var(--serif); font-weight: 500; color: inherit;
+    font-size: clamp(32px, 4vw, 52px); line-height: 1.02; letter-spacing: -.02em;
+    margin: 0; text-wrap: balance;
+  }
+  .rtool .rt-more { justify-content: flex-end; gap: 10px; opacity: 0; transform: translateY(10px); }
+  .rtool .rt-small { font-family: var(--serif); font-weight: 500; font-size: 24px; line-height: 1.15; overflow: hidden; }
+  .rtool .rt-desc { font-size: var(--fs-body); line-height: 1.55; color: rgba(255,255,255,.88); }
+  .rtool .rt-go { margin-top: 6px; font-weight: 600; font-size: var(--fs-body); color: #FFBE98; }
+  .rtool:hover .rt-face, .rtool:focus-visible .rt-face { opacity: 0; transform: translateY(-10px); }
+  .rtool:hover .rt-more, .rtool:focus-visible .rt-more { opacity: 1; transform: none; }
+  a.rtool:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(0,0,0,.14); }
+  .rtool:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .rtool.soon { background: transparent; color: var(--muted); border: 1.5px dashed var(--line); box-shadow: none; cursor: default; }
+  .rtool.soon .rt-desc { color: var(--muted); }
+  .rtool.soon .rt-go { color: var(--label); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+  /* Touch screens have no hover, so show the details there */
+  @media (hover: none) {
+    .rtool { min-height: 0; }
+    .rtool .rt-face { display: none; }
+    .rtool .rt-more { opacity: 1; transform: none; }
+  }
+  @media (max-width: 820px) {
+    .rtools { grid-template-columns: 1fr; }
+    .rtool { min-height: 200px; padding: 24px 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .rtool, .rtool .rt-face, .rtool .rt-more { transition: none; } }
+</style>
 </head>
 <body>
 
@@ -63,42 +108,30 @@
   <section id="available">
     <div class="wrap sec-head">
       <div class="sec-label">Available now</div>
-      <div class="card-grid">
-        <a class="course c5 compact live-tool reveal" href="transition-words.html">
-          <span class="code">Writing tool</span>
-          <h3>Transition Word Finder</h3>
-          <p>Find the right connecting word for adding, contrasting, or concluding ideas, with tips on grammar and punctuation.</p>
-          <span class="open">Open tool →</span>
+      <div class="rtools">
+        <a class="rtool c5 reveal" href="transition-words.html">
+          <span class="rt-face"><h3 class="rt-name">Transition Word Finder</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">Transition Word Finder</span><span class="rt-desc">Find the right connecting word for adding, contrasting, or concluding ideas, with tips on grammar and punctuation.</span><span class="rt-go">Open tool →</span></span>
         </a>
-        <a class="course c1 compact live-tool reveal" href="academic-verbs.html">
-          <span class="code">Writing tool</span>
-          <h3>Academic Verb Finder</h3>
-          <p>Find precise verbs for reporting sources, describing research, and building an argument, with grammar patterns and common mistakes.</p>
-          <span class="open">Open tool →</span>
+        <a class="rtool c1 reveal" href="academic-verbs.html">
+          <span class="rt-face"><h3 class="rt-name">Academic Verb Finder</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">Academic Verb Finder</span><span class="rt-desc">Find precise verbs for reporting sources, describing research, and building an argument, with grammar patterns and common mistakes.</span><span class="rt-go">Open tool →</span></span>
         </a>
-        <a class="course c4 compact live-tool reveal" href="semantic-map.html">
-          <span class="code">Visual tool</span>
-          <h3>Semantic Map Builder</h3>
-          <p>Build and style maps of a word's meaning, synonyms, word forms, and collocations, then download them as high-resolution images.</p>
-          <span class="open">Open tool →</span>
+        <a class="rtool c4 reveal" href="semantic-map.html">
+          <span class="rt-face"><h3 class="rt-name">Semantic Map Builder</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">Semantic Map Builder</span><span class="rt-desc">Build and style maps of a word's meaning, synonyms, word forms, and collocations, then download them as high-resolution images.</span><span class="rt-go">Open tool →</span></span>
         </a>
-        <a class="course c2 compact live-tool reveal" href="synonym-finder.html">
-          <span class="code">Writing tool</span>
-          <h3>Synonym Finder</h3>
-          <p>Type any English word to find its synonyms and alternative phrases, grouped by meaning.</p>
-          <span class="open">Open tool →</span>
+        <a class="rtool c2 reveal" href="synonym-finder.html">
+          <span class="rt-face"><h3 class="rt-name">Synonym Finder</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">Synonym Finder</span><span class="rt-desc">Type any English word to find its synonyms and alternative phrases, grouped by meaning.</span><span class="rt-go">Open tool →</span></span>
         </a>
-        <a class="course c3 compact live-tool reveal" href="syntax-tree.html">
-          <span class="code">Linguistics tool</span>
-          <h3>Syntax Tree Generator</h3>
-          <p>Type a sentence to see its phrase structure tree, with every reading of ambiguous sentences. Edit it and download it as an image.</p>
-          <span class="open">Open tool →</span>
+        <a class="rtool c3 reveal" href="syntax-tree.html">
+          <span class="rt-face"><h3 class="rt-name">Syntax Tree Generator</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">Syntax Tree Generator</span><span class="rt-desc">Type a sentence to see its phrase structure tree, with every reading of ambiguous sentences. Edit it and download it as an image.</span><span class="rt-go">Open tool →</span></span>
         </a>
-        <a class="course c5 compact live-tool reveal" href="argu-daily.html">
-          <span class="code">Game</span>
-          <h3>ARGU Daily</h3>
-          <p>Rebuild short arguments card by card: claim, reason, support, counterargument, and response. Then drag in the linking words that connect them.</p>
-          <span class="open">Play game →</span>
+        <a class="rtool c5 reveal" href="argu-daily.html">
+          <span class="rt-face"><h3 class="rt-name">ARGU Daily</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">ARGU Daily</span><span class="rt-desc">Rebuild short arguments card by card: claim, reason, support, counterargument, and response. Then drag in the linking words that connect them.</span><span class="rt-go">Play game →</span></span>
         </a>
       </div>
     </div>
@@ -107,12 +140,27 @@
   <section id="upcoming">
     <div class="wrap sec-head">
       <div class="sec-label">Coming soon</div>
-      <div class="tools">
-        <div class="tool soon reveal" aria-disabled="true"><span class="icon">C</span><h3>Claim Builder</h3><p>Turn a topic into a focused, arguable thesis statement, step by step.</p><span class="status">Writing · Coming soon</span></div>
-        <div class="tool soon reveal" aria-disabled="true"><span class="icon">↔</span><h3>Counterargument Practice</h3><p>Anticipate an opposing view and draft a clear rebuttal.</p><span class="status">Writing · Coming soon</span></div>
-        <div class="tool soon reveal" aria-disabled="true"><span class="icon">✓</span><h3>Peer Review Checklist</h3><p>A guided checklist for giving useful, specific feedback on a draft.</p><span class="status">Writing · Coming soon</span></div>
-        <div class="tool soon reveal" aria-disabled="true"><span class="icon">ə</span><h3>Sounds of English</h3><p>An interactive look at English speech sounds and how they're made.</p><span class="status">Explore · Coming soon</span></div>
-        <div class="tool soon reveal" aria-disabled="true"><span class="icon">✦</span><h3>Language Facts</h3><p>Short, surprising facts about multilingualism and how languages work.</p><span class="status">Explore · Coming soon</span></div>
+      <div class="rtools">
+        <div class="rtool soon reveal" aria-disabled="true">
+          <span class="rt-face"><h3 class="rt-name">Claim Builder</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">Claim Builder</span><span class="rt-desc">Turn a topic into a focused, arguable thesis statement, step by step.</span><span class="rt-go">Coming soon</span></span>
+        </div>
+        <div class="rtool soon reveal" aria-disabled="true">
+          <span class="rt-face"><h3 class="rt-name">Counterargument Practice</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">Counterargument Practice</span><span class="rt-desc">Anticipate an opposing view and draft a clear rebuttal.</span><span class="rt-go">Coming soon</span></span>
+        </div>
+        <div class="rtool soon reveal" aria-disabled="true">
+          <span class="rt-face"><h3 class="rt-name">Peer Review Checklist</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">Peer Review Checklist</span><span class="rt-desc">A guided checklist for giving useful, specific feedback on a draft.</span><span class="rt-go">Coming soon</span></span>
+        </div>
+        <div class="rtool soon reveal" aria-disabled="true">
+          <span class="rt-face"><h3 class="rt-name">Sounds of English</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">Sounds of English</span><span class="rt-desc">An interactive look at English speech sounds and how they're made.</span><span class="rt-go">Coming soon</span></span>
+        </div>
+        <div class="rtool soon reveal" aria-disabled="true">
+          <span class="rt-face"><h3 class="rt-name">Language Facts</h3></span>
+          <span class="rt-more"><span class="rt-small" aria-hidden="true">Language Facts</span><span class="rt-desc">Short, surprising facts about multilingualism and how languages work.</span><span class="rt-go">Coming soon</span></span>
+        </div>
       </div>
     </div>
   </section>
@@ -134,6 +182,17 @@
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
   }), { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  // Shrink a tool name only if its longest word would not fit inside the card
+  function fitNames() {
+    document.querySelectorAll('.rt-name, .rt-small').forEach(n => {
+      n.style.fontSize = '';
+      let size = parseFloat(getComputedStyle(n).fontSize);
+      while (n.scrollWidth > n.clientWidth + 1 && size > 20) { size -= 1; n.style.fontSize = size + 'px'; }
+    });
+  }
+  fitNames();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
+  addEventListener('resize', fitNames);
 </script>
 </body>
 </html>
