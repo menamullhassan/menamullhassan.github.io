@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="ARGU Daily: a drag-and-drop argument puzzle for English learners.">
+<title>ARGU Daily</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>
+/* Match the website's light/dark choice, and blend in when shown inside the site page */
+(function(){var d=document.documentElement;
+ try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')d.setAttribute('data-theme',t)}catch(e){}
+ try{if(window.self!==window.top)d.classList.add('embedded')}catch(e){d.classList.add('embedded')}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@800&display=swap">
+<style>
+:root{
+  --paper:#FAFAF9; --card:#FFFFFF; --ink:#18171A; --muted:#6B6970; --faint:#A3A1A8;
+  --line:#E8E6E9; --line2:#F1F0F2; --lock:#EFEEF0;
+  --btn:#18171A; --btn-ink:#FFFFFF;
+  --r1:#E9573A; --r1s:#FDEEE9;   /* claim · coral */
+  --r2:#DB7A00; --r2s:#FDF1E1;   /* reason · tangerine */
+  --r3:#0C9580; --r3s:#E3F5F1;   /* support · teal */
+  --r4:#6E52D6; --r4s:#EFEBFC;   /* counter · violet */
+  --r5:#D33D74; --r5s:#FCEAF1;   /* response · pink */
+  --star:#F2A31B;
+  --good:#0C9580; --good-soft:#E3F5F1; --bad:#D63A2A; --bad-soft:#FCECEA; --warn-soft:#FDF1E1; --info-soft:#F3F2F4;
+  --scrim:rgba(24,23,26,.36);
+  --sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --logo:"Plus Jakarta Sans",var(--sans);
+  --fun:var(--sans); --serif:var(--sans);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#141316; --card:#1C1B1F; --ink:#F2F1F3; --muted:#A9A6AE; --faint:#6F6C75;
+    --line:#2C2A30; --line2:#232126; --lock:#232126; --btn:#F2F1F3; --btn-ink:#141316;
+    --r1:#FF7A5E; --r1s:#2E1A16; --r2:#FFA43D; --r2s:#2E2213; --r3:#3CCDB2; --r3s:#132A26; --r4:#A48EFF; --r4s:#221D38; --r5:#FF72A6; --r5s:#2F1722;
+    --star:#FFBF47; --good:#3CCDB2; --good-soft:#132A26; --bad:#FF7B6B; --bad-soft:#321A17; --warn-soft:#2E2213; --info-soft:#232126;
+    --scrim:rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#141316; --card:#1C1B1F; --ink:#F2F1F3; --muted:#A9A6AE; --faint:#6F6C75;
+  --line:#2C2A30; --line2:#232126; --lock:#232126; --btn:#F2F1F3; --btn-ink:#141316;
+  --r1:#FF7A5E; --r1s:#2E1A16; --r2:#FFA43D; --r2s:#2E2213; --r3:#3CCDB2; --r3s:#132A26; --r4:#A48EFF; --r4s:#221D38; --r5:#FF72A6; --r5s:#2F1722;
+  --star:#FFBF47; --good:#3CCDB2; --good-soft:#132A26; --bad:#FF7B6B; --bad-soft:#321A17; --warn-soft:#2E2213; --info-soft:#232126;
+  --scrim:rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.app{max-width:460px;margin:0 auto;padding-inline:20px;padding-block:12px 48px}
+.view{display:flex;flex-direction:column;gap:20px;animation:rise .3s ease both}
+@keyframes rise{from{opacity:.001;transform:translateY(6px)}}
+.label{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.02em}
+
+/* wordmark (kept as is) */
+.wordmark{font-family:var(--logo);font-weight:800;font-size:30px;line-height:1;display:inline-flex;align-items:center;letter-spacing:-.045em}
+.wordmark .l:nth-child(1){color:var(--r1)}
+.wordmark .l:nth-child(2){color:var(--r2)}
+.wordmark .l:nth-child(3){color:var(--r3)}
+.wordmark .l:nth-child(4){color:var(--r4)}
+.wordmark .sub{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-left:10px;padding-left:10px;border-left:1px solid var(--line);align-self:stretch;display:flex;align-items:center}
+.wordmark.small{font-size:22px}
+.wordmark.small .sub{display:none}
+
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:44px}
+.pillbtn{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-weight:500;font-size:14px;transition:background .15s}
+.pillbtn:hover{background:var(--line2)}
+
+/* map */
+.progress{display:flex;flex-direction:column;gap:10px;padding:4px 0 2px}
+.progress .nums{display:flex;align-items:baseline;gap:18px}
+.progress .big{font-family:var(--mono);font-weight:500;font-size:28px;line-height:1;letter-spacing:-.03em}
+.progress .lab{font-size:13px;color:var(--muted);margin-left:4px;font-family:var(--sans);letter-spacing:0}
+.progress .stars{color:var(--star)}
+.progress .sep{display:none}
+.ptrack{height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.ptrack span{display:block;height:100%;border-radius:4px;background:var(--ink);transition:width .6s ease}
+.chapter{display:flex;flex-direction:column;gap:2px;margin-top:14px;padding-bottom:4px}
+.chapter h2{font-weight:600;font-size:17px;margin:0;letter-spacing:-.01em}
+.chapter p{margin:0;color:var(--muted);font-size:14px}
+.path{display:flex;flex-direction:column;gap:8px}
+.stage{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border-radius:14px;padding:12px 14px;background:color-mix(in srgb,var(--cs) 70%,var(--card));border:1px solid color-mix(in srgb,var(--c) 18%,var(--line));transition:border-color .15s,transform .15s}
+.stage:not(.locked):hover{border-color:var(--c)}
+.stage.now{background:var(--card);border-color:var(--c);box-shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px -10px color-mix(in srgb,var(--c) 60%,transparent)}
+.stage.locked{filter:grayscale(.7);opacity:.55;cursor:default}
+.node{flex:none;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-family:var(--mono);font-weight:500;font-size:16px;background:var(--c);color:#fff}
+.stage.locked .node{background:color-mix(in srgb,var(--c) 45%,var(--lock))}
+.node svg{width:16px;height:16px}
+.sinfo{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sinfo .t{font-weight:500;font-size:15.5px;line-height:1.35;color:var(--ink)}
+.sinfo .s{font-size:13px;color:var(--muted)}
+.starrow{letter-spacing:2px;font-size:13px}
+.starrow .on{color:var(--star)} .starrow .off{color:color-mix(in srgb,var(--ink) 15%,transparent)}
+.go{flex:none;font-size:13px;font-weight:500;padding:7px 14px;border-radius:999px;background:var(--c);color:#fff}
+.replay{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--c);background:var(--card);border:1px solid color-mix(in srgb,var(--c) 30%,var(--line));transition:transform .2s}
+.replay svg{width:16px;height:16px}
+.stage:hover .replay{transform:rotate(-40deg)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.footer{margin:16px 0 0;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:12.5px;color:var(--faint);display:flex;flex-direction:column;gap:4px}
+
+/* play */
+.q{font-weight:600;font-size:24px;line-height:1.22;margin:0;text-wrap:balance;letter-spacing:-.025em}
+.stagechip{font-size:12.5px;font-weight:500;color:var(--muted);font-family:var(--mono)}
+.status{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 0 12px;border-bottom:1px solid var(--line)}
+.task{font-weight:500;font-size:15px;display:flex;align-items:center;gap:8px}
+.task .dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--ink));flex:none}
+.hearts{font-size:14px;letter-spacing:3px;white-space:nowrap}
+.hearts{font-size:17px;letter-spacing:2px}
+.hearts .h{color:var(--star);display:inline-block;transition:all .3s}
+.hearts .h.gone{color:var(--line)}
+.hearts .h.lost{animation:lose .5s}
+@keyframes lose{40%{transform:scale(1.6)}}
+
+.board{display:flex;flex-direction:column;gap:6px}
+.slot{border-radius:12px;padding:10px 14px 12px;border:1px dashed var(--line);background:transparent;transition:all .25s}
+.slot .role{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.slot .role i{width:6px;height:6px;border-radius:50%;background:var(--line)}
+.slot .ask{font-size:14px;color:var(--faint);margin-top:2px}
+.slot.active{border-style:solid;border-color:var(--c);background:color-mix(in srgb,var(--cs) 60%,var(--card))}
+.slot.active .role,.slot.active .ask{color:var(--c)}
+.slot.active .role i{background:var(--c)}
+.slot.done{border:1px solid var(--line);background:var(--card);box-shadow:inset 3px 0 0 var(--c)}
+.slot.done .role{color:var(--c)} .slot.done .role i{background:var(--c)}
+.stext{font-size:16.5px;line-height:1.45;margin-top:3px}
+.placed{animation:land .35s cubic-bezier(.2,.9,.3,1.1) both}
+@keyframes land{from{transform:translateY(8px);opacity:0}}
+.blank{display:inline-block;min-width:64px;height:1em;vertical-align:-2px;border-bottom:2px solid var(--line);margin-right:4px}
+.blank.now{border-color:var(--c);background:var(--cs);border-radius:4px 4px 0 0;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.4}}
+.conn{color:var(--c);font-weight:600}
+.conn.new{display:inline-block;animation:flip .4s ease both}
+@keyframes flip{from{transform:translateY(-6px);opacity:0}}
+
+.tray{display:flex;flex-direction:column;gap:8px}
+.trayhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
+.trayhead span{font-size:13px;font-weight:500;color:var(--muted)}
+.hintbtn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-weight:500;font-size:13px}
+.hintbtn:hover{background:var(--line2)}
+.hintbtn:disabled{opacity:.4;cursor:default}
+.tile{width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:13px 14px;font-size:16px;line-height:1.45;transition:border-color .15s,transform .1s}
+.tile:hover{border-color:var(--faint)}
+.tile:active{transform:scale(.99)}
+.tile.glow{border-color:var(--c);box-shadow:0 0 0 3px var(--cs)}
+.shake{animation:shake .35s!important;border-color:var(--bad)!important;background:var(--bad-soft)!important}
+@keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-2px)}}
+.opts{display:grid;grid-template-columns:1fr;gap:8px}
+.opt{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:14px 16px;font-size:17px;font-weight:500;text-align:left;transition:border-color .15s}
+.opt:hover{border-color:var(--faint)}
+.opt.glow{border-color:var(--c);box-shadow:0 0 0 3px var(--cs)}
+
+.msg{display:block;border-radius:10px;padding:11px 14px;font-size:14.5px;line-height:1.45;animation:land .25s both;border-left:3px solid var(--ink)}
+.msg .ic{display:none}
+.msg.warn{background:var(--warn-soft);border-color:var(--r2)}
+.msg.bad{background:var(--bad-soft);border-color:var(--bad)}
+.msg.good{background:var(--good-soft);border-color:var(--good)}
+.msg.info{background:var(--info-soft);border-color:var(--ink)}
+
+/* end */
+.end{display:flex;flex-direction:column;gap:14px;animation:rise .35s both;padding-top:6px}
+.endhead{text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center;padding:10px 0 4px}
+.endhead h2{font-weight:600;font-size:28px;margin:0;line-height:1.1;letter-spacing:-.03em}
+.endhead p{margin:0;color:var(--muted);font-size:14.5px}
+.bigstars{font-size:34px;letter-spacing:8px;line-height:1}
+.bigstars span{display:inline-block;color:var(--line)}
+.bigstars span.on{color:var(--star);animation:starin .45s cubic-bezier(.2,1.4,.4,1) both}
+.bigstars span:nth-child(2).on{animation-delay:.15s}.bigstars span:nth-child(3).on{animation-delay:.3s}
+@keyframes starin{from{transform:scale(.2);opacity:0}}
+.anatomy{font-size:16.5px;line-height:1.75;margin:0}
+.anatomy .sn{background:var(--cs);border-radius:4px;padding:2px 3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.anatomy b{color:var(--c);font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend span::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--c)}
+.why{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.why li{display:grid;grid-template-columns:10px 1fr;gap:10px;font-size:14.5px;color:var(--muted)}
+.why li>i{width:6px;height:6px;border-radius:50%;background:var(--c);margin-top:8px}
+.why b{color:var(--ink);font-weight:600}
+.why em{font-style:normal;color:var(--c);font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.cardh{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.decoycard{border-color:color-mix(in srgb,var(--bad) 35%,var(--line))}
+.decoycard .stext{text-decoration:line-through;text-decoration-color:var(--bad);color:var(--muted)}
+.btn{border:0;background:var(--btn);color:var(--btn-ink);border-radius:12px;padding:14px 18px;font-weight:500;font-size:15.5px;width:100%;transition:opacity .15s,transform .1s}
+.btn:hover{opacity:.88}
+.btn:active{transform:scale(.99)}
+.btn.soft{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.row{display:flex;gap:10px}.row>*{flex:1}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:10;display:flex;align-items:flex-end;justify-content:center;animation:fade .2s both;backdrop-filter:blur(2px)}
+@keyframes fade{from{opacity:0}}
+.sheet{background:var(--paper);width:100%;max-width:460px;max-height:90vh;overflow:auto;border-radius:20px 20px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px;animation:up .28s cubic-bezier(.2,.9,.3,1) both}
+@keyframes up{from{transform:translateY(30px);opacity:0}}
+.sheet h2{font-weight:600;font-size:22px;margin:0;letter-spacing:-.02em}
+.howto{display:flex;flex-direction:column;gap:14px;margin:0;padding:0;list-style:none}
+.howto li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;font-size:15px;color:var(--muted)}
+.howto li b{color:var(--ink);font-weight:600}
+.howto .n{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--mono);font-size:13px;color:var(--c);background:var(--cs)}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain span{font-size:12px;font-weight:500;padding:3px 9px;border-radius:6px;background:var(--cs);color:var(--c)}
+.chain em{color:var(--faint);font-style:normal}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:var(--ink);color:var(--paper);padding:11px 16px;border-radius:12px;font-weight:500;font-size:14px;opacity:0;transition:all .25s;z-index:20;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.confetti{position:fixed;top:-12px;width:6px;height:10px;border-radius:2px;z-index:30;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(var(--rot))}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* drag & drop */
+.drag{touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.tile.drag{display:flex;gap:10px;align-items:flex-start}
+.grip{color:var(--faint);font-size:14px;line-height:1.6;flex:none}
+.dragging{opacity:.3}
+.ghost{position:fixed;z-index:50;pointer-events:none;margin:0;transform:rotate(-1.5deg) scale(1.02);box-shadow:0 16px 36px -12px rgba(0,0,0,.35);cursor:grabbing;opacity:.97}
+body.is-dragging{cursor:grabbing;user-select:none;-webkit-user-select:none}
+body.is-dragging .slot.target{border-color:color-mix(in srgb,var(--c) 45%,var(--line))}
+.slot.over{border-style:solid!important;border-color:var(--c)!important;background:var(--cs)!important;transform:scale(1.015)}
+.slot.over .role,.slot.over .ask{color:var(--c)}
+.slot.done.target{box-shadow:inset 3px 0 0 var(--c),0 0 0 3px var(--cs)}
+.selected{border-color:var(--ink)!important;box-shadow:0 0 0 3px var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chipw{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:11px 16px;font-size:16px;font-weight:500;transition:border-color .15s}
+.chipw:hover{border-color:var(--faint)}
+.chipw.glow{border-color:var(--c);box-shadow:0 0 0 3px var(--cs)}
+.chipw.ghost{border-color:var(--c);color:var(--c)}
+.task .count{font-family:var(--mono);font-size:13px;color:var(--muted);margin-left:2px}
+.slot{transition:border-color .15s,background .15s,transform .15s}
+html.embedded body{background:transparent}
+</style>
+</head>
+<body>
+
+
+<div class="app">
+  <!-- MAP -->
+  <section class="view" id="map">
+    <div class="top">
+      <div class="wordmark" aria-label="ARGU Daily"><span class="l">A</span><span class="l">R</span><span class="l">G</span><span class="l">U</span><span class="sub">Daily</span></div>
+      <button class="pillbtn" id="btn-help">? Help</button>
+    </div>
+    <div class="progress">
+      <div class="nums"><span><span class="big" id="p-done">0/10</span><span class="lab">stages</span></span><span><span class="big stars" id="p-stars">0★</span><span class="lab">of 30 stars</span></span></div>
+      <div class="ptrack" aria-hidden="true"><span id="p-bar" style="width:0%"></span></div>
+    </div>
+    <div id="chapters"></div>
+    <footer class="footer"><span>Your progress is saved on this device.</span><span>Copyright © Enam Hassan</span></footer>
+  </section>
+
+  <!-- PLAY -->
+  <section class="view" id="play" hidden>
+    <div class="top">
+      <button class="pillbtn" id="btn-back">← Stages</button>
+      <div class="wordmark small" aria-hidden="true"><span class="l">A</span><span class="l">R</span><span class="l">G</span><span class="l">U</span></div>
+      <button class="pillbtn" id="btn-help2" aria-label="How to play">?</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <span class="stagechip" id="stagechip">Stage 1</span>
+      <h1 class="q" id="q"></h1>
+    </div>
+    <div class="status"><span class="task" id="task"></span><span class="hearts" id="hearts" aria-label="Stars left"></span></div>
+    <div class="board" id="board"></div>
+    <div id="feedback" aria-live="polite"></div>
+    <div class="tray" id="tray"></div>
+    <div id="end"></div>
+  </section>
+</div>
+<div id="overlay"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ STAGES ============ */
+// Cards are listed in the correct order: claim, reason, support, counter, response.
+// c.o[0] is the correct connector; options are shuffled on screen.
+const CHAPTERS=[
+ {name:"Chapter 1 · Build it",note:"Drag the argument into place, then connect it."},
+ {name:"Chapter 2 · Spot the decoy",note:"Now one weak card is hiding in your hand. Leave it out."}
+];
+const STAGES=[
+{ch:0,q:"Should every classroom have a pet dragon?",cards:[
+ {t:"Every classroom should have its own pet dragon."},
+ {t:"A dragon could keep the classroom warm all winter."},
+ {t:"On a freezing morning, one gentle puff of fire could heat the whole room in seconds.",c:{o:["For example,","However,","Therefore,"]}},
+ {t:"Dragons can be dangerous around paper and books.",c:{o:["However,","As a result,","For instance,"]}},
+ {t:"Schools could build fireproof classrooms so that everyone stays safe.",c:{o:["Nevertheless,","Similarly,","Because"]}}]},
+{ch:0,q:"Should Mondays be cancelled forever?",cards:[
+ {t:"Mondays should be removed from the calendar."},
+ {t:"Most people feel tired and unhappy at the start of the week."},
+ {t:"Coffee shops are often at their busiest on Monday mornings.",c:{o:["For instance,","Nevertheless,","Instead,"]}},
+ {t:"Without Mondays, Tuesday would simply become the new Monday.",c:{o:["Critics argue that","Therefore,","For example,"]}},
+ {t:"A six-day week would still give everyone one extra day of rest.",c:{o:["However,","Moreover,","For instance,"]}}]},
+{ch:0,q:"Should napping be a required college class?",cards:[
+ {t:"Every college should offer a required class on napping."},
+ {t:"Well-rested students learn and remember more."},
+ {t:"A short afternoon nap can help people stay alert for the rest of the day.",c:{o:["For example,","On the other hand,","Otherwise,"]}},
+ {t:"Some professors would not take a class about sleeping seriously.",c:{o:["Admittedly,","Consequently,","In addition,"]}},
+ {t:"Students could earn credit by keeping a short sleep journal after each nap.",c:{o:["Nonetheless,","Therefore,","For instance,"]}}]},
+{ch:0,q:"Should students bring their dogs to exams?",cards:[
+ {t:"Students should be allowed to bring their dogs to exams."},
+ {t:"Dogs help people feel calm in stressful situations."},
+ {t:"Some universities already invite therapy dogs to campus during finals week.",c:{o:["For instance,","However,","Therefore,"]}},
+ {t:"A barking dog could distract everyone in the room.",c:{o:["On the other hand,","As a result,","Similarly,"]}},
+ {t:"Exam rooms could allow only quiet, well-trained dogs.",c:{o:["However,","For example,","Moreover,"]}}]},
+{ch:0,q:"Should aliens get a student discount?",cards:[
+ {t:"Aliens who visit Earth should get a student discount."},
+ {t:"They are here to learn about our planet, just like students."},
+ {t:"An alien studying human food would need to try hundreds of restaurants.",c:{o:["For example,","Nevertheless,","Instead,"]}},
+ {t:"Aliens might not have a valid student ID.",c:{o:["Some people worry that","Therefore,","For instance,"]}},
+ {t:"Universities could create a special intergalactic student card.",c:{o:["However,","Similarly,","Because of this,"]}}]},
+{ch:1,q:"Should cats be allowed to vote in city elections?",cards:[
+ {t:"Cats should be allowed to vote in city elections."},
+ {t:"Cats are affected by city decisions just as much as humans are."},
+ {t:"When the city cuts park funding, cats lose their favorite sunny places to nap.",c:{o:["For example,","However,","Therefore,"]}},
+ {t:"Cats cannot read the names on the ballot.",c:{o:["Critics argue that","As a result,","Similarly,"]}},
+ {t:"Ballots could show pictures of fish instead of names, which every cat understands.",c:{o:["However,","For instance,","Moreover,"]}}],
+ decoy:{t:"Cats are cute, so they deserve everything.",why:"Being cute has nothing to do with voting, and “deserve everything” is too broad to prove."}},
+{ch:1,q:"Should homework be delivered by pigeon?",cards:[
+ {t:"Teachers should send homework by carrier pigeon."},
+ {t:"Pigeons would make homework feel exciting instead of boring."},
+ {t:"Students would rush to the window every afternoon to see what had arrived.",c:{o:["For example,","However,","Therefore,"]}},
+ {t:"Pigeons sometimes get lost in bad weather.",c:{o:["Critics point out that","As a result,","Similarly,"]}},
+ {t:"A lost pigeon simply means one free day without homework.",c:{o:["Nevertheless,","For instance,","Moreover,"]}}],
+ decoy:{t:"Pigeons are birds, and birds can fly.",why:"True, but it doesn't explain why pigeons are better for homework."}},
+{ch:1,q:"Should cities replace stairs with giant slides?",cards:[
+ {t:"Cities should replace some public stairs with giant slides."},
+ {t:"Slides would make getting around faster and more fun."},
+ {t:"Going down a five-story slide takes only a few seconds.",c:{o:["For instance,","Although","Consequently,"]}},
+ {t:"Slides only work in one direction.",c:{o:["Admittedly,","Therefore,","In addition,"]}},
+ {t:"Cities could keep elevators for going up and use slides only for coming down.",c:{o:["Nevertheless,","For example,","Similarly,"]}}],
+ decoy:{t:"Slides are awesome and everyone loves them.",why:"“Awesome” is vague, and “everyone” is an overgeneralization."}},
+{ch:1,q:"Should robots join school sports teams?",cards:[
+ {t:"Schools should let robots join their sports teams."},
+ {t:"Robots could help human players practice and improve faster."},
+ {t:"A robot goalkeeper could block hundreds of shots without getting tired.",c:{o:["For example,","However,","Instead,"]}},
+ {t:"Robots would make games unfair for human players.",c:{o:["Opponents argue that","As a result,","For instance,"]}},
+ {t:"Robots could be limited to practice sessions, not official games.",c:{o:["However,","Moreover,","Similarly,"]}}],
+ decoy:{t:"Robots are the future of everything.",why:"A big, vague prediction. It says nothing about sports."}},
+{ch:1,q:"Should ice cream count as a vegetable at lunch?",cards:[
+ {t:"Ice cream should count as a vegetable in school lunches."},
+ {t:"Many flavors come from plants, such as vanilla, mint, and strawberry."},
+ {t:"Vanilla comes from the seed pod of an orchid flower.",c:{o:["For instance,","However,","Otherwise,"]}},
+ {t:"Ice cream contains much more sugar than broccoli.",c:{o:["However,","Therefore,","In addition,"]}},
+ {t:"Students who refuse all vegetables might at least eat this one.",c:{o:["Nevertheless,","For example,","As a result,"]}}],
+ decoy:{t:"Ice cream is my favorite food.",why:"A personal preference, not a reason anyone else has to accept."}}
+];
+const ROLES=[
+ {n:"Claim",ask:"What does the writer want?",hint:"The claim says what should happen. It is the main idea.",why:"states the position. Everything else supports it.",conn:""},
+ {n:"Reason",ask:"Why?",hint:"The reason answers the question “Why?” about the claim.",why:"answers “Why?”",conn:""},
+ {n:"Support",ask:"What is the example or fact?",hint:"Support is a specific example or fact that proves the reason.",why:"makes the reason believable with an example or fact.",conn:"introduces an example or fact"},
+ {n:"Counterargument",ask:"What would the other side say?",hint:"The counterargument is what someone who disagrees would say.",why:"shows the other side fairly. This builds trust.",conn:"signals the other side is coming"},
+ {n:"Response",ask:"How does the writer answer them?",hint:"The response answers the counterargument, so the claim still stands.",why:"answers the other side, so the claim still stands.",conn:"turns back to the writer's side"}
+];
+const MAX_LIVES=3; // stars: each mistake or hint costs one
+const rc=i=>`--c:var(--r${i+1});--cs:var(--r${i+1}s)`;
+
+/* ============ SAVE ============ */
+const KEY="argu-stages.v2";
+let SV={stars:{},seenHelp:false};
+try{const r=localStorage.getItem(KEY);if(r)SV=Object.assign(SV,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(SV))}catch(e){}};
+const unlockedUpTo=()=>{let i=0;while(i<STAGES.length&&SV.stars[i])i++;return i}; // first unbeaten stage index
+
+/* ============ HELPERS ============ */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const lcFirst=t=>/^[A-Z][a-z]/.test(t)?t[0].toLowerCase()+t.slice(1):t;
+const starsHTML=n=>`<span class="starrow">${[0,1,2].map(i=>`<span class="${i<n?"on":"off"}">★</span>`).join("")}</span>`;
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("on"),2200)}
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const cols=["var(--r1)","var(--r2)","var(--r3)","var(--r4)","var(--r5)"];
+  for(let i=0;i<70;i++){const c=document.createElement("span");c.className="confetti";c.style.left=Math.random()*100+"vw";c.style.background=cols[i%5];c.style.setProperty("--dx",(Math.random()*160-80)+"px");c.style.setProperty("--rot",(Math.random()*720-360)+"deg");c.style.animationDuration=(1.6+Math.random()*1.4)+"s";c.style.animationDelay=Math.random()*.4+"s";document.body.appendChild(c);setTimeout(()=>c.remove(),3600)}
+}
+
+/* ============ MAP ============ */
+function showMap(){
+  $("#play").hidden=true;$("#map").hidden=false;window.scrollTo(0,0);
+  const up=unlockedUpTo();const done=Object.keys(SV.stars).length;const stars=Object.values(SV.stars).reduce((a,b)=>a+b,0);
+  $("#p-done").textContent=`${done}/${STAGES.length}`;$("#p-stars").textContent=stars+"★";$("#p-bar").style.width=(done/STAGES.length*100)+"%";
+  $("#chapters").innerHTML=CHAPTERS.map((ch,ci)=>{
+    const rows=STAGES.map((s,i)=>({s,i})).filter(x=>x.s.ch===ci).map(({s,i},k)=>{
+      const st=SV.stars[i]?"done":i===up?"now":"locked";
+      const sub=st==="done"?starsHTML(SV.stars[i]):st==="now"?`Stage ${i+1} · Ready`:`Locked · win stage ${i} first`;
+      return `<button class="stage ${st}" data-i="${i}" style="${rc(i%5)}" ${st==="locked"?'aria-disabled="true"':""}>
+        <span class="node">${st==="locked"?'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-label="Locked"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>':i+1}</span>
+        <span class="sinfo"><span class="t">${esc(s.q)}</span><span class="s">${sub}</span></span>${st==="now"?'<span class="go">Play</span>':st==="done"?'<span class="replay" title="Replay"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10a6 6 0 1 0 1.8-4.3"/><path d="M4 3.5v3h3"/></svg><span class="sr">Replay</span></span>':""}</button>`;
+    }).join("");
+    return `<div class="chapter"><h2>${ch.name}</h2><p>${ch.note}</p></div><div class="path">${rows}</div>`;
+  }).join("");
+  document.querySelectorAll(".stage").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i;if(b.classList.contains("locked")){toast(`Win stage ${unlockedUpTo()+1} first to unlock this one`);return}
+    start(i);
+  });
+  const now=document.querySelector(".stage.now");if(now&&up>2)setTimeout(()=>now.scrollIntoView({behavior:"smooth",block:"center"}),250);
+}
+
+/* ============ GAME ============ */
+let G;
+function start(i){
+  const p=STAGES[i];
+  G={i,p,connSteps:p.cards.map((c,k)=>c.c?k:-1).filter(k=>k>=0),phase:"order",done:{},ci:0,filled:{},lives:MAX_LIVES,miss:0,hints:0,
+     glow:false,sel:null,hand:shuffle([...p.cards.map((_,k)=>k),...(p.decoy?["D"]:[])]),decoyOut:false,fb:null,optOrder:null};
+  $("#map").hidden=true;$("#play").hidden=false;$("#end").innerHTML="";
+  $("#stagechip").textContent=`Stage ${i+1} of ${STAGES.length}${p.decoy?" · Decoy hidden":""}`;
+  $("#q").textContent=p.q;
+  if(i===0&&!SV.stars[0])G.fb={cls:"info",html:"Drag each card into the box where it belongs. Tip: start with the <b>claim</b>, the sentence that says what the writer wants."};
+  else if(p.decoy&&i===STAGES.findIndex(s=>s.decoy)&&!SV.stars[i])G.fb={cls:"info",html:"New: one card in your hand is a <b>decoy</b>, a weak sentence that doesn't belong. Leave it out."};
+  render();window.scrollTo(0,0);
+}
+const placedCount=()=>Object.keys(G.done).length;
+const firstEmpty=()=>G.p.cards.findIndex((_,k)=>!G.done[k]);
+function heartsHTML(lost=-1){return Array.from({length:MAX_LIVES},(_,k)=>`<span class="h ${k>=G.lives?"gone":""} ${k===lost?"lost":""}">★</span>`).join("")}
+function sentenceHTML(k,flipped){
+  const c=G.p.cards[k];
+  if(G.phase==="order"||!c.c)return esc(c.t);
+  const f=G.filled[k];
+  if(f)return `<span class="conn ${flipped===k?"new":""}">${esc(f)}</span> ${esc(lcFirst(c.t))}`;
+  const now=G.phase==="connect"&&G.connSteps[G.ci]===k;
+  return `<span class="blank ${now?"now":""}"></span> ${esc(c.t)}`;
+}
+function render(landed=-1,flipped=-1){
+  $("#hearts").innerHTML=heartsHTML();
+  const task=$("#task");
+  if(G.phase==="order"){task.style.cssText="";task.innerHTML=`<span class="dot"></span>Drag each card into its box <span class="count">${placedCount()}/5</span>`}
+  else if(G.phase==="connect"){const k=G.connSteps[G.ci];task.style.cssText=rc(k);task.innerHTML=`<span class="dot"></span>Drag a linking word into the blank`}
+  const hk=G.glow&&G.phase==="order"?firstEmpty():-1;
+  $("#board").innerHTML=G.p.cards.map((c,k)=>{
+    const done=!!G.done[k];
+    const target=G.phase==="order"&&!done||G.phase==="connect"&&G.connSteps[G.ci]===k;
+    const cls=done?(target?"done target":"done"):(k===hk?"active target":"target");
+    return `<div class="slot ${cls}" style="${rc(k)}" ${target?`data-drop="${k}"`:""}>
+      <div class="role"><i></i>${ROLES[k].n}</div>
+      ${done?`<div class="stext ${landed===k?"placed":""}">${sentenceHTML(k,flipped)}</div>`:`<div class="ask">${ROLES[k].ask}</div>`}</div>`;
+  }).join("");
+  $("#feedback").innerHTML=G.fb?`<div class="msg ${G.fb.cls}">${G.fb.html}</div>`:"";
+  const tray=$("#tray");G.sel=null;
+  if(G.phase==="order"){
+    tray.innerHTML=`<div class="trayhead"><span>Your cards · drag them up</span><button class="hintbtn" id="hint" ${G.glow||G.lives<=1?"disabled":""}>Hint · costs ★</button></div>`+
+      G.hand.map(id=>`<div class="tile drag ${G.glow&&id===hk?"glow":""}" style="${hk>=0?rc(hk):""}" data-id="${id}" tabindex="0" role="button" aria-label="Card: ${esc(id==="D"?G.p.decoy.t:G.p.cards[id].t)}"><span class="grip" aria-hidden="true">⠿</span><span>${esc(id==="D"?G.p.decoy.t:G.p.cards[id].t)}</span></div>`).join("");
+    tray.querySelectorAll(".tile").forEach(el=>makeDraggable(el,{type:"card",id:el.dataset.id==="D"?"D":+el.dataset.id}));
+  }else if(G.phase==="connect"){
+    const k=G.connSteps[G.ci];const opts=G.optOrder||(G.optOrder=shuffle(G.p.cards[k].c.o));
+    tray.innerHTML=`<div class="trayhead"><span>Linking words · drag one to the blank</span><button class="hintbtn" id="hint" ${G.glow||G.lives<=1?"disabled":""}>Hint · costs ★</button></div><div class="chips">${opts.map(o=>`<div class="chipw drag ${G.glow&&o===G.p.cards[k].c.o[0]?"glow":""}" style="${rc(k)}" data-o="${esc(o)}" tabindex="0" role="button">${esc(o)}</div>`).join("")}</div>`;
+    tray.querySelectorAll(".chipw").forEach(el=>makeDraggable(el,{type:"conn",o:el.dataset.o}));
+  }else tray.innerHTML="";
+  document.querySelectorAll("[data-drop]").forEach(s=>s.onclick=()=>{if(G.sel)drop(G.sel.payload,+s.dataset.drop,G.sel.el)});
+  const h=$("#hint");if(h)h.onclick=useHint;
+}
+
+/* ---- drag & drop (pointer events: mouse, touch and pen) ---- */
+let DR=null;
+function makeDraggable(el,payload){
+  el.addEventListener("pointerdown",e=>{
+    if(e.pointerType==="mouse"&&e.button!==0)return;
+    e.preventDefault();
+    const r=el.getBoundingClientRect();
+    DR={el,payload,sx:e.clientX,sy:e.clientY,x:e.clientX,y:e.clientY,ox:e.clientX-r.left,oy:e.clientY-r.top,w:r.width,moved:false,ghost:null,over:null,raf:0};
+    document.addEventListener("pointermove",onMove);document.addEventListener("pointerup",onUp);document.addEventListener("pointercancel",onCancel);
+  });
+  el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();select(el,payload)}});
+}
+function onMove(e){
+  if(!DR)return;DR.x=e.clientX;DR.y=e.clientY;
+  if(!DR.moved){
+    if(Math.hypot(DR.x-DR.sx,DR.y-DR.sy)<6)return;
+    DR.moved=true;const g=DR.el.cloneNode(true);g.classList.add("ghost");g.classList.remove("glow","selected");g.style.width=DR.w+"px";document.body.appendChild(g);DR.ghost=g;DR.el.classList.add("dragging");
+    document.body.classList.add("is-dragging");DR.raf=requestAnimationFrame(autoScroll);
+  }
+  e.preventDefault();
+  DR.ghost.style.left=(DR.x-DR.ox)+"px";DR.ghost.style.top=(DR.y-DR.oy)+"px";
+  const t=document.elementFromPoint(DR.x,DR.y);const slot=t&&t.closest("[data-drop]");
+  if(slot!==DR.over){if(DR.over)DR.over.classList.remove("over");if(slot)slot.classList.add("over");DR.over=slot}
+}
+function autoScroll(){
+  if(!DR||!DR.moved)return;const edge=90,H=innerHeight;let v=0;
+  if(DR.y<edge)v=-Math.ceil((edge-DR.y)/6);else if(DR.y>H-edge)v=Math.ceil((DR.y-(H-edge))/6);
+  if(v)window.scrollBy(0,v);DR.raf=requestAnimationFrame(autoScroll);
+}
+function endDrag(){document.removeEventListener("pointermove",onMove);document.removeEventListener("pointerup",onUp);document.removeEventListener("pointercancel",onCancel);document.body.classList.remove("is-dragging");if(DR){cancelAnimationFrame(DR.raf);if(DR.ghost)DR.ghost.remove();DR.el.classList.remove("dragging");if(DR.over)DR.over.classList.remove("over")}}
+function onCancel(){endDrag();DR=null}
+function onUp(){
+  const d=DR;endDrag();DR=null;if(!d)return;
+  if(!d.moved){select(d.el,d.payload);return}
+  if(d.over)drop(d.payload,+d.over.dataset.drop,d.el);
+}
+function select(el,payload){ // tap-to-select fallback: tap a card, then tap a box
+  document.querySelectorAll(".selected").forEach(x=>x.classList.remove("selected"));
+  if(G.sel&&G.sel.el===el){G.sel=null;return}
+  G.sel={el,payload};el.classList.add("selected");
+}
+function drop(payload,k,el){
+  if(G.lives<=0)return;G.sel=null;
+  if(payload.type==="card"&&G.phase==="order"){
+    if(G.done[k])return;
+    const id=payload.id;
+    if(id==="D"){
+      G.hand=G.hand.filter(x=>x!=="D");G.decoyOut="caught";
+      mistake(null,{cls:"bad",html:`That's the <b>decoy</b>. ${esc(G.p.decoy.why)} It's gone from your hand now.`});
+      if(G.lives>0)setTimeout(render,50);return;
+    }
+    if(id===k){
+      G.hand=G.hand.filter(x=>x!==id);G.done[k]=true;G.glow=false;G.fb=null;
+      if(placedCount()===G.p.cards.length){
+        if(G.hand.includes("D")){G.decoyOut="skipped";G.fb={cls:"good",html:`Nice, you left out the decoy: “${esc(G.p.decoy.t)}” ${esc(G.p.decoy.why)} Now add the linking words.`}}
+        else G.fb={cls:"good",html:"All in place. Now drag in the linking words that connect the ideas."};
+        G.hand=[];G.phase="connect";G.optOrder=null;
+      }
+      render(k);
+    }else{
+      mistake(el,{cls:"bad",html:`That card isn't the <b>${ROLES[k].n.toLowerCase()}</b>. ${ROLES[k].hint}`});
+    }
+  }else if(payload.type==="conn"&&G.phase==="connect"){
+    const kk=G.connSteps[G.ci];if(k!==kk)return;const o=payload.o,right=G.p.cards[kk].c.o[0];
+    if(o===right){
+      G.filled[kk]=o;G.ci++;G.optOrder=null;G.glow=false;
+      G.fb={cls:"good",html:`<b>${esc(o)}</b> ${ROLES[kk].conn}.`};
+      if(G.ci>=G.connSteps.length){G.phase="done";render(-1,kk);setTimeout(()=>finish(true),900)}
+      else render(-1,kk);
+    }else{
+      mistake(el,{cls:"bad",html:`<b>${esc(o)}</b> doesn't fit here. The ${ROLES[kk].n.toLowerCase()} needs a word that ${ROLES[kk].conn}.`});
+    }
+  }
+}
+function useHint(){
+  if(G.lives<=1){G.fb={cls:"warn",html:"You have one star left, so hints are off. You can do this!"};render();return}
+  G.hints++;G.glow=true;G.lives--;
+  if(G.phase==="order"){const k=firstEmpty();G.fb={cls:"warn",html:`Look for the <b>${ROLES[k].n.toLowerCase()}</b>. ${ROLES[k].hint}`}}
+  else{const k=G.connSteps[G.ci];G.fb={cls:"warn",html:`The ${ROLES[k].n.toLowerCase()} needs a word that ${ROLES[k].conn}.`}}
+  render();
+}
+function mistake(el,fb){
+  G.lives--;G.miss++;G.fb=fb;
+  if(el){el.classList.remove("shake","selected");void el.offsetWidth;el.classList.add("shake")}
+  $("#hearts").innerHTML=heartsHTML(G.lives);
+  $("#feedback").innerHTML=`<div class="msg ${fb.cls}">${fb.html}</div>`;
+  if(G.lives<=0)setTimeout(()=>finish(false),800);
+}
+function finish(won){
+  const i=G.i,p=G.p;
+  $("#tray").innerHTML="";$("#feedback").innerHTML="";
+  if(!won){
+    $("#task").innerHTML="Out of stars";
+    $("#end").innerHTML=`<div class="end"><div class="endhead"><h2>Out of stars</h2><p>Every mistake taught you something. Try this stage again.</p></div>
+      <button class="btn" id="e-retry">Try again</button><button class="btn soft" id="e-map">Back to stages</button></div>`;
+    $("#e-retry").onclick=()=>start(i);$("#e-map").onclick=showMap;
+    setTimeout(()=>$("#end").scrollIntoView({behavior:"smooth",block:"start"}),150);
+    return;
+  }
+  const stars=G.lives;
+  const first=!SV.stars[i];const best=Math.max(SV.stars[i]||0,stars);SV.stars[i]=best;save();
+  const hasNext=i+1<STAGES.length;
+  $("#task").innerHTML="Stage complete!";
+  const para=p.cards.map((c,k)=>`<span class="sn" style="${rc(k)}">${c.c?`<b>${esc(c.c.o[0])}</b> ${esc(lcFirst(c.t))}`:esc(c.t)}</span>`).join(" ");
+  const cheer=stars===3?"Perfect argument!":stars===2?"Great job!":"You did it!";
+  const tip=stars<3?`<p>${G.miss?`${G.miss} mistake${G.miss>1?"s":""}`:""}${G.miss&&G.hints?" and ":""}${G.hints?`${G.hints} hint${G.hints>1?"s":""}`:""}. Replay for 3 stars.</p>`:"<p>No mistakes, no hints.</p>";
+  $("#end").innerHTML=`<div class="end">
+    <div class="endhead"><div class="bigstars">${[0,1,2].map(k=>`<span class="${k<stars?"on":""}">★</span>`).join("")}</div><h2>${cheer}</h2>${tip}</div>
+    ${hasNext?`<button class="btn" id="e-next">${first?"Unlock stage "+(i+2):"Next stage →"}</button>`:`<button class="btn" id="e-map2">All stages done! Back to map</button>`}
+    <div class="card"><div class="cardh">Your finished argument</div><p class="anatomy">${para}</p>
+      <div class="legend" style="margin-top:12px">${ROLES.map((r,k)=>`<span style="${rc(k)}">${r.n}</span>`).join("")}</div></div>
+    <div class="card"><div class="cardh">Why it works</div><ul class="why">${ROLES.map((r,k)=>`<li style="${rc(k)}"><i></i><span>The <b>${r.n.toLowerCase()}</b> ${r.why}${p.cards[k].c?` <em>${esc(p.cards[k].c.o[0])}</em> ${r.conn}.`:""}</span></li>`).join("")}</ul></div>
+    ${p.decoy?`<div class="card decoycard"><div class="cardh" style="color:var(--bad)">The decoy ${G.decoyOut==="skipped"?"· you spotted it":"· it cost you a star"}</div><div class="stext">${esc(p.decoy.t)}</div><div style="font-size:14px;color:var(--muted);margin-top:4px;font-weight:600">${esc(p.decoy.why)}</div></div>`:""}
+    <div class="row"><button class="btn soft" id="e-replay">Replay</button><button class="btn soft" id="e-map">Stages</button></div>
+  </div>`;
+  confetti();
+  const nx=$("#e-next");if(nx)nx.onclick=()=>start(i+1);
+  const m2=$("#e-map2");if(m2)m2.onclick=showMap;
+  $("#e-replay").onclick=()=>start(i);$("#e-map").onclick=showMap;
+  setTimeout(()=>$("#end").scrollIntoView({behavior:"smooth",block:"start"}),400);
+}
+
+/* ============ HELP ============ */
+function openHelp(){
+  const o=$("#overlay");
+  o.innerHTML=`<div class="scrim" id="scrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="How to play">
+    <h2>How to play</h2>
+    <p style="margin:0;font-weight:600;color:var(--muted)">Each stage is one argument, cut into cards. Put it back together.</p>
+    <ul class="howto">
+      <li style="${rc(0)}"><span class="n">1</span><span><b>Drag each card into its box.</b> A strong argument moves like this:
+        <div class="chain" style="margin-top:8px">${ROLES.map((r,k)=>`<span style="${rc(k)}">${r.n}</span>`).join("<em>→</em>")}</div></span></li>
+      <li style="${rc(2)}"><span class="n">2</span><span><b>Drag in the linking words.</b> Choose the word that connects each idea, like <i>For example,</i> or <i>However,</i></span></li>
+      <li style="${rc(1)}"><span class="n">★</span><span><b>You start with 3 stars.</b> Each wrong drop or hint costs one star, and a wrong drop tells you why. Finish with at least one star to unlock the next stage.</span></li>
+    </ul>
+    <button class="btn" data-close>Let's play</button></div></div>`;
+  o.querySelector("#scrim").onclick=e=>{if(e.target.id==="scrim"||e.target.closest("[data-close]"))o.innerHTML=""};
+  SV.seenHelp=true;save();
+}
+$("#btn-help").onclick=openHelp;$("#btn-help2").onclick=openHelp;$("#btn-back").onclick=showMap;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#overlay").innerHTML=""});
+
+showMap();
+if(!SV.seenHelp)openHelp();
+</script>
+
+</body>
+</html>
