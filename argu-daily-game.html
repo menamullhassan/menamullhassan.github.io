@@ -64,6 +64,23 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @keyframes rise{from{opacity:.001;transform:translateY(6px)}}
 .label{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.02em}
 
+/* flaws & new chapters */
+.flawcard{display:flex;flex-direction:column;gap:4px;border-color:color-mix(in srgb,var(--c) 40%,var(--line));background:color-mix(in srgb,var(--cs) 55%,var(--card))}
+.flawcard .cardh{color:var(--c);margin-bottom:2px}
+.flawcard .fname{font-weight:600;font-size:17px;line-height:1.3}
+.flawcard .fformal{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.flawcard p{margin:4px 0 0;font-size:14.5px;color:var(--muted)}
+.flawcard .fex{font-style:italic}
+.flawcard .hintbtn{align-self:flex-start;margin-top:8px}
+.guiderow{display:flex;justify-content:flex-end}
+.opt .optf{display:block;font-family:var(--mono);font-size:12.5px;font-weight:400;color:var(--muted);margin-top:3px}
+.opt:disabled{opacity:.45;cursor:default;text-decoration:line-through}
+.flawtag{font-size:14px;margin-top:6px}
+.decoycard.askcard .stext{text-decoration:none;color:var(--ink)}
+#play.naming #intro .flawcard{display:none}
+.flawtag i{font-family:var(--mono);font-style:normal;font-size:12.5px;color:var(--muted)}
+.gformal{font-family:var(--mono);font-style:normal;font-size:12px;color:var(--muted)}
+.gex{font-style:italic}
 /* ARGU logo */
 .logo{display:inline-flex;align-items:center;color:var(--r1);line-height:0}
 .logo svg{height:44px;width:auto;display:block}
@@ -254,7 +271,7 @@ html.embedded body{background:transparent}
       <button class="pillbtn" id="btn-help">? Help</button>
     </div>
     <div class="progress">
-      <div class="nums"><span><span class="big" id="p-done">0/10</span><span class="lab">stages</span></span><span><span class="big stars" id="p-stars">0★</span><span class="lab">of 30 stars</span></span></div>
+      <div class="nums"><span><span class="big" id="p-done">0/30</span><span class="lab">stages</span></span><span><span class="big stars" id="p-stars">0★</span><span class="lab" id="p-of">of 30 stars</span></span></div>
       <div class="ptrack" aria-hidden="true"><span id="p-bar" style="width:0%"></span></div>
     </div>
     <div id="chapters"></div>
@@ -272,6 +289,7 @@ html.embedded body{background:transparent}
       <span class="stagechip" id="stagechip">Stage 1</span>
       <h1 class="q" id="q"></h1>
     </div>
+    <div id="intro"></div>
     <div class="status"><span class="task" id="task"></span><span class="hearts" id="hearts" aria-label="Stars left"></span></div>
     <div class="board" id="board"></div>
     <div id="feedback" aria-live="polite"></div>
@@ -357,13 +375,176 @@ const STAGES=[
  {t:"Students who refuse all vegetables might at least eat this one.",c:{o:["Nevertheless,","For example,","As a result,"]}}],
  decoy:{t:"Ice cream is my favorite food.",why:"A personal preference, not a reason anyone else has to accept."}}
 ];
+/* ============ STAGES 11–30 ============ */
+CHAPTERS.push(
+ {name:"Chapter 3 · Tricky links",note:"Four linking words to choose from, and the reason needs one too."},
+ {name:"Chapter 4 · Name the flaw",note:"The decoy sounds smart, but it has a flaw. Leave it out, then name the flaw."},
+ {name:"Chapter 5 · Stronger evidence",note:"You get two support cards. Only one is strong evidence."},
+ {name:"Chapter 6 · Double trouble",note:"Two decoys are hiding, and the boxes won't tell you what goes where."}
+);
+// Reasoning flaws, taught one at a time in Chapter 4.
+const FLAWS={
+ bandwagon:{n:"Everyone's doing it",f:"bandwagon",d:"It says something is right just because many people like it or do it.",ex:"“Everyone in my class eats glue, so glue must be healthy.”"},
+ slope:{n:"One small step leads to disaster",f:"slippery slope",d:"It claims one small change will cause a chain of terrible events, without proof.",ex:"“If you eat one cookie, soon you'll eat the whole bakery.”"},
+ person:{n:"Attacks the person, not the idea",f:"personal attack",d:"It criticizes the people who disagree instead of answering their reasons.",ex:"“Don't listen to Sam's idea. Sam wears socks with sandals.”"},
+ cause:{n:"Just because it came first doesn't mean it caused it",f:"false cause",d:"It assumes that one thing caused another only because it happened first.",ex:"“I wore my lucky hat, and then it rained. My hat makes it rain.”"},
+ hasty:{n:"Too big a claim from one example",f:"hasty generalization",d:"It makes a claim about all cases from just one or two examples.",ex:"“One goose chased me, so all birds are dangerous.”"},
+ none:{n:"No flaw. It's a fair reason",f:"",d:""}
+};
+STAGES.push(
+/* ---- Chapter 3 · Tricky links ---- */
+{ch:2,q:"Should schools replace fire drills with dance-offs?",cards:[
+ {t:"Schools should replace boring fire drills with dance-offs."},
+ {t:"Students move faster when music is playing.",c:{o:["This is because","For example,","As a result,","However,"]}},
+ {t:"During a test dance-off, one class reached the playground in forty seconds while doing the conga.",c:{o:["For instance,","Similarly,","Therefore,","Instead,"]}},
+ {t:"Some students might stop in the hallway to show off their best moves.",c:{o:["Critics argue that","Similarly,","For example,","As a result,"]}},
+ {t:"Teachers could give a prize to the first dancer who leaves the building.",c:{o:["However,","For instance,","Because","In addition,"]}}]},
+{ch:2,q:"Should grandmas referee professional football?",cards:[
+ {t:"Professional football matches should be refereed by grandmas."},
+ {t:"Grandmas are experts at stopping arguments.",c:{o:["The main reason is that","On the other hand,","For example,","Therefore,"]}},
+ {t:"One grandma calmed down twelve shouting grandchildren with a single look.",c:{o:["For example,","However,","As a result,","Likewise,"]}},
+ {t:"Grandmas might not be able to run as fast as the players.",c:{o:["Some people worry that","Therefore,","For instance,","In addition,"]}},
+ {t:"They could follow the game in a golf cart with extra cushions.",c:{o:["Nevertheless,","Similarly,","For example,","As a result,"]}}]},
+{ch:2,q:"Should every classroom have a tiny door for gnomes?",cards:[
+ {t:"Every classroom should have a tiny door for friendly gnomes."},
+ {t:"Gnomes could help keep the classroom neat and tidy.",c:{o:["This is because","In contrast,","For example,","As a result,"]}},
+ {t:"In old stories, gnomes fix shoes, sweep floors, and find lost buttons overnight.",c:{o:["For instance,","However,","Therefore,","Instead,"]}},
+ {t:"Nobody has ever proven that gnomes are real.",c:{o:["Admittedly,","Consequently,","For example,","Similarly,"]}},
+ {t:"A tiny door costs very little, and it would make students curious every morning.",c:{o:["Even so,","For instance,","Because","Therefore,"]}}]},
+{ch:2,q:"Should homework be delivered by trained squirrels?",cards:[
+ {t:"Teachers should use trained squirrels to deliver homework."},
+ {t:"Squirrels are fast and never get stuck in traffic.",c:{o:["The main reason is that","For example,","Nevertheless,","Similarly,"]}},
+ {t:"A squirrel can run about thirty kilometers per hour and jump between rooftops.",c:{o:["For example,","Otherwise,","Therefore,","However,"]}},
+ {t:"Squirrels might bury the homework instead of delivering it.",c:{o:["On the other hand,","As a result,","For instance,","Because of this,"]}},
+ {t:"Each homework sheet could come with a free acorn, so the squirrel has something else to bury.",c:{o:["However,","Similarly,","For example,","In addition,"]}}]},
+{ch:2,q:"Should the moon be rented out for birthday parties?",cards:[
+ {t:"The moon should be rented out for birthday parties."},
+ {t:"The rent money could pay for more space exploration.",c:{o:["This is because","For instance,","Even so,","As a result,"]}},
+ {t:"A single party with one hundred guests could pay for a brand-new telescope.",c:{o:["For example,","In contrast,","Therefore,","Instead,"]}},
+ {t:"There is no air on the moon for blowing out candles.",c:{o:["Critics point out that","Consequently,","For example,","Likewise,"]}},
+ {t:"Guests could use electric candles and wear space helmets with party hats on top.",c:{o:["Nonetheless,","For instance,","Therefore,","Because"]}}]},
+/* ---- Chapter 4 · Name the flaw ---- */
+{ch:3,q:"Should unicorns be allowed on public buses?",newFlaw:"bandwagon",flawOpts:["bandwagon","none"],cards:[
+ {t:"Unicorns should be allowed to ride public buses."},
+ {t:"Unicorns need a safe way to get to work in the city."},
+ {t:"Most unicorns live in forests more than fifty kilometers from the nearest city.",c:{o:["For example,","However,","Therefore,"]}},
+ {t:"A unicorn's horn could poke other passengers.",c:{o:["Opponents argue that","As a result,","Similarly,"]}},
+ {t:"Bus companies could give each unicorn a soft foam cover for its horn.",c:{o:["However,","For example,","Moreover,"]}}],
+ extras:[{id:"D",kind:"decoy",flaw:"bandwagon",t:"Everyone online wants unicorns on buses, so it must be a good idea.",why:"Lots of people wanting something doesn't prove it's a good idea."}]},
+{ch:3,q:"Should weddings serve pizza instead of cake?",newFlaw:"slope",flawOpts:["slope","bandwagon"],cards:[
+ {t:"Weddings should serve pizza instead of cake."},
+ {t:"Pizza is easier to share with a large group of guests."},
+ {t:"One large pizza can be cut into sixteen slices in less than a minute.",c:{o:["For instance,","Nevertheless,","Instead,"]}},
+ {t:"Pizza sauce might stain the wedding dress.",c:{o:["Some people worry that","Therefore,","For example,"]}},
+ {t:"Couples could choose white pizza with no tomato sauce at all.",c:{o:["Nevertheless,","Similarly,","Because"]}}],
+ extras:[{id:"D",kind:"decoy",flaw:"slope",t:"If we allow pizza at weddings, soon people will get married inside pizza ovens.",why:"One small change will not automatically lead to such an extreme result."}]},
+{ch:3,q:"Should penguins be hired as school crossing guards?",newFlaw:"person",flawOpts:["person","slope","bandwagon"],cards:[
+ {t:"Schools should hire penguins as crossing guards."},
+ {t:"Penguins are very easy for drivers to see."},
+ {t:"Their black-and-white feathers stand out clearly against a gray road.",c:{o:["For example,","However,","As a result,"]}},
+ {t:"Penguins walk too slowly to cross a busy street.",c:{o:["Critics argue that","Therefore,","For instance,"]}},
+ {t:"Slow walking makes drivers stop and wait, which keeps children safer.",c:{o:["However,","Similarly,","For example,"]}}],
+ extras:[{id:"D",kind:"decoy",flaw:"person",t:"People who disagree with this idea are just jealous of penguins' tuxedos.",why:"It attacks the people who disagree instead of answering their reasons."}]},
+{ch:3,q:"Should the school principal be a golden retriever?",newFlaw:"cause",flawOpts:["cause","person","bandwagon"],cards:[
+ {t:"A golden retriever should be the school principal."},
+ {t:"Golden retrievers are friendly, loyal, and always happy to see students."},
+ {t:"Therapy dogs already help people feel calm in many hospitals and schools.",c:{o:["For instance,","In contrast,","Therefore,"]}},
+ {t:"A dog cannot read reports or sign important papers.",c:{o:["Opponents point out that","As a result,","Similarly,"]}},
+ {t:"A human vice principal could handle the paperwork while the dog handles the tail wags.",c:{o:["Nevertheless,","For example,","In addition,"]}}],
+ extras:[{id:"D",kind:"decoy",flaw:"cause",t:"Our test scores went up the week a dog visited, so dogs must make students smarter.",why:"Scores going up after the visit doesn't prove the dog caused it."}]},
+{ch:3,q:"Should cats run the city's lost-and-found office?",newFlaw:"hasty",flawOpts:["hasty","cause","slope"],cards:[
+ {t:"Cats should run the city's lost-and-found office."},
+ {t:"Cats are curious and love searching in small, hidden places."},
+ {t:"Cats can squeeze into tiny gaps behind sofas, where lost keys often end up.",c:{o:["For example,","However,","Therefore,"]}},
+ {t:"Cats might keep the shiniest items for themselves.",c:{o:["Critics argue that","Consequently,","For instance,"]}},
+ {t:"The office could pay the cats in fish treats for every item they return.",c:{o:["However,","Similarly,","Because"]}}],
+ extras:[{id:"D",kind:"decoy",flaw:"hasty",t:"My cat found my sock once, so all cats are excellent detectives.",why:"One cat finding one sock is not enough to prove something about all cats."}]},
+/* ---- Chapter 5 · Stronger evidence ---- */
+{ch:4,q:"Should every office have a ball pit instead of chairs?",cards:[
+ {t:"Every office should replace its chairs with a ball pit."},
+ {t:"Workers are more creative when they are having fun."},
+ {t:"In one office study, workers who took short play breaks solved puzzles faster than workers who did not.",c:{o:["For example,","However,","Instead,"]}},
+ {t:"It would be hard to type on a laptop while sinking into plastic balls.",c:{o:["On the other hand,","Therefore,","For instance,"]}},
+ {t:"Offices could keep a few desks at the edge of the pit for serious typing.",c:{o:["However,","Similarly,","As a result,"]}}],
+ extras:[{id:"W",kind:"weak",t:"My cousin sat in a ball pit once and said it felt amazing.",why:"One person's feeling is a story, not strong evidence."}]},
+{ch:4,q:"Should teachers wear pajamas on Mondays?",cards:[
+ {t:"Teachers should be allowed to wear pajamas on Mondays."},
+ {t:"Comfortable teachers are calmer and more patient."},
+ {t:"In one school survey, teachers rated their mood much higher on casual clothing days.",c:{o:["For instance,","However,","Otherwise,"]}},
+ {t:"Students may not take a teacher in bunny slippers seriously.",c:{o:["Some parents worry that","Therefore,","Similarly,"]}},
+ {t:"Teachers could wear serious pajamas, such as ones with a tie printed on the front.",c:{o:["However,","For example,","In addition,"]}}],
+ extras:[{id:"W",kind:"weak",t:"Pajamas are just the best clothes ever, and everybody knows it.",why:"This is a vague opinion, not evidence."}]},
+{ch:4,q:"Should goats mow the university lawn?",cards:[
+ {t:"Universities should hire goats to mow their lawns."},
+ {t:"Goats are quieter and cleaner than lawn mowers."},
+ {t:"Several cities already use herds of goats to clear grass and weeds without using any fuel.",c:{o:["For example,","In contrast,","Therefore,"]}},
+ {t:"Goats might eat the flowers along with the grass.",c:{o:["Critics point out that","As a result,","For instance,"]}},
+ {t:"Gardeners could put small fences around the flower beds.",c:{o:["Nevertheless,","Similarly,","Because"]}}],
+ extras:[{id:"W",kind:"weak",t:"Goats look really cute when they are eating.",why:"Being cute does not show that goats do a better job."}]},
+{ch:4,q:"Should every city bus have a karaoke machine?",cards:[
+ {t:"Every city bus should have a karaoke machine."},
+ {t:"Singing together would make long rides less stressful."},
+ {t:"Studies show that singing in a group can lower stress and help strangers feel connected.",c:{o:["For instance,","However,","Instead,"]}},
+ {t:"Some passengers just want a quiet ride.",c:{o:["Opponents argue that","Therefore,","Likewise,"]}},
+ {t:"Buses could have a quiet zone at the back with free earplugs.",c:{o:["However,","For example,","Moreover,"]}}],
+ extras:[{id:"W",kind:"weak",t:"I sang in the shower this morning and felt great, so singing works.",why:"One morning in your shower is a personal story, not strong evidence."}]},
+{ch:4,q:"Should exams be taken on roller coasters?",cards:[
+ {t:"Exams should be taken while riding roller coasters."},
+ {t:"Excitement can help students remember what they learned."},
+ {t:"Research shows that people often remember exciting events more clearly than boring ones.",c:{o:["For example,","In contrast,","Otherwise,"]}},
+ {t:"It is impossible to write neatly while upside down.",c:{o:["Critics argue that","As a result,","For instance,"]}},
+ {t:"Students could answer the questions out loud into a microphone in their helmets.",c:{o:["However,","Similarly,","Therefore,"]}}],
+ extras:[{id:"W",kind:"weak",t:"Roller coasters are awesome, and exams are boring.",why:"This is a feeling about fun, not evidence about memory."}]},
+/* ---- Chapter 6 · Double trouble ---- */
+{ch:5,q:"Should robots be allowed to write love letters?",hideAsk:true,cards:[
+ {t:"Robots should be allowed to write love letters."},
+ {t:"Robots never run out of romantic words."},
+ {t:"A robot can search thousands of poems in one second to find the perfect rhyme.",c:{o:["For example,","However,","Therefore,","In contrast,"]}},
+ {t:"A letter from a robot might not feel sincere.",c:{o:["Critics argue that","As a result,","For instance,","Similarly,"]}},
+ {t:"The sender could still add a personal note in their own handwriting.",c:{o:["However,","Moreover,","For example,","Because"]}}],
+ extras:[{id:"D",kind:"decoy",flaw:"bandwagon",t:"Everyone uses robots for everything now, so robots should write love letters too.",why:"Lots of people using robots doesn't prove robots should write love letters."},
+  {id:"D2",kind:"decoy",t:"Robots are shiny and look great in photos.",why:"Looking shiny has nothing to do with writing love letters."}]},
+{ch:5,q:"Should ducks get their own lane at the swimming pool?",hideAsk:true,cards:[
+ {t:"Ducks should get their own lane at the swimming pool."},
+ {t:"Ducks and humans swim at very different speeds."},
+ {t:"A duck paddles slowly on the surface, while swimmers race past and splash it.",c:{o:["For instance,","Nevertheless,","Therefore,","Likewise,"]}},
+ {t:"Pools would have less space for human swimmers.",c:{o:["Opponents point out that","Consequently,","For example,","In addition,"]}},
+ {t:"The duck lane could be very narrow, since ducks only need a little room.",c:{o:["However,","For instance,","As a result,","Similarly,"]}}],
+ extras:[{id:"D",kind:"decoy",flaw:"slope",t:"If ducks get a lane, next the geese will demand the whole pool and a hot tub.",why:"One small change will not automatically lead to geese taking over."},
+  {id:"D2",kind:"decoy",t:"Ducks are some of the best swimmers in the bird world.",why:"True or not, it doesn't explain why they need their own lane."}]},
+{ch:5,q:"Should lunch last three hours if you eat spaghetti?",hideAsk:true,cards:[
+ {t:"Lunch breaks should last three hours for anyone eating spaghetti."},
+ {t:"Spaghetti is very hard to eat quickly without making a mess."},
+ {t:"A single plate of spaghetti can have more than a hundred slippery strands to twirl.",c:{o:["For example,","However,","Instead,","Therefore,"]}},
+ {t:"Workers might start ordering spaghetti every single day.",c:{o:["Critics argue that","Similarly,","For instance,","As a result,"]}},
+ {t:"Offices could still finish the same amount of work by starting earlier in the morning.",c:{o:["Nevertheless,","For example,","Because","Moreover,"]}}],
+ extras:[{id:"D",kind:"decoy",flaw:"person",t:"People who eat sandwiches for lunch are boring, so their opinion doesn't count.",why:"It attacks sandwich eaters instead of answering their reasons."},
+  {id:"D2",kind:"decoy",t:"Spaghetti was my grandfather's favorite food.",why:"A family memory doesn't support longer lunch breaks."}]},
+{ch:5,q:"Should dinosaurs be brought back as school mascots?",hideAsk:true,cards:[
+ {t:"Scientists should bring dinosaurs back to be school mascots."},
+ {t:"A real dinosaur would make students excited about science."},
+ {t:"Dinosaur museums are some of the most popular places for school trips.",c:{o:["For instance,","In contrast,","Therefore,","Otherwise,"]}},
+ {t:"The T. rex might eat the school band.",c:{o:["Some people worry that","Consequently,","For example,","Likewise,"]}},
+ {t:"Schools could choose a gentle, plant-eating dinosaur instead.",c:{o:["However,","For instance,","In addition,","As a result,"]}}],
+ extras:[{id:"D",kind:"decoy",flaw:"cause",t:"Our team won a game the day we hung up a dinosaur poster, so dinosaurs bring good luck.",why:"Winning after the poster went up doesn't prove the poster caused the win."},
+  {id:"D2",kind:"decoy",t:"Dinosaurs are old, and old things are always valuable.",why:"A vague, sweeping claim, not a reason about mascots."}]},
+{ch:5,q:"Should Earth have a snow day every year, even in the desert?",hideAsk:true,cards:[
+ {t:"Earth should have one official snow day every year, even in the desert."},
+ {t:"Everyone deserves one day to rest and play together."},
+ {t:"Many workers say a surprise day off helps them come back with more energy.",c:{o:["For example,","However,","Therefore,","Instead,"]}},
+ {t:"It is impossible to make snow fall in a hot desert.",c:{o:["Critics point out that","As a result,","For instance,","Similarly,"]}},
+ {t:"Desert towns could celebrate with snow machines and ice-cream fights instead.",c:{o:["Nevertheless,","For example,","Because","Moreover,"]}}],
+ extras:[{id:"D",kind:"decoy",flaw:"hasty",t:"I had fun on one snow day, so every person in the world loves snow.",why:"One fun day for one person can't prove what everyone in the world loves."},
+  {id:"D2",kind:"decoy",t:"Snow is white, and white is a very calm color.",why:"The color of snow says nothing about why we need a snow day."}]}
+);
 const ROLES=[
  {n:"Claim",ask:"What does the writer want?",hint:"The claim says what should happen. It is the main idea.",why:"states the position. Everything else supports it.",conn:""},
- {n:"Reason",ask:"Why?",hint:"The reason answers the question “Why?” about the claim.",why:"answers “Why?”",conn:""},
+ {n:"Reason",ask:"Why?",hint:"The reason answers the question “Why?” about the claim.",why:"answers “Why?”",conn:"introduces the reason"},
  {n:"Support",ask:"What is the example or fact?",hint:"Support is a specific example or fact that proves the reason.",why:"makes the reason believable with an example or fact.",conn:"introduces an example or fact"},
  {n:"Counterargument",ask:"What would the other side say?",hint:"The counterargument is what someone who disagrees would say.",why:"shows the other side fairly. This builds trust.",conn:"signals the other side is coming"},
  {n:"Response",ask:"How does the writer answer them?",hint:"The response answers the counterargument, so the claim still stands.",why:"answers the other side, so the claim still stands.",conn:"turns back to the writer's side"}
 ];
+STAGES.forEach(s=>{if(!s.extras)s.extras=s.decoy?[Object.assign({id:"D",kind:"decoy"},s.decoy)]:[]});
 const MAX_LIVES=3; // stars: each mistake or hint costs one
 const rc=i=>`--c:var(--r${i+1});--cs:var(--r${i+1}s)`;
 
@@ -378,7 +559,7 @@ const unlockedUpTo=()=>{let i=0;while(i<STAGES.length&&SV.stars[i])i++;return i}
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
-const lcFirst=t=>/^[A-Z][a-z]/.test(t)?t[0].toLowerCase()+t.slice(1):t;
+const lcFirst=t=>/^I\b/.test(t)||!/^[A-Z](?![A-Z.])/.test(t)?t:t[0].toLowerCase()+t.slice(1);
 const starsHTML=n=>`<span class="starrow">${[0,1,2].map(i=>`<span class="${i<n?"on":"off"}">★</span>`).join("")}</span>`;
 function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("on"),2200)}
 function confetti(){
@@ -391,7 +572,7 @@ function confetti(){
 function showMap(){
   $("#play").hidden=true;$("#map").hidden=false;window.scrollTo(0,0);
   const up=unlockedUpTo();const done=Object.keys(SV.stars).length;const stars=Object.values(SV.stars).reduce((a,b)=>a+b,0);
-  $("#p-done").textContent=`${done}/${STAGES.length}`;$("#p-stars").textContent=stars+"★";$("#p-bar").style.width=(done/STAGES.length*100)+"%";
+  $("#p-done").textContent=`${done}/${STAGES.length}`;$("#p-stars").textContent=stars+"★";$("#p-bar").style.width=(done/STAGES.length*100)+"%";$("#p-of").textContent=`of ${STAGES.length*3} stars`;
   $("#chapters").innerHTML=CHAPTERS.map((ch,ci)=>{
     const rows=STAGES.map((s,i)=>({s,i})).filter(x=>x.s.ch===ci).map(({s,i},k)=>{
       const st=SV.stars[i]?"done":i===up?"now":"locked";
@@ -414,16 +595,21 @@ let G;
 function start(i){
   const p=STAGES[i];
   G={i,p,connSteps:p.cards.map((c,k)=>c.c?k:-1).filter(k=>k>=0),phase:"order",done:{},ci:0,filled:{},lives:MAX_LIVES,miss:0,hints:0,
-     glow:false,sel:null,hand:shuffle([...p.cards.map((_,k)=>k),...(p.decoy?["D"]:[])]),decoyOut:false,fb:null,optOrder:null};
+     glow:false,sel:null,hand:shuffle([...p.cards.map((_,k)=>k),...p.extras.map(e=>e.id)]),out:{},fb:null,optOrder:null,
+     flawAsk:p.ch===3,flawOrder:null,flawTried:{}};
   $("#map").hidden=true;$("#play").hidden=false;$("#end").innerHTML="";
-  $("#stagechip").textContent=`Stage ${i+1} of ${STAGES.length}${p.decoy?" · Decoy hidden":""}`;
+  const nd=p.extras.filter(e=>e.kind==="decoy").length,nw=p.extras.filter(e=>e.kind==="weak").length;
+  $("#stagechip").textContent=`Stage ${i+1} of ${STAGES.length}${nd===1?" · Decoy hidden":nd>1?` · ${nd} decoys hidden`:""}${nw?" · Weaker evidence hidden":""}`;
   $("#q").textContent=p.q;
   if(i===0&&!SV.stars[0])G.fb={cls:"info",html:"Drag each card into the box where it belongs. Tip: start with the <b>claim</b>, the sentence that says what the writer wants."};
   else if(p.decoy&&i===STAGES.findIndex(s=>s.decoy)&&!SV.stars[i])G.fb={cls:"info",html:"New: one card in your hand is a <b>decoy</b>, a weak sentence that doesn't belong. Leave it out."};
+  else if(p.ch>=2&&i===STAGES.findIndex(s=>s.ch===p.ch)&&!SV.stars[i])G.fb={cls:"info",html:CH_TIPS[p.ch]};
+  renderIntro();
   render();window.scrollTo(0,0);
 }
 const placedCount=()=>Object.keys(G.done).length;
 const firstEmpty=()=>G.p.cards.findIndex((_,k)=>!G.done[k]);
+const cardText=id=>typeof id==="number"?G.p.cards[id].t:G.p.extras.find(e=>e.id===id).t;
 function heartsHTML(lost=-1){return Array.from({length:MAX_LIVES},(_,k)=>`<span class="h ${k>=G.lives?"gone":""} ${k===lost?"lost":""}">★</span>`).join("")}
 function sentenceHTML(k,flipped){
   const c=G.p.cards[k];
@@ -435,9 +621,11 @@ function sentenceHTML(k,flipped){
 }
 function render(landed=-1,flipped=-1){
   $("#hearts").innerHTML=heartsHTML();
+  $("#play").classList.toggle("naming",G.phase==="flaw"||G.phase==="done");
   const task=$("#task");
   if(G.phase==="order"){task.style.cssText="";task.innerHTML=`<span class="dot"></span>Drag each card into its box <span class="count">${placedCount()}/5</span>`}
   else if(G.phase==="connect"){const k=G.connSteps[G.ci];task.style.cssText=rc(k);task.innerHTML=`<span class="dot"></span>Drag a linking word into the blank`}
+  else if(G.phase==="flaw"){task.style.cssText=rc(3);task.innerHTML=`<span class="dot"></span>Name the flaw in the decoy`}
   const hk=G.glow&&G.phase==="order"?firstEmpty():-1;
   $("#board").innerHTML=G.p.cards.map((c,k)=>{
     const done=!!G.done[k];
@@ -445,19 +633,26 @@ function render(landed=-1,flipped=-1){
     const cls=done?(target?"done target":"done"):(k===hk?"active target":"target");
     return `<div class="slot ${cls}" style="${rc(k)}" ${target?`data-drop="${k}"`:""}>
       <div class="role"><i></i>${ROLES[k].n}</div>
-      ${done?`<div class="stext ${landed===k?"placed":""}">${sentenceHTML(k,flipped)}</div>`:`<div class="ask">${ROLES[k].ask}</div>`}</div>`;
+      ${done?`<div class="stext ${landed===k?"placed":""}">${sentenceHTML(k,flipped)}</div>`:`<div class="ask">${G.p.hideAsk?"&nbsp;":ROLES[k].ask}</div>`}</div>`;
   }).join("");
   $("#feedback").innerHTML=G.fb?`<div class="msg ${G.fb.cls}">${G.fb.html}</div>`:"";
   const tray=$("#tray");G.sel=null;
   if(G.phase==="order"){
     tray.innerHTML=`<div class="trayhead"><span>Your cards · drag them up</span><button class="hintbtn" id="hint" ${G.glow||G.lives<=1?"disabled":""}>Hint · costs ★</button></div>`+
-      G.hand.map(id=>`<div class="tile drag ${G.glow&&id===hk?"glow":""}" style="${hk>=0?rc(hk):""}" data-id="${id}" tabindex="0" role="button" aria-label="Card: ${esc(id==="D"?G.p.decoy.t:G.p.cards[id].t)}"><span class="grip" aria-hidden="true">⠿</span><span>${esc(id==="D"?G.p.decoy.t:G.p.cards[id].t)}</span></div>`).join("");
-    tray.querySelectorAll(".tile").forEach(el=>makeDraggable(el,{type:"card",id:el.dataset.id==="D"?"D":+el.dataset.id}));
+      G.hand.map(id=>`<div class="tile drag ${G.glow&&id===hk?"glow":""}" style="${hk>=0?rc(hk):""}" data-id="${id}" tabindex="0" role="button" aria-label="Card: ${esc(cardText(id))}"><span class="grip" aria-hidden="true">⠿</span><span>${esc(cardText(id))}</span></div>`).join("");
+    tray.querySelectorAll(".tile").forEach(el=>makeDraggable(el,{type:"card",id:/^\d+$/.test(el.dataset.id)?+el.dataset.id:el.dataset.id}));
   }else if(G.phase==="connect"){
     const k=G.connSteps[G.ci];const opts=G.optOrder||(G.optOrder=shuffle(G.p.cards[k].c.o));
     tray.innerHTML=`<div class="trayhead"><span>Linking words · drag one to the blank</span><button class="hintbtn" id="hint" ${G.glow||G.lives<=1?"disabled":""}>Hint · costs ★</button></div><div class="chips">${opts.map(o=>`<div class="chipw drag ${G.glow&&o===G.p.cards[k].c.o[0]?"glow":""}" style="${rc(k)}" data-o="${esc(o)}" tabindex="0" role="button">${esc(o)}</div>`).join("")}</div>`;
     tray.querySelectorAll(".chipw").forEach(el=>makeDraggable(el,{type:"conn",o:el.dataset.o}));
+  }else if(G.phase==="flaw"){
+    const dc=G.p.extras.find(e=>e.flaw);const opts=G.flawOrder||(G.flawOrder=shuffle(G.p.flawOpts));
+    tray.innerHTML=`<div class="trayhead"><span>Which flaw does the decoy use?</span><button class="hintbtn" data-guide>Flaw guide</button></div>
+      <div class="card decoycard askcard"><div class="cardh" style="color:var(--bad)">The decoy</div><div class="stext">${esc(dc.t)}</div></div>
+      <div class="opts">${opts.map(f=>`<button class="opt flawopt" data-f="${f}" style="${rc(3)}" ${G.flawTried[f]?"disabled":""}>${esc(FLAWS[f].n)}${FLAWS[f].f?`<span class="optf">${FLAWS[f].f}</span>`:""}</button>`).join("")}</div>`;
+    tray.querySelectorAll(".flawopt").forEach(b=>b.onclick=()=>pickFlaw(b.dataset.f,b));
   }else tray.innerHTML="";
+  tray.querySelectorAll("[data-guide]").forEach(b=>b.onclick=openFlawGuide);
   document.querySelectorAll("[data-drop]").forEach(s=>s.onclick=()=>{if(G.sel)drop(G.sel.payload,+s.dataset.drop,G.sel.el)});
   const h=$("#hint");if(h)h.onclick=useHint;
 }
@@ -508,16 +703,25 @@ function drop(payload,k,el){
   if(payload.type==="card"&&G.phase==="order"){
     if(G.done[k])return;
     const id=payload.id;
-    if(id==="D"){
-      G.hand=G.hand.filter(x=>x!=="D");G.decoyOut="caught";
-      mistake(null,{cls:"bad",html:`That's the <b>decoy</b>. ${esc(G.p.decoy.why)} It's gone from your hand now.`});
+    if(typeof id==="string"){
+      const ex=G.p.extras.find(e=>e.id===id);G.hand=G.hand.filter(x=>x!==id);G.out[id]="caught";
+      const nd=G.p.extras.filter(e=>e.kind==="decoy").length;
+      const msg=ex.kind==="weak"?`That's the <b>weaker evidence</b>. ${esc(ex.why)} It's gone from your hand now.`
+        :G.flawAsk?`That's the <b>decoy</b>. It sounds convincing, but it has a flaw. You'll name the flaw at the end. It's gone from your hand now.`
+        :`That's ${nd>1?"a":"the"} <b>decoy</b>. ${esc(ex.why)} It's gone from your hand now.`;
+      mistake(null,{cls:"bad",html:msg});
       if(G.lives>0)setTimeout(render,50);return;
     }
     if(id===k){
       G.hand=G.hand.filter(x=>x!==id);G.done[k]=true;G.glow=false;G.fb=null;
       if(placedCount()===G.p.cards.length){
-        if(G.hand.includes("D")){G.decoyOut="skipped";G.fb={cls:"good",html:`Nice, you left out the decoy: “${esc(G.p.decoy.t)}” ${esc(G.p.decoy.why)} Now add the linking words.`}}
-        else G.fb={cls:"good",html:"All in place. Now drag in the linking words that connect the ideas."};
+        const left=G.hand.filter(x=>typeof x==="string");left.forEach(x=>G.out[x]="skipped");
+        const lx=left.map(x=>G.p.extras.find(e=>e.id===x));
+        if(!lx.length)G.fb={cls:"good",html:"All in place. Now drag in the linking words that connect the ideas."};
+        else if(lx[0].kind==="weak")G.fb={cls:"good",html:`Nice, you chose the stronger evidence and left out: “${esc(lx[0].t)}” ${esc(lx[0].why)} Now add the linking words.`};
+        else if(G.flawAsk)G.fb={cls:"good",html:"Nice, you left out the decoy. Now add the linking words. Then you'll name the decoy's flaw."};
+        else if(lx.length>1)G.fb={cls:"good",html:"Nice, you left out both decoys. Now add the linking words."};
+        else G.fb={cls:"good",html:`Nice, you left out the decoy: “${esc(lx[0].t)}” ${esc(lx[0].why)} Now add the linking words.`};
         G.hand=[];G.phase="connect";G.optOrder=null;
       }
       render(k);
@@ -529,7 +733,9 @@ function drop(payload,k,el){
     if(o===right){
       G.filled[kk]=o;G.ci++;G.optOrder=null;G.glow=false;
       G.fb={cls:"good",html:`<b>${esc(o)}</b> ${ROLES[kk].conn}.`};
-      if(G.ci>=G.connSteps.length){G.phase="done";render(-1,kk);setTimeout(()=>finish(true),900)}
+      if(G.ci>=G.connSteps.length){
+        if(G.flawAsk){G.phase="flaw";G.fb={cls:"good",html:`<b>${esc(o)}</b> ${ROLES[kk].conn}. Last step: name the decoy's flaw.`};render(-1,kk)}
+        else{G.phase="done";render(-1,kk);setTimeout(()=>finish(true),900)}}
       else render(-1,kk);
     }else{
       mistake(el,{cls:"bad",html:`<b>${esc(o)}</b> doesn't fit here. The ${ROLES[kk].n.toLowerCase()} needs a word that ${ROLES[kk].conn}.`});
@@ -574,7 +780,7 @@ function finish(won){
     <div class="card"><div class="cardh">Your finished argument</div><p class="anatomy">${para}</p>
       <div class="legend" style="margin-top:12px">${ROLES.map((r,k)=>`<span style="${rc(k)}">${r.n}</span>`).join("")}</div></div>
     <div class="card"><div class="cardh">Why it works</div><ul class="why">${ROLES.map((r,k)=>`<li style="${rc(k)}"><i></i><span>The <b>${r.n.toLowerCase()}</b> ${r.why}${p.cards[k].c?` <em>${esc(p.cards[k].c.o[0])}</em> ${r.conn}.`:""}</span></li>`).join("")}</ul></div>
-    ${p.decoy?`<div class="card decoycard"><div class="cardh" style="color:var(--bad)">The decoy ${G.decoyOut==="skipped"?"· you spotted it":"· it cost you a star"}</div><div class="stext">${esc(p.decoy.t)}</div><div style="font-size:14px;color:var(--muted);margin-top:4px;font-weight:600">${esc(p.decoy.why)}</div></div>`:""}
+    ${p.extras.map(ex=>{const fl=ex.flaw?FLAWS[ex.flaw]:null;return `<div class="card decoycard"><div class="cardh" style="color:var(--bad)">${ex.kind==="weak"?"The weaker evidence":"The decoy"} ${G.out[ex.id]==="skipped"?"· you spotted it":"· it cost you a star"}</div><div class="stext">${esc(ex.t)}</div>${fl?`<div class="flawtag">Flaw: <b>${esc(fl.n)}</b> · <i>${esc(fl.f)}</i></div>`:""}<div style="font-size:14px;color:var(--muted);margin-top:4px;font-weight:600">${esc(ex.why)}</div></div>`}).join("")}
     <div class="row"><button class="btn soft" id="e-replay">Replay</button><button class="btn soft" id="e-map">Stages</button></div>
   </div>`;
   confetti();
@@ -582,6 +788,44 @@ function finish(won){
   const m2=$("#e-map2");if(m2)m2.onclick=showMap;
   $("#e-replay").onclick=()=>start(i);$("#e-map").onclick=showMap;
   setTimeout(()=>$("#end").scrollIntoView({behavior:"smooth",block:"start"}),400);
+}
+
+/* ============ FLAWS ============ */
+const CH_TIPS={
+ 2:"New: each blank has <b>four</b> linking words, and the <b>reason</b> needs one too.",
+ 3:"New: the decoy sounds smart, but it has a <b>flaw</b>. Leave it out. At the end, you'll name the flaw.",
+ 4:"New: you have <b>two support cards</b>. Only one is strong evidence, like a fact or a study. Put that one in the Support box.",
+ 5:"New: <b>two decoys</b> are hiding, and the boxes only show their names. You've got this!"
+};
+const flawsLearned=()=>{const L=[];STAGES.slice(0,G.i+1).forEach(s=>{if(s.newFlaw&&!L.includes(s.newFlaw))L.push(s.newFlaw)});return L};
+function renderIntro(){
+  const p=G.p,el=$("#intro");
+  if(p.newFlaw){const f=FLAWS[p.newFlaw];
+    el.innerHTML=`<div class="card flawcard" style="${rc(3)}"><div class="cardh">New flaw</div><div class="fname">${esc(f.n)}</div><div class="fformal">${esc(f.f)}</div><p>${esc(f.d)}</p><p class="fex">Example: ${esc(f.ex)}</p><button class="hintbtn" data-guide>Flaw guide</button></div>`}
+  else if(p.ch===5)el.innerHTML=`<div class="guiderow"><button class="hintbtn" data-guide>Flaw guide</button></div>`;
+  else el.innerHTML="";
+  el.querySelectorAll("[data-guide]").forEach(b=>b.onclick=openFlawGuide);
+}
+function openFlawGuide(){
+  const o=$("#overlay"),L=flawsLearned();
+  o.innerHTML=`<div class="scrim" id="scrim"><div class="sheet" role="dialog" aria-modal="true" aria-label="Flaw guide">
+    <h2>Flaw guide</h2>
+    <p style="margin:0;color:var(--muted)">Weak arguments often hide one of these flaws. Using this guide is free.</p>
+    <ul class="howto">${L.map((k,n)=>{const f=FLAWS[k];return `<li style="${rc(n%5)}"><span class="n">${n+1}</span><span><b>${esc(f.n)}</b> <i class="gformal">${esc(f.f)}</i><br>${esc(f.d)}<br><span class="gex">${esc(f.ex)}</span></span></li>`}).join("")}</ul>
+    <button class="btn" data-close>Back to the game</button></div></div>`;
+  o.querySelector("#scrim").onclick=e=>{if(e.target.id==="scrim"||e.target.closest("[data-close]"))o.innerHTML=""};
+}
+function pickFlaw(k,btn){
+  if(G.phase!=="flaw"||G.lives<=0)return;
+  const dc=G.p.extras.find(e=>e.flaw),right=FLAWS[dc.flaw];
+  if(k===dc.flaw){
+    G.phase="done";G.fb={cls:"good",html:`Yes! <b>${esc(right.n)}</b> (${esc(right.f)}). ${esc(dc.why)}`};
+    render();setTimeout(()=>finish(true),1100);
+  }else{
+    G.flawTried[k]=true;btn.disabled=true;
+    const f=FLAWS[k];
+    mistake(btn,{cls:"bad",html:k==="none"?"Not quite. The decoy does have a flaw. Read it again carefully.":`Not quite. <b>${esc(f.n)}</b> means: ${esc(f.d)} Read the decoy again.`});
+  }
 }
 
 /* ============ HELP ============ */
@@ -595,6 +839,7 @@ function openHelp(){
         <div class="chain" style="margin-top:8px">${ROLES.map((r,k)=>`<span style="${rc(k)}">${r.n}</span>`).join("<em>→</em>")}</div></span></li>
       <li style="${rc(2)}"><span class="n">2</span><span><b>Drag in the linking words.</b> Choose the word that connects each idea, like <i>For example,</i> or <i>However,</i></span></li>
       <li style="${rc(1)}"><span class="n">★</span><span><b>You start with 3 stars.</b> Each wrong drop or hint costs one star, and a wrong drop tells you why. Finish with at least one star to unlock the next stage.</span></li>
+      <li style="${rc(3)}"><span class="n">+</span><span><b>New twists appear as you go.</b> Each one is explained the first time you meet it.</span></li>
     </ul>
     <button class="btn" data-close>Let's play</button></div></div>`;
   o.querySelector("#scrim").onclick=e=>{if(e.target.id==="scrim"||e.target.closest("[data-close]"))o.innerHTML=""};
