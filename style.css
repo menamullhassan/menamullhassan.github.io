@@ -585,13 +585,13 @@
     .contact-page { padding: 56px 0 80px; }
   }
 
-  /* ---------- Footer band: soft orange tint, same on every page ---------- */
-  footer, body:has(.contact-page) footer { background: #F6E4D8; color: #9A4518; border-top: 3px solid var(--highlight); }
+  /* ---------- Footer band: stone, same on every page ---------- */
+  footer, body:has(.contact-page) footer { background: #E4E0D7; color: #5F5A52; border-top: 0; }
   footer .wrap { opacity: 1; font-weight: 500; }
   @media (prefers-color-scheme: dark) {
-    :where(html:not([data-theme="light"])) footer, :where(html:not([data-theme="light"])) body:has(.contact-page) footer { background: #2b1d15; color: #F2995C; border-top-color: var(--highlight); }
+    :where(html:not([data-theme="light"])) footer, :where(html:not([data-theme="light"])) body:has(.contact-page) footer { background: #1B1E26; color: #A4A09A; border-top: 0; }
   }
-  :where(html[data-theme="dark"]) footer, :where(html[data-theme="dark"]) body:has(.contact-page) footer { background: #2b1d15; color: #F2995C; border-top-color: var(--highlight); }
+  :where(html[data-theme="dark"]) footer, :where(html[data-theme="dark"]) body:has(.contact-page) footer { background: #1B1E26; color: #A4A09A; border-top: 0; }
 
   /* ---------- Background texture: very subtle dot grid (all pages) ---------- */
   :root { --dot: rgba(27, 29, 36, .07); }
@@ -831,10 +831,11 @@
   .rtool .rt-more .rt-ic { width: 26px; height: 26px; margin-bottom: auto; }
   .rtool.soon .rt-ic { color: var(--label); opacity: .8; }
 
+  footer .credit { float: right; font-size: 12.5px; font-weight: 400; opacity: .7; margin-top: 2px; }
+  footer .credit .sep { display: none; }
   footer .credit a { color: inherit; }
   @media (max-width: 700px) {
-    footer .credit { display: block; margin-top: 4px; }
-    footer .credit .sep { display: none; }
+    footer .credit { float: none; display: block; margin-top: 6px; }
     .course > .ibadge.corner { top: 22px; right: 20px; width: 38px; height: 38px; }
     .course > .ibadge.corner .ic { width: 19px; height: 19px; }
     .course > .ibadge.corner + h3 { padding-right: 50px; }
