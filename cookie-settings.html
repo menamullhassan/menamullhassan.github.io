@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Settings | M Enam Ull Hassan</title>
+<meta name="description" content="See and clear the preferences enamhassan.com has saved in your browser.">
+<script>
+  (function () {
+    var d = document.documentElement;
+    try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') d.setAttribute('data-theme', t); } catch (e) {}
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.theme-toggle');
+      if (!b) return;
+      var cur = d.getAttribute('data-theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      d.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=14">
+<link rel="icon" href="favicon.ico?v=4" sizes="any">
+<link rel="icon" href="favicon.svg?v=5" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=4">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan</a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M1 4.7H3.8Q4.2 6.2 5.5 7Q6.8 7.8 8.3 7.4Q9.3 7.1 10 6.4Q10.6 5.7 11 4.7H23Q23.4 4.7 23.7 4.4Q24 4.2 24 3.8Q24 3.4 23.7 3Q23.4 2.7 23 2.7H11Q10.6 1.3 9.2 0.5Q7.8 -0.2 6.3 0.2Q5.4 0.4 4.7 1.1Q4 1.8 3.8 2.7H1Q0.6 2.7 0.3 3Q0 3.4 0 3.8Q0 4.2 0.3 4.4Q0.6 4.7 1 4.7ZM23 11H20.2Q19.8 9.5 18.5 8.8Q17.2 8 15.7 8.4Q14.7 8.6 14 9.4Q13.4 10.1 13 11H1Q0.6 11 0.3 11.3Q0 11.6 0 12Q0 12.4 0.3 12.7Q0.6 13 1 13H13Q13.4 14.5 14.8 15.2Q16.2 16 17.7 15.6Q18.6 15.4 19.3 14.6Q20 13.9 20.2 13H23Q23.4 13 23.7 12.7Q24 12.4 24 12Q24 11.6 23.7 11.3Q23.4 11 23 11ZM23 19.3H11Q10.6 17.8 9.2 17Q7.8 16.2 6.3 16.6Q5.4 16.9 4.7 17.6Q4 18.3 3.8 19.3H1Q0.6 19.3 0.3 19.6Q0 19.8 0 20.2Q0 20.6 0.3 21Q0.6 21.3 1 21.3H3.8Q4.2 22.7 5.5 23.5Q6.8 24.2 8.3 23.8Q9.3 23.6 10 22.9Q10.6 22.2 11 21.3H23Q23.4 21.3 23.7 21Q24 20.6 24 20.2Q24 19.8 23.7 19.6Q23.4 19.3 23 19.3Z"/></svg>Legal</p>
+    <h1 class="reveal">Cookie <em>settings</em>.</h1>
+    <p class="lead reveal">See what this site has saved in your browser, and clear it with one click.</p>
+    <p class="updated reveal">Last updated September 27, 2026</p>
+    <nav class="legal-nav reveal" aria-label="Legal pages"><a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a><a href="cookies.html">Cookies Policy</a><a href="cookie-settings.html" aria-current="page">Cookie Settings</a><a href="copyright.html">Copyright Notice</a></nav>
+  </div>
+
+  <section class="legal">
+    <div class="wrap legal-grid">
+      <div class="toc toc-note"><span class="toc-h">Good to know</span><p>This site sets no cookies. These two items live in your browser&rsquo;s local storage, on this device only.</p><p><a href="cookies.html">Read the Cookies Policy</a></p></div>
+      <div class="doc">
+        <div class="cs-list">
+          <div class="cs-item" data-key="theme">
+            <span class="ibadge"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.1 16.8 20.2 16.9Q20.5 17.3 21 17.4Q21.4 17.5 21.9 17.4Q22.4 17.4 22.8 17Q23.1 16.7 23.3 16.2Q24.2 14.1 24.1 11.7Q24 8.6 22.4 6Q20.8 3.4 18.2 1.8Q15.6 0.2 12.5 0Q10.1 -0.1 7.8 0.8Q5.5 1.7 3.8 3.4Q2 5 1 7.3Q0.1 9.5 0.1 12Q0.1 15.3 1.7 18Q3.3 20.8 6 22.4Q8.8 24 12.1 24L13.1 23.9Q13.4 23.9 13.7 23.6Q14 23.4 14 23V19.4Q13.9 18.2 14.5 17.4Q15.1 16.5 16.1 16Q17.1 15.6 18.2 15.8Q19.3 16 20.1 16.8ZM17.1 8.1Q17.7 7.9 18.2 8.2Q18.8 8.5 19 9.1Q19.1 9.7 18.8 10.2Q18.5 10.8 17.9 11Q17.3 11.1 16.8 10.8Q16.2 10.5 16.1 9.9Q15.9 9.3 16.2 8.8Q16.5 8.2 17.1 8.1ZM7.9 17Q7.3 17.1 6.8 16.8Q6.2 16.5 6.1 15.9Q5.9 15.3 6.2 14.8Q6.5 14.2 7.1 14.1Q7.7 13.9 8.2 14.2Q8.8 14.5 9 15.1Q9.1 15.7 8.8 16.2Q8.5 16.8 7.9 17ZM7.9 11Q7.3 11.1 6.8 10.8Q6.2 10.5 6.1 9.9Q5.9 9.3 6.2 8.8Q6.5 8.2 7.1 8.1Q7.7 7.9 8.2 8.2Q8.8 8.5 9 9.1Q9.1 9.7 8.8 10.2Q8.5 10.8 7.9 11ZM12.9 7.9Q12.3 8.1 11.8 7.8Q11.2 7.5 11 6.9Q10.9 6.3 11.2 5.8Q11.5 5.2 12.1 5Q12.7 4.9 13.2 5.2Q13.8 5.5 13.9 6.1Q14.1 6.7 13.8 7.2Q13.5 7.8 12.9 7.9Z"/></svg></span>
+            <div class="cs-body"><h3>Theme preference</h3><p>Remembers whether you chose light or dark mode.</p><span class="cs-status" aria-live="polite"></span></div>
+            <button class="btn ghost cs-clear" type="button">Clear</button>
+          </div>
+          <div class="cs-item" data-key="argu-stages.v2">
+            <span class="ibadge ib-7"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22.1 5Q21.4 3.8 20.3 3.2Q19.2 2.6 17.8 2.6H6Q4.6 2.6 3.5 3.2Q2.4 3.8 1.7 5Q0 8.1 0 11.5Q0 14.2 0.7 16.5Q1.4 18.8 2.5 20.1Q3.6 21.4 5 21.4Q7.2 21.4 8.6 17.2Q8.6 16.9 8.9 16.7Q9.2 16.5 9.6 16.5H14.4Q14.7 16.5 15 16.7Q15.3 16.9 15.4 17.2Q16.8 21.4 19 21.4Q20.4 21.4 21.5 20.1Q22.6 18.8 23.3 16.5Q24 14.2 24 11.5Q23.7 7.9 22.1 5ZM9 10.5H8V11.5Q8 11.9 7.7 12.2Q7.4 12.5 7 12.5Q6.6 12.5 6.3 12.2Q6 11.9 6 11.5V10.5H5Q4.6 10.5 4.3 10.2Q4 9.9 4 9.5Q4 9 4.3 8.8Q4.6 8.5 5 8.5H6V7.5Q6 7 6.3 6.8Q6.6 6.6 7 6.6Q7.4 6.6 7.7 6.8Q8 7 8 7.5V8.5H9Q9.4 8.5 9.7 8.8Q9.9 9 9.9 9.5Q9.9 9.9 9.7 10.2Q9.4 10.5 9 10.5ZM15.5 12.5Q15 12.5 14.5 12Q14.1 11.6 14.1 11Q14.1 10.4 14.5 10Q15 9.5 15.6 9.5Q16.2 9.5 16.6 10Q17 10.4 17 11Q17 11.6 16.6 12Q16.1 12.5 15.5 12.5ZM18.4 9.5Q17.8 9.5 17.4 9.1Q17 8.6 17 8Q17 7.4 17.4 7Q17.8 6.6 18.4 6.6Q19 6.6 19.4 7Q19.9 7.4 19.9 8Q19.9 8.6 19.5 9.1Q19 9.5 18.4 9.5Z"/></svg></span>
+            <div class="cs-body"><h3>ARGU Daily progress</h3><p>Your completed stages, stars, and whether you&rsquo;ve seen the help screen.</p><span class="cs-status" aria-live="polite"></span></div>
+            <button class="btn ghost cs-clear" type="button">Clear</button>
+          </div>
+        </div>
+        <div class="cs-all"><button class="btn primary" type="button" id="cs-clear-all"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 4H17.9Q17.5 2.2 16.2 1.1Q14.8 0 13 0H11Q9.2 0 7.8 1.1Q6.5 2.2 6.1 4H3Q2.6 4 2.3 4.3Q2 4.6 2 5Q2 5.4 2.3 5.7Q2.6 6 3 6H4V19Q4 20.3 4.7 21.5Q5.4 22.6 6.5 23.3Q7.7 24 9 24H15Q16.3 24 17.5 23.3Q18.6 22.6 19.3 21.5Q20 20.3 20 19V6H21Q21.4 6 21.7 5.7Q22 5.4 22 5Q22 4.6 21.7 4.3Q21.4 4 21 4ZM11 17Q11 17.4 10.7 17.7Q10.4 18 10 18Q9.6 18 9.3 17.7Q9 17.4 9 17V11Q9 10.6 9.3 10.3Q9.6 10 10 10Q10.4 10 10.7 10.3Q11 10.6 11 11V17ZM15 17Q15 17.4 14.7 17.7Q14.4 18 14 18Q13.6 18 13.3 17.7Q13 17.4 13 17V11Q13 10.6 13.3 10.3Q13.6 10 14 10Q14.4 10 14.7 10.3Q15 10.6 15 11ZM8.2 4Q8.5 3.1 9.3 2.6Q10.1 2 11 2H13Q13.9 2 14.7 2.6Q15.5 3.1 15.8 4Z"/></svg>Clear everything</button><span class="cs-msg" id="cs-msg" role="status"></span></div>
+        <p class="cs-foot">Clearing only resets your light/dark choice and ARGU Daily progress. Everything else on the site keeps working. Tracking and advertising cookies aren&rsquo;t listed here because the site doesn&rsquo;t use any.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><nav class="legal-links" aria-label="Legal"><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="cookies.html">Cookies</a><a href="cookie-settings.html">Cookie settings</a><a href="copyright.html">Copyright</a></nav>Copyright © <span id="yr"></span> M Enam Ull Hassan · Boston, MA<span class="credit"><span class="sep"> · </span>Icons: Uicons by <a href="https://www.flaticon.com/uicons" target="_blank" rel="noopener">Flaticon</a></span></div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<script>
+  (function () {
+    function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+    function describe(key, v) {
+      if (v === null) return null;
+      if (key === 'theme') return 'Saved: ' + (v === 'dark' ? 'dark' : 'light') + ' mode';
+      if (key === 'argu-stages.v2') {
+        try { var n = Object.keys((JSON.parse(v) || {}).stars || {}).length; return 'Saved: ' + n + (n === 1 ? ' stage' : ' stages') + ' completed'; }
+        catch (e) { return 'Saved'; }
+      }
+      return 'Saved';
+    }
+    var items = document.querySelectorAll('.cs-item');
+    function render() {
+      var any = false;
+      items.forEach(function (it) {
+        var key = it.dataset.key, d = describe(key, get(key));
+        var st = it.querySelector('.cs-status'), b = it.querySelector('.cs-clear');
+        st.textContent = d || 'Nothing saved';
+        st.classList.toggle('none', !d);
+        b.disabled = !d; if (d) any = true;
+      });
+      document.getElementById('cs-clear-all').disabled = !any;
+    }
+    function msg(t) { var m = document.getElementById('cs-msg'); m.textContent = t; }
+    function clear(key) {
+      del(key);
+      if (key === 'theme') document.documentElement.removeAttribute('data-theme');
+    }
+    items.forEach(function (it) {
+      it.querySelector('.cs-clear').addEventListener('click', function () {
+        clear(it.dataset.key); render(); msg('Cleared.');
+      });
+    });
+    document.getElementById('cs-clear-all').addEventListener('click', function () {
+      items.forEach(function (it) { clear(it.dataset.key); }); render(); msg('Everything this site saved has been cleared.');
+    });
+    document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.theme-toggle')) setTimeout(render, 0); });
+    render();
+  })();
+</script>
+</body>
+</html>
