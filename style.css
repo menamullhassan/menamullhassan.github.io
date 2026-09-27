@@ -853,7 +853,7 @@
   .legal-nav a:hover { border-color: var(--accent); color: var(--accent); }
   .legal-nav a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
 
-  .legal-grid { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 48px; align-items: start; }
+  .legal-grid { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 40px; align-items: start; }
   .toc { position: sticky; top: 96px; display: flex; flex-direction: column; gap: 9px; font-size: 14px; }
   .toc .toc-h { font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--label); margin-bottom: 4px; }
   .toc a { color: var(--muted); text-decoration: none; line-height: 1.35; }
@@ -862,7 +862,7 @@
   .toc-note a { color: var(--accent); }
 
   .doc { max-width: 70ch; }
-  .doc h2 { font-size: 25px; font-weight: 500; margin: 44px 0 12px; scroll-margin-top: 96px; }
+  .doc h2 { font-size: 24px; font-weight: 500; line-height: 1.3; letter-spacing: 0; margin: 44px 0 12px; scroll-margin-top: 96px; }
   .doc > h2:first-child, .doc .summary + h2 { margin-top: 0; }
   .doc p, .doc li { font-size: 16.5px; line-height: 1.7; }
   .doc p + p, .doc ul + p, .doc ol + p, .doc p + ul, .doc p + ol, .doc .legal-table + p { margin-top: 12px; }
