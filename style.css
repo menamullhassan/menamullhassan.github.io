@@ -741,3 +741,101 @@
   }
   :where(html[data-theme="dark"]) .theme-toggle .ic-sun { display: block; }
   :where(html[data-theme="dark"]) .theme-toggle .ic-moon { display: none; }
+
+
+  /* ===== Icons (Flaticon UIcons, solid rounded) ===== */
+  .ic { display: inline-block; width: 1em; height: 1em; fill: currentColor; flex: none; }
+  .eyebrow > .ic { width: 16px; height: 16px; margin-right: 9px; vertical-align: -3px; }
+  .sec-label > .ic { display: block; width: 22px; height: 22px; margin-bottom: 10px; color: var(--accent); }
+  .btn > .ic { width: 15px; height: 15px; }
+
+  /* tinted icon tile */
+  .ibadge { --ib-fg: var(--classic-blue); --ib-bg: #dde6f0;
+    display: inline-grid; place-items: center; flex: none; width: 44px; height: 44px; border-radius: 12px;
+    color: var(--ib-fg); background: var(--ib-bg); }
+  .ibadge .ic { width: 22px; height: 22px; }
+  .ib-2 { --ib-fg: #a11f3e; --ib-bg: #f6e3ea; }
+  .ib-3 { --ib-fg: #7d5543; --ib-bg: #efe4de; }
+  .ib-4 { --ib-fg: #4d4e93; --ib-bg: #e5e5f3; }
+  .ib-5 { --ib-fg: #b4532a; --ib-bg: #fbe6da; }
+  .ib-6 { --ib-fg: #6b5a00; --ib-bg: #faf1c4; }
+  .ib-7 { --ib-fg: #0b6b57; --ib-bg: #dcefe9; }
+  @media (prefers-color-scheme: dark) {
+    :where(html:not([data-theme="light"])) .ibadge { --ib-fg: #8fb6de; --ib-bg: #1c2a3b; }
+    :where(html:not([data-theme="light"])) .ib-2 { --ib-fg: #ef7d98; --ib-bg: #3a1822; }
+    :where(html:not([data-theme="light"])) .ib-3 { --ib-fg: #d4ab97; --ib-bg: #33251e; }
+    :where(html:not([data-theme="light"])) .ib-4 { --ib-fg: #a9aae0; --ib-bg: #25264a; }
+    :where(html:not([data-theme="light"])) .ib-5 { --ib-fg: #f2995c; --ib-bg: #3a2519; }
+    :where(html:not([data-theme="light"])) .ib-6 { --ib-fg: #f5df4d; --ib-bg: #3a3414; }
+    :where(html:not([data-theme="light"])) .ib-7 { --ib-fg: #6fd1b4; --ib-bg: #15312a; }
+  }
+  :where(html[data-theme="dark"]) .ibadge { --ib-fg: #8fb6de; --ib-bg: #1c2a3b; }
+  :where(html[data-theme="dark"]) .ib-2 { --ib-fg: #ef7d98; --ib-bg: #3a1822; }
+  :where(html[data-theme="dark"]) .ib-3 { --ib-fg: #d4ab97; --ib-bg: #33251e; }
+  :where(html[data-theme="dark"]) .ib-4 { --ib-fg: #a9aae0; --ib-bg: #25264a; }
+  :where(html[data-theme="dark"]) .ib-5 { --ib-fg: #f2995c; --ib-bg: #3a2519; }
+  :where(html[data-theme="dark"]) .ib-6 { --ib-fg: #f5df4d; --ib-bg: #3a3414; }
+  :where(html[data-theme="dark"]) .ib-7 { --ib-fg: #6fd1b4; --ib-bg: #15312a; }
+
+  .explore-card .ibadge { margin-bottom: 10px; }
+
+  .contact-card .ibadge { margin-bottom: 6px; }
+
+  /* heading with a tile beside it */
+  h2.with-ic, h3.with-ic { display: flex; align-items: center; gap: 14px; }
+  .role h3.with-ic { gap: 12px; }
+  .role h3.with-ic .ibadge { width: 38px; height: 38px; border-radius: 10px; }
+  .role h3.with-ic .ibadge .ic { width: 19px; height: 19px; }
+  .role:nth-child(7n+2) .ibadge { --ib-fg: #a11f3e; --ib-bg: #f6e3ea; }
+  .role:nth-child(7n+3) .ibadge { --ib-fg: #7d5543; --ib-bg: #efe4de; }
+  .role:nth-child(7n+4) .ibadge { --ib-fg: #4d4e93; --ib-bg: #e5e5f3; }
+  .role:nth-child(7n+5) .ibadge { --ib-fg: #0b6b57; --ib-bg: #dcefe9; }
+  .role:nth-child(7n+6) .ibadge { --ib-fg: #b4532a; --ib-bg: #fbe6da; }
+  .role:nth-child(7n+7) .ibadge { --ib-fg: #6b5a00; --ib-bg: #faf1c4; }
+  @media (prefers-color-scheme: dark) {
+    :where(html:not([data-theme="light"])) .role:nth-child(7n+2) .ibadge { --ib-fg: #ef7d98; --ib-bg: #3a1822; }
+    :where(html:not([data-theme="light"])) .role:nth-child(7n+3) .ibadge { --ib-fg: #d4ab97; --ib-bg: #33251e; }
+    :where(html:not([data-theme="light"])) .role:nth-child(7n+4) .ibadge { --ib-fg: #a9aae0; --ib-bg: #25264a; }
+    :where(html:not([data-theme="light"])) .role:nth-child(7n+5) .ibadge { --ib-fg: #6fd1b4; --ib-bg: #15312a; }
+    :where(html:not([data-theme="light"])) .role:nth-child(7n+6) .ibadge { --ib-fg: #f2995c; --ib-bg: #3a2519; }
+    :where(html:not([data-theme="light"])) .role:nth-child(7n+7) .ibadge { --ib-fg: #f5df4d; --ib-bg: #3a3414; }
+  }
+  :where(html[data-theme="dark"]) .role:nth-child(7n+2) .ibadge { --ib-fg: #ef7d98; --ib-bg: #3a1822; }
+  :where(html[data-theme="dark"]) .role:nth-child(7n+3) .ibadge { --ib-fg: #d4ab97; --ib-bg: #33251e; }
+  :where(html[data-theme="dark"]) .role:nth-child(7n+4) .ibadge { --ib-fg: #a9aae0; --ib-bg: #25264a; }
+  :where(html[data-theme="dark"]) .role:nth-child(7n+5) .ibadge { --ib-fg: #6fd1b4; --ib-bg: #15312a; }
+  :where(html[data-theme="dark"]) .role:nth-child(7n+6) .ibadge { --ib-fg: #f2995c; --ib-bg: #3a2519; }
+  :where(html[data-theme="dark"]) .role:nth-child(7n+7) .ibadge { --ib-fg: #f5df4d; --ib-bg: #3a3414; }
+
+  /* about: tile above the heading */
+  .lead-badge { margin-bottom: 18px; --ib-fg: #a11f3e; --ib-bg: #f6e3ea; }
+  @media (prefers-color-scheme: dark) { :where(html:not([data-theme="light"])) .lead-badge { --ib-fg: #ef7d98; --ib-bg: #3a1822; } }
+  :where(html[data-theme="dark"]) .lead-badge { --ib-fg: #ef7d98; --ib-bg: #3a1822; }
+
+  /* coloured cards (teaching, research, grants): white tile in the top-right corner */
+  .course { position: relative; }
+  .course > .ibadge.corner { position: absolute; top: 30px; right: 30px; --ib-fg: #fff; --ib-bg: rgba(255,255,255,.16); }
+  .course > .ibadge.corner + h3 { padding-right: 58px; }
+  .course.compact > .ibadge.corner { top: 24px; right: 24px; width: 40px; height: 40px; }
+  .course.compact > .ibadge.corner .ic { width: 20px; height: 20px; }
+  .course.compact > .ibadge.corner + h3 { padding-right: 0; }
+  .course.compact h3 { margin-top: 20px; }
+
+  /* education + skills small labels */
+  .stop-place .ic { width: 13px; height: 13px; margin-right: 6px; vertical-align: -2px; }
+  .skill-group h4 .ic { width: 14px; height: 14px; margin-right: 7px; vertical-align: -2px; color: var(--accent); }
+
+  /* resources tiles */
+  .rtool .rt-ic { width: 34px; height: 34px; margin-bottom: auto; opacity: .92; }
+  .rtool .rt-face .rt-ic + .rt-name { margin-top: 18px; }
+  .rtool .rt-more .rt-ic { width: 26px; height: 26px; margin-bottom: auto; }
+  .rtool.soon .rt-ic { color: var(--label); opacity: .8; }
+
+  footer .credit a { color: inherit; }
+  @media (max-width: 700px) {
+    footer .credit { display: block; margin-top: 4px; }
+    footer .credit .sep { display: none; }
+    .course > .ibadge.corner { top: 22px; right: 20px; width: 38px; height: 38px; }
+    .course > .ibadge.corner .ic { width: 19px; height: 19px; }
+    .course > .ibadge.corner + h3 { padding-right: 50px; }
+  }
