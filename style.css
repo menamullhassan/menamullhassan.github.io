@@ -945,3 +945,16 @@
   .course > .ibadge.corner { --ib-fg: var(--rc); --ib-bg: color-mix(in srgb, var(--rc) 12%, transparent); }
   .ta-card { background: var(--bg); border-color: var(--line); }
   .ta-card p { color: var(--muted); }
+  .course .award { background: var(--bg); border-color: var(--line); }
+  .course .award-name { color: var(--ink); }
+  .course .award-by { color: var(--muted); }
+  .tw-box .tw-fam, .av-strength span { color: var(--label); }
+  .course .tw-ex { background: var(--bg); border-left-color: var(--rc, var(--accent)); }
+  .course .tw-ex strong { color: var(--rc, var(--accent)); }
+  .tw-box .tw-toggle { color: var(--ink); }
+  .tw-toggle input { accent-color: var(--accent); }
+  .av-strength a { background: var(--bg); color: var(--ink); border-color: var(--line); }
+  .av-strength a:hover { background: var(--accent-soft); }
+  .av-strength a.on { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+  .tw-word:hover, .tw-word.hit, .tw-word:hover sup, .tw-word.hit sup, .tw-word.av-up:hover small, .tw-word.av-up.hit small { color: var(--surface); }
+  .sm-tb.primary { color: var(--surface); }
