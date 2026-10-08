@@ -435,29 +435,14 @@
   .explore-card:nth-child(7) { border-top-color: var(--illuminating); }
   .explore-card:nth-child(8) { border-top-color: var(--viva-magenta); }
 
-  /* Contact page: soft blue, low contrast */
-  body:has(.contact-page) { background: #E3EBF4; }
-  .contact.contact-page { background: #E3EBF4; color: #1b2a3a; }
-  .contact-page h2 { color: #0F4C81; }
-  .contact-page .sec-label { color: #5b7896; opacity: 1; }
-  .contact-page .contact-links a { color: #1b2a3a; border-bottom-color: rgba(15,76,129,.18); }
-  .contact-page .contact-links a span { color: #5b7896; opacity: 1; }
-  .contact-page .contact-links a:hover { color: #0F4C81; }
-  body:has(.contact-page) footer { background: #E3EBF4; color: #5b7896; }
-  @media (prefers-color-scheme: dark) {
-    :where(html:not([data-theme="light"])) body:has(.contact-page), :where(html:not([data-theme="light"])) .contact.contact-page, :where(html:not([data-theme="light"])) body:has(.contact-page) footer { background: #1c2a3b; }
-    :where(html:not([data-theme="light"])) .contact.contact-page, :where(html:not([data-theme="light"])) .contact-page .contact-links a { color: #dfe7f0; }
-    :where(html:not([data-theme="light"])) .contact-page h2 { color: #bcd2ea; }
-    :where(html:not([data-theme="light"])) .contact-page .sec-label, :where(html:not([data-theme="light"])) .contact-page .contact-links a span, :where(html:not([data-theme="light"])) body:has(.contact-page) footer { color: #8fa8c2; }
-    :where(html:not([data-theme="light"])) .contact-page .contact-links a { border-bottom-color: rgba(255,255,255,.14); }
-    :where(html:not([data-theme="light"])) .contact-page .contact-links a:hover { color: #8fb6de; }
-  }
-  :where(html[data-theme="dark"]) body:has(.contact-page), :where(html[data-theme="dark"]) .contact.contact-page, :where(html[data-theme="dark"]) body:has(.contact-page) footer { background: #1c2a3b; }
-  :where(html[data-theme="dark"]) .contact.contact-page, :where(html[data-theme="dark"]) .contact-page .contact-links a { color: #dfe7f0; }
-  :where(html[data-theme="dark"]) .contact-page h2 { color: #bcd2ea; }
-  :where(html[data-theme="dark"]) .contact-page .sec-label, :where(html[data-theme="dark"]) .contact-page .contact-links a span, :where(html[data-theme="dark"]) body:has(.contact-page) footer { color: #8fa8c2; }
-  :where(html[data-theme="dark"]) .contact-page .contact-links a { border-bottom-color: rgba(255,255,255,.14); }
-  :where(html[data-theme="dark"]) .contact-page .contact-links a:hover { color: #8fb6de; }
+  /* Contact page: same background and colours as the rest of the site */
+  body:has(.contact-page) { background-color: var(--bg); }
+  .contact.contact-page { background: transparent; color: var(--ink); }
+  .contact-page h2 { color: var(--ink); }
+  .contact-page .sec-label { color: var(--label); opacity: 1; }
+  .contact-page .contact-links a { color: var(--ink); border-bottom-color: var(--line); }
+  .contact-page .contact-links a span { color: var(--muted); opacity: 1; }
+  .contact-page .contact-links a:hover { color: var(--accent); }
 
   /* Navigation: switch to the Menu button earlier now that there are 9 links */
   nav ul { gap: 22px; }
@@ -921,7 +906,10 @@
     main .rtools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .sm-section .wrap { max-width: max(1340px, var(--max)); }
     .sm-main { height: 760px; }
-    .role > div > ul, .role .where, #about p, .about-body p, .course > p { max-width: 50em; }
+    .role > div > ul, .role .where, #about p, .about-body p, .course > p, .doc { max-width: 70em; }
+    .hero p.lead, .page-hero p.lead { max-width: 60em; }
+    .page-hero h1 { max-width: 24ch; }
+    .hero h1 { max-width: 20ch; }
   }
   @media (min-width: 2300px) {
     :root { --max: 1840px; }
@@ -937,3 +925,23 @@
     .sec-head, .legal-grid { grid-template-columns: 340px minmax(0, 1fr); gap: 84px; }
     .sm-main { height: 940px; }
   }
+
+  /* ===== Calm cards (teaching, research, grants, resources): white card, thin colour stripe ===== */
+  :root { --c1: #0F4C81; --c2: #A11F3E; --c3: #7A5444; --c4: #4F5096; --c5: #0B6B57; }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) { --c1: #8fb6de; --c2: #ef7d98; --c3: #d4ab97; --c4: #a9aae0; --c5: #6fd1b4; }
+  }
+  :root:where([data-theme="dark"]) { --c1: #8fb6de; --c2: #ef7d98; --c3: #d4ab97; --c4: #a9aae0; --c5: #6fd1b4; }
+  .c1 { --rc: var(--c1); } .c2 { --rc: var(--c2); } .c3 { --rc: var(--c3); } .c4 { --rc: var(--c4); } .c5 { --rc: var(--c5); }
+  .course.c1, .course.c2, .course.c3, .course.c4, .course.c5 {
+    background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-top: 5px solid var(--rc); box-shadow: none;
+  }
+  .course h3, .course .ta-card h3 { color: var(--ink); }
+  .course .meta { color: var(--muted); }
+  .course h4 { color: var(--label); }
+  .course p, .course ul li, .course ol li { color: var(--ink); }
+  .course ul li::before { background: var(--rc, var(--accent)); }
+  .course li::before { color: var(--rc, var(--accent)); }
+  .course > .ibadge.corner { --ib-fg: var(--rc); --ib-bg: color-mix(in srgb, var(--rc) 12%, transparent); }
+  .ta-card { background: var(--bg); border-color: var(--line); }
+  .ta-card p { color: var(--muted); }
