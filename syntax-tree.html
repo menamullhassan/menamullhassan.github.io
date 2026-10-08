@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=15">
+<link rel="stylesheet" href="style.css?v=16">
 <link rel="icon" href="favicon.ico?v=4" sizes="any">
 <link rel="icon" href="favicon.svg?v=5" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4">
@@ -133,34 +133,34 @@
 <style>
   #tree .sec-head > div, #conventions .sec-head > div, #accuracy .sec-head > div { min-width: 0; }
   .st-card { max-width: 100%; }
-  .st-scroll { margin: 0; padding: 0 18px 8px; font-size: 13px; color: var(--muted); }
+  .st-scroll { margin: 0; padding: 0 18px 8px; font-size: 0.8125rem; color: var(--muted); }
   .st-search { padding-right: 6px; }
-  .st-search input { font-size: 17px; }
+  .st-search input { font-size: 1.0625rem; }
   .st-search svg { stroke-linejoin: round; }
-  .st-go { font: inherit; font-size: 15px; font-weight: 600; color: #fff; background: var(--accent); border: 0; border-radius: 999px; padding: 10px 20px; cursor: pointer; white-space: nowrap; }
+  .st-go { font: inherit; font-size: 0.9375rem; font-weight: 600; color: #fff; background: var(--accent); border: 0; border-radius: 999px; padding: 10px 20px; cursor: pointer; white-space: nowrap; }
   .st-go:hover { filter: brightness(1.1); }
   .st-examples { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 14px; }
   .st-examples span { font-size: var(--fs-meta); color: var(--muted); margin-right: 2px; }
-  .st-examples button { font: inherit; font-size: 13.5px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+  .st-examples button { font: inherit; font-size: 0.84375rem; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
   .st-examples button:hover { border-color: var(--accent); color: var(--accent); }
   .st-status { min-height: 1.4em; margin: 12px 4px 0; font-size: var(--fs-meta); color: var(--muted); }
   .st-card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; margin-top: 8px; overflow: hidden; }
   .st-amb { padding: 16px 22px; border-bottom: 1px solid var(--line); background: #FBE3D3; color: #3a2016; }
   .st-amb b { font-weight: 600; }
   .st-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-  .st-tab { font: inherit; font-size: 14px; font-weight: 500; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(58,32,22,.25); background: rgba(255,255,255,.6); color: #3a2016; cursor: pointer; }
+  .st-tab { font: inherit; font-size: 0.875rem; font-weight: 500; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(58,32,22,.25); background: rgba(255,255,255,.6); color: #3a2016; cursor: pointer; }
   .st-tab.on { background: #3a2016; color: #fff; border-color: #3a2016; }
   .st-why { margin-top: 10px; font-size: var(--fs-meta); }
   .st-canvas { overflow-x: auto; padding: 22px 16px 12px; -webkit-overflow-scrolling: touch; }
   .st-canvas svg { display: block; margin: 0 auto; }
   .st-actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 18px 16px; border-top: 1px solid var(--line); }
-  .st-btn { font: inherit; font-size: 14px; font-weight: 500; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+  .st-btn { font: inherit; font-size: 0.875rem; font-weight: 500; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
   .st-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .st-btn:hover { border-color: var(--accent); color: var(--accent); }
   .st-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
   .st-btn.primary:hover { color: #fff; filter: brightness(1.1); }
   .st-edit { padding: 0 18px 18px; }
-  .st-edit textarea { width: 100%; min-height: 110px; font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); resize: vertical; box-sizing: border-box; }
+  .st-edit textarea { width: 100%; min-height: 110px; font: 0.875rem/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); resize: vertical; box-sizing: border-box; }
   .st-edit textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
   .st-edit p { font-size: var(--fs-meta); color: var(--muted); margin: 8px 2px; }
   .st-err { color: var(--viva-magenta); font-size: var(--fs-meta); margin: 8px 2px 0; min-height: 1.2em; }
@@ -172,15 +172,15 @@
   .st-legend h4 { margin: 0 0 10px; font-size: var(--fs-label); letter-spacing: .12em; text-transform: uppercase; color: var(--label); }
   .st-legend dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px 18px; margin: 0; }
   .st-legend dl div { display: flex; gap: 10px; align-items: baseline; }
-  .st-legend dt { font-weight: 600; color: var(--accent); min-width: 42px; font-size: 14px; }
-  .st-legend dd { margin: 0; font-size: 14px; color: var(--muted); }
+  .st-legend dt { font-weight: 600; color: var(--accent); min-width: 42px; font-size: 0.875rem; }
+  .st-legend dd { margin: 0; font-size: 0.875rem; color: var(--muted); }
   .st-acc p { margin: 0 0 10px; line-height: 1.6; }
   .st-acc p:last-child { margin-bottom: 0; }
-  .st-credit { font-size: 13px; color: var(--muted); }
+  .st-credit { font-size: 0.8125rem; color: var(--muted); }
   .st-credit a { color: var(--accent); }
-  .st-tree .ph { fill: var(--classic-blue); font: 600 15px Inter, system-ui, sans-serif; }
-  .st-tree .pt { fill: #A11F3E; font: 600 14px Inter, system-ui, sans-serif; }
-  .st-tree .wd { fill: var(--ink); font: 400 17px Fraunces, Georgia, serif; }
+  .st-tree .ph { fill: var(--classic-blue); font: 600 0.9375rem Inter, system-ui, sans-serif; }
+  .st-tree .pt { fill: #A11F3E; font: 600 0.875rem Inter, system-ui, sans-serif; }
+  .st-tree .wd { fill: var(--ink); font: 400 1.0625rem Fraunces, Georgia, serif; }
   .st-tree line { stroke: #9a948a; stroke-width: 1.3; }
   @media (max-width: 640px) { .st-go { padding: 10px 14px; } .st-amb { padding: 14px 16px; } }
   @media (prefers-color-scheme: dark) {

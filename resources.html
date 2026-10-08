@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=15">
+<link rel="stylesheet" href="style.css?v=16">
 <link rel="icon" href="favicon.ico?v=4" sizes="any">
 <link rel="icon" href="favicon.svg?v=5" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4">
@@ -45,11 +45,11 @@
   .rtool .rt-more { min-width: 0; }
   .rtool .rt-name {
     font-family: var(--serif); font-weight: 500; color: inherit;
-    font-size: clamp(32px, 4vw, 52px); line-height: 1.02; letter-spacing: -.02em;
+    font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.02; letter-spacing: -.02em;
     margin: 0; text-wrap: balance;
   }
   .rtool .rt-more { justify-content: flex-end; gap: 10px; opacity: 0; transform: translateY(10px); }
-  .rtool .rt-small { font-family: var(--serif); font-weight: 500; font-size: 24px; line-height: 1.15; overflow: hidden; }
+  .rtool .rt-small { font-family: var(--serif); font-weight: 500; font-size: 1.5rem; line-height: 1.15; overflow: hidden; }
   .rtool .rt-desc { font-size: var(--fs-body); line-height: 1.55; color: rgba(255,255,255,.88); }
   .rtool .rt-go { margin-top: 6px; font-weight: 600; font-size: var(--fs-body); color: #FFBE98; }
   .rtool:hover .rt-face, .rtool:focus-visible .rt-face { opacity: 0; transform: translateY(-10px); }
@@ -58,7 +58,7 @@
   .rtool:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
   .rtool.soon { background: transparent; color: var(--muted); border: 1.5px dashed var(--line); box-shadow: none; cursor: default; }
   .rtool.soon .rt-desc { color: var(--muted); }
-  .rtool.soon .rt-go { color: var(--label); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+  .rtool.soon .rt-go { color: var(--label); font-size: 0.75rem; letter-spacing: .12em; text-transform: uppercase; }
   /* Touch screens have no hover, so show the details there */
   @media (hover: none) {
     .rtool { min-height: 0; }
