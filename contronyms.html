@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contronyms | M Enam Ull Hassan</title>
+<link rel="canonical" href="https://enamhassan.com/contronyms.html">
+<meta name="description" content="Contronyms (Janus words): English words with two opposite meanings, each with example sentences.">
+<script>
+  (function () {
+    var d = document.documentElement;
+    try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') d.setAttribute('data-theme', t); } catch (e) {}
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.theme-toggle');
+      if (!b) return;
+      var cur = d.getAttribute('data-theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      d.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=22">
+<link rel="icon" href="favicon.ico?v=7" sizes="48x48">
+<link rel="icon" href="icon-192.png?v=7" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan</a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 0 0 6l8 6V8.5h15v-5H8zM16 12v3.5H1v5h15V24l8-6z"/></svg><a class="crumb" href="resources.html">Resources</a> · Vocabulary</p>
+    <h1 class="reveal">Contronyms: <em>one word, opposite meanings</em></h1>
+    <p class="lead reveal">A contronym (also called a Janus word or auto-antonym) is a word that can mean the opposite of itself. You can <i>dust</i> a shelf or <i>dust</i> a cake; a team can be <i>sanctioned</i> for good or for bad. Each entry below shows both meanings with an example sentence, so you can see how context decides which one is meant.</p>
+  </div>
+
+  <section id="contronyms">
+    <div class="wrap sec-head">
+      <div class="sec-label"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 20Q11.8 20 13.4 19.4Q15 18.9 16.3 17.8L22.3 23.7Q22.6 24 23 24Q23.4 24 23.7 23.7Q24 23.4 24 23Q24 22.6 23.7 22.3L17.8 16.3Q19.4 14.2 19.9 11.6Q20.3 9 19.4 6.5Q18.4 4 16.3 2.3Q14.2 0.6 11.6 0.1Q9 -0.3 6.5 0.6Q4 1.6 2.3 3.7Q0.6 5.8 0.1 8.4Q-0.3 11 0.6 13.5Q1.6 16 3.7 17.8Q5 18.9 6.6 19.4Q8.2 20 10 20Z"/></svg>Explore</div>
+      <div>
+        <div class="ct-bar reveal">
+          <label class="tw-search gl-search">
+            <span class="visually-hidden">Search contronyms</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+            <input id="gl-q" type="search" placeholder="Search words and meanings, e.g. dust" spellcheck="false" autocapitalize="off">
+          </label>
+          <button type="button" class="ct-btn" id="ct-rand">Surprise me</button>
+          <button type="button" class="ct-btn" id="ct-quiz">Quiz mode: off</button>
+        </div>
+        <div class="gl-fields" id="gl-fields"></div>
+        <p class="gl-status" id="gl-status" aria-live="polite"></p>
+        <div id="gl-list" class="ct-grid"></div>
+        <p class="gl-note">In <b>quiz mode</b>, the meanings are hidden: read the two example sentences, decide what the word means in each, then tap the card to check. Spotted an error? Please let me know through the <a href="contact.html">contact page</a>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><nav class="legal-links" aria-label="Site info"><a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a><a href="cookies.html">Cookies Policy</a><a href="cookie-settings.html">Cookie Settings</a><a href="copyright.html">Copyright Notice</a></nav><span class="copy">Copyright © <span id="yr"></span> M Enam Ull Hassan · Boston, MA</span></div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<style>
+  .ct-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; }
+  .ct-bar .gl-search { flex: 1 1 320px; margin: 0; }
+  .ct-btn { font: inherit; font-size: 0.9375rem; font-weight: 600; padding: 0 18px; min-height: 48px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+  .ct-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .ct-btn.on { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .gl-status { min-height: 1.4em; margin: 14px 4px 0; font-size: var(--fs-meta); color: var(--muted); }
+  .gl-status b { color: var(--ink); font-weight: 600; }
+  .gl-fields { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .gl-field { font: inherit; font-size: 0.875rem; font-weight: 500; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+  .gl-field.on { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .gl-field span { opacity: .6; margin-left: 4px; }
+  .ct-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 14px; margin-top: 14px; }
+  .ct-card { background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--rc); border-radius: 14px; padding: 20px 22px; scroll-margin-top: 90px; }
+  .ct-card.flash { box-shadow: 0 0 0 3px var(--accent-soft); }
+  .ct-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+  .ct-top h3 { margin: 0; font-size: var(--fs-h4); }
+  .gl-tag { font-size: var(--fs-label); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--rc); }
+  .ct-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; margin-top: 14px; align-items: stretch; }
+  .ct-side { background: var(--bg); border-radius: 10px; padding: 12px 14px; }
+  .ct-side .lab { display: block; font-size: var(--fs-label); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--label); }
+  .ct-side .def { display: block; margin-top: 4px; font-weight: 600; line-height: 1.4; }
+  .ct-side .ex { display: block; margin-top: 8px; line-height: 1.5; color: var(--muted); font-style: italic; }
+  .ct-side .ex b { color: var(--ink); font-style: normal; }
+  .ct-vs { align-self: center; font-size: 1.25rem; color: var(--rc); }
+  .ct-note { margin-top: 12px; font-size: var(--fs-meta); color: var(--muted); line-height: 1.5; }
+  .ct-note b { font-size: var(--fs-label); letter-spacing: .12em; text-transform: uppercase; color: var(--label); margin-right: 8px; }
+  .quiz .ct-card { cursor: pointer; }
+  .quiz .ct-card:not(.shown) .def { filter: blur(6px); user-select: none; }
+  .quiz .ct-card:not(.shown) .ct-note { display: none; }
+  .quiz .ct-card:not(.shown) .ct-top::after { content: 'Tap to reveal'; margin-left: auto; font-size: var(--fs-meta); color: var(--accent); }
+  @media (max-width: 560px) { .ct-pair { grid-template-columns: 1fr; } .ct-vs { justify-self: center; transform: rotate(90deg); } }
+  mark { background: color-mix(in srgb, var(--illuminating) 55%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
+  .gl-empty { padding: 22px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); }
+  .gl-note { margin-top: 28px; font-size: var(--fs-meta); color: var(--muted); }
+  .gl-note a { color: var(--accent); }
+</style>
+<script>
+(function () {
+  var DATA = [{"w":"apology","g":"Everyday","a":{"d":"a statement of regret","e":"He made an <b>apology</b> for being late."},"b":{"d":"a formal defense of a belief","e":"Plato's <i>Apology</i> presents Socrates's defense of his life."}},{"w":"aught","g":"Historical","a":{"d":"anything (old use)","e":"Is there <b>aught</b> I can do?"},"b":{"d":"zero, nothing (variant of <i>naught</i>)","e":"Some older speakers say the year 1905 as nineteen <b>aught</b>-five."}},{"w":"awful","g":"Historical","a":{"d":"inspiring awe (old use)","e":"They stood before the <b>awful</b> majesty of the mountains."},"b":{"d":"very bad","e":"The traffic was <b>awful</b>."}},{"w":"bad","g":"Informal","a":{"d":"poor, not good","e":"That was a <b>bad</b> decision."},"b":{"d":"excellent (slang)","e":"Those sneakers are <b>bad</b>!"}},{"w":"bimonthly","g":"Everyday","a":{"d":"twice a month","e":"The newsletter is <b>bimonthly</b>: it comes out on the 1st and the 15th."},"b":{"d":"every two months","e":"The <b>bimonthly</b> magazine has six issues a year."},"n":"<i>Semimonthly</i> clearly means twice a month."},{"w":"biweekly","g":"Everyday","a":{"d":"twice a week","e":"The class meets <b>biweekly</b>, on Mondays and Thursdays."},"b":{"d":"every two weeks","e":"We are paid <b>biweekly</b>, every other Friday."},"n":"<i>Semiweekly</i> clearly means twice a week."},{"w":"bolt","g":"Everyday","a":{"d":"to fasten securely","e":"<b>Bolt</b> the door before you go to bed."},"b":{"d":"to run away suddenly","e":"The horse <b>bolted</b> when it heard the thunder."}},{"w":"bomb","g":"Regional","a":{"d":"to fail badly (US)","e":"The movie <b>bombed</b> at the box office."},"b":{"d":"to be a great success (UK, in <i>go down a bomb</i>)","e":"Her new show <b>went down a bomb</b>."}},{"w":"bone","g":"Everyday","a":{"d":"to remove the bones from","e":"Ask the butcher to <b>bone</b> the chicken."},"b":{"d":"to stiffen with strips of bone or plastic","e":"The corset was <b>boned</b> for support."}},{"w":"bound","g":"Everyday","a":{"d":"heading toward a place","e":"The train is <b>bound</b> for Boston."},"b":{"d":"tied up, unable to move","e":"The prisoner's hands were <b>bound</b>."}},{"w":"buckle","g":"Everyday","a":{"d":"to fasten together","e":"<b>Buckle</b> your seat belt."},"b":{"d":"to bend and give way","e":"The shelf <b>buckled</b> under the weight of the books."}},{"w":"chuffed","g":"Regional","a":{"d":"very pleased (UK informal)","e":"She was <b>chuffed</b> with her exam results."},"b":{"d":"annoyed, displeased (UK dialect, now rare)","e":"He was rather <b>chuffed</b> at being kept waiting so long."},"n":"The ‘displeased’ sense is rare today; most British speakers know only ‘pleased’."},{"w":"citation","g":"Everyday","a":{"d":"an official commendation","e":"The firefighter received a <b>citation</b> for bravery."},"b":{"d":"an official summons for an offense","e":"The driver got a <b>citation</b> for speeding."}},{"w":"cleave","g":"Historical","a":{"d":"to split or cut apart","e":"He <b>cleaved</b> the log in two with an axe."},"b":{"d":"to stick closely to","e":"She <b>cleaved</b> to her principles."},"n":"Two separate Old English verbs (<i>clēofan</i> ‘split’ and <i>clifian</i> ‘stick’) merged into one spelling."},{"w":"clip","g":"Everyday","a":{"d":"to attach","e":"<b>Clip</b> the pages together."},"b":{"d":"to cut off","e":"He <b>clipped</b> the hedge in the garden."},"n":"Two different Old Norse/Old English words that ended up with the same spelling."},{"w":"commencement","g":"Everyday","a":{"d":"a beginning","e":"The <b>commencement</b> of the project is set for May."},"b":{"d":"a graduation ceremony, at the end of studies (US)","e":"Her parents flew in for <b>commencement</b>."},"n":"The ceremony marks the ‘beginning’ of graduates' life after school."},{"w":"comprise","g":"Everyday","a":{"d":"to consist of (whole contains parts)","e":"The course <b>comprises</b> six units."},"b":{"d":"to make up (parts form a whole)","e":"Six units <b>comprise</b> the course."},"n":"Many style guides prefer the first use; the second is common but debated."},{"w":"consult","g":"Everyday","a":{"d":"to ask for advice","e":"You should <b>consult</b> a doctor."},"b":{"d":"to give professional advice","e":"She <b>consults</b> for several tech companies."}},{"w":"continue","g":"Everyday","a":{"d":"to keep going","e":"Please <b>continue</b> reading."},"b":{"d":"to postpone (US law)","e":"The judge <b>continued</b> the case until next month."}},{"w":"custom","g":"Everyday","a":{"d":"a usual, shared practice","e":"It is the <b>custom</b> to remove your shoes at the door."},"b":{"d":"made specially for one person","e":"She ordered a <b>custom</b> bookshelf."}},{"w":"discursive","g":"Everyday","a":{"d":"moving from topic to topic, rambling","e":"He gave a long, <b>discursive</b> talk."},"b":{"d":"proceeding by logical argument","e":"Philosophers contrast <b>discursive</b> reasoning with intuition."}},{"w":"dope","g":"Informal","a":{"d":"a foolish person","e":"Don't be such a <b>dope</b>."},"b":{"d":"excellent (slang)","e":"That new song is <b>dope</b>."}},{"w":"downhill","g":"Everyday","a":{"d":"getting easier","e":"It's all <b>downhill</b> from here: the hard part is over."},"b":{"d":"getting worse","e":"Since the new manager arrived, things have gone <b>downhill</b>."}},{"w":"draw","g":"Everyday","a":{"d":"to close (curtains)","e":"<b>Draw</b> the curtains: the sun is too bright."},"b":{"d":"to open (curtains)","e":"She <b>drew</b> the curtains to let the morning light in."},"n":"<i>Draw</i> just means ‘pull’, so the direction depends on context."},{"w":"dress","g":"Everyday","a":{"d":"to add a dressing or covering","e":"<b>Dress</b> the salad just before serving."},"b":{"d":"to remove the insides of an animal for cooking","e":"The hunter <b>dressed</b> the deer."}},{"w":"dust","g":"Everyday","a":{"d":"to remove fine particles from","e":"I <b>dust</b> the shelves every Saturday."},"b":{"d":"to sprinkle fine particles on","e":"<b>Dust</b> the cake with powdered sugar."}},{"w":"egregious","g":"Historical","a":{"d":"remarkably good (old use)","e":"He was an <b>egregious</b> scholar, admired by all."},"b":{"d":"outrageously bad","e":"That was an <b>egregious</b> error."}},{"w":"enjoin","g":"Everyday","a":{"d":"to order someone to do something","e":"The guide <b>enjoined</b> us to stay together."},"b":{"d":"to forbid by legal order (US law)","e":"The court <b>enjoined</b> the company from selling the product."}},{"w":"fast","g":"Everyday","a":{"d":"moving quickly","e":"She is a <b>fast</b> runner."},"b":{"d":"fixed firmly, not moving","e":"The boat was stuck <b>fast</b> in the mud."}},{"w":"fight with","g":"Phrasal verb","a":{"d":"to fight on the same side as","e":"Her grandfather <b>fought with</b> the Allies."},"b":{"d":"to fight against","e":"He <b>fought with</b> his brother over the remote."}},{"w":"fine","g":"Everyday","a":{"d":"of very high quality","e":"They served a <b>fine</b> meal."},"b":{"d":"just acceptable","e":"The food was <b>fine</b>, but nothing special."}},{"w":"finished","g":"Everyday","a":{"d":"completed, perfected","e":"The <b>finished</b> painting hangs in the hall."},"b":{"d":"ruined, defeated","e":"If the bank refuses, we're <b>finished</b>."}},{"w":"first degree","g":"Everyday","a":{"d":"the least serious (of burns)","e":"A <b>first-degree</b> burn affects only the outer skin."},"b":{"d":"the most serious (of crimes)","e":"He was charged with <b>first-degree</b> murder."}},{"w":"garnish","g":"Everyday","a":{"d":"to add something to food","e":"<b>Garnish</b> the soup with parsley."},"b":{"d":"to take part of someone's wages by legal order","e":"The court <b>garnished</b> his wages to pay the debt."}},{"w":"give out","g":"Phrasal verb","a":{"d":"to hand out","e":"The teacher <b>gave out</b> the worksheets."},"b":{"d":"to stop working, fail","e":"His knees <b>gave out</b> halfway up the hill."}},{"w":"go off","g":"Phrasal verb","a":{"d":"to start working or ringing","e":"The alarm <b>went off</b> at six."},"b":{"d":"to stop working","e":"The lights <b>went off</b> during the storm."}},{"w":"handicap","g":"Everyday","a":{"d":"an allowance that helps a weaker player even out a contest","e":"With his golf <b>handicap</b>, he gets extra strokes."},"b":{"d":"a disadvantage","e":"Not speaking the language was a <b>handicap</b>."},"n":"In the disability sense, <i>handicap</i> is now considered dated; use <i>disability</i> instead."},{"w":"help","g":"Everyday","a":{"d":"to make something easier","e":"Can you <b>help</b> me carry these boxes?"},"b":{"d":"to stop or avoid (in <i>can't help</i>)","e":"I can't <b>help</b> laughing at that video."}},{"w":"hold up","g":"Phrasal verb","a":{"d":"to support","e":"Four columns <b>hold up</b> the roof."},"b":{"d":"to delay or hinder","e":"An accident <b>held up</b> traffic for an hour."}},{"w":"hysterical","g":"Everyday","a":{"d":"extremely funny","e":"The comedian was <b>hysterical</b>."},"b":{"d":"extremely upset","e":"He became <b>hysterical</b> when he lost his passport."}},{"w":"lease","g":"Everyday","a":{"d":"to use property under a contract","e":"The company <b>leases</b> its office space."},"b":{"d":"to let property under a contract","e":"The owner <b>leases</b> the building to a café."}},{"w":"left","g":"Everyday","a":{"d":"gone away","e":"Everyone has <b>left</b> the room."},"b":{"d":"still remaining","e":"Only two cookies are <b>left</b>."}},{"w":"let","g":"Historical","a":{"d":"to allow","e":"<b>Let</b> me help you."},"b":{"d":"to hinder (old use)","e":"British passports ask that the bearer be allowed to pass without <b>let</b> or hindrance."},"n":"The old ‘hinder’ sense survives in tennis, where a <i>let</i> is a serve that must be replayed."},{"w":"liege","g":"Historical","a":{"d":"a feudal lord","e":"The knight swore loyalty to his <b>liege</b>."},"b":{"d":"a vassal who owes loyalty","e":"The king summoned all his <b>lieges</b> to court."}},{"w":"literally","g":"Informal","a":{"d":"in a literal, exact sense","e":"The building <b>literally</b> collapsed."},"b":{"d":"used for emphasis in a non-literal way (informal)","e":"I <b>literally</b> died laughing."},"n":"The emphatic use is very old and common in speech, but many readers object to it in formal writing."},{"w":"mean","g":"Informal","a":{"d":"unkind","e":"That was a <b>mean</b> thing to say."},"b":{"d":"excellent (informal)","e":"She plays a <b>mean</b> guitar."}},{"w":"moot","g":"Regional","a":{"d":"open to debate","e":"Whether the plan will work is a <b>moot</b> point."},"b":{"d":"no longer relevant (mainly US)","e":"The question became <b>moot</b> once the meeting was cancelled."}},{"w":"nervy","g":"Regional","a":{"d":"bold, cheeky (US)","e":"It was <b>nervy</b> of him to ask for a raise on his first day."},"b":{"d":"nervous, jumpy (UK)","e":"She felt <b>nervy</b> before the exam."}},{"w":"nonplussed","g":"Regional","a":{"d":"confused, unsure how to react","e":"She was <b>nonplussed</b> by the strange question."},"b":{"d":"calm, unbothered (North American informal)","e":"He seemed <b>nonplussed</b>, as if nothing had happened."},"n":"The second use is common but still considered nonstandard by many dictionaries."},{"w":"out","g":"Everyday","a":{"d":"visible","e":"The stars are <b>out</b> tonight."},"b":{"d":"not visible, not shining","e":"The lights are <b>out</b> in the hallway."}},{"w":"overlook","g":"Everyday","a":{"d":"to supervise or look over (dated)","e":"A foreman <b>overlooked</b> the workers."},"b":{"d":"to fail to notice","e":"I <b>overlooked</b> a mistake in the report."}},{"w":"oversight","g":"Everyday","a":{"d":"careful supervision","e":"The project is under the <b>oversight</b> of a review board."},"b":{"d":"a failure to notice something","e":"Leaving her name off the list was an <b>oversight</b>."}},{"w":"peer","g":"Everyday","a":{"d":"a person of equal standing","e":"Students gave feedback on their <b>peers</b>' essays."},"b":{"d":"a noble, of higher rank (UK)","e":"The Duke sits in the House of Lords as a <b>peer</b>."},"n":"Historically, <i>peers</i> were nobles who were equals of one another."},{"w":"peruse","g":"Everyday","a":{"d":"to read carefully","e":"She <b>perused</b> the contract before signing."},"b":{"d":"to look over casually","e":"He <b>perused</b> the menu while waiting."},"n":"The casual sense is widely used, though some style guides object to it."},{"w":"public school","g":"Regional","a":{"d":"a private, fee-paying school (UK)","e":"Eton is one of England's best-known <b>public schools</b>."},"b":{"d":"a free, state-funded school (US)","e":"She teaches at a <b>public school</b> in Boston."}},{"w":"put out","g":"Phrasal verb","a":{"d":"to extinguish","e":"Firefighters <b>put out</b> the blaze."},"b":{"d":"to produce or release","e":"The band <b>put out</b> a new album."}},{"w":"puzzle","g":"Everyday","a":{"d":"to confuse","e":"The question <b>puzzled</b> everyone."},"b":{"d":"to work out (<i>puzzle out</i>)","e":"We finally <b>puzzled out</b> the answer."}},{"w":"qualified","g":"Everyday","a":{"d":"fully able, certified","e":"She is a <b>qualified</b> nurse."},"b":{"d":"limited, with reservations","e":"The plan received <b>qualified</b> approval."}},{"w":"quantum leap","g":"Everyday","a":{"d":"a huge, sudden advance","e":"The new phone is a <b>quantum leap</b> in battery life."},"b":{"d":"in physics, an extremely small change of energy level","e":"An electron makes a <b>quantum leap</b> between energy levels."},"n":"The everyday ‘huge change’ sense is the opposite of the scale in physics."},{"w":"ravel","g":"Everyday","a":{"d":"to tangle","e":"The threads <b>raveled</b> into a knot."},"b":{"d":"to untangle (same as <i>unravel</i>)","e":"She slowly <b>raveled</b> out the knotted yarn."}},{"w":"rent","g":"Everyday","a":{"d":"to pay to use something","e":"I <b>rent</b> an apartment near campus."},"b":{"d":"to let someone use something for payment","e":"She <b>rents</b> rooms to students."},"n":"<i>Rent out</i> makes the second meaning clear."},{"w":"restive","g":"Everyday","a":{"d":"restless, unable to stay still","e":"The audience grew <b>restive</b> during the long speech."},"b":{"d":"refusing to move (of a horse)","e":"The <b>restive</b> horse would not go forward."},"n":"The original sense (from Old French <i>rester</i> ‘to stay’) was ‘refusing to move’."},{"w":"root","g":"Everyday","a":{"d":"to establish firmly","e":"The new plants <b>rooted</b> quickly."},"b":{"d":"to remove completely (<i>root out</i>)","e":"The mayor promised to <b>root out</b> corruption."}},{"w":"sanction","g":"Everyday","a":{"d":"to officially approve or allow","e":"The committee <b>sanctioned</b> the new safety rules."},"b":{"d":"to penalize","e":"The league <b>sanctioned</b> the club for breaking the rules."},"n":"As a noun, a <i>sanction</i> can be either an approval or a penalty."},{"w":"scan","g":"Everyday","a":{"d":"to examine closely","e":"The doctor <b>scanned</b> the X-ray for fractures."},"b":{"d":"to look over quickly","e":"I only had time to <b>scan</b> the headlines."}},{"w":"screen","g":"Everyday","a":{"d":"to show","e":"The festival will <b>screen</b> six new films."},"b":{"d":"to hide from view","e":"A row of trees <b>screens</b> the house from the road."}},{"w":"secrete","g":"Everyday","a":{"d":"to release a substance","e":"Glands <b>secrete</b> hormones."},"b":{"d":"to hide","e":"He <b>secreted</b> the letter in a drawer."},"n":"Two different origins: from <i>secretion</i> and from <i>secret</i>."},{"w":"seed","g":"Everyday","a":{"d":"to remove the seeds from","e":"<b>Seed</b> the peppers before chopping them."},"b":{"d":"to plant seeds in","e":"We <b>seeded</b> the lawn in April."}},{"w":"sick","g":"Informal","a":{"d":"ill","e":"I stayed home because I was <b>sick</b>."},"b":{"d":"excellent (slang)","e":"That skateboard trick was <b>sick</b>!"}},{"w":"skin","g":"Everyday","a":{"d":"to remove the skin from","e":"<b>Skin</b> the potatoes before boiling them."},"b":{"d":"to cover with a thin outer layer","e":"The boat's wooden frame was <b>skinned</b> with canvas."}},{"w":"stem","g":"Everyday","a":{"d":"to stop the flow of","e":"Pressure on the wound helped <b>stem</b> the bleeding."},"b":{"d":"to come from, originate","e":"Her interest in language <b>stems</b> from her childhood."}},{"w":"stone","g":"Everyday","a":{"d":"to throw stones at","e":"Vandals <b>stoned</b> the empty bus."},"b":{"d":"to remove the stones from fruit","e":"<b>Stone</b> the cherries before baking."}},{"w":"strike","g":"Everyday","a":{"d":"to hit","e":"Lightning <b>struck</b> the tree."},"b":{"d":"a miss (in baseball, a swing that misses the ball)","e":"He swung and missed: <b>strike</b> one."}},{"w":"string","g":"Everyday","a":{"d":"to remove the strings from","e":"<b>String</b> the green beans."},"b":{"d":"to put strings on","e":"He <b>strung</b> the new guitar."}},{"w":"table","g":"Regional","a":{"d":"to present for discussion (UK)","e":"The minister <b>tabled</b> a motion in Parliament."},"b":{"d":"to postpone discussion (US)","e":"The committee <b>tabled</b> the proposal until next year."}},{"w":"temper","g":"Everyday","a":{"d":"to soften or moderate","e":"She <b>tempered</b> her criticism with praise."},"b":{"d":"to harden","e":"Steel is <b>tempered</b> by heating and cooling."}},{"w":"terrific","g":"Historical","a":{"d":"causing terror (old use)","e":"A <b>terrific</b> storm swept the coast."},"b":{"d":"excellent","e":"You did a <b>terrific</b> job."}},{"w":"throw out","g":"Phrasal verb","a":{"d":"to get rid of","e":"<b>Throw out</b> the old newspapers."},"b":{"d":"to put forward for discussion","e":"Let me <b>throw out</b> an idea."}},{"w":"top","g":"Everyday","a":{"d":"to remove the top from","e":"<b>Top</b> the strawberries before slicing them."},"b":{"d":"to put something on top of","e":"<b>Top</b> the cake with cream."}},{"w":"transparent","g":"Everyday","a":{"d":"easy to see through, almost invisible","e":"The wings are so thin they look <b>transparent</b>."},"b":{"d":"obvious, easy to notice","e":"His excuse was a <b>transparent</b> lie."}},{"w":"trim","g":"Everyday","a":{"d":"to remove parts from","e":"The barber <b>trimmed</b> my beard."},"b":{"d":"to add decorations to","e":"We <b>trimmed</b> the tree with lights."}},{"w":"trip","g":"Everyday","a":{"d":"to stumble","e":"She <b>tripped</b> on the stairs."},"b":{"d":"to move lightly and nimbly","e":"The dancers <b>tripped</b> across the stage."}},{"w":"undoable","g":"Word-building","a":{"d":"able to be undone (<i>undo + able</i>)","e":"Don't worry, that change is <b>undoable</b>: just press Ctrl+Z."},"b":{"d":"impossible to do (<i>un + doable</i>)","e":"Finishing the thesis in a week is <b>undoable</b>."},"n":"The word splits into morphemes in two ways, which gives opposite meanings."},{"w":"unlockable","g":"Word-building","a":{"d":"able to be unlocked (<i>unlock + able</i>)","e":"The next level is <b>unlockable</b> once you collect ten stars."},"b":{"d":"impossible to lock (<i>un + lockable</i>)","e":"The old shed door is <b>unlockable</b>, so anyone can walk in."},"n":"A classic example of structural ambiguity in morphology."},{"w":"variety","g":"Everyday","a":{"d":"one particular type","e":"This is a new <b>variety</b> of apple."},"b":{"d":"many different types","e":"The shop sells a <b>variety</b> of apples."}},{"w":"wear","g":"Everyday","a":{"d":"to last well in use","e":"This fabric <b>wears</b> well."},"b":{"d":"to be damaged by use","e":"The carpet has <b>worn</b> thin."}},{"w":"weather","g":"Everyday","a":{"d":"to come safely through","e":"The small business <b>weathered</b> the recession."},"b":{"d":"to wear away by exposure to wind and rain","e":"Wind and rain have <b>weathered</b> the old statue."}},{"w":"wicked","g":"Informal","a":{"d":"evil","e":"The <b>wicked</b> witch cast a spell."},"b":{"d":"excellent (slang)","e":"He played a <b>wicked</b> guitar solo."},"n":"In New England, <i>wicked</i> is also used to mean ‘very’, as in <i>wicked good</i>."},{"w":"wind up","g":"Phrasal verb","a":{"d":"to start by turning a key or spring","e":"She <b>wound up</b> the toy car."},"b":{"d":"to bring to an end","e":"Let's <b>wind up</b> the meeting."}}];
+  var GROUPS = ['Everyday','Phrasal verb','Regional','Informal','Historical','Word-building'];
+  var COLOR = {'Everyday':'c1','Phrasal verb':'c5','Regional':'c4','Informal':'c2','Historical':'c3','Word-building':'c5'};
+  var slug = function (s) { return 'w-' + s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); };
+  var strip = function (h) { return h.replace(/<[^>]+>/g, ''); };
+  var esc = function (s) { return s.replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var q = document.getElementById('gl-q'), list = document.getElementById('gl-list'), status = document.getElementById('gl-status');
+  var group = 'All';
+  function hl(html, term) {
+    if (!term) return html;
+    var re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+    return html.split(/(<[^>]+>)/).map(function (p) { return p.charAt(0) === '<' ? p : p.replace(re, '<mark>$1</mark>'); }).join('');
+  }
+  function groupsUI() {
+    var counts = {}; DATA.forEach(function (x) { counts[x.g] = (counts[x.g] || 0) + 1; });
+    document.getElementById('gl-fields').innerHTML = ['All'].concat(GROUPS.filter(function (g) { return counts[g]; })).map(function (g) {
+      return '<button type="button" class="gl-field' + (g === group ? ' on' : '') + '" data-g="' + esc(g) + '">' + esc(g) + '<span>' + (g === 'All' ? DATA.length : counts[g]) + '</span></button>';
+    }).join('');
+  }
+  function side(lab, m, term) {
+    return '<div class="ct-side"><span class="lab">' + lab + '</span><span class="def">' + hl(m.d, term) + '</span><span class="ex">“' + m.e + '”</span></div>';
+  }
+  function render() {
+    var term = q.value.trim().toLowerCase();
+    var rows = DATA.filter(function (x) {
+      if (group !== 'All' && x.g !== group) return false;
+      if (!term) return true;
+      return x.w.toLowerCase().indexOf(term) > -1 || strip(x.a.d + ' ' + x.b.d + ' ' + x.a.e + ' ' + x.b.e).toLowerCase().indexOf(term) > -1;
+    });
+    if (term) rows.sort(function (a, b) { var r = function (x) { var i = x.w.toLowerCase().indexOf(term); return i === 0 ? 0 : i > -1 ? 1 : 2; }; return r(a) - r(b) || a.w.localeCompare(b.w); });
+    list.innerHTML = rows.map(function (x) {
+      return '<article class="ct-card ' + COLOR[x.g] + '" id="' + slug(x.w) + '"><div class="ct-top"><h3>' + hl(esc(x.w), term) + '</h3><span class="gl-tag">' + esc(x.g) + '</span></div>' +
+        '<div class="ct-pair">' + side('Meaning 1', x.a, term) + '<span class="ct-vs" aria-label="opposite of">⇄</span>' + side('Meaning 2', x.b, term) + '</div>' +
+        (x.n ? '<p class="ct-note"><b>Note</b>' + x.n + '</p>' : '') + '</article>';
+    }).join('') || '<p class="gl-empty">No contronyms match “' + esc(q.value.trim()) + '”. Try a shorter word.</p>';
+    status.innerHTML = term || group !== 'All' ? '<b>' + rows.length + '</b> of ' + DATA.length + ' contronyms' : 'All <b>' + DATA.length + '</b> contronyms, A to Z';
+  }
+  document.getElementById('gl-fields').addEventListener('click', function (e) { var b = e.target.closest('.gl-field'); if (!b) return; group = b.dataset.g; groupsUI(); render(); });
+  q.addEventListener('input', render);
+  var quizBtn = document.getElementById('ct-quiz');
+  quizBtn.addEventListener('click', function () {
+    var on = list.classList.toggle('quiz');
+    quizBtn.classList.toggle('on', on); quizBtn.textContent = 'Quiz mode: ' + (on ? 'on' : 'off');
+    list.querySelectorAll('.shown').forEach(function (c) { c.classList.remove('shown'); });
+  });
+  list.addEventListener('click', function (e) { if (!list.classList.contains('quiz')) return; var c = e.target.closest('.ct-card'); if (c) c.classList.toggle('shown'); });
+  document.getElementById('ct-rand').addEventListener('click', function () {
+    q.value = ''; group = 'All'; groupsUI(); render();
+    var x = DATA[Math.floor(Math.random() * DATA.length)], el = document.getElementById(slug(x.w));
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    list.querySelectorAll('.flash').forEach(function (c) { c.classList.remove('flash'); });
+    el.classList.add('flash');
+  });
+  DATA.sort(function (a, b) { return a.w.localeCompare(b.w); });
+  groupsUI(); render();
+})();
+</script>
+</body>
+</html>
