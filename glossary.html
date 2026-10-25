@@ -110,13 +110,14 @@
   .gl-az a { color: var(--accent); background: var(--accent-soft); }
   .gl-az a:hover { background: var(--accent); color: var(--surface); }
   .gl-az span { color: var(--line); }
-  .gl-letter { font-family: var(--serif); font-size: var(--fs-h3); margin: 32px 0 4px; padding-bottom: 6px; border-bottom: 1px solid var(--line); scroll-margin-top: 90px; }
+  .gl-letter { font-family: var(--serif); font-size: clamp(2.6rem, 2rem + 1.5vw, 3.4rem); font-weight: 600; line-height: 1.1; color: var(--accent); margin: 32px 0 4px; padding-bottom: 6px; border-bottom: 1px solid var(--line); scroll-margin-top: 90px; }
   .gl-entry { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--rc); border-radius: 14px; padding: 20px 22px; margin-top: 12px; scroll-margin-top: 90px; }
   .gl-entry:target { box-shadow: 0 0 0 3px var(--accent-soft); }
-  .gl-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
-  .gl-top h3 { margin: 0; font-size: var(--fs-h4); }
+  .gl-top { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .gl-top h3 { order: 2; margin: 0; font-size: clamp(1.9rem, 1.5rem + 1vw, 2.4rem); font-weight: 600; letter-spacing: -.01em; line-height: 1.1; }
+  .gl-top .gl-tag { order: 1; }
   .gl-tag { font-size: var(--fs-label); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--rc); }
-  .gl-def { margin-top: 8px; font-size: var(--fs-body); line-height: 1.6; }
+  .gl-def { margin-top: 12px; font-size: var(--fs-body); line-height: 1.6; }
   .gl-ex { margin-top: 10px; padding: 10px 14px; border-radius: 8px; background: var(--bg); font-size: var(--fs-body); line-height: 1.55; }
   .gl-ex b { font-size: var(--fs-label); letter-spacing: .12em; text-transform: uppercase; color: var(--label); margin-right: 8px; }
   .gl-src { margin-top: 8px; font-size: var(--fs-meta); color: var(--muted); line-height: 1.5; }

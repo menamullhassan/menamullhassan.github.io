@@ -116,10 +116,11 @@
   .ct-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 14px; margin-top: 14px; }
   .ct-card { background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--rc); border-radius: 14px; padding: 20px 22px; scroll-margin-top: 90px; }
   .ct-card.flash { box-shadow: 0 0 0 3px var(--accent-soft); }
-  .ct-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
-  .ct-top h3 { margin: 0; font-size: var(--fs-h4); }
+  .ct-top { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .ct-top h3 { order: 2; margin: 0; font-size: clamp(1.9rem, 1.5rem + 1vw, 2.4rem); font-weight: 600; letter-spacing: -.01em; line-height: 1.1; }
+  .ct-top .gl-tag { order: 1; }
   .gl-tag { font-size: var(--fs-label); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--rc); }
-  .ct-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; margin-top: 14px; align-items: stretch; }
+  .ct-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; margin-top: 18px; align-items: stretch; }
   .ct-side { background: var(--bg); border-radius: 10px; padding: 12px 14px; }
   .ct-side .lab { display: block; font-size: var(--fs-label); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--label); }
   .ct-side .def { display: block; margin-top: 4px; font-weight: 600; line-height: 1.4; }
@@ -131,7 +132,7 @@
   .quiz .ct-card { cursor: pointer; }
   .quiz .ct-card:not(.shown) .def { filter: blur(6px); user-select: none; }
   .quiz .ct-card:not(.shown) .ct-note { display: none; }
-  .quiz .ct-card:not(.shown) .ct-top::after { content: 'Tap to reveal'; margin-left: auto; font-size: var(--fs-meta); color: var(--accent); }
+  .quiz .ct-card:not(.shown) .ct-top::after { content: 'Tap to reveal'; order: 3; font-size: var(--fs-meta); color: var(--accent); }
   @media (max-width: 560px) { .ct-pair { grid-template-columns: 1fr; } .ct-vs { justify-self: center; transform: rotate(90deg); } }
   mark { background: color-mix(in srgb, var(--illuminating) 55%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
   .gl-empty { padding: 22px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); }
