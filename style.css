@@ -989,7 +989,7 @@
   .gl-field, .ct-btn, .st-btn, .pillbtn, .opt, .hintbtn, .sy-filter, .st-examples button, .legal-nav a, .btn.soft, .theme-toggle, .tw-goal, .sm-dropdown, .st-legend, .sm-pb, .sm-toolbar, .chipw {
     background: var(--bg) !important; border: 0 !important; box-shadow: var(--neu-out-sm) !important;
   }
-  .gl-field.on, .ct-btn.on, .pillbtn.on, .sy-filter.on, .opt.on { background: var(--ink) !important; color: var(--bg) !important; box-shadow: var(--neu-in) !important; }
+  .gl-field.on, .ct-btn.on, .pillbtn.on, .sy-filter.on, .opt.on { background: #15161b !important; color: #f4f2ee !important; box-shadow: 0 0 0 1px rgba(255,255,255,.06) !important; }
 
   /* pressed-in wells: inputs, tags, inner panes */
   .tw-search, .sm-input, .st-edit textarea, input[type="search"], input[type="text"], textarea, select { background: var(--bg) !important; border: 0 !important; box-shadow: var(--neu-in) !important; }
@@ -997,5 +997,8 @@
   .code, .gl-ex, .ct-side, .ibadge, .course .ibadge { background: var(--bg) !important; box-shadow: var(--neu-in) !important; border: 0 !important; }
   .code { color: var(--rc, var(--accent)) !important; }
   .btn.primary { box-shadow: var(--neu-out-sm) !important; border: 0 !important; }
-  .legal-nav a[aria-current="page"] { background: var(--accent) !important; color: var(--bg) !important; box-shadow: var(--neu-in) !important; }
+  .legal-nav a[aria-current="page"] { background: #15161b !important; color: #f4f2ee !important; box-shadow: 0 0 0 1px rgba(255,255,255,.06) !important; }
   .explore-card:hover, .rtool:hover, .tw-goal:hover, .tool:hover, .stop:hover { box-shadow: var(--neu-out-sm) !important; transform: none !important; }
+  .tw-search input, .tw-search textarea { background: transparent !important; box-shadow: none !important; }
+  .tw-search { padding-right: 8px; }
+  .sy-go-btn, .st-go { background: #15161b !important; color: #f4f2ee !important; box-shadow: none !important; }
