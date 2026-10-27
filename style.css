@@ -958,3 +958,44 @@
   .av-strength a.on { background: var(--accent); color: var(--surface); border-color: var(--accent); }
   .tw-word:hover, .tw-word.hit, .tw-word:hover sup, .tw-word.hit sup, .tw-word.av-up:hover small, .tw-word.av-up.hit small { color: var(--surface); }
   .sm-tb.primary { color: var(--surface); }
+
+  /* ---------- Soft 3D (neumorphic) surfaces ---------- */
+  :root { --bg: #ECE9E3; --surface: #ECE9E3; --line: #d9d5cc; --neu-dk: #d1cdc4; --neu-lt: #ffffff; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #191b22; --surface: #191b22; --line: #2a2d36; --neu-dk: #0f1015; --neu-lt: #24272f; }
+  }
+  :root[data-theme="dark"] { --bg: #191b22; --surface: #191b22; --line: #2a2d36; --neu-dk: #0f1015; --neu-lt: #24272f; }
+  :root {
+    --neu-out: 8px 8px 18px var(--neu-dk), -8px -8px 18px var(--neu-lt);
+    --neu-out-sm: 4px 4px 9px var(--neu-dk), -4px -4px 9px var(--neu-lt);
+    --neu-in: inset 3px 3px 7px var(--neu-dk), inset -3px -3px 7px var(--neu-lt);
+  }
+  body { background: var(--bg) !important; background-image: none !important; }
+  header.nav, footer, body:has(.contact-page) footer { background: var(--bg) !important; }
+  section, .contact { border-top: 0 !important; }
+  .contact { background: var(--bg) !important; color: var(--ink) !important; }
+
+  /* raised boxes */
+  .course, .card, .explore-card, .rtool, .tool, .stop, .gl-entry, .ct-card, .st-card, .sy-block, .tw-block,
+  .sm-app, .sm-panel, .summary, .journey-map, .cs-item, .legal-table, .tile, .ta-card, .award, .tw-sresults, .sm-wide {
+    background: var(--bg) !important; border: 0 !important; box-shadow: var(--neu-out) !important; border-radius: 22px !important;
+  }
+  .ta-card, .award, .cs-item, .tile, .stop { border-radius: 16px !important; box-shadow: var(--neu-out-sm) !important; }
+  .course, .ta-card, .award { color: var(--ink) !important; }
+  .course h3, .course .meta, .ta-card p, .award p { color: inherit; }
+  .course .meta { color: var(--muted) !important; }
+
+  /* small raised controls */
+  .gl-field, .ct-btn, .st-btn, .pillbtn, .opt, .hintbtn, .sy-filter, .st-examples button, .legal-nav a, .btn.soft, .theme-toggle, .tw-goal, .sm-dropdown, .st-legend, .sm-pb, .sm-toolbar, .chipw {
+    background: var(--bg) !important; border: 0 !important; box-shadow: var(--neu-out-sm) !important;
+  }
+  .gl-field.on, .ct-btn.on, .pillbtn.on, .sy-filter.on, .opt.on { background: var(--ink) !important; color: var(--bg) !important; box-shadow: var(--neu-in) !important; }
+
+  /* pressed-in wells: inputs, tags, inner panes */
+  .tw-search, .sm-input, .st-edit textarea, input[type="search"], input[type="text"], textarea, select { background: var(--bg) !important; border: 0 !important; box-shadow: var(--neu-in) !important; }
+  .tw-search input { box-shadow: none !important; }
+  .code, .gl-ex, .ct-side, .ibadge, .course .ibadge { background: var(--bg) !important; box-shadow: var(--neu-in) !important; border: 0 !important; }
+  .code { color: var(--rc, var(--accent)) !important; }
+  .btn.primary { box-shadow: var(--neu-out-sm) !important; border: 0 !important; }
+  .legal-nav a[aria-current="page"] { background: var(--accent) !important; color: var(--bg) !important; box-shadow: var(--neu-in) !important; }
+  .explore-card:hover, .rtool:hover, .tw-goal:hover, .tool:hover, .stop:hover { box-shadow: var(--neu-out-sm) !important; transform: none !important; }
