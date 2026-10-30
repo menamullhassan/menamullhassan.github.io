@@ -272,7 +272,7 @@
         <div class="sx-calc"><div class="sx-in" id="ap-in"></div><div class="sx-out" id="ap-out" aria-live="polite"></div></div>
       </div>
       <div class="sx-card" id="p-list" style="margin-top:22px">
-        <div class="sx-head"><span class="sx-n">&#9776;</span><div><h2 class="sx-h">Your reference list <span class="ap-count" id="ap-count" hidden></span></h2><p class="sx-sub">References you add collect here, sorted in APA order with a hanging indent. You can also paste references you already have.</p></div></div>
+        <div class="sx-head"><span class="sx-n">&#9776;</span><div><h2 class="sx-h">Your reference list <span class="ap-count" id="ap-count" hidden></span></h2><p class="sx-sub">Every reference you build above is saved here automatically, sorted in APA order with a hanging indent. You can copy or remove each one, copy the whole list, or paste references you already have.</p></div></div>
         <div id="ap-list"></div>
       </div>
     </div>
@@ -539,6 +539,12 @@
   .ap-or::before, .ap-or::after { content: ''; flex: 1; height: 1px; background: color-mix(in srgb, var(--muted) 30%, transparent); }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ap-ok { color: #6fcf9b; } :root:not([data-theme="light"]) .ap-err { color: #ef8f74; } }
   :root[data-theme="dark"] .ap-ok { color: #6fcf9b; } :root[data-theme="dark"] .ap-err { color: #ef8f74; }
+  .ap-entry { padding-right: 0; }
+  .ap-entry-btns { display: flex; justify-content: flex-end; gap: 6px; margin: -2px 0 8px; }
+  .ap-mini { font: 600 .72rem/1.4 var(--sans, Inter, sans-serif); padding: 3px 11px; border: 0; border-radius: 999px; background: #efeae2; color: #555; cursor: pointer; }
+  .ap-mini:hover { background: #e3dccf; color: #111; }
+  .sx-small[disabled] { opacity: .45; cursor: default; }
+  .ap-result .ap-actions a.sx-small { text-decoration: none; font-weight: 500; }
 </style>
 <script>
 (function () {
@@ -918,8 +924,8 @@
     var s = state[cur];
     var h = '<div class="ap-look"><label for="ap-look">Fill in automatically from a DOI or ISBN</label><div class="ap-lookrow"><input type="text" id="ap-look" value="' + esc(lookVal) + '" placeholder="e.g. 10.1093/applin/I.1.1 or 978-0-312-61049-4" autocomplete="off" spellcheck="false"><button type="button" class="sx-small dark" data-act="lookup"' + (looking ? ' disabled' : '') + '>' + (looking ? 'Looking up\u2026' : 'Fill in') + '</button></div><p class="help ap-lookmsg" id="ap-lookmsg" aria-live="polite">' + (lookMsg || 'Works for journal articles, books, and chapters that have a DOI, and for books with an ISBN. Always check the result against the source.') + '</p></div>';
     h += '<div class="ap-or"><span>or</span></div>';
-    h += '<div class="ap-src"><button type="button" class="sx-small" data-act="example">Show an example</button><button type="button" class="sx-small" data-act="clear">Clear</button></div>';
-    h += '<p class="help">' + (s.ex ? 'This is a real example from linguistics. Press <b>Clear</b> to enter your own source.' : 'Fill in what you have. The reference updates as you type.') + '</p>';
+    h += '<div class="ap-src"><button type="button" class="sx-small" data-act="example">Show an example</button><button type="button" class="sx-small" data-act="clear">Start a new reference</button></div>';
+    h += '<p class="help">' + (s.ex ? 'This is a real example from linguistics. Press <b>Start a new reference</b> to enter your own source.' : 'Fill in what you have. The reference updates as you type and is saved to your reference list below.') + '</p>';
     h += personRows(s.authors, 'authors', TYPES[cur].who, true);
     h += FIELDS[cur].map(function (row) { return row.length > 1 ? '<div class="ap-grid ap-g' + row.length + '">' + row.map(function (f) { return field(f, s); }).join('') + '</div>' : field(row[0], s); }).join('');
     h += '<a class="sx-small dark ap-jump" href="#ap-out">See the reference \u2193</a>';
@@ -930,9 +936,21 @@
     var s = state[cur], r = build(cur, s), o = $('ap-out');
     if (r.empty) { o.innerHTML = '<div class="cx-wait">Your reference will appear here once you add a title. Not sure where to start? Press <b>Show an example</b>.</div>'; return; }
     var c = cites(r, cur, s, pageLoc);
-    o.innerHTML = '<div class="ap-result"><span class="k">Reference</span><p class="ap-ref" id="ap-ref">' + r.html + '</p><div class="ap-actions"><button type="button" class="sx-small dark" data-act="copy">Copy reference</button><button type="button" class="sx-small" data-act="add">Add to my reference list</button></div></div>' +
+    o.innerHTML = '<div class="ap-result"><span class="k">Reference</span><p class="ap-ref" id="ap-ref">' + r.html + '</p><div class="ap-actions"><button type="button" class="sx-small dark" data-act="copy">Copy reference</button><a class="sx-small" href="#p-list">' + (s.ex ? 'Examples are not saved to your list' : '\u2713 Saved to your reference list') + '</a></div></div>' +
       '<div class="cx-step"><div class="t"><span>In your text</span>Citations</div><p>Use the <b>parenthetical</b> form at the end of a sentence, or the <b>narrative</b> form as part of the sentence.</p><div class="ap-cites">' + c.map(function (x) { return '<div><span>' + x[0] + '</span><b>' + x[1] + '</b></div>'; }).join('') + '</div><label class="ap-inline">' + (cur === 'video' ? 'Quoting? Add the time stamp: ' : 'Quoting? Add the page: ') + '<input type="text" id="ap-page" value="' + esc(pageLoc) + '" placeholder="' + (cur === 'video' ? 'e.g. 8:51' : 'e.g. 45 or 45-46') + '" aria-label="' + (cur === 'video' ? 'Time stamp' : 'Page number') + ' for a quotation"></label><p class="help">APA uses only the year in citations, even when the reference has a full date. For three or more authors, use the first name and et al. every time.</p></div>' +
       (r.notes.length ? '<div class="cx-step"><div class="t"><span>Notes</span>What the builder did for you</div><ul class="ap-notes">' + r.notes.map(function (n) { return '<li>' + n + '</li>'; }).join('') + '</ul></div>' : '');
+    syncList(s, r);
+  }
+  // every reference you build is saved to the list and kept up to date while you edit it
+  function syncList(s, r) {
+    if (s.ex || r.empty) return;
+    var el = $('ap-ref'); if (!el) return;
+    var html = r.html.replace(/<a [^>]*>|<\/a>/g, ''), text = el.innerText.trim(), L = getList();
+    if (!s.rid) { if (L.some(function (x) { return x.text === text; })) return; s.rid = 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+    var i = -1; L.forEach(function (x, k) { if (x.id === s.rid) i = k; });
+    var e = { id: s.rid, html: html, text: text };
+    if (i > -1) { if (L[i].text === text) return; L[i] = e; } else L.push(e);
+    saveList(L); updateCount(); renderList();
   }
   function setType(k) { cur = k; store.set('enam-apa-type', k); renderTypes(); renderIn(); renderOut(); }
   $('ap-types').addEventListener('click', function (e) { var b = e.target.closest('[data-type]'); if (b) setType(b.dataset.type); });
@@ -972,11 +990,7 @@
     var r = build(cur, state[cur]);
     if (b.dataset.fix) { var key = b.dataset.fix; state[cur][key] = sentenceCase(state[cur][key]); state[cur].ex = false; renderIn(); renderOut(); return; }
     if (b.dataset.act === 'copy') { var el = $('ap-ref'); copyRich('<p style="' + WORD + '">' + el.innerHTML.replace(/<a [^>]*>|<\/a>/g, '') + '</p>', el.innerText, b); }
-    if (b.dataset.act === 'add') {
-      var L = getList(), html = r.html.replace(/<a [^>]*>|<\/a>/g, ''), text = $('ap-ref').innerText;
-      if (L.some(function (x) { return x.text === text; })) { flash(b, 'Already in your list'); return; }
-      L.push({ html: html, text: text }); saveList(L); flash(b, '✓ Added'); updateCount(); renderList();
-    }
+
   });
 
   // ---------- reference list ----------
@@ -991,16 +1005,18 @@
   function sorted(L) { return L.map(function (x, i) { return { x: x, i: i, k: sortKey(x.text) }; }).sort(function (a, b) { var c = a.k[0].localeCompare(b.k[0], 'en', { sensitivity: 'base' }); if (c) return c; if (a.k[1] !== b.k[1]) return a.k[1] - b.k[1]; return a.k[2].localeCompare(b.k[2]); }); }
   function updateCount() { var n = getList().length, c = $('ap-count'); c.hidden = !n; c.textContent = n; }
   function renderList() {
-    var L = getList(), S = sorted(L);
-    $('ap-list').innerHTML = '<div class="ap-listgrid"><div><div class="ap-page" aria-label="Reference list preview"><p class="ap-page-h">' + (L.length === 1 ? 'Reference' : 'References') + '</p>' + (L.length ? S.map(function (o) { return '<div class="ap-entry"><p>' + o.x.html + '</p><button type="button" class="cx-rm" data-rmref="' + o.i + '" aria-label="Remove this reference">×</button></div>'; }).join('') : '<p class="ap-empty">Your list is empty. Build a reference and press <b>Add to my reference list</b>, or paste references on the right.</p>') + '</div>' +
-      (L.length ? '<div class="ap-actions"><button type="button" class="sx-small dark" data-act="copyall">Copy the whole list</button><button type="button" class="sx-small" data-act="clearall">Clear the list</button></div><p class="help">The copied list keeps italics, double spacing, and the hanging indent when you paste it into Word or Google Docs.</p>' : '') + '</div>' +
+    var L = getList(), S = sorted(L), pv = $('ap-paste') ? $('ap-paste').value : '';
+    var host = $('ap-list'); host.innerHTML = '<div class="ap-listgrid"><div><div class="ap-page" aria-label="Reference list preview"><p class="ap-page-h">' + (L.length === 1 ? 'Reference' : 'References') + '</p>' + (L.length ? S.map(function (o) { return '<div class="ap-entry"><p>' + o.x.html + '</p><div class="ap-entry-btns"><button type="button" class="ap-mini" data-cpref="' + o.i + '">Copy</button><button type="button" class="ap-mini" data-rmref="' + o.i + '" aria-label="Remove this reference">Remove</button></div></div>'; }).join('') : '<p class="ap-empty">Your list is empty. Every reference you build above is saved here automatically, or you can paste references on the right.</p>') + '</div>' +
+      '<div class="ap-actions"><button type="button" class="sx-small dark" data-act="copyall"' + (L.length ? '' : ' disabled') + '>Copy the whole list</button><button type="button" class="sx-small" data-act="clearall"' + (L.length ? '' : ' disabled') + '>Clear the list</button></div><p class="help">Copied references keep italics, double spacing, and the hanging indent when you paste them into Word or Google Docs. Your list stays in this browser until you clear it.</p></div>' +
       '<div class="sx-in"><div><label for="ap-paste">Paste references you already have</label><textarea id="ap-paste" rows="6" placeholder="One reference per line or paragraph"></textarea><p class="help">They are added to the list and sorted. Pasted text loses italics, so check those afterwards.</p></div><button type="button" class="sx-small" data-act="paste">Add and sort</button>' +
       '<div class="ap-rules"><h3>Reference list rules</h3><ul><li>Start the list on a new page after your text, with the label <b>References</b> bold and centered.</li><li>Double-space everything, with no extra space between entries.</li><li>Use a 0.5-inch hanging indent: the first line of each entry is flush left and the rest are indented.</li><li>Put entries in alphabetical order by the first author&rsquo;s last name. Works by the same author go from oldest to newest, with undated (n.d.) works first.</li><li>Every source cited in your text must be in the list, and every entry in the list must be cited. Personal communications are the exception: they appear only in the text.</li></ul></div></div></div>';
+    if (pv) $('ap-paste').value = pv;
   }
   $('ap-list').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return; var L = getList();
-    if (b.dataset.rmref != null) { L.splice(+b.dataset.rmref, 1); saveList(L); renderList(); updateCount(); return; }
-    if (b.dataset.act === 'clearall') { if (b.dataset.sure) { saveList([]); renderList(); updateCount(); } else { b.dataset.sure = 1; b.textContent = 'Press again to clear'; setTimeout(function () { if (b.isConnected) { delete b.dataset.sure; b.textContent = 'Clear the list'; } }, 3000); } return; }
+    if (b.dataset.cpref != null) { var x = L[+b.dataset.cpref]; if (x) copyRich('<p style="' + WORD + '">' + x.html + '</p>', x.text, b); return; }
+    if (b.dataset.rmref != null) { var gone = L.splice(+b.dataset.rmref, 1)[0]; if (gone) Object.keys(state).forEach(function (k) { if (state[k].rid && state[k].rid === gone.id) state[k].rid = null; }); saveList(L); renderList(); updateCount(); return; }
+    if (b.dataset.act === 'clearall') { if (b.dataset.sure) { saveList([]); Object.keys(state).forEach(function (k) { state[k].rid = null; }); renderList(); updateCount(); } else { b.dataset.sure = 1; b.textContent = 'Press again to clear'; setTimeout(function () { if (b.isConnected) { delete b.dataset.sure; b.textContent = 'Clear the list'; } }, 3000); } return; }
     if (b.dataset.act === 'copyall') { var S = sorted(L); copyRich('<p style="font-family:Times New Roman,serif;font-size:12pt;line-height:2;text-align:center;margin:0"><b>' + (L.length === 1 ? 'Reference' : 'References') + '</b></p>' + S.map(function (o) { return '<p style="' + WORD + '">' + o.x.html + '</p>'; }).join(''), (L.length === 1 ? 'Reference' : 'References') + '\n' + S.map(function (o) { return o.x.text; }).join('\n'), b); return; }
     if (b.dataset.act === 'paste') { var v = $('ap-paste').value.split(/\n+/).map(function (x) { return x.trim(); }).filter(function (x) { return x.length > 10; }); v.forEach(function (t) { if (!L.some(function (x) { return x.text === t; })) L.push({ html: esc(t), text: t }); }); saveList(L); renderList(); updateCount(); }
   });
