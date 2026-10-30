@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive IPA Chart | M Enam Ull Hassan</title>
+<link rel="canonical" href="https://enamhassan.com/ipa-chart.html">
+<meta name="description" content="An interactive International Phonetic Alphabet chart with English examples, a quiz, and an IPA keyboard.">
+<script>
+  (function () {
+    var d = document.documentElement;
+    try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') d.setAttribute('data-theme', t); } catch (e) {}
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.theme-toggle');
+      if (!b) return;
+      var cur = d.getAttribute('data-theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      d.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=25">
+<link rel="icon" href="favicon.ico?v=7" sizes="48x48">
+<link rel="icon" href="icon-192.png?v=7" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan</a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 9h3v6H2zM7 5h3v14H7zM12 8h3v8h-3zM17 3h3v18h-3z"/></svg><a class="crumb" href="resources.html">Resources</a> · Phonetics</p>
+    <h1 class="reveal">The IPA, <em>one sound at a time</em></h1>
+    <p class="lead reveal">Tap any symbol in the International Phonetic Alphabet to see how it is made, where you hear it in English, and which languages use it. Practise with the quiz, or type your own transcriptions with the keyboard.</p>
+  </div>
+
+  <section id="ipa">
+    <div class="wrap">
+      <div class="ip-modes" role="tablist" aria-label="Choose a mode">
+        <button type="button" role="tab" class="ip-mode on" data-mode="explore" aria-selected="true">Explore</button>
+        <button type="button" role="tab" class="ip-mode" data-mode="quiz" aria-selected="false">Quiz</button>
+        <button type="button" role="tab" class="ip-mode" data-mode="keyboard" aria-selected="false">Keyboard</button>
+        <label class="ip-eng"><input type="checkbox" id="ip-eng"> <span>Colour the sounds used in English <span class="sw" aria-hidden="true"></span></span></label>
+      </div>
+
+      <div class="ip-quizbar" id="ip-quizbar" hidden>
+        <div class="ip-q"><span class="ip-qlab">Find the sound</span><span id="ip-qtext"></span></div>
+        <div class="ip-score"><span>Score <b id="ip-sc">0</b></span><span>Streak <b id="ip-st">0</b></span><button type="button" class="ip-small" id="ip-skip">Skip</button></div>
+      </div>
+
+      <div class="ip-kb" id="ip-kb" hidden>
+        <label for="ip-type" class="visually-hidden">Your transcription</label>
+        <div class="ip-typebox"><input id="ip-type" type="text" value="/lɪŋˈɡwɪstɪks/" spellcheck="false" autocomplete="off"><button type="button" class="ip-small dark" id="ip-copy">Copy</button><button type="button" class="ip-small" id="ip-clear">Clear</button></div>
+        <p class="ip-hint">Tap symbols in the charts below to add them. Extra marks: <span class="ip-extra" id="ip-extra"></span></p>
+      </div>
+
+      <div class="ip-layout">
+        <div class="ip-charts">
+          <div class="ip-card">
+            <h2 class="ip-h">Consonants</h2>
+            <p class="ip-sub">Columns show <b>where</b> in the mouth the sound is made, rows show <b>how</b>. In each box, the left symbol is voiceless and the right one is voiced.</p>
+            <div class="ip-scroll"><table class="ip-table" id="ip-cons"></table></div>
+            <div class="ip-other"><span class="ip-otherlab">Also in English</span><div id="ip-other"></div></div>
+          </div>
+          <div class="ip-card">
+            <h2 class="ip-h">Vowels</h2>
+            <p class="ip-sub">The chart is a map of the mouth: left is the front, right is the back, top is a closed jaw, bottom is open. Where symbols come in pairs, the right one has rounded lips.</p>
+            <div class="ip-vwrap"><svg id="ip-vow" viewBox="0 0 560 380" role="group" aria-label="Vowel chart"></svg></div>
+          </div>
+        </div>
+        <aside class="ip-detail" id="ip-detail" aria-live="polite"></aside>
+      </div>
+      <p class="gl-note">Examples follow General American and Standard Southern British English; accents vary. Symbols and labels follow the official IPA chart (International Phonetic Association, 2020). Spotted an error? Let me know through the <a href="contact.html">contact page</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><nav class="legal-links" aria-label="Site info"><a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a><a href="cookies.html">Cookies Policy</a><a href="cookie-settings.html">Cookie Settings</a><a href="copyright.html">Copyright Notice</a></nav><span class="copy">Copyright © <span id="yr"></span> M Enam Ull Hassan · Boston, MA</span></div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<style>
+  :root { --ipa-font: "Noto Sans", "Charis SIL", "Doulos SIL", "Gentium Plus", "Segoe UI", "DejaVu Sans", "Arial Unicode MS", sans-serif; --ip-ok: #1f7a55; --ip-no: #b3263e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ip-ok: #6fd1a8; --ip-no: #f08aa0; } }
+  :root[data-theme="dark"] { --ip-ok: #6fd1a8; --ip-no: #f08aa0; }
+  #ipa { padding-top: 24px; }
+  .ip-modes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .ip-mode { font: inherit; font-size: .9375rem; font-weight: 600; padding: 10px 20px; border: 0; border-radius: 999px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); cursor: pointer; }
+  .ip-mode.on { background: #15161b; color: #f4f2ee; box-shadow: 0 0 0 1px rgba(255,255,255,.06); }
+  .ip-eng { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; padding: 9px 16px; border-radius: 999px; box-shadow: var(--neu-in); font-size: .875rem; color: var(--muted); cursor: pointer; }
+  .ip-eng input { accent-color: #15161b; width: 16px; height: 16px; }
+  .ip-quizbar, .ip-kb { margin-top: 20px; padding: 18px 22px; border-radius: 20px; box-shadow: var(--neu-out); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; }
+  .ip-kb { display: block; }
+  .ip-quizbar[hidden], .ip-kb[hidden] { display: none; }
+  .ip-q { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .ip-qlab { font-size: var(--fs-label, .75rem); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--label); }
+  #ip-qtext { font-family: var(--serif); font-size: 1.375rem; line-height: 1.3; }
+  #ip-qtext b { font-family: var(--serif); color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+  .ip-score { display: flex; align-items: center; gap: 16px; font-size: .9375rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .ip-score b { color: var(--ink); font-size: 1.125rem; }
+  .ip-small { font: inherit; font-size: .875rem; font-weight: 600; padding: 8px 16px; border: 0; border-radius: 999px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); cursor: pointer; }
+  .ip-small.dark { background: #15161b; color: #f4f2ee; box-shadow: none; }
+  .ip-typebox { display: flex; gap: 10px; align-items: center; padding: 6px 6px 6px 20px; border-radius: 999px; box-shadow: var(--neu-in); }
+  .ip-typebox input { flex: 1; min-width: 0; border: 0 !important; outline: 0; background: transparent !important; box-shadow: none !important; font-family: var(--ipa-font); font-size: 1.5rem; color: var(--ink); padding: 8px 0; }
+  .ip-hint { margin-top: 12px; font-size: .875rem; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .ip-extra { display: inline-flex; flex-wrap: wrap; gap: 8px; }
+  .ip-extra button { font-family: var(--ipa-font); font-size: 1.05rem; min-width: 38px; height: 36px; padding: 0 10px; border: 0; border-radius: 10px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); cursor: pointer; }
+  .ip-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; margin-top: 28px; }
+  .ip-charts { display: grid; gap: 28px; min-width: 0; }
+  .ip-card { padding: 26px 26px 28px; border-radius: 22px; box-shadow: var(--neu-out); min-width: 0; }
+  .ip-h { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; }
+  .ip-sub { margin-top: 6px; font-size: .9375rem; color: var(--muted); max-width: 70ch; }
+  .ip-sub b { color: var(--ink); }
+  .ip-scroll { overflow-x: auto; margin-top: 18px; padding: 6px 4px 12px; }
+  .ip-table { border-collapse: separate; border-spacing: 5px; min-width: 860px; width: 100%; table-layout: fixed; }
+  .ip-table col.rh { width: 92px; }
+  .ip-table th { font-size: .72rem; font-weight: 600; letter-spacing: .02em; color: var(--muted); text-align: center; padding: 2px 0; line-height: 1.2; vertical-align: bottom; hyphens: manual; }
+  .ip-table th.row { text-align: right; padding-right: 6px; vertical-align: middle; }
+  .ip-table td[colspan] .ip-cell { justify-content: center; gap: 10px; }
+  .ip-table td { height: 44px; border-radius: 12px; text-align: center; vertical-align: middle; padding: 3px; box-shadow: var(--neu-in); }
+  .ip-table td.imp { box-shadow: none; background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--muted) 18%, transparent) 6px 7px); }
+  .ip-cell { display: flex; justify-content: space-between; gap: 4px; padding: 0 2px; }
+  .ip-cell.one-v { justify-content: flex-end; } .ip-cell.one-u { justify-content: flex-start; }
+  .sym { position: relative; font-family: var(--ipa-font); font-size: 1.2rem; line-height: 1; min-width: 32px; height: 34px; padding: 0 5px; border: 0; border-radius: 10px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); cursor: pointer; transition: transform .12s, box-shadow .15s; }
+  .sym:hover { transform: translateY(-1px); }
+  .sym:active { box-shadow: var(--neu-in); transform: none; }
+  .sym:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .sym.sel { background: #15161b; color: #f4f2ee; box-shadow: 0 0 0 1px rgba(255,255,255,.06); }
+  .eng-on .sym.en:not(.sel):not(.ok):not(.no) { background: color-mix(in srgb, var(--accent) 18%, var(--bg)); color: var(--accent); font-weight: 600; }
+  .ip-eng .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; background: color-mix(in srgb, var(--accent) 30%, var(--bg)); vertical-align: -2px; }
+  .sym.ok { background: var(--ip-ok); color: #fff; animation: ip-pop .45s ease; }
+  .sym.no { background: var(--ip-no); color: #fff; animation: ip-shake .35s ease; }
+  .sym.reveal-ans { outline: 3px solid var(--ip-ok); outline-offset: 2px; }
+  @keyframes ip-pop { 0% { transform: scale(1); } 40% { transform: scale(1.25); } 100% { transform: scale(1); } }
+  @keyframes ip-shake { 0%,100% { transform: none; } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+  .ip-other { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .ip-otherlab { font-size: .75rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--label); margin-right: 4px; }
+  #ip-other { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ip-vwrap { margin-top: 14px; max-width: 620px; }
+  #ip-vow { width: 100%; height: auto; display: block; overflow: visible; }
+  #ip-vow line { stroke: var(--line); stroke-width: 2; }
+  #ip-vow .dot { fill: var(--muted); }
+  #ip-vow .lab { fill: var(--muted); font: 600 11px var(--sans, Inter, sans-serif); letter-spacing: .06em; text-transform: uppercase; }
+  #ip-vow foreignObject { overflow: visible; }
+  #ip-vow .sym { font-size: 1.15rem; min-width: 34px; height: 34px; padding: 0 6px; }
+  #ip-other .sym { font-size: 1.15rem; min-width: 38px; height: 36px; padding: 0 8px; }
+  .ip-detail { order: -1; position: sticky; top: 76px; z-index: 5; background: var(--bg); padding: 20px 24px; border-radius: 22px; box-shadow: var(--neu-out); display: grid; grid-template-columns: 104px minmax(0, 1.1fr) minmax(0, 1.5fr) auto; gap: 8px 26px; align-items: start; }
+  .ip-detail .ip-col { min-width: 0; }
+  .ip-detail .ip-sec:first-child { margin-top: 0; }
+  .ip-detail .ip-add { width: auto; margin-top: 0; white-space: nowrap; align-self: center; }
+  .ip-big { font-family: var(--ipa-font); font-size: 4rem; line-height: 1; width: 104px; height: 104px; display: grid; place-items: center; border-radius: 24px; box-shadow: var(--neu-in); }
+  .ip-name { margin-top: 2px; font-family: var(--serif); font-size: 1.375rem; line-height: 1.25; text-wrap: balance; }
+  .ip-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .ip-badge { font-size: .75rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; box-shadow: var(--neu-in); color: var(--muted); }
+  .ip-badge.en { color: var(--accent); }
+  .ip-sec { margin-top: 18px; }
+  .ip-sec h3 { font-family: var(--sans, Inter, sans-serif); font-size: .75rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--label); margin: 0 0 6px; }
+  .ip-sec p, .ip-sec li { font-size: .9375rem; line-height: 1.55; }
+  .ip-words { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ip-words .w { display: inline-block; padding: 5px 12px; border-radius: 999px; box-shadow: var(--neu-out-sm); font-size: .9375rem; }
+  .ip-words b { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .ip-muted { color: var(--muted); }
+  .ip-add { margin-top: 18px; width: 100%; }
+  .ip-toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); opacity: 0; padding: 12px 22px; border-radius: 999px; background: #15161b; color: #f4f2ee; font-weight: 600; font-size: .9375rem; transition: opacity .25s, transform .25s; pointer-events: none; z-index: 50; }
+  .ip-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .gl-note { margin-top: 28px; font-size: var(--fs-meta); color: var(--muted); }
+  .gl-note a { color: var(--accent); }
+  @media (max-width: 900px) { .ip-detail { position: static; grid-template-columns: 88px minmax(0, 1fr); scroll-margin-top: 90px; } .ip-detail .ip-col2, .ip-detail .ip-add { grid-column: 1 / -1; } .ip-detail .ip-add { width: 100%; } }
+  @media (max-height: 760px) and (min-width: 901px) { .ip-detail { position: static; } }
+  @media (max-width: 560px) { .ip-eng { margin-left: 0; } .ip-card { padding: 20px 16px; } .ip-big { width: 80px; height: 80px; font-size: 3.2rem; } }
+  @media (prefers-reduced-motion: reduce) { .sym, .ip-toast { transition: none; animation: none !important; } }
+</style>
+<script>
+(function () {
+  var PLACES = ['Bilabial','Labiodental','Dental','Alveolar','Postalveolar','Retroflex','Palatal','Velar','Uvular','Pharyngeal','Glottal'];
+  var MANNERS = ['Plosive','Nasal','Trill','Tap or flap','Fricative','Lateral fricative','Approximant','Lateral approximant'];
+  // s, voiced, place, manner, english examples, other languages
+  var C = [
+    ['p',0,'Bilabial','Plosive',['<b>p</b>en','ha<b>pp</b>y','sto<b>p</b>'],'Very common, though Standard Arabic is a well-known exception.'],
+    ['b',1,'Bilabial','Plosive',['<b>b</b>at','ra<b>bb</b>it','we<b>b</b>'],'Very common; Bangla বাবা <i>baba</i> ‘father’.'],
+    ['t',0,'Alveolar','Plosive',['<b>t</b>op','ca<b>t</b>'],'In Spanish, French, and Bangla (ত) it is dental, made with the tongue against the teeth.'],
+    ['d',1,'Alveolar','Plosive',['<b>d</b>og','la<b>dd</b>er'],'Very common worldwide.'],
+    ['ʈ',0,'Retroflex','Plosive',[],'Bangla ট in টাকা <i>ʈaka</i> ‘money’; Hindi ट.'],
+    ['ɖ',1,'Retroflex','Plosive',[],'Bangla ড in ডাল <i>ɖal</i> ‘branch’; Hindi ड.'],
+    ['c',0,'Palatal','Plosive',[],'Hungarian <i>ty</i> in <i>kutya</i> ‘dog’.'],
+    ['ɟ',1,'Palatal','Plosive',[],'Hungarian <i>gy</i> in <i>magyar</i>.'],
+    ['k',0,'Velar','Plosive',['<b>c</b>at','<b>k</b>ite','ba<b>ck</b>'],'Very common worldwide.'],
+    ['ɡ',1,'Velar','Plosive',['<b>g</b>o','bi<b>g</b>'],'Very common worldwide.'],
+    ['q',0,'Uvular','Plosive',[],'Arabic ق in قلب <i>qalb</i> ‘heart’.'],
+    ['ɢ',1,'Uvular','Plosive',[],'Rare; found in a few languages, such as some varieties of Persian.'],
+    ['ʔ',0,'Glottal','Plosive',['the break in <b>uh</b>-<b>oh</b>','bu<b>tt</b>on (in many accents)'],'Arabic ء (hamza); Hawaiian ʻokina.'],
+    ['m',1,'Bilabial','Nasal',['<b>m</b>an','su<b>mm</b>er'],'Found in almost every language.'],
+    ['ɱ',1,'Labiodental','Nasal',['co<b>m</b>fort (in fast speech)','sy<b>m</b>phony'],'Usually a variant of m or n before f or v.'],
+    ['n',1,'Alveolar','Nasal',['<b>n</b>o','su<b>n</b>'],'Found in almost every language.'],
+    ['ɳ',1,'Retroflex','Nasal',[],'Tamil ண in கண் <i>kaɳ</i> ‘eye’.'],
+    ['ɲ',1,'Palatal','Nasal',[],'Spanish <i>ñ</i> in <i>año</i>; French <i>gn</i> in <i>agneau</i>.'],
+    ['ŋ',1,'Velar','Nasal',['si<b>ng</b>','thi<b>n</b>k'],'Bangla ঙ in রং <i>rɔŋ</i> ‘colour’.'],
+    ['ɴ',1,'Uvular','Nasal',[],'Japanese final <i>n</i>, as in <i>hon</i> ‘book’, often sounds like this.'],
+    ['ʙ',1,'Bilabial','Trill',[],'The ‘brrr’ sound people make when cold; used in a few languages of Papua New Guinea.'],
+    ['r',1,'Alveolar','Trill',[],'Spanish <i>rr</i> in <i>perro</i>; Italian <i>terra</i>.'],
+    ['ʀ',1,'Uvular','Trill',[],'Some speakers of German, Dutch, and French.'],
+    ['ⱱ',1,'Labiodental','Tap or flap',[],'Mono and other languages of central Africa. The newest consonant on the chart, added in 2005.'],
+    ['ɾ',1,'Alveolar','Tap or flap',['bu<b>tt</b>er','wa<b>t</b>er (American English)'],'Spanish single <i>r</i> in <i>pero</i>.'],
+    ['ɽ',1,'Retroflex','Tap or flap',[],'Bangla ড় in বড় <i>bɔɽo</i> ‘big’; Hindi ड़.'],
+    ['ɸ',0,'Bilabial','Fricative',[],'Japanese <i>f</i> in <i>Fuji</i>.'],
+    ['β',1,'Bilabial','Fricative',[],'Spanish <i>b</i> between vowels, as in <i>lobo</i>.'],
+    ['f',0,'Labiodental','Fricative',['<b>f</b>an','<b>ph</b>one','lau<b>gh</b>'],'Very common worldwide.'],
+    ['v',1,'Labiodental','Fricative',['<b>v</b>an','lo<b>v</b>e'],'Bangla has no separate v; many Bangla speakers use bh or b instead.'],
+    ['θ',0,'Dental','Fricative',['<b>th</b>ink','ba<b>th</b>'],'Castilian Spanish <i>z</i> in <i>zapato</i>; Greek θ.'],
+    ['ð',1,'Dental','Fricative',['<b>th</b>is','mo<b>th</b>er'],'Greek δ; Spanish <i>d</i> between vowels, as in <i>nada</i>.'],
+    ['s',0,'Alveolar','Fricative',['<b>s</b>ea','ki<b>ss</b>','<b>c</b>ity'],'Very common worldwide.'],
+    ['z',1,'Alveolar','Fricative',['<b>z</b>oo','dog<b>s</b>','ro<b>s</b>e'],'French <i>maison</i>.'],
+    ['ʃ',0,'Postalveolar','Fricative',['<b>sh</b>e','na<b>ti</b>on','wi<b>sh</b>'],'Bangla শ in শাক <i>ʃak</i> ‘greens’; French <i>ch</i>.'],
+    ['ʒ',1,'Postalveolar','Fricative',['mea<b>s</b>ure','vi<b>s</b>ion','bei<b>ge</b>'],'French <i>j</i> in <i>jour</i>.'],
+    ['ʂ',0,'Retroflex','Fricative',[],'Mandarin <i>sh</i> in <i>shān</i> ‘mountain’; Polish <i>sz</i>.'],
+    ['ʐ',1,'Retroflex','Fricative',[],'Mandarin <i>r</i> in <i>rén</i> ‘person’ is often pronounced this way.'],
+    ['ç',0,'Palatal','Fricative',['<b>h</b>uge (in many accents)'],'German <i>ch</i> in <i>ich</i>.'],
+    ['ʝ',1,'Palatal','Fricative',[],'Spanish <i>y</i> in <i>mayo</i> in many varieties.'],
+    ['x',0,'Velar','Fricative',['lo<b>ch</b> (Scottish English)'],'German <i>ch</i> in <i>Bach</i>; Spanish <i>j</i> in <i>jota</i>.'],
+    ['ɣ',1,'Velar','Fricative',[],'Spanish <i>g</i> between vowels, as in <i>lago</i>; Greek γ.'],
+    ['χ',0,'Uvular','Fricative',[],'Arabic خ in خبز <i>χubz</i> ‘bread’.'],
+    ['ʁ',1,'Uvular','Fricative',[],'French <i>r</i> in <i>rouge</i>.'],
+    ['ħ',0,'Pharyngeal','Fricative',[],'Arabic ح in حب <i>ħubb</i> ‘love’.'],
+    ['ʕ',1,'Pharyngeal','Fricative',[],'Arabic ع (ʿayn).'],
+    ['h',0,'Glottal','Fricative',['<b>h</b>at','a<b>h</b>ead'],'Bangla হ in হাত <i>hat</i> ‘hand’.'],
+    ['ɦ',1,'Glottal','Fricative',['a<b>h</b>ead (often, between vowels)'],'Hindi ह is often pronounced this way.'],
+    ['ɬ',0,'Alveolar','Lateral fricative',[],'Welsh <i>ll</i> in <i>Llanelli</i>.'],
+    ['ɮ',1,'Alveolar','Lateral fricative',[],'Zulu <i>dl</i> in <i>dla</i> ‘eat’.'],
+    ['ʋ',1,'Labiodental','Approximant',[],'Hindi व; Dutch <i>w</i> in <i>wat</i>.'],
+    ['ɹ',1,'Alveolar','Approximant',['<b>r</b>ed','ca<b>rr</b>y'],'The usual English r. Note that the plain symbol r is the trill.'],
+    ['ɻ',1,'Retroflex','Approximant',[],'Tamil ழ, as in the word <i>Tamil</i> itself.'],
+    ['j',1,'Palatal','Approximant',['<b>y</b>es','<b>u</b>se'],'German <i>j</i> in <i>ja</i>. In the IPA, j is never the j of <i>jam</i>.'],
+    ['ɰ',1,'Velar','Approximant',[],'Spanish <i>g</i> in relaxed speech, as in <i>agua</i>.'],
+    ['l',1,'Alveolar','Lateral approximant',['<b>l</b>eg','be<b>ll</b>'],'Found in most languages.'],
+    ['ɭ',1,'Retroflex','Lateral approximant',[],'Tamil ள; Marathi ळ.'],
+    ['ʎ',1,'Palatal','Lateral approximant',[],'Italian <i>gl</i> in <i>figlio</i>; Castilian Spanish <i>ll</i>.'],
+    ['ʟ',1,'Velar','Lateral approximant',[],'Rare; Mid-Wahgi (Papua New Guinea).']
+  ];
+  var OTHER = [
+    ['w',1,'Voiced labial-velar approximant',['<b>w</b>e','q<b>u</b>een'],'French <i>oui</i>. The lips round and the back of the tongue rises at the same time.'],
+    ['ʍ',0,'Voiceless labial-velar fricative',['<b>wh</b>ich (Scottish and some American accents)'],'Most English speakers now say <i>which</i> and <i>witch</i> the same way.'],
+    ['tʃ',0,'Voiceless postalveolar affricate',['<b>ch</b>urch','ma<b>tch</b>'],'Spanish <i>ch</i> in <i>chico</i>; Bangla চ.'],
+    ['dʒ',1,'Voiced postalveolar affricate',['<b>j</b>udge','a<b>g</b>e'],'Bangla জ in জল <i>dʒɔl</i> ‘water’; Italian <i>g</i> in <i>giorno</i>.']
+  ];
+  // vowels: s, height(0 close..3 open), back (0 front,0.25 near-front,0.5 central,0.75 near-back,1 back), rounded, english, other
+  var V = [
+    ['i',0,0,0,['s<b>ee</b>','m<b>e</b>'],'Spanish <i>sí</i>; Bangla ই.'],
+    ['y',0,0,1,[],'French <i>tu</i>; German <i>über</i>.'],
+    ['ɨ',0,.5,0,[],'Russian ы in <i>ты</i> ‘you’.'],
+    ['ʉ',0,.5,1,['g<b>oo</b>se (Australian English)'],'Swedish <i>hus</i> is close to this.'],
+    ['ɯ',0,1,0,[],'Japanese <i>u</i> in <i>sushi</i>; Turkish <i>ı</i>.'],
+    ['u',0,1,1,['f<b>oo</b>d','bl<b>ue</b>'],'Spanish <i>tú</i>; Bangla উ.'],
+    ['ɪ',.5,.25,0,['s<b>i</b>t','b<b>u</b>sy'],'Not a separate vowel in Spanish or Bangla, which is why <i>ship</i> and <i>sheep</i> are hard for many learners.'],
+    ['ʏ',.5,.25,1,[],'German <i>Glück</i>.'],
+    ['ʊ',.5,.75,1,['b<b>oo</b>k','p<b>u</b>t'],'Many learners merge it with u, so <i>full</i> and <i>fool</i> sound alike.'],
+    ['e',1,0,0,['f<b>a</b>ce (start of the vowel)'],'Spanish <i>mesa</i>; Bangla এ in <i>dekha</i>.'],
+    ['ø',1,0,1,[],'French <i>peu</i>; German <i>schön</i>.'],
+    ['ɘ',1,.5,0,['k<b>i</b>t (New Zealand English is close)'],'Rare as a separate vowel.'],
+    ['ɵ',1,.5,1,[],'Swedish <i>buss</i> ‘bus’.'],
+    ['ɤ',1,1,0,[],'Mandarin <i>e</i> in <i>è</i> ‘hungry’.'],
+    ['o',1,1,1,['g<b>oa</b>t (start of the vowel in many accents)'],'Spanish <i>no</i>; Bangla ও.'],
+    ['ə',1.5,.5,0,['<b>a</b>bout','sof<b>a</b>'],'The schwa: the most common vowel in English, used in many unstressed syllables.'],
+    ['ɛ',2,0,0,['b<b>e</b>d','s<b>ai</b>d'],'French <i>père</i>; German <i>Bett</i>.'],
+    ['œ',2,0,1,[],'French <i>œuf</i>; German <i>Götter</i>.'],
+    ['ɜ',2,.5,0,['b<b>ir</b>d (British English)','n<b>ur</b>se (British English)'],'Mostly known from English.'],
+    ['ɞ',2,.5,1,[],'Rare as a separate vowel.'],
+    ['ʌ',2,1,0,['c<b>u</b>p','l<b>o</b>ve'],'In many modern accents this vowel is actually more central.'],
+    ['ɔ',2,1,1,['l<b>aw</b> (British English)','th<b>ough</b>t (British English)'],'Bangla অ in অনেক <i>ɔnek</i> ‘many’.'],
+    ['æ',2.5,0,0,['c<b>a</b>t','tr<b>a</b>p'],'Bangla এ in এক <i>æk</i> ‘one’. Many learners whose languages lack it say <i>bed</i> for <i>bad</i>.'],
+    ['ɐ',2.5,.5,0,[],'Portuguese final <i>a</i> in <i>cama</i>; German <i>-er</i> in <i>besser</i>.'],
+    ['a',3,0,0,[],'Spanish <i>casa</i>; French <i>patte</i>.'],
+    ['ɶ',3,0,1,[],'Very rare; reported in some Danish and Swedish varieties.'],
+    ['ɑ',3,1,0,['f<b>a</b>ther','p<b>al</b>m'],'Dutch <i>bad</i> ‘bath’.'],
+    ['ɒ',3,1,1,['h<b>o</b>t (British English)','l<b>o</b>t (British English)'],'Hungarian <i>a</i> in <i>alma</i> ‘apple’.']
+  ];
+  var HN = ['close','near-close','close-mid','mid','open-mid','near-open','open'];
+  var hName = function (h) { return {0:'close',0.5:'near-close',1:'close-mid',1.5:'mid',2:'open-mid',2.5:'near-open',3:'open'}[h]; };
+  var bName = function (b) { return {0:'front',0.25:'near-front',0.5:'central',0.75:'near-back',1:'back'}[b]; };
+  var ALL = {};
+  C.forEach(function (c) { ALL[c[0]] = { s: c[0], kind: 'c', name: (c[1] ? 'Voiced ' : 'Voiceless ') + c[2].toLowerCase() + ' ' + c[3].toLowerCase(), voiced: !!c[1], place: c[2], manner: c[3], en: c[4], ex: c[5] }; });
+  OTHER.forEach(function (c) { ALL[c[0]] = { s: c[0], kind: 'o', name: c[2], voiced: !!c[1], en: c[3], ex: c[4] }; });
+  V.forEach(function (v) { ALL[v[0]] = { s: v[0], kind: 'v', name: (hName(v[1]) + ' ' + bName(v[2]) + ' ' + (v[3] ? 'rounded' : 'unrounded') + ' vowel').replace(/^./, function (m) { return m.toUpperCase(); }), h: v[1], b: v[2], r: !!v[3], en: v[4], ex: v[5] }; });
+
+  var TIPS = {
+    'Plosive': 'Block the air completely, then let it go in a small burst.',
+    'Nasal': 'Air flows out through your nose. Pinch your nose while saying it and the sound stops.',
+    'Trill': 'Let the air make the tongue or lips vibrate several times in a row.',
+    'Tap or flap': 'One very quick tap, much shorter than a d.',
+    'Fricative': 'Bring two parts of the mouth close so the air hisses or buzzes through.',
+    'Lateral fricative': 'Put the tongue tip up and let the air hiss out over the sides of the tongue.',
+    'Approximant': 'Bring the parts of the mouth close, but not close enough to hiss.',
+    'Lateral approximant': 'Touch the tongue tip up and let the air flow smoothly around the sides.'
+  };
+  var VOICE_TIP = { true: 'Voiced: put your fingers on your throat and you will feel a buzz.', false: 'Voiceless: no buzz in the throat, only air.' };
+
+  var cons = document.getElementById('ip-cons'), detail = document.getElementById('ip-detail');
+  var MERGE = { 'Plosive': 1, 'Nasal': 1, 'Trill': 1, 'Tap or flap': 1, 'Lateral fricative': 1, 'Approximant': 1, 'Lateral approximant': 1 };
+  var IMP = { 'Plosive|Pharyngeal': 'b', 'Plosive|Glottal': 'v', 'Nasal|Pharyngeal': 'b', 'Nasal|Glottal': 'b', 'Trill|Velar': 'b', 'Trill|Glottal': 'b', 'Tap or flap|Velar': 'b', 'Tap or flap|Glottal': 'b', 'Lateral fricative|Bilabial': 'b', 'Lateral fricative|Labiodental': 'b', 'Lateral fricative|Pharyngeal': 'b', 'Lateral fricative|Glottal': 'b', 'Lateral approximant|Bilabial': 'b', 'Lateral approximant|Labiodental': 'b', 'Lateral approximant|Pharyngeal': 'b', 'Lateral approximant|Glottal': 'b' };
+  var CORE = 'p b t d k ɡ m n ŋ f v θ ð s z ʃ ʒ h ɹ l j w tʃ dʒ i ɪ ɛ æ ʌ ə ɜ ɑ ɒ ɔ ʊ u'.split(' ');
+  var isCore = function (s) { return CORE.indexOf(s) > -1; };
+  var btn = function (s) { var d = ALL[s]; return '<button type="button" class="sym' + (isCore(s) ? ' en' : '') + '" data-s="' + s + '" aria-label="' + s + ', ' + d.name + '">' + s + '</button>'; };
+  var html = '<colgroup><col class="rh">' + PLACES.map(function () { return '<col>'; }).join('') + '</colgroup><thead><tr><th></th>' + PLACES.map(function (p) { return '<th scope="col">' + p.replace('Labiodental', 'Labio&shy;dental').replace('Postalveolar', 'Post&shy;alveolar').replace('Pharyngeal', 'Pharyn&shy;geal') + '</th>'; }).join('') + '</tr></thead><tbody>';
+  MANNERS.forEach(function (m) {
+    html += '<tr><th scope="row" class="row">' + m + '</th>';
+    for (var i = 0; i < PLACES.length; i++) {
+      var p = PLACES[i], span = 1, places = [p];
+      if (MERGE[m] && p === 'Dental') { span = 3; places = ['Dental', 'Alveolar', 'Postalveolar']; }
+      if (MERGE[m] && (p === 'Alveolar' || p === 'Postalveolar')) continue;
+      var items = C.filter(function (c) { return c[3] === m && places.indexOf(c[2]) > -1; });
+      var u = items.filter(function (c) { return !c[1]; })[0], v = items.filter(function (c) { return c[1]; })[0];
+      var imp = IMP[m + '|' + p];
+      var cls = imp === 'b' ? ' class="imp" title="Judged impossible"' : '';
+      var inner = '';
+      if (u || v) inner = '<div class="ip-cell' + (!u ? ' one-v' : !v ? ' one-u' : '') + '">' + (u ? btn(u[0]) : '') + (v ? btn(v[0]) : '') + '</div>';
+      html += '<td' + (span > 1 ? ' colspan="3"' : '') + cls + '>' + inner + '</td>';
+    }
+    html += '</tr>';
+  });
+  cons.innerHTML = html + '</tbody>';
+  document.getElementById('ip-other').innerHTML = OTHER.map(function (o) { return btn(o[0]); }).join('');
+
+  // vowel chart
+  var svg = document.getElementById('ip-vow');
+  var Y = function (h) { return 40 + h * 100; };
+  var FX = function (h) { return 130 + h * (200 / 3); }, BX = function () { return 500; };
+  var X = function (h, b) { return FX(h) + (BX() - FX(h)) * b; };
+  var NS = 'http://www.w3.org/2000/svg', s = '';
+  s += '<line x1="' + FX(0) + '" y1="' + Y(0) + '" x2="' + BX() + '" y2="' + Y(0) + '"/>';
+  s += '<line x1="' + FX(3) + '" y1="' + Y(3) + '" x2="' + BX() + '" y2="' + Y(3) + '"/>';
+  s += '<line x1="' + FX(0) + '" y1="' + Y(0) + '" x2="' + FX(3) + '" y2="' + Y(3) + '"/>';
+  s += '<line x1="' + BX() + '" y1="' + Y(0) + '" x2="' + BX() + '" y2="' + Y(3) + '"/>';
+  [1, 2].forEach(function (h) { s += '<line x1="' + FX(h) + '" y1="' + Y(h) + '" x2="' + BX() + '" y2="' + Y(h) + '"/>'; });
+  s += '<line x1="' + X(0, .5) + '" y1="' + Y(0) + '" x2="' + X(3, .5) + '" y2="' + Y(3) + '"/>';
+  [['Front', FX(0), 18], ['Central', X(0, .5), 18], ['Back', BX(), 18]].forEach(function (l) { s += '<text class="lab" x="' + l[1] + '" y="' + l[2] + '" text-anchor="middle">' + l[0] + '</text>'; });
+  [['Close', 0], ['Close-mid', 1], ['Open-mid', 2], ['Open', 3]].forEach(function (l) { s += '<text class="lab" x="' + (FX(l[1]) - 54) + '" y="' + (Y(l[1]) + 4) + '" text-anchor="end">' + l[0] + '</text>'; });
+  var pos = {};
+  V.forEach(function (v) { var k = v[1] + '|' + v[2]; (pos[k] = pos[k] || []).push(v); });
+  Object.keys(pos).forEach(function (k) {
+    var g = pos[k], h = g[0][1], b = g[0][2], x = X(h, b), y = Y(h);
+    var paired = g.length > 1;
+    if (paired) s += '<circle class="dot" cx="' + x + '" cy="' + y + '" r="4"/>';
+    g.forEach(function (v) {
+      var dx = paired ? (v[3] ? 24 : -24) : 0;
+      s += '<foreignObject x="' + (x + dx - 21) + '" y="' + (y - 21) + '" width="42" height="42"><div xmlns="http://www.w3.org/1999/xhtml" style="display:grid;place-items:center;width:42px;height:42px">' + btn(v[0]) + '</div></foreignObject>';
+    });
+  });
+  svg.innerHTML = s;
+
+  // detail panel
+  var current = null;
+  function show(sym) {
+    var d = ALL[sym]; if (!d) return;
+    current = sym;
+    document.querySelectorAll('.sym.sel').forEach(function (e) { e.classList.remove('sel'); });
+    document.querySelectorAll('.sym[data-s="' + CSS.escape(sym) + '"]').forEach(function (e) { e.classList.add('sel'); });
+    var badges = [];
+    if (d.kind === 'c') { badges.push(d.place, d.manner, d.voiced ? 'Voiced' : 'Voiceless'); }
+    else if (d.kind === 'v') { badges.push(hName(d.h), bName(d.b), d.r ? 'Rounded' : 'Unrounded'); }
+    else badges.push(d.voiced ? 'Voiced' : 'Voiceless');
+    var tip = d.kind === 'c' ? TIPS[d.manner] + ' ' + VOICE_TIP[d.voiced] : d.kind === 'v' ? 'Tongue ' + (d.h <= .5 ? 'high, jaw nearly closed' : d.h >= 2.5 ? 'low, jaw open wide' : 'in the middle') + ', ' + (d.b <= .25 ? 'pushed forward' : d.b >= .75 ? 'pulled back' : 'neither forward nor back') + ', lips ' + (d.r ? 'rounded' : 'spread or relaxed') + '.' : 'Say the example words slowly and notice what your lips and tongue do.';
+    detail.innerHTML = '<div class="ip-big" aria-hidden="true">' + d.s + '</div><div class="ip-col">' +
+      '<p class="ip-name">' + d.name + '</p>' +
+      '<div class="ip-badges">' + badges.map(function (b) { return '<span class="ip-badge">' + b.charAt(0).toUpperCase() + b.slice(1) + '</span>'; }).join('') + (isCore(d.s) ? '<span class="ip-badge en">English sound</span>' : d.en.length ? '<span class="ip-badge">In some English speech</span>' : '') + '</div>' +
+      '<div class="ip-sec"><h3>In English</h3>' + (d.en.length ? '<div class="ip-words">' + d.en.map(function (w) { return '<span class="w">' + w + '</span>'; }).join('') + '</div>' : '<p class="ip-muted">Not a separate sound in standard English.</p>') + '</div>' +
+      '</div><div class="ip-col ip-col2"><div class="ip-sec"><h3>Around the world</h3><p>' + d.ex + '</p></div>' +
+      '<div class="ip-sec"><h3>Try it</h3><p>' + tip + '</p></div></div>' +
+      '<button type="button" class="ip-small ip-add" id="ip-addbtn">Add ' + d.s + ' to keyboard</button>';
+  }
+
+  // modes
+  var mode = 'explore', root = document.getElementById('ipa');
+  var quizbar = document.getElementById('ip-quizbar'), kb = document.getElementById('ip-kb');
+  document.querySelectorAll('.ip-mode').forEach(function (b) {
+    b.addEventListener('click', function () {
+      mode = b.dataset.mode;
+      document.querySelectorAll('.ip-mode').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); });
+      quizbar.hidden = mode !== 'quiz'; kb.hidden = mode !== 'keyboard';
+      if (mode === 'quiz') newQ();
+    });
+  });
+  var eng = document.getElementById('ip-eng');
+  eng.addEventListener('change', function () { root.classList.toggle('eng-on', eng.checked); });
+
+  // keyboard
+  var typ = document.getElementById('ip-type');
+  var caret = null;
+  typ.addEventListener('blur', function () { caret = [typ.selectionStart, typ.selectionEnd]; });
+  typ.addEventListener('input', function () { caret = [typ.selectionStart, typ.selectionEnd]; });
+  function insert(t) {
+    var a = caret ? caret[0] : typ.value.length, z = caret ? caret[1] : a;
+    if (a > typ.value.length) { a = z = typ.value.length; }
+    typ.value = typ.value.slice(0, a) + t + typ.value.slice(z);
+    caret = [a + t.length, a + t.length];
+    if (!window.matchMedia('(pointer: coarse)').matches) { typ.focus(); typ.setSelectionRange(caret[0], caret[1]); }
+  }
+  var EXTRA = [['/', 'slash'], ['[', 'open bracket'], [']', 'close bracket'], ['ˈ', 'primary stress'], ['ˌ', 'secondary stress'], ['ː', 'long'], ['.', 'syllable break'], ['ʰ', 'aspirated'], ['̃', 'nasalised'], ['␣', 'space']];
+  document.getElementById('ip-extra').innerHTML = EXTRA.map(function (e) { return '<button type="button" data-x="' + e[0] + '" title="' + e[1] + '" aria-label="' + e[1] + '">' + (e[0] === '̃' ? '◌̃' : e[0]) + '</button>'; }).join('');
+  document.getElementById('ip-extra').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) insert(b.dataset.x === '␣' ? ' ' : b.dataset.x); });
+  document.getElementById('ip-clear').addEventListener('click', function () { typ.value = ''; caret = null; typ.focus(); });
+  document.getElementById('ip-copy').addEventListener('click', function () {
+    var done = function () { toast('Copied'); };
+    try { navigator.clipboard.writeText(typ.value).then(done, function () { typ.select(); toast('Press Ctrl+C to copy'); }); } catch (e) { typ.select(); toast('Press Ctrl+C to copy'); }
+  });
+
+  // toast
+  var tEl = document.createElement('div'); tEl.className = 'ip-toast'; tEl.setAttribute('role', 'status'); document.body.appendChild(tEl);
+  var tT; function toast(m) { tEl.textContent = m; tEl.classList.add('show'); clearTimeout(tT); tT = setTimeout(function () { tEl.classList.remove('show'); }, 1400); }
+
+  // quiz
+  var score = 0, streak = 0, answer = null, locked = false, last = null;
+  var qtext = document.getElementById('ip-qtext');
+  function newQ() {
+    locked = false;
+    document.querySelectorAll('.sym.reveal-ans').forEach(function (e) { e.classList.remove('reveal-ans'); });
+    var keys = Object.keys(ALL), d;
+    do { d = ALL[keys[Math.floor(Math.random() * keys.length)]]; } while (d.s === last);
+    last = d.s; answer = d.s;
+    if (isCore(d.s) && Math.random() < .55) {
+      var w = d.en[Math.floor(Math.random() * d.en.length)].replace(/\s*\(.*?\)\s*$/, '');
+      qtext.innerHTML = 'Which symbol is the underlined sound in <span style="font-family:var(--serif)">' + w + '</span>?';
+    } else {
+      qtext.textContent = 'Tap the ' + d.name.charAt(0).toLowerCase() + d.name.slice(1) + '.';
+    }
+  }
+  function check(btnEl, sym) {
+    if (locked) return;
+    if (sym === answer) {
+      locked = true; score++; streak++;
+      btnEl.classList.add('ok');
+      if (streak > 0 && streak % 5 === 0) toast(streak + ' in a row. Brilliant!'); else toast('Correct');
+      setTimeout(function () { btnEl.classList.remove('ok'); show(sym); newQ(); }, 700);
+    } else {
+      streak = 0; btnEl.classList.add('no');
+      setTimeout(function () { btnEl.classList.remove('no'); }, 450);
+      toast('Not quite. That is the ' + ALL[sym].name.toLowerCase() + '.');
+    }
+    document.getElementById('ip-sc').textContent = score; document.getElementById('ip-st').textContent = streak;
+  }
+  document.getElementById('ip-skip').addEventListener('click', function () {
+    streak = 0; document.getElementById('ip-st').textContent = 0;
+    document.querySelectorAll('.sym[data-s="' + CSS.escape(answer) + '"]').forEach(function (e) { e.classList.add('reveal-ans'); });
+    show(answer); locked = true; setTimeout(newQ, 1600);
+  });
+
+  root.addEventListener('click', function (e) {
+    var b = e.target.closest('.sym'); if (b) {
+      var sym = b.dataset.s;
+      if (mode === 'quiz') return check(b, sym);
+      show(sym);
+      if (mode === 'keyboard') insert(sym);
+      else if (window.matchMedia('(max-width: 900px)').matches) detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    if (e.target.id === 'ip-addbtn') {
+      if (mode !== 'keyboard') document.querySelector('.ip-mode[data-mode="keyboard"]').click();
+      insert(current); toast('Added ' + current);
+    }
+  });
+  show('ʃ');
+})();
+</script>
+</body>
+</html>
