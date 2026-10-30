@@ -161,7 +161,7 @@
   .cx-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-top: 10px; }
   .cx-stats div { padding: 10px 12px; border-radius: 12px; box-shadow: var(--neu-out-sm); }
   .cx-stats b { display: block; font-family: var(--serif); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
-  .cx-stats span { font-size: .78rem; color: var(--muted); }
+  .cx-stats span { display: block; margin-top: 4px; font-size: .78rem; line-height: 1.45; color: var(--muted); text-align: left; }
   .cx-verdict { display: inline-block; margin-top: 10px; padding: 6px 14px; border-radius: 999px; font-weight: 600; font-size: .9rem; background: #15161b; color: #f4f2ee; }
   .cx-verdict.ns { background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); }
   .cx-report { margin-top: 10px; padding: 12px 16px; border-radius: 12px; box-shadow: var(--neu-out-sm); font-size: .98rem; line-height: 1.6; }
@@ -172,7 +172,7 @@
   .cx-viz .g1 { fill: var(--c1); } .cx-viz .g2 { fill: var(--c2); }
   .cx-viz .m1 { stroke: var(--c1); stroke-width: 3; } .cx-viz .m2 { stroke: var(--c2); stroke-width: 3; }
   .cx-viz .ln { stroke: var(--muted); stroke-width: 1.2; opacity: .5; }
-  .cx-viz .fit { stroke: var(--c2); stroke-width: 2.5; }
+  .cx-viz .fit { stroke: var(--c2); stroke-width: 2; }
   .cx-scale { display: flex; margin-top: 10px; border-radius: 999px; overflow: hidden; box-shadow: var(--neu-in); font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
   .cx-scale span { flex: 1; text-align: center; padding: 6px 4px; color: var(--muted); }
   .cx-scale span.on { background: #15161b; color: #f4f2ee; }
@@ -198,7 +198,7 @@
   .sx-tab { display: inline-flex; flex-direction: column; align-items: flex-start; text-align: left; line-height: 1.25; }
   .sx-tab small { font-size: .72rem; font-weight: 500; color: var(--muted); margin-top: 2px; }
   .sx-tab.on small { color: rgba(244,242,238,.72); }
-  .tm, .tm-demo { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: help; text-decoration: underline dotted; text-decoration-thickness: 1.5px; text-underline-offset: 3px; text-decoration-color: var(--muted); }
+  .tm, .tm-demo { font: inherit; text-align: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: help; text-decoration: underline dotted; text-decoration-thickness: 1.5px; text-underline-offset: 3px; text-decoration-color: var(--muted); }
   .tm:hover, .tm[aria-expanded="true"] { text-decoration-style: solid; text-decoration-color: var(--ink); }
   .tm-pop { position: absolute; z-index: 60; padding: 14px 16px; border-radius: 16px; background: #15161b; color: #f4f2ee; font-size: .875rem; line-height: 1.5; box-shadow: 0 12px 32px rgba(0,0,0,.25); }
   .tm-pop b { display: block; margin-bottom: 4px; font-size: .9rem; }
@@ -795,14 +795,14 @@ var ST2 = (function () {
   function rng(v) { var lo = Math.min.apply(null, v), hi = Math.max.apply(null, v); if (lo === hi) { lo -= 1; hi += 1; } var p = (hi - lo) * .08; return [lo - p, hi + p]; }
   function dotsK(V, N, centre) {
     var k = V.length, W = cw(), rowH = 54, H = 30 + k * rowH, L = W < 500 ? 92 : 120, Rg = 20, r = rng([].concat.apply([], V)), x = function (v) { return L + (v - r[0]) / (r[1] - r[0]) * (W - L - Rg); }, s = '';
-    V.forEach(function (arr, gi) { var y = 34 + gi * rowH, seen = {}; arr.forEach(function (v) { var key = v.toFixed(3); seen[key] = (seen[key] || 0) + 1; s += '<circle cx="' + x(v) + '" cy="' + (y - (seen[key] - 1) * 8) + '" r="4.5" fill="' + PAL[gi] + '" opacity=".85"/>'; }); var m = centre === 'median' ? ST2.median(arr) : ST.mean(arr); s += '<line x1="' + x(m) + '" x2="' + x(m) + '" y1="' + (y - 26) + '" y2="' + (y + 10) + '" stroke="' + PAL[gi] + '" stroke-width="3"/><text class="tk" x="' + (L - 10) + '" y="' + (y + 4) + '" text-anchor="end">' + esc(N[gi].slice(0, W < 500 ? 12 : 16)) + '</text>'; });
+    V.forEach(function (arr, gi) { var y = 34 + gi * rowH, seen = {}; arr.forEach(function (v) { var key = v.toFixed(3); seen[key] = (seen[key] || 0) + 1; s += '<circle cx="' + x(v) + '" cy="' + (y - (seen[key] - 1) * 7.5) + '" r="3.4" fill="' + PAL[gi] + '" opacity=".9"/>'; }); var m = centre === 'median' ? ST2.median(arr) : ST.mean(arr); s += '<line x1="' + x(m) + '" x2="' + x(m) + '" y1="' + (y - 19) + '" y2="' + (y + 7) + '" stroke="' + PAL[gi] + '" stroke-width="2"/><text class="tk" x="' + (L - 10) + '" y="' + (y + 4) + '" text-anchor="end">' + esc(N[gi].slice(0, W < 500 ? 12 : 16)) + '</text>'; });
     for (var i = 0; i <= 4; i++) { var v = r[0] + (r[1] - r[0]) * i / 4; s += '<text class="tk" x="' + x(v) + '" y="' + (H - 4) + '" text-anchor="middle">' + f2(v, 1) + '</text>'; }
     return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Dot plot of each group with its ' + centre + '"><line class="ax" x1="' + L + '" x2="' + (W - Rg) + '" y1="' + (H - 20) + '" y2="' + (H - 20) + '"/>' + s + '</svg><p class="cx-cap">Each dot is one person; the bar marks the ' + centre + '.</p>';
   }
   function slopeK(V, N) {
     var k = V.length, n = V[0].length, W = cw(), H = W < 500 ? 240 : 210, T = 16, B = 30, L = W < 500 ? 50 : 60, Rg = W < 500 ? 46 : 60, r = rng([].concat.apply([], V)), y = function (v) { return T + (1 - (v - r[0]) / (r[1] - r[0])) * (H - T - B); }, x = function (j) { return L + j * (W - L - Rg) / (k - 1); }, s = '';
     for (var p = 0; p < n; p++) { var pts = V.map(function (c, j) { return x(j) + ',' + y(c[p]); }).join(' '); s += '<polyline points="' + pts + '" fill="none" class="ln"/>'; }
-    V.forEach(function (c, j) { c.forEach(function (v) { s += '<circle cx="' + x(j) + '" cy="' + y(v) + '" r="4" fill="' + PAL[j] + '"/>'; }); var m = ST.mean(c); s += '<line x1="' + (x(j) - 18) + '" x2="' + (x(j) + 18) + '" y1="' + y(m) + '" y2="' + y(m) + '" stroke="' + PAL[j] + '" stroke-width="3"/><text class="tk" x="' + (j === 0 ? x(j) - 14 : j === k - 1 ? x(j) + 14 : x(j)) + '" y="' + (H - 8) + '" text-anchor="' + (j === 0 ? 'start' : j === k - 1 ? 'end' : 'middle') + '">' + esc(N[j].slice(0, W < 500 && k > 2 ? 14 : 20)) + '</text>'; });
+    V.forEach(function (c, j) { c.forEach(function (v) { s += '<circle cx="' + x(j) + '" cy="' + y(v) + '" r="3.2" fill="' + PAL[j] + '"/>'; }); var m = ST.mean(c); s += '<line x1="' + (x(j) - 13) + '" x2="' + (x(j) + 13) + '" y1="' + y(m) + '" y2="' + y(m) + '" stroke="' + PAL[j] + '" stroke-width="2"/><text class="tk" x="' + (j === 0 ? x(j) - 14 : j === k - 1 ? x(j) + 14 : x(j)) + '" y="' + (H - 8) + '" text-anchor="' + (j === 0 ? 'start' : j === k - 1 ? 'end' : 'middle') + '">' + esc(N[j].slice(0, W < 500 && k > 2 ? 14 : 20)) + '</text>'; });
     for (var i = 0; i <= 3; i++) { var v = r[0] + (r[1] - r[0]) * i / 3; s += '<text class="tk" x="' + (L - 30) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + f2(v, 1) + '</text>'; }
     return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Each person’s scores joined by a line">' + s + '</svg><p class="cx-cap">Each line is one person; the short bars mark the means.</p>';
   }
@@ -810,8 +810,8 @@ var ST2 = (function () {
     var W = cw(), H = W < 500 ? 300 : 270, L = 62, Rg = 16, T = 12, B = 44, ax = pt ? a.concat([pt[0]]) : a, ay = pt ? b.concat([pt[1]]) : b, rx = rng(ax), ry = rng(ay), x = function (v) { return L + (v - rx[0]) / (rx[1] - rx[0]) * (W - L - Rg); }, y = function (v) { return T + (1 - (v - ry[0]) / (ry[1] - ry[0])) * (H - T - B); }, s = '';
     s += '<line class="ax" x1="' + L + '" x2="' + (W - Rg) + '" y1="' + (H - B) + '" y2="' + (H - B) + '"/><line class="ax" x1="' + L + '" x2="' + L + '" y1="' + T + '" y2="' + (H - B) + '"/>';
     s += '<line class="fit" x1="' + x(rx[0]) + '" y1="' + y(r.icpt + r.slope * rx[0]) + '" x2="' + x(rx[1]) + '" y2="' + y(r.icpt + r.slope * rx[1]) + '" clip-path="url(#cxclip)"/>';
-    a.forEach(function (v, i) { s += '<circle class="g1" cx="' + x(v) + '" cy="' + y(b[i]) + '" r="5" opacity=".85"/>'; });
-    if (pt) s += '<circle cx="' + x(pt[0]) + '" cy="' + y(pt[1]) + '" r="7" fill="none" stroke="var(--ink)" stroke-width="2.5"/>';
+    a.forEach(function (v, i) { s += '<circle class="g1" cx="' + x(v) + '" cy="' + y(b[i]) + '" r="4" opacity=".85"/>'; });
+    if (pt) s += '<circle cx="' + x(pt[0]) + '" cy="' + y(pt[1]) + '" r="6.5" fill="none" stroke="var(--ink)" stroke-width="2"/>';
     for (var i = 0; i <= 4; i++) { var vx = rx[0] + (rx[1] - rx[0]) * i / 4, vy = ry[0] + (ry[1] - ry[0]) * i / 4; s += '<text class="tk" x="' + x(vx) + '" y="' + (H - B + 16) + '" text-anchor="middle">' + f2(vx, 1) + '</text><text class="tk" x="' + (L - 6) + '" y="' + (y(vy) + 4) + '" text-anchor="end">' + f2(vy, 0) + '</text>'; }
     return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Scatter plot with line of best fit"><defs><clipPath id="cxclip"><rect x="' + L + '" y="' + T + '" width="' + (W - L - Rg) + '" height="' + (H - T - B) + '"/></clipPath></defs>' + s + '<text class="tk" x="' + ((L + W - Rg) / 2) + '" y="' + (H - 4) + '" text-anchor="middle">' + esc(na) + '</text><text class="tk" transform="translate(12 ' + ((T + H - B) / 2) + ') rotate(-90)" text-anchor="middle">' + esc(nb) + '</text></svg>' + (pt ? '<p class="cx-cap">The ringed point is your prediction.</p>' : '');
   }
