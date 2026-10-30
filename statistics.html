@@ -64,7 +64,7 @@
   <section id="finder">
     <div class="wrap">
       <div class="sx-card">
-        <div class="sx-head"><span class="sx-n">1</span><div><h2 class="sx-h">Find your test</h2><p class="sx-sub">Pick the answers that fit your study. No statistics knowledge needed.</p></div><button type="button" class="sx-small" id="fd-reset">Start over</button></div>
+        <div class="sx-head"><span class="sx-n">1</span><div><h2 class="sx-h">Find your test</h2><p class="sx-sub">Pick the answers that fit your study. No statistics knowledge needed.</p></div></div>
         <div id="fd-qs"></div>
         <div id="fd-result" aria-live="polite"></div>
       </div>
@@ -220,6 +220,30 @@
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) :is(.fd-opt.on, .sx-tab.on, .sx-small.dark, .cx-verdict:not(.ns), .cx-short:not(.ns), .cx-scale span.on) { background: #0e0f13; box-shadow: 0 0 0 1.5px rgba(244,242,238,.35); } :root:not([data-theme="light"]) .tm-pop { background: #2a2d36; } }
   :root[data-theme="dark"] :is(.fd-opt.on, .sx-tab.on, .sx-small.dark, .cx-verdict:not(.ns), .cx-short:not(.ns), .cx-scale span.on) { background: #0e0f13; box-shadow: 0 0 0 1.5px rgba(244,242,238,.35); }
   :root[data-theme="dark"] .tm-pop { background: #2a2d36; }
+  .fd-sum { display: grid; gap: 8px; margin-top: 20px; padding: 14px 16px; border-radius: 16px; box-shadow: var(--neu-in); }
+  .fd-a { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-size: .9rem; }
+  .fd-a span { color: var(--muted); flex: 1 1 220px; }
+  .fd-a b { font-weight: 600; }
+  .fd-chg, .fd-reset { font: inherit; font-size: .82rem; font-weight: 600; background: none; border: 0; padding: 2px 0; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .fd-chg:hover, .fd-reset:hover { color: var(--ink); }
+  .fd-reset { justify-self: start; margin-top: 4px; }
+  .fd-n { display: block; font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--label); margin-bottom: 4px; }
+  .fd-what { margin-top: 6px; font-size: 1rem; line-height: 1.55; }
+  .fd-more { margin-top: 16px; }
+  .fd-more summary { cursor: pointer; font-size: .875rem; font-weight: 600; color: var(--muted); width: max-content; max-width: 100%; }
+  .fd-more summary:hover { color: var(--ink); }
+  .cx-sug { display: block; font-size: .64rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--label); margin-bottom: 1px; }
+  .sx-tab.on .cx-sug { color: rgba(244,242,238,.8); }
+  .cx-check { padding: 14px 18px; border-radius: 16px; margin-bottom: 14px; font-size: .9rem; line-height: 1.55; }
+  .cx-check .k { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--label); }
+  .cx-check p { margin-top: 4px; }
+  .cx-check ul { margin: 6px 0 0; padding-left: 18px; }
+  .cx-check .sx-small { margin-top: 10px; white-space: normal; text-align: left; line-height: 1.35; }
+  .cx-check.ok { box-shadow: var(--neu-in); color: var(--muted); }
+  .cx-check.warn { box-shadow: var(--neu-out-sm); border-left: 4px solid #c27a2c; }
+  .cx-copy { margin-top: 10px; font-size: .82rem; padding: 7px 14px; }
+  .cx-jump { display: none; text-align: center; text-decoration: none; }
+  @media (max-width: 900px) { .cx-jump { display: block; margin-top: 4px; } }
   .sx-in, .sx-out, .sx-calc > * { min-width: 0; }
   .cx-pairs th i { text-transform: none; }
   @media (max-width: 440px) { .cx-pairs th:nth-child(3), .cx-pairs td:nth-child(3) { display: none; } }
@@ -382,26 +406,35 @@ var ST2 = (function () {
     }
     return null;
   }
+  var ORDER = ['goal', 'kind', 'groups', 'design', 'normal', 'rkind'];
+  function label(k, v) { var o = Q[k].o.filter(function (x) { return x[0] === v; })[0]; return o ? o[1] : ''; }
   function renderFinder() {
-    var p = path();
-    document.getElementById('fd-qs').innerHTML = p.map(function (k) { var q = Q[k]; return '<div class="fd-q"><p>' + q.q + (q.h ? '<small>' + q.h + '</small>' : '') + '</p><div class="fd-opts">' + q.o.map(function (o) { return '<button type="button" class="fd-opt' + (ans[k] === o[0] ? ' on' : '') + '" data-q="' + k + '" data-v="' + o[0] + '" aria-pressed="' + (ans[k] === o[0]) + '"><b>' + o[1] + '</b><span>' + o[2] + '</span></button>'; }).join('') + '</div></div>'; }).join('');
-    var id = pick(), box = document.getElementById('fd-result');
+    var p = path(), id = pick(), done = p.filter(function (k) { return ans[k]; }), open = p.filter(function (k) { return !ans[k]; })[0];
+    var h = '';
+    if (done.length) h += '<div class="fd-sum" aria-label="Your answers">' + done.map(function (k) { return '<div class="fd-a"><span>' + Q[k].q + '</span><b>' + label(k, ans[k]) + '</b><button type="button" class="fd-chg" data-chg="' + k + '" aria-label="Change answer: ' + Q[k].q + '">Change</button></div>'; }).join('') + '<button type="button" class="fd-reset" data-reset="1">Start over</button></div>';
+    if (open) { var q = Q[open], n = done.length + 1; h += '<div class="fd-q"><p><span class="fd-n">Question ' + n + '</span>' + q.q + (q.h ? '<small>' + q.h + '</small>' : '') + '</p><div class="fd-opts">' + q.o.map(function (o) { return '<button type="button" class="fd-opt" data-q="' + open + '" data-v="' + o[0] + '"><b>' + o[1] + '</b><span>' + o[2] + '</span></button>'; }).join('') + '</div></div>'; }
+    document.getElementById('fd-qs').innerHTML = h;
+    var box = document.getElementById('fd-result');
+    if (typeof renderTabs === 'function' && document.getElementById('cx-tabs').children.length) renderTabs();
     if (!id) { box.innerHTML = ''; return; }
     var t = T[id], alt = t.alt ? T[t.alt] : null;
-    box.innerHTML = '<div class="fd-res"><span class="k">Suggested test</span><h3>' + t.name + '</h3>' + (alt ? '<p class="alt">If your scores turn out lopsided or have extreme values, use the <b>' + alt.name + '</b> instead.</p>' : '') +
-      '<div class="fd-grid"><div><h4>What it does</h4><p>' + t.what + '</p></div><div><h4>Example question</h4><p>' + t.ex + '</p></div>' +
-      '<div><h4>Use it when</h4><ul>' + t.asm.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></div>' +
-      '<div><h4>Size of the effect is shown by</h4><p>' + t.eff + '</p><h4 style="margin-top:12px">How it is reported</h4><p>' + t.rep + '</p></div></div>' +
-      (t.calc ? '<button type="button" class="sx-small dark fd-go" data-go="' + t.calc + '">Try this test with numbers →</button>' : '<p class="alt" style="margin-top:16px">A worked example for this test is coming later. Free programs such as jamovi and JASP can run it.</p>') + '</div>';
+    box.innerHTML = '<div class="fd-res"><span class="k">Your test</span><h3>' + t.name + '</h3><p class="fd-what">' + t.what + '</p>' + (alt ? '<p class="alt">If your scores turn out lopsided or have extreme values, the <b>' + alt.name + '</b> is the safer choice. The calculator checks this for you.</p>' : '') +
+      '<button type="button" class="sx-small dark fd-go" data-go="' + t.calc + '">Try it with numbers →</button>' +
+      '<details class="fd-more"><summary>More about this test</summary><div class="fd-grid"><div><h4>Example question</h4><p>' + t.ex + '</p><h4 style="margin-top:12px">Use it when</h4><ul>' + t.asm.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></div>' +
+      '<div><h4>Size of the effect is shown by</h4><p>' + t.eff + '</p><h4 style="margin-top:12px">How it is reported</h4><p>' + t.rep + '</p></div></div></details></div>';
   }
   document.getElementById('fd-qs').addEventListener('click', function (e) {
+    var c = e.target.closest('[data-chg],[data-reset]');
+    if (c) {
+      if (c.dataset.reset) ans = {}; else { var i = ORDER.indexOf(c.dataset.chg); ORDER.slice(i).forEach(function (x) { delete ans[x]; }); }
+      renderFinder(); var f = document.querySelector('#fd-qs .fd-opt'); if (f) f.focus(); return;
+    }
     var b = e.target.closest('.fd-opt'); if (!b) return;
-    var k = b.dataset.q, order = ['goal', 'kind', 'groups', 'design', 'normal', 'rkind'];
-    ans[k] = b.dataset.v;
-    order.slice(order.indexOf(k) + 1).forEach(function (x) { if (k === 'goal' || x !== 'rkind') delete ans[x]; });
+    var k = b.dataset.q; ans[k] = b.dataset.v;
+    ORDER.slice(ORDER.indexOf(k) + 1).forEach(function (x) { if (k === 'goal' || x !== 'rkind') delete ans[x]; });
     renderFinder();
+    var nx = document.querySelector('#fd-qs .fd-opt') || document.querySelector('#fd-result .fd-go'); if (nx) nx.focus({ preventScroll: true });
   });
-  document.getElementById('fd-reset').addEventListener('click', function () { ans = {}; renderFinder(); });
   document.getElementById('fd-result').addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (!b) return; setTest(b.dataset.go); document.getElementById('calc').scrollIntoView({ behavior: 'smooth' }); });
 
   // ---------- calculators ----------
@@ -434,7 +467,11 @@ var ST2 = (function () {
   var data = {};
   function resetData(k) { data[k] = CALC[k].d.map(function (x) { return x.slice(); }); }
   Object.keys(CALC).forEach(function (k) { if (CALC[k].d) resetData(k); });
-  var predX = 5, cur = 'welch', own = {};
+  var predX = 5, cur = 'welch', own = {}, mine = {}, mineGrid = null, SKEY = 'enam-stats-v1';
+  try { var sv = JSON.parse(localStorage.getItem(SKEY) || 'null'); if (sv) { mine = sv.mine || {}; mineGrid = sv.grid || null; } } catch (e) {}
+  function saveMine() { try { localStorage.setItem(SKEY, JSON.stringify({ mine: mine, grid: mineGrid })); } catch (e) {} }
+  function copyD(d) { return d.map(function (x) { return x.slice(); }); }
+  var ALT = { welch: 'mwu', paired: 'wsr', anova: 'kw', rmanova: 'fr', pearson: 'spearman' };
 
   // ---------- glossary pop-ups ----------
   var GL = {
@@ -470,12 +507,15 @@ var ST2 = (function () {
   window.addEventListener('resize', hidePop);
 
   // ---------- input panel ----------
+  function renderTabs() {
+    var sug = pick(), k = cur;
+    document.getElementById('cx-tabs').innerHTML = GROUPS.map(function (g) { return '<div class="cx-grp"><span>' + g[0] + '</span><div>' + g[1].map(function (x) { return '<button type="button" role="tab" class="sx-tab' + (x === k ? ' on' : '') + '" aria-selected="' + (x === k) + '" data-t="' + x + '">' + (x === sug ? '<span class="cx-sug">Your test</span>' : '') + SHORT[x][0] + '<small>' + SHORT[x][1] + '</small></button>'; }).join('') + '</div></div>'; }).join('');
+  }
   function setTest(k) {
-    cur = k; hidePop();
-    document.getElementById('cx-tabs').innerHTML = GROUPS.map(function (g) { return '<div class="cx-grp"><span>' + g[0] + '</span><div>' + g[1].map(function (x) { return '<button type="button" role="tab" class="sx-tab' + (x === k ? ' on' : '') + '" aria-selected="' + (x === k) + '" data-t="' + x + '">' + SHORT[x][0] + '<small>' + SHORT[x][1] + '</small></button>'; }).join('') + '</div></div>'; }).join('');
+    cur = k; hidePop(); renderTabs();
     var c = CALC[k], h = '<div class="cx-about"><b>' + T[k].name + '</b><p>' + T[k].what + '</p></div>';
     h += '<div class="cx-src"><button type="button" class="sx-small' + (own[k] ? '' : ' dark') + '" data-src="ex" aria-pressed="' + !own[k] + '">Example data</button><button type="button" class="sx-small' + (own[k] ? ' dark' : '') + '" data-src="own" aria-pressed="' + !!own[k] + '">My own data</button></div>';
-    h += '<p class="help">' + (own[k] ? 'Type or paste your numbers below. ' : 'Example: ' + c.help + MADE + ' ') + (c.kind === 'grid' ? '' : (c.xy ? SHAPE.xy : c.same ? SHAPE.same : SHAPE.two)) + '</p>';
+    h += '<p class="help">' + (own[k] ? 'Type or paste your numbers below. They stay in this browser only, so they will still be here if you come back. ' : 'Example: ' + c.help + MADE + ' ') + (c.kind === 'grid' ? '' : (c.xy ? SHAPE.xy : c.same ? SHAPE.same : SHAPE.two)) + '</p>';
     if (c.kind === 'grid') h += gridHTML();
     else if (c.kind === 'two') {
       var L = c.xy ? [['X (the first variable)', 'X values'], ['Y (the second variable)', 'Y values, same order as X']] : [[c.lab[0] + ' 1', c.lab[0] + ' 1 ' + c.lab[1]], [c.lab[0] + ' 2', c.lab[0] + ' 2 ' + c.lab[1] + (c.same ? ', same order' : '')]];
@@ -485,7 +525,8 @@ var ST2 = (function () {
       h += data[k].map(function (g, i) { return '<div class="cx-mg"><div class="cx-mh"><input type="text" class="cx-mn" data-n="' + i + '" value="' + esc(g[0]) + '" aria-label="' + c.lab + ' ' + (i + 1) + ' name"><button type="button" class="cx-rm" data-rm="' + i + '" aria-label="Remove ' + esc(g[0] || c.lab + ' ' + (i + 1)) + '"' + (data[k].length > 3 ? '' : ' hidden') + '>×</button></div><textarea data-v="' + i + '" rows="2" placeholder="e.g. 12, 15, 14, 18" aria-label="' + esc(g[0] || c.lab + ' ' + (i + 1)) + ' values">' + esc(g[1]) + '</textarea></div>'; }).join('') +
         (data[k].length < 6 ? '<button type="button" class="sx-small" data-addg="1">+ Add ' + c.lab.toLowerCase() + '</button>' : '');
     }
-    if (c.kind !== 'grid') h += '<p class="help">Separate numbers with commas, spaces, or new lines. You can paste a column straight from Excel or Google Sheets.</p>';
+    if (c.kind !== 'grid') h += '<p class="help">Separate numbers with commas, spaces, or new lines. You can paste a column straight from Excel or Google Sheets. Results update as you type.</p>';
+    h += '<a class="sx-small dark cx-jump" href="#cx-out">See the results \u2193</a>';
     h += '<div id="cx-err" class="err" role="alert"></div>';
     document.getElementById('cx-in').innerHTML = h;
     run();
@@ -505,7 +546,7 @@ var ST2 = (function () {
     if (t.dataset.n != null && d) d[+t.dataset.n][0] = t.value;
     if (t.dataset.v != null && d) d[+t.dataset.v][1] = t.value;
     if (t.id === 'cx-px') predX = t.value;
-    clearTimeout(tm0); tm0 = setTimeout(run, 250);
+    clearTimeout(tm0); tm0 = setTimeout(function () { run(); if (own[cur]) { if (CALC[cur].kind === 'grid') mineGrid = JSON.parse(JSON.stringify(grid)); else mine[cur] = copyD(data[cur]); saveMine(); } }, 250);
   });
   inBox.addEventListener('click', function (e) {
     var b = e.target.closest('[data-g],[data-addg],[data-rm],[data-src]'); if (!b) return;
@@ -513,8 +554,14 @@ var ST2 = (function () {
       var wantOwn = b.dataset.src === 'own';
       if (wantOwn === !!own[cur]) return;
       own[cur] = wantOwn;
-      if (CALC[cur].kind === 'grid') { cloneGrid(); if (wantOwn) grid.v = grid.v.map(function (r) { return r.map(function () { return NaN; }); }); }
-      else { resetData(cur); if (wantOwn) data[cur].forEach(function (g, i) { g[1] = ''; if (!CALC[cur].xy) { var lb = CALC[cur].lab; g[0] = (Array.isArray(lb) ? lb[0] : lb) + ' ' + (i + 1); } }); }
+      if (CALC[cur].kind === 'grid') {
+        if (wantOwn) { if (mineGrid) grid = JSON.parse(JSON.stringify(mineGrid)); else { cloneGrid(); grid.v = grid.v.map(function (r) { return r.map(function () { return NaN; }); }); } }
+        else { mineGrid = JSON.parse(JSON.stringify(grid)); saveMine(); cloneGrid(); }
+      } else {
+        if (!wantOwn) { mine[cur] = copyD(data[cur]); saveMine(); resetData(cur); }
+        else if (mine[cur]) data[cur] = copyD(mine[cur]);
+        else { resetData(cur); data[cur].forEach(function (g, i) { g[1] = ''; if (!CALC[cur].xy) { var lb = CALC[cur].lab; g[0] = (Array.isArray(lb) ? lb[0] : lb) + ' ' + (i + 1); } }); }
+      }
       if (cur === 'regression') predX = wantOwn ? '' : 5;
       setTest(cur);
       var f = inBox.querySelector(CALC[cur].kind === 'grid' ? '[data-i]' : 'textarea'); if (f && wantOwn) f.focus();
@@ -558,23 +605,41 @@ var ST2 = (function () {
   function run() {
     var out = document.getElementById('cx-out'), e = document.getElementById('cx-err'); if (e) e.textContent = '';
     var c = CALC[cur]; if (c.kind === 'grid') return runChi(out);
-    var D = data[cur], P = D.map(function (g) { return parse(g[1]); }), names = D.map(function (g, i) { return (g[0] || '').trim() || (c.xy ? ['X', 'Y'][i] : (c.lab[0] || c.lab) + ' ' + (i + 1)); });
+    var D = data[cur], P = D.map(function (g) { return parse(g[1]); }), names = D.map(function (g, i) { return (g[0] || '').trim() || (c.xy ? ['X', 'Y'][i] : (Array.isArray(c.lab) ? c.lab[0] : c.lab) + ' ' + (i + 1)); });
     if (own[cur] && P.every(function (p) { return !p.v.length && !p.bad.length; })) { out.innerHTML = '<div class="cx-wait">Your results will appear here as soon as you enter your numbers.</div>'; return; }
     var bad = [].concat.apply([], P.map(function (p) { return p.bad; }));
     if (bad.length) return err('Some entries are not numbers: ' + bad.slice(0, 3).join(', ') + '. Use digits only, with a dot for decimals (2.5, not 2,5).');
     var V = P.map(function (p) { return p.v; });
     if (V.some(function (v) { return v.length < 2; })) return err('Each list needs at least two numbers.');
     if (c.same && V.some(function (v) { return v.length !== V[0].length; })) return err('Every list needs the same number of values, one per person. Right now the lists have ' + list(V.map(function (v) { return String(v.length); })) + ' values.');
-    try { out.innerHTML = R[cur](V, names); } catch (x) { err(x.message || 'These numbers cannot be analysed. Check whether every value is the same.'); }
+    try { out.innerHTML = R[cur](V, names); var wn = out.querySelector('.cx-check.warn'); if (wn) out.insertBefore(wn, out.firstChild); } catch (x) { err(x.message || 'These numbers cannot be analysed. Check whether every value is the same.'); }
   }
   function need(ok, msg) { if (!ok) throw new Error(msg); }
+  function quant(a, p) { var s = a.slice().sort(function (x, y) { return x - y; }), i = (s.length - 1) * p, lo = Math.floor(i); return s[lo] + (s[Math.min(lo + 1, s.length - 1)] - s[lo]) * (i - lo); }
+  function outliers(a) { if (a.length < 5) return []; var q1 = quant(a, .25), q3 = quant(a, .75), r = q3 - q1; if (!r) return []; return a.filter(function (v) { return v < q1 - 1.5 * r || v > q3 + 1.5 * r; }); }
+  function skew(a) { var n = a.length, m = ST.mean(a), sd = ST.sd(a), g = 0; if (n < 8 || !sd) return 0; a.forEach(function (v) { g += Math.pow((v - m) / sd, 3); }); return g * n / ((n - 1) * (n - 2)); }
+  function fmtN(v) { return String(Math.round(v * 100) / 100).replace('-', '\u2212'); }
+  function check(sets, names, small) {
+    var issues = [], tiny = sets.some(function (a) { return a.length < (small || 5); });
+    sets.forEach(function (a, i) {
+      var o = outliers(a), g = skew(a);
+      if (o.length) issues.push('<b>' + esc(names[i]) + '</b>: ' + (o.length === 1 ? 'one value (' + fmtN(o[0]) + ') is' : o.length + ' values (' + o.slice(0, 4).map(fmtN).join(', ') + ') are') + ' far from the rest.');
+      else if (Math.abs(g) > 1) issues.push('<b>' + esc(names[i]) + '</b>: the scores are lopsided (most are ' + (g > 0 ? 'low, with a few high ones' : 'high, with a few low ones') + ').');
+    });
+    var alt = ALT[cur], h = '';
+    if (issues.length) {
+      h = '<div class="cx-check warn" role="note"><span class="k">Check your data</span><p>This test works best when scores sit near the middle with no extreme values. In your numbers:</p><ul>' + issues.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' +
+        (alt ? '<p>A rank-based test is less affected by this. Check that the extreme values are not typing mistakes, then compare the results.</p><button type="button" class="sx-small dark" data-alt="' + alt + '">Try the ' + SHORT[alt][0] + ' with these numbers \u2192</button>' : '<p>Check that the extreme values are not typing mistakes. A single unusual value can pull the line a long way, so report the result with care.</p>') + '</div>';
+    } else h = '<div class="cx-check ok" role="note"><span class="k">Data check</span><p>No extreme values or lopsided groups found, so this test suits your numbers.' + (tiny ? ' With fewer than ' + (small || 5) + ' values in a group, though, treat the result as a rough guide.' : '') + '</p></div>';
+    return h;
+  }
   var R = {};
   R.welch = function (V, N) {
     var r = ST.welch(V[0], V[1]), A = esc(N[0]), B = esc(N[1]), dif = r.m1 - r.m2; need(isFinite(r.t) && r.se > 0, 'All the scores are identical, so there is no spread to compare. Check your numbers.');
     var sig = r.p < .05;
     return shortAns(sig, sig ? A + ' scored ' + (dif > 0 ? 'higher' : 'lower') + ' than ' + B : 'No clear difference between ' + A + ' and ' + B,
         sig ? 'On average, ' + A + ' scored ' + f2(Math.abs(dif)) + ' points ' + (dif > 0 ? 'higher' : 'lower') + ' (' + f2(r.m1) + ' vs ' + f2(r.m2) + '). A gap this size is unlikely to be chance, and it is a <b>' + sizeWord(r.d, C_D) + '</b> difference.' : A + ' averaged ' + f2(r.m1) + ' and ' + B + ' averaged ' + f2(r.m2) + '. A gap of ' + f2(Math.abs(dif)) + ' points could easily be chance, so these data do not show a real difference. (That is not proof that the groups are the same.)') +
-      step(1, 'Look at your data', '<p>Each group’s ' + tm('mean') + ' (average) and ' + tm('sd') + ' (spread):</p>' + stats([[f2(r.m1), A + ' mean (SD ' + f2(r.s1) + ', ' + r.n1 + ' people)'], [f2(r.m2), B + ' mean (SD ' + f2(r.s2) + ', ' + r.n2 + ' people)'], [f2(dif), 'difference']]) + '<div class="cx-viz">' + dotsK(V, N, 'mean') + '</div>') +
+      check(V, N) + step(1, 'Look at your data', '<p>Each group’s ' + tm('mean') + ' (average) and ' + tm('sd') + ' (spread):</p>' + stats([[f2(r.m1), A + ' mean (SD ' + f2(r.s1) + ', ' + r.n1 + ' people)'], [f2(r.m2), B + ' mean (SD ' + f2(r.s2) + ', ' + r.n2 + ' people)'], [f2(dif), 'difference']]) + '<div class="cx-viz">' + dotsK(V, N, 'mean') + '</div>') +
       step(2, 'Run the test', '<p>The t-test asks: is the difference between the means big compared with how much the means would wobble by chance? The answer is one number, <i>t</i> (the ' + tm('stat', 'test statistic') + '). The further from 0, the stronger the evidence.</p>' + stats([[f2(r.t), '<i>t</i>'], [f2(r.df), tm('df', 'degrees of freedom')]]) + math('<i>SE</i> = √(<i>s</i>₁²/<i>n</i>₁ + <i>s</i>₂²/<i>n</i>₂) = √(' + f2(r.s1) + '²/' + r.n1 + ' + ' + f2(r.s2) + '²/' + r.n2 + ') = ' + f2(r.se, 3) + '<br><i>t</i> = (<i>M</i>₁ − <i>M</i>₂) / <i>SE</i> = ' + f2(dif) + ' / ' + f2(r.se, 3) + ' = <b>' + f2(r.t) + '</b><br>This is Welch’s version, which does not assume both groups have the same spread, so df can be a decimal.')) +
       step(3, 'Could this be chance?', pBox(r.p)) +
       step(4, STEP4, '<p>A result can be significant but tiny. The ' + tm('eff') + ' tells you how big the difference is. Here it is Cohen’s <i>d</i>: the difference in means measured in SDs.</p>' + stats([[f2(r.d), 'Cohen’s <i>d</i>']]) + scale(r.d, C_D) + '<p class="cx-cap">Guide for language research (Plonsky &amp; Oswald, 2014): 0.40 small, 0.70 medium, 1.00 large.</p>' + math('<i>d</i> = (' + f2(r.m1) + ' − ' + f2(r.m2) + ') / pooled SD ' + f2(r.sp) + ' = <b>' + f2(r.d) + '</b>')) +
@@ -585,7 +650,7 @@ var ST2 = (function () {
     var sig = r.p < .05, up = r.md > 0;
     return shortAns(sig, sig ? 'Scores went ' + (up ? 'up' : 'down') + ' from ' + A + ' to ' + B : 'No clear change from ' + A + ' to ' + B,
         (sig ? 'On average, scores went ' + (up ? 'up' : 'down') + ' by ' + f2(Math.abs(r.md)) + ' points (' + f2(r.m1) + ' to ' + f2(r.m2) + '). ' + upDown(V[0], V[1]) + ' A change this consistent is unlikely to be chance.' : 'The average changed by ' + f2(r.md) + ' points (' + f2(r.m1) + ' to ' + f2(r.m2) + '). ' + upDown(V[0], V[1]) + ' This could easily be chance.')) +
-      step(1, 'Look at your data', '<p>Because the same people were measured twice, the test looks at each person’s own change. Each line in the chart is one person.</p>' + stats([[f2(r.m1), A + ' ' + tm('mean')], [f2(r.m2), B + ' mean'], [f2(r.md), 'average change (SD ' + f2(r.sdd) + ')'], [r.n, 'people']]) + '<div class="cx-viz">' + slopeK(V, N) + '</div>') +
+      check([V[1].map(function (v, i) { return v - V[0][i]; })], ['The changes (' + N[1] + ' minus ' + N[0] + ')']) + step(1, 'Look at your data', '<p>Because the same people were measured twice, the test looks at each person’s own change. Each line in the chart is one person.</p>' + stats([[f2(r.m1), A + ' ' + tm('mean')], [f2(r.m2), B + ' mean'], [f2(r.md), 'average change (SD ' + f2(r.sdd) + ')'], [r.n, 'people']]) + '<div class="cx-viz">' + slopeK(V, N) + '</div>') +
       step(2, 'Run the test', '<p>The paired t-test asks: is the average change big compared with how much people’s changes vary? The answer is <i>t</i>, the ' + tm('stat', 'test statistic') + '.</p>' + stats([[f2(r.t), '<i>t</i>'], [r.df, tm('df', 'degrees of freedom')]]) + math('<i>SE</i> = SD of changes / √<i>n</i> = ' + f2(r.sdd) + ' / √' + r.n + ' = ' + f2(r.se, 3) + '<br><i>t</i> = average change / <i>SE</i> = ' + f2(r.md) + ' / ' + f2(r.se, 3) + ' = <b>' + f2(r.t) + '</b>, df = <i>n</i> − 1 = ' + r.df)) +
       step(3, 'Could this be chance?', pBox(r.p)) +
       step(4, STEP4, '<p>The ' + tm('eff') + ' here is <i>d<sub>z</sub></i>: the average change divided by the SD of the changes.</p>' + stats([[f2(r.dz), '<i>d<sub>z</sub></i>']]) + scale(r.dz, C_DZ) + '<p class="cx-cap">Guide for pre–post designs in language research (Plonsky &amp; Oswald, 2014): 0.60 small, 1.00 medium, 1.40 large. <i>d<sub>z</sub></i> grows when everyone changes by a similar amount, so it can look larger than other kinds of <i>d</i>.</p>' + math('<i>d<sub>z</sub></i> = ' + f2(r.md) + ' / ' + f2(r.sdd) + ' = <b>' + f2(r.dz) + '</b>')) +
@@ -623,7 +688,7 @@ var ST2 = (function () {
     var r = ST2.anova(V); need(isFinite(r.F) && r.ssw > 0, 'There is no spread within the groups, so the test cannot run. Check your numbers.');
     var sig = r.p < .05, sp = sigPairs(r.pairs, N), h = hiLo(r.means, N);
     return multiShort(sig, r.p, sp, h[0] + ' had the highest average (' + f2(r.means[h[2]]) + ') and ' + h[1] + ' the lowest (' + f2(r.means[h[3]]) + ').', 'groups', null, sizeWord(r.eta, C_ETA)) +
-      step(1, 'Look at your data', stats(N.map(function (n, i) { return [f2(r.means[i]), esc(n) + ' ' + (i ? 'mean' : tm('mean')) + ' (SD ' + f2(r.sds[i]) + ', ' + r.ns[i] + ' people)']; })) + '<div class="cx-viz">' + dotsK(V, N, 'mean') + '</div>') +
+      check(V, N) + step(1, 'Look at your data', stats(N.map(function (n, i) { return [f2(r.means[i]), esc(n) + ' ' + (i ? 'mean' : tm('mean')) + ' (SD ' + f2(r.sds[i]) + ', ' + r.ns[i] + ' people)']; })) + '<div class="cx-viz">' + dotsK(V, N, 'mean') + '</div>') +
       step(2, 'Run the test', '<p>ANOVA compares two kinds of spread: how far apart the group averages are, and how spread out people are within each group. <i>F</i> is the ratio of the two. If the groups were really the same, <i>F</i> would be around 1.</p>' + stats([[f2(r.F), '<i>F</i>'], [r.df1 + ', ' + r.df2, tm('df', 'degrees of freedom')]]) + math('<i>MS</i><sub>between</sub> = <i>SS</i><sub>between</sub> / (<i>k</i> − 1) = ' + f2(r.ssb) + ' / ' + r.df1 + ' = ' + f2(r.msb) + '<br><i>MS</i><sub>within</sub> = <i>SS</i><sub>within</sub> / (<i>N</i> − <i>k</i>) = ' + f2(r.ssw) + ' / ' + r.df2 + ' = ' + f2(r.msw) + '<br><i>F</i> = ' + f2(r.msb) + ' / ' + f2(r.msw) + ' = <b>' + f2(r.F) + '</b>')) +
       step(3, 'Could this be chance?', pBox(r.p) + '<p><b>Which groups differ?</b> ' + tm('pairs', 'Pairwise comparisons') + ' test each pair with a t-test, using a ' + tm('bonf', 'Bonferroni correction') + '. (Software often uses Tukey’s test instead, which gives similar answers.)</p>' + pairTable(r.pairs, N, [['Difference', function (q) { return f2(q.diff); }], ['<i>d</i>', function (q) { return f2(q.d); }]])) +
       step(4, STEP4, '<p>The ' + tm('eff') + ' is eta squared (η²): the share of all the differences between people that is explained by which group they were in.</p>' + stats([[nz(f2(r.eta)), 'η²'], [Math.round(r.eta * 100) + '%', 'explained by group']]) + scale(r.eta, C_ETA) + '<p class="cx-cap">Guide (Cohen, 1988): .01 small, .06 medium, .14 large.</p>' + math('η² = <i>SS</i><sub>between</sub> / <i>SS</i><sub>total</sub> = ' + f2(r.ssb) + ' / ' + f2(r.sst) + ' = <b>' + nz(f2(r.eta)) + '</b>')) +
@@ -645,7 +710,7 @@ var ST2 = (function () {
     var r = ST2.rmanova(V); need(isFinite(r.F) && r.sse > 0, 'There is no variation left to test. Check that the scores are not identical.');
     var sig = r.pGG < .05, sp = sigPairs(r.pairs, N);
     return multiShort(sig, r.pGG, sp, 'Average scores: ' + list(N.map(function (n, i) { return esc(n) + ' ' + f2(r.cm[i]); })) + '.', 'times', ['Scores changed over time', 'No clear change over time'], sizeWord(r.peta, C_ETA)) +
-      step(1, 'Look at your data', '<p>Each line is one person, measured ' + r.k + ' times. The short bars show the ' + tm('mean', 'means') + '.</p>' + stats(N.map(function (n, i) { return [f2(r.cm[i]), esc(n) + ' mean (SD ' + f2(r.csd[i]) + ')']; }).concat([[r.n, 'people']])) + '<div class="cx-viz">' + slopeK(V, N) + '</div>') +
+      check(V, N) + step(1, 'Look at your data', '<p>Each line is one person, measured ' + r.k + ' times. The short bars show the ' + tm('mean', 'means') + '.</p>' + stats(N.map(function (n, i) { return [f2(r.cm[i]), esc(n) + ' mean (SD ' + f2(r.csd[i]) + ')']; }).concat([[r.n, 'people']])) + '<div class="cx-viz">' + slopeK(V, N) + '</div>') +
       step(2, 'Run the test', '<p>Some people score high every time and some low. Because the same people are measured each time, the test can set those personal differences aside and look only at the change over time. <i>F</i> compares the change between times with the leftover noise.</p>' + stats([[f2(r.F), '<i>F</i>'], [f2(r.eps, 2), 'Greenhouse–Geisser ε']]) + '<p class="cx-cap">ε corrects for an assumption called sphericity (that the changes between each pair of times are similarly spread). 1 means no correction was needed; the p-value below already includes the correction.</p>' + math('<i>SS</i><sub>time</sub> = ' + f2(r.ssc) + ', <i>SS</i><sub>people</sub> = ' + f2(r.sss) + ', <i>SS</i><sub>error</sub> = ' + f2(r.sse) + '<br><i>F</i> = (' + f2(r.ssc) + ' / ' + r.df1 + ') / (' + f2(r.sse) + ' / ' + r.df2 + ') = <b>' + f2(r.F) + '</b><br>Corrected df = ' + r.df1 + ' × ' + f2(r.eps, 3) + ' and ' + r.df2 + ' × ' + f2(r.eps, 3) + ' = ' + f2(r.df1 * r.eps) + ', ' + f2(r.df2 * r.eps))) +
       step(3, 'Could this be chance?', pBox(r.pGG) + '<p><b>Which times differ?</b> ' + tm('pairs', 'Pairwise comparisons') + ' use paired t-tests with a ' + tm('bonf', 'Bonferroni correction') + '.</p>' + pairTable(r.pairs, N, [['Change', function (q) { return f2(q.diff); }], ['<i>d<sub>z</sub></i>', function (q) { return f2(q.d); }]])) +
       step(4, STEP4, '<p>The ' + tm('eff') + ' is partial eta squared (ηₚ²): the share of the change within people that is explained by time.</p>' + stats([[nz(f2(r.peta)), 'ηₚ²']]) + scale(r.peta, C_ETA) + '<p class="cx-cap">Guide (Cohen, 1988): .01 small, .06 medium, .14 large. Values from repeated designs run high, so compare them only with similar studies.</p>' + math('ηₚ² = <i>SS</i><sub>time</sub> / (<i>SS</i><sub>time</sub> + <i>SS</i><sub>error</sub>) = ' + f2(r.ssc) + ' / (' + f2(r.ssc) + ' + ' + f2(r.sse) + ') = <b>' + nz(f2(r.peta)) + '</b>')) +
@@ -672,7 +737,7 @@ var ST2 = (function () {
     var r = ST.pearson(V[0], V[1]); need(isFinite(r.r), 'Each variable needs at least two different values.');
     var sig = r.p < .05;
     return corrShort(sig, r.r, N[0], N[1], '<i>r</i>') +
-      step(1, 'Look at your data', '<p>Each dot is one person. Always look at the plot first: Pearson’s correlation only makes sense if the dots follow a rough straight line, with no dots far away from the rest.</p><div class="cx-viz">' + scatter(V[0], V[1], r, N[0], N[1]) + '</div>') +
+      check(V, N) + step(1, 'Look at your data', '<p>Each dot is one person. Always look at the plot first: Pearson’s correlation only makes sense if the dots follow a rough straight line, with no dots far away from the rest.</p><div class="cx-viz">' + scatter(V[0], V[1], r, N[0], N[1]) + '</div>') +
       step(2, 'Run the test', '<p>The ' + tm('corr', 'correlation') + ' <i>r</i> measures how closely the dots follow a straight line, from −1 to +1.</p>' + stats([[nz(f2(r.r)), '<i>r</i>'], [r.n, 'people']]) + math('<i>r</i> = Σ(<i>x</i> − <i>M<sub>x</sub></i>)(<i>y</i> − <i>M<sub>y</sub></i>) / √[Σ(<i>x</i> − <i>M<sub>x</sub></i>)² · Σ(<i>y</i> − <i>M<sub>y</sub></i>)²] = <b>' + nz(f2(r.r)) + '</b><br>To test it: <i>t</i> = <i>r</i>√(<i>n</i> − 2) / √(1 − <i>r</i>²) = ' + f2(r.t) + ', df = ' + r.df)) +
       step(3, 'Could this be chance?', pBox(r.p)) +
       step(4, STEP4R, '<p>For correlations, <i>r</i> is itself the ' + tm('eff') + '. Squaring it tells you how much the two variables overlap.</p>' + stats([[nz(f2(r.r)), '<i>r</i>'], [Math.round(r.r * r.r * 100) + '%', 'shared variation (<i>r</i>²)']]) + scale(r.r, C_COR) + '<p class="cx-cap">Guide for language research (Plonsky &amp; Oswald, 2014): .25 small, .40 medium, .60 large.</p>') +
@@ -696,7 +761,7 @@ var ST2 = (function () {
     var pr = ST.pearson(V[0], V[1]), sig = r.p < .05, X = lc(N[0]), Y = lc(N[1]);
     return shortAns(sig, sig ? esc(N[0]) + ' helps predict ' + Y : esc(N[0]) + ' does not clearly predict ' + Y,
         (sig ? 'Each increase of 1 in ' + X + ' goes with ' + (r.b > 0 ? 'an increase' : 'a decrease') + ' of about <b>' + f2(Math.abs(r.b)) + '</b> in ' + Y + '. The line explains ' + Math.round(r.R2 * 100) + '% of the differences in ' + Y + '.' : 'The line is too close to flat to be sure it is not chance (it explains ' + Math.round(r.R2 * 100) + '% of the differences).') + (hasP ? ' When ' + X + ' is ' + esc(String(px)) + ', the predicted ' + Y + ' is <b>' + f2(py) + '</b>' + (out ? ' (outside your data, so treat it with care)' : '') + '.' : '')) +
-      step(1, 'Look at your data', '<p>Regression draws the straight line that best fits the dots and uses it to predict ' + Y + ' from ' + X + '.' + (hasP ? ' The ringed dot is your prediction.' : '') + '</p><div class="cx-viz">' + scatter(V[0], V[1], pr, N[0], N[1], hasP ? [px, py] : null) + '</div>') +
+      check(V, N) + step(1, 'Look at your data', '<p>Regression draws the straight line that best fits the dots and uses it to predict ' + Y + ' from ' + X + '.' + (hasP ? ' The ringed dot is your prediction.' : '') + '</p><div class="cx-viz">' + scatter(V[0], V[1], pr, N[0], N[1], hasP ? [px, py] : null) + '</div>') +
       step(2, 'Run the test', '<p>The line has two numbers. The <b>slope</b> is how much ' + Y + ' changes, on average, for each 1-unit increase in ' + X + '. The <b>intercept</b> is the predicted value when ' + X + ' is 0, which may not mean much if 0 is outside your data.</p>' + stats([[f2(r.b), 'slope (<i>b</i>)'], [f2(r.a), 'intercept'], [f2(r.see), 'typical prediction error']]) + '<div class="cx-math">' + esc(N[1]) + ' = ' + f2(r.a) + ' + ' + f2(r.b) + ' × ' + esc(N[0]) + '</div>' + (hasP ? stats([[f2(py), 'predicted ' + Y + ' when ' + X + ' = ' + esc(String(px))]]) + (out ? '<p class="err">This value is outside the range of your data, so the prediction is less trustworthy.</p>' : '') : '') + math('<i>t</i> = <i>b</i> / <i>SE<sub>b</sub></i> = ' + f2(r.b) + ' / ' + f2(r.se, 3) + ' = <b>' + f2(r.t) + '</b>, df = <i>n</i> − 2 = ' + r.df)) +
       step(3, 'Could this be chance?', '<p>Here the question is whether the slope could really be 0 (a flat line, meaning ' + X + ' tells you nothing about ' + Y + ').</p>' + pBox(r.p)) +
       step(4, 'How much does it explain?', '<p><i>R</i>² is the share of the differences in ' + Y + ' that the line explains. It works as the ' + tm('eff') + '.</p>' + stats([[nz(f2(r.R2)), '<i>R</i>²'], [Math.round(r.R2 * 100) + '%', 'explained']]) + scale(Math.sqrt(r.R2), C_COR) + '<p class="cx-cap">Judged by <i>r</i> = √<i>R</i>² against the guide for language research (Plonsky &amp; Oswald, 2014). Regression shows prediction, not cause.</p>') +
@@ -760,6 +825,7 @@ var ST2 = (function () {
 
   // ---------- chart download ----------
   function addDl(out) {
+    out.querySelectorAll('.cx-report').forEach(function (r) { if (r.nextElementSibling && r.nextElementSibling.classList.contains('cx-copy')) return; var b = document.createElement('button'); b.type = 'button'; b.className = 'sx-small cx-copy'; b.textContent = 'Copy sentence'; r.parentNode.insertBefore(b, r.nextSibling); });
     out.querySelectorAll('.cx-viz').forEach(function (v) { if (!v.querySelector('svg') || v.querySelector('.cx-dl')) return; var b = document.createElement('button'); b.type = 'button'; b.className = 'sx-small cx-dl'; b.textContent = '↓ Download chart (PNG)'; v.appendChild(b); });
   }
   var DLP = ['fill', 'fill-opacity', 'stroke', 'stroke-width', 'stroke-opacity', 'stroke-dasharray', 'opacity', 'font-family', 'font-size', 'font-weight', 'text-anchor'];
@@ -777,7 +843,20 @@ var ST2 = (function () {
     img.onerror = function () { URL.revokeObjectURL(url); btn.textContent = 'Download failed. Try another browser.'; };
     img.src = url;
   }
+  function flash(b, t) { var o = b.dataset.o || b.textContent; b.dataset.o = o; b.textContent = t; setTimeout(function () { b.textContent = o; }, 2000); }
   document.getElementById('cx-out').addEventListener('click', function (e) {
+    var al = e.target.closest('[data-alt]');
+    if (al) { var to = al.dataset.alt; data[to] = copyD(data[cur]); own[to] = true; mine[to] = copyD(data[to]); saveMine(); setTest(to); document.getElementById('calc').scrollIntoView({ behavior: 'smooth' }); return; }
+    var cp = e.target.closest('.cx-copy');
+    if (cp) {
+      var r = cp.previousElementSibling, txt = r.innerText.trim(), html = '<span style="font-family:Times New Roman,serif">' + r.innerHTML + '</span>';
+      var ok = function () { flash(cp, '\u2713 Copied'); }, fail = function () { var rg = document.createRange(); rg.selectNodeContents(r); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(rg); flash(cp, 'Press Ctrl+C to copy'); };
+      try {
+        if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) navigator.clipboard.write([new ClipboardItem({ 'text/plain': new Blob([txt], { type: 'text/plain' }), 'text/html': new Blob([html], { type: 'text/html' }) })]).then(ok, function () { navigator.clipboard.writeText(txt).then(ok, fail); });
+        else if (navigator.clipboard) navigator.clipboard.writeText(txt).then(ok, fail); else fail();
+      } catch (x) { fail(); }
+      return;
+    }
     var b = e.target.closest('.cx-dl'); if (!b) return;
     var svg = b.parentNode.querySelector('svg'); if (svg) saveChart(svg, SHORT[cur][0].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '-chart.png', b);
   });
