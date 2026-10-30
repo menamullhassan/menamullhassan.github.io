@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interactive IPA Chart | M Enam Ull Hassan</title>
 <link rel="canonical" href="https://enamhassan.com/ipa-chart.html">
-<meta name="description" content="An interactive International Phonetic Alphabet chart with English examples, a quiz, and an IPA keyboard.">
+<meta name="description" content="An interactive International Phonetic Alphabet chart with English examples and an IPA keyboard.">
 <script>
   (function () {
     var d = document.documentElement;
@@ -58,21 +58,15 @@
   <div class="wrap page-hero">
     <p class="eyebrow reveal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 9h3v6H2zM7 5h3v14H7zM12 8h3v8h-3zM17 3h3v18h-3z"/></svg><a class="crumb" href="resources.html">Resources</a> · Phonetics</p>
     <h1 class="reveal">The IPA, <em>one sound at a time</em></h1>
-    <p class="lead reveal">Tap any symbol in the International Phonetic Alphabet to see how it is made, where you hear it in English, and which languages use it. Practise with the quiz, or type your own transcriptions with the keyboard.</p>
+    <p class="lead reveal">Tap any symbol in the International Phonetic Alphabet to see how it is made, where you hear it in English, and which languages use it. Switch to the keyboard to type your own transcriptions.</p>
   </div>
 
   <section id="ipa">
     <div class="wrap">
       <div class="ip-modes" role="tablist" aria-label="Choose a mode">
         <button type="button" role="tab" class="ip-mode on" data-mode="explore" aria-selected="true">Explore</button>
-        <button type="button" role="tab" class="ip-mode" data-mode="quiz" aria-selected="false">Quiz</button>
         <button type="button" role="tab" class="ip-mode" data-mode="keyboard" aria-selected="false">Keyboard</button>
         <label class="ip-eng"><input type="checkbox" id="ip-eng"> <span>Colour the sounds used in English <span class="sw" aria-hidden="true"></span></span></label>
-      </div>
-
-      <div class="ip-quizbar" id="ip-quizbar" hidden>
-        <div class="ip-q"><span class="ip-qlab">Find the sound</span><span id="ip-qtext"></span></div>
-        <div class="ip-score"><span>Score <b id="ip-sc">0</b></span><span>Streak <b id="ip-st">0</b></span><button type="button" class="ip-small" id="ip-skip">Skip</button></div>
       </div>
 
       <div class="ip-kb" id="ip-kb" hidden>
@@ -130,15 +124,9 @@
   .ip-mode.on { background: #15161b; color: #f4f2ee; box-shadow: 0 0 0 1px rgba(255,255,255,.06); }
   .ip-eng { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; padding: 9px 16px; border-radius: 999px; box-shadow: var(--neu-in); font-size: .875rem; color: var(--muted); cursor: pointer; }
   .ip-eng input { accent-color: #15161b; width: 16px; height: 16px; }
-  .ip-quizbar, .ip-kb { margin-top: 20px; padding: 18px 22px; border-radius: 20px; box-shadow: var(--neu-out); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; }
+  .ip-kb { margin-top: 20px; padding: 18px 22px; border-radius: 20px; box-shadow: var(--neu-out); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; }
   .ip-kb { display: block; }
-  .ip-quizbar[hidden], .ip-kb[hidden] { display: none; }
-  .ip-q { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-  .ip-qlab { font-size: var(--fs-label, .75rem); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--label); }
-  #ip-qtext { font-family: var(--serif); font-size: 1.375rem; line-height: 1.3; }
-  #ip-qtext b { font-family: var(--serif); color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
-  .ip-score { display: flex; align-items: center; gap: 16px; font-size: .9375rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .ip-score b { color: var(--ink); font-size: 1.125rem; }
+  .ip-kb[hidden] { display: none; }
   .ip-small { font: inherit; font-size: .875rem; font-weight: 600; padding: 8px 16px; border: 0; border-radius: 999px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); cursor: pointer; }
   .ip-small.dark { background: #15161b; color: #f4f2ee; box-shadow: none; }
   .ip-typebox { display: flex; gap: 10px; align-items: center; padding: 6px 6px 6px 20px; border-radius: 999px; box-shadow: var(--neu-in); }
@@ -167,13 +155,8 @@
   .sym:active { box-shadow: var(--neu-in); transform: none; }
   .sym:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .sym.sel { background: #15161b; color: #f4f2ee; box-shadow: 0 0 0 1px rgba(255,255,255,.06); }
-  .eng-on .sym.en:not(.sel):not(.ok):not(.no) { background: color-mix(in srgb, var(--accent) 18%, var(--bg)); color: var(--accent); font-weight: 600; }
+  .eng-on .sym.en:not(.sel) { background: color-mix(in srgb, var(--accent) 18%, var(--bg)); color: var(--accent); font-weight: 600; }
   .ip-eng .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; background: color-mix(in srgb, var(--accent) 30%, var(--bg)); vertical-align: -2px; }
-  .sym.ok { background: var(--ip-ok); color: #fff; animation: ip-pop .45s ease; }
-  .sym.no { background: var(--ip-no); color: #fff; animation: ip-shake .35s ease; }
-  .sym.reveal-ans { outline: 3px solid var(--ip-ok); outline-offset: 2px; }
-  @keyframes ip-pop { 0% { transform: scale(1); } 40% { transform: scale(1.25); } 100% { transform: scale(1); } }
-  @keyframes ip-shake { 0%,100% { transform: none; } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
   .ip-other { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
   .ip-otherlab { font-size: .75rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--label); margin-right: 4px; }
   #ip-other { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -410,13 +393,12 @@
 
   // modes
   var mode = 'explore', root = document.getElementById('ipa');
-  var quizbar = document.getElementById('ip-quizbar'), kb = document.getElementById('ip-kb');
+  var kb = document.getElementById('ip-kb');
   document.querySelectorAll('.ip-mode').forEach(function (b) {
     b.addEventListener('click', function () {
       mode = b.dataset.mode;
       document.querySelectorAll('.ip-mode').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); });
-      quizbar.hidden = mode !== 'quiz'; kb.hidden = mode !== 'keyboard';
-      if (mode === 'quiz') newQ();
+      kb.hidden = mode !== 'keyboard';
     });
   });
   var eng = document.getElementById('ip-eng');
@@ -447,46 +429,9 @@
   var tEl = document.createElement('div'); tEl.className = 'ip-toast'; tEl.setAttribute('role', 'status'); document.body.appendChild(tEl);
   var tT; function toast(m) { tEl.textContent = m; tEl.classList.add('show'); clearTimeout(tT); tT = setTimeout(function () { tEl.classList.remove('show'); }, 1400); }
 
-  // quiz
-  var score = 0, streak = 0, answer = null, locked = false, last = null;
-  var qtext = document.getElementById('ip-qtext');
-  function newQ() {
-    locked = false;
-    document.querySelectorAll('.sym.reveal-ans').forEach(function (e) { e.classList.remove('reveal-ans'); });
-    var keys = Object.keys(ALL), d;
-    do { d = ALL[keys[Math.floor(Math.random() * keys.length)]]; } while (d.s === last);
-    last = d.s; answer = d.s;
-    if (isCore(d.s) && Math.random() < .55) {
-      var w = d.en[Math.floor(Math.random() * d.en.length)].replace(/\s*\(.*?\)\s*$/, '');
-      qtext.innerHTML = 'Which symbol is the underlined sound in <span style="font-family:var(--serif)">' + w + '</span>?';
-    } else {
-      qtext.textContent = 'Tap the ' + d.name.charAt(0).toLowerCase() + d.name.slice(1) + '.';
-    }
-  }
-  function check(btnEl, sym) {
-    if (locked) return;
-    if (sym === answer) {
-      locked = true; score++; streak++;
-      btnEl.classList.add('ok');
-      if (streak > 0 && streak % 5 === 0) toast(streak + ' in a row. Brilliant!'); else toast('Correct');
-      setTimeout(function () { btnEl.classList.remove('ok'); show(sym); newQ(); }, 700);
-    } else {
-      streak = 0; btnEl.classList.add('no');
-      setTimeout(function () { btnEl.classList.remove('no'); }, 450);
-      toast('Not quite. That is the ' + ALL[sym].name.toLowerCase() + '.');
-    }
-    document.getElementById('ip-sc').textContent = score; document.getElementById('ip-st').textContent = streak;
-  }
-  document.getElementById('ip-skip').addEventListener('click', function () {
-    streak = 0; document.getElementById('ip-st').textContent = 0;
-    document.querySelectorAll('.sym[data-s="' + CSS.escape(answer) + '"]').forEach(function (e) { e.classList.add('reveal-ans'); });
-    show(answer); locked = true; setTimeout(newQ, 1600);
-  });
-
   root.addEventListener('click', function (e) {
     var b = e.target.closest('.sym'); if (b) {
       var sym = b.dataset.s;
-      if (mode === 'quiz') return check(b, sym);
       show(sym);
       if (mode === 'keyboard') insert(sym);
       else if (window.matchMedia('(max-width: 900px)').matches) detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
