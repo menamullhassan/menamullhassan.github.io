@@ -467,10 +467,12 @@ var ST2 = (function () {
   var data = {};
   function resetData(k) { data[k] = CALC[k].d.map(function (x) { return x.slice(); }); }
   Object.keys(CALC).forEach(function (k) { if (CALC[k].d) resetData(k); });
-  var predX = 5, cur = 'welch', own = {}, mine = {}, mineGrid = null, SKEY = 'enam-stats-v1';
+  var predX = 5, cur = 'welch', own = {}, mine = {}, mineGrid = null, SKEY = 'enam-stats-v2';
   try { var sv = JSON.parse(localStorage.getItem(SKEY) || 'null'); if (sv) { mine = sv.mine || {}; mineGrid = sv.grid || null; } } catch (e) {}
   function saveMine() { try { localStorage.setItem(SKEY, JSON.stringify({ mine: mine, grid: mineGrid })); } catch (e) {} }
   function copyD(d) { return d.map(function (x) { return x.slice(); }); }
+  function blankOwn(k) { data[k] = CALC[k].d.map(function () { return ['', '']; }); }
+  function blankGrid() { grid = { rows: ['', ''], cols: ['', '', ''], v: [[NaN, NaN, NaN], [NaN, NaN, NaN]] }; }
   var ALT = { welch: 'mwu', paired: 'wsr', anova: 'kw', rmanova: 'fr', pearson: 'spearman' };
 
   // ---------- glossary pop-ups ----------
@@ -515,14 +517,14 @@ var ST2 = (function () {
     cur = k; hidePop(); renderTabs();
     var c = CALC[k], h = '<div class="cx-about"><b>' + T[k].name + '</b><p>' + T[k].what + '</p></div>';
     h += '<div class="cx-src"><button type="button" class="sx-small' + (own[k] ? '' : ' dark') + '" data-src="ex" aria-pressed="' + !own[k] + '">Example data</button><button type="button" class="sx-small' + (own[k] ? ' dark' : '') + '" data-src="own" aria-pressed="' + !!own[k] + '">My own data</button></div>';
-    h += '<p class="help">' + (own[k] ? 'Type or paste your numbers below. They stay in this browser only, so they will still be here if you come back. ' : 'Example: ' + c.help + MADE + ' ') + (c.kind === 'grid' ? '' : (c.xy ? SHAPE.xy : c.same ? SHAPE.same : SHAPE.two)) + '</p>';
+    h += '<p class="help">' + (own[k] ? 'Type or paste your numbers below. They stay in this browser only, so they will still be here if you come back. <button type="button" class="fd-chg" data-clear="1">Clear my numbers</button> ' : 'Example: ' + c.help + MADE + ' ') + (c.kind === 'grid' ? '' : (c.xy ? SHAPE.xy : c.same ? SHAPE.same : SHAPE.two)) + '</p>';
     if (c.kind === 'grid') h += gridHTML();
     else if (c.kind === 'two') {
       var L = c.xy ? [['X (the first variable)', 'X values'], ['Y (the second variable)', 'Y values, same order as X']] : [[c.lab[0] + ' 1', c.lab[0] + ' 1 ' + c.lab[1]], [c.lab[0] + ' 2', c.lab[0] + ' 2 ' + c.lab[1] + (c.same ? ', same order' : '')]];
-      h += data[k].map(function (g, i) { return '<div><label for="cx-n' + i + '">' + L[i][0] + ' name</label><input type="text" id="cx-n' + i + '" data-n="' + i + '" value="' + esc(g[0]) + '"></div><div><label for="cx-v' + i + '">' + L[i][1] + '</label><textarea id="cx-v' + i + '" data-v="' + i + '" rows="2" placeholder="e.g. 12, 15, 14, 18">' + esc(g[1]) + '</textarea></div>'; }).join('');
+      h += data[k].map(function (g, i) { return '<div><label for="cx-n' + i + '">' + L[i][0] + ' name</label><input type="text" id="cx-n' + i + '" data-n="' + i + '" value="' + esc(g[0]) + '" placeholder="' + (c.xy ? (i ? 'e.g. Vocabulary score' : 'e.g. Reading hours') : 'e.g. ' + (c.same ? (i ? 'Post-test' : 'Pre-test') : (i ? 'Class B' : 'Class A'))) + '"></div><div><label for="cx-v' + i + '">' + L[i][1] + '</label><textarea id="cx-v' + i + '" data-v="' + i + '" rows="2" placeholder="e.g. 12, 15, 14, 18">' + esc(g[1]) + '</textarea></div>'; }).join('');
       if (c.pred) h += '<div><label for="cx-px">Predict Y for this X value</label><input type="text" id="cx-px" inputmode="decimal" value="' + esc(String(predX)) + '"></div>';
     } else {
-      h += data[k].map(function (g, i) { return '<div class="cx-mg"><div class="cx-mh"><input type="text" class="cx-mn" data-n="' + i + '" value="' + esc(g[0]) + '" aria-label="' + c.lab + ' ' + (i + 1) + ' name"><button type="button" class="cx-rm" data-rm="' + i + '" aria-label="Remove ' + esc(g[0] || c.lab + ' ' + (i + 1)) + '"' + (data[k].length > 3 ? '' : ' hidden') + '>×</button></div><textarea data-v="' + i + '" rows="2" placeholder="e.g. 12, 15, 14, 18" aria-label="' + esc(g[0] || c.lab + ' ' + (i + 1)) + ' values">' + esc(g[1]) + '</textarea></div>'; }).join('') +
+      h += data[k].map(function (g, i) { return '<div class="cx-mg"><div class="cx-mh"><input type="text" class="cx-mn" data-n="' + i + '" value="' + esc(g[0]) + '" placeholder="' + c.lab + ' ' + (i + 1) + ' name" aria-label="' + c.lab + ' ' + (i + 1) + ' name"><button type="button" class="cx-rm" data-rm="' + i + '" aria-label="Remove ' + esc(g[0] || c.lab + ' ' + (i + 1)) + '"' + (data[k].length > 3 ? '' : ' hidden') + '>×</button></div><textarea data-v="' + i + '" rows="2" placeholder="e.g. 12, 15, 14, 18" aria-label="' + esc(g[0] || c.lab + ' ' + (i + 1)) + ' values">' + esc(g[1]) + '</textarea></div>'; }).join('') +
         (data[k].length < 6 ? '<button type="button" class="sx-small" data-addg="1">+ Add ' + c.lab.toLowerCase() + '</button>' : '');
     }
     if (c.kind !== 'grid') h += '<p class="help">Separate numbers with commas, spaces, or new lines. You can paste a column straight from Excel or Google Sheets. Results update as you type.</p>';
@@ -532,8 +534,8 @@ var ST2 = (function () {
     run();
   }
   function gridHTML() {
-    var h = '<div class="cx-grid"><table><tr><td></td>' + grid.cols.map(function (c, j) { return '<td><input class="lab" data-c="' + j + '" value="' + esc(c) + '" aria-label="Column ' + (j + 1) + ' name"></td>'; }).join('') + '</tr>';
-    grid.v.forEach(function (r, i) { h += '<tr><td><input class="lab" data-r="' + i + '" value="' + esc(grid.rows[i]) + '" aria-label="Row ' + (i + 1) + ' name"></td>' + r.map(function (v, j) { return '<td><input inputmode="numeric" data-i="' + i + '" data-j="' + j + '" value="' + (isFinite(v) ? v : '') + '" aria-label="Count for ' + esc(grid.rows[i]) + ', ' + esc(grid.cols[j]) + '"></td>'; }).join('') + '</tr>'; });
+    var h = '<div class="cx-grid"><table><tr><td></td>' + grid.cols.map(function (c, j) { return '<td><input class="lab" data-c="' + j + '" value="' + esc(c) + '" placeholder="Category ' + (j + 1) + '" aria-label="Column ' + (j + 1) + ' name"></td>'; }).join('') + '</tr>';
+    grid.v.forEach(function (r, i) { h += '<tr><td><input class="lab" data-r="' + i + '" value="' + esc(grid.rows[i]) + '" placeholder="Group ' + (i + 1) + '" aria-label="Row ' + (i + 1) + ' name"></td>' + r.map(function (v, j) { return '<td><input inputmode="numeric" data-i="' + i + '" data-j="' + j + '" value="' + (isFinite(v) ? v : '') + '" aria-label="Count for ' + esc(grid.rows[i]) + ', ' + esc(grid.cols[j]) + '"></td>'; }).join('') + '</tr>'; });
     return h + '</table></div><p class="help">Rows are one variable (such as language background), columns the other (such as preferred feedback). Each person is counted once. Use counts, not percentages. Click a name to rename it.</p><div class="row"><button type="button" class="sx-small" data-g="+r">+ Row</button><button type="button" class="sx-small" data-g="-r">− Row</button><button type="button" class="sx-small" data-g="+c">+ Column</button><button type="button" class="sx-small" data-g="-c">− Column</button></div>';
   }
   document.getElementById('cx-tabs').addEventListener('click', function (e) { var b = e.target.closest('[data-t]'); if (b) setTest(b.dataset.t); });
@@ -549,18 +551,19 @@ var ST2 = (function () {
     clearTimeout(tm0); tm0 = setTimeout(function () { run(); if (own[cur]) { if (CALC[cur].kind === 'grid') mineGrid = JSON.parse(JSON.stringify(grid)); else mine[cur] = copyD(data[cur]); saveMine(); } }, 250);
   });
   inBox.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-g],[data-addg],[data-rm],[data-src]'); if (!b) return;
+    var b = e.target.closest('[data-g],[data-addg],[data-rm],[data-src],[data-clear]'); if (!b) return;
+    if (b.dataset.clear) { if (CALC[cur].kind === 'grid') { blankGrid(); mineGrid = null; } else { blankOwn(cur); delete mine[cur]; } if (cur === 'regression') predX = ''; saveMine(); setTest(cur); var f0 = inBox.querySelector(CALC[cur].kind === 'grid' ? '.lab' : 'input[data-n], .cx-mn'); if (f0) f0.focus(); return; }
     if (b.dataset.src) {
       var wantOwn = b.dataset.src === 'own';
       if (wantOwn === !!own[cur]) return;
       own[cur] = wantOwn;
       if (CALC[cur].kind === 'grid') {
-        if (wantOwn) { if (mineGrid) grid = JSON.parse(JSON.stringify(mineGrid)); else { cloneGrid(); grid.v = grid.v.map(function (r) { return r.map(function () { return NaN; }); }); } }
+        if (wantOwn) { if (mineGrid) grid = JSON.parse(JSON.stringify(mineGrid)); else blankGrid(); }
         else { mineGrid = JSON.parse(JSON.stringify(grid)); saveMine(); cloneGrid(); }
       } else {
         if (!wantOwn) { mine[cur] = copyD(data[cur]); saveMine(); resetData(cur); }
         else if (mine[cur]) data[cur] = copyD(mine[cur]);
-        else { resetData(cur); data[cur].forEach(function (g, i) { g[1] = ''; if (!CALC[cur].xy) { var lb = CALC[cur].lab; g[0] = (Array.isArray(lb) ? lb[0] : lb) + ' ' + (i + 1); } }); }
+        else blankOwn(cur);
       }
       if (cur === 'regression') predX = wantOwn ? '' : 5;
       setTest(cur);
@@ -568,11 +571,11 @@ var ST2 = (function () {
       return;
     }
     if (b.dataset.rm != null) { data[cur].splice(+b.dataset.rm, 1); return setTest(cur); }
-    if (b.dataset.addg) { data[cur].push([CALC[cur].lab + ' ' + (data[cur].length + 1), '']); setTest(cur); var tas = inBox.querySelectorAll('textarea'); tas[tas.length - 1].focus(); return; }
+    if (b.dataset.addg) { data[cur].push([own[cur] ? '' : CALC[cur].lab + ' ' + (data[cur].length + 1), '']); setTest(cur); var tas = inBox.querySelectorAll('textarea'); tas[tas.length - 1].focus(); return; }
     var g = b.dataset.g, blank = own.chisq ? NaN : 0;
-    if (g === '+r' && grid.v.length < 6) { grid.rows.push('Group ' + (grid.v.length + 1)); grid.v.push(grid.cols.map(function () { return blank; })); }
+    if (g === '+r' && grid.v.length < 6) { grid.rows.push(own.chisq ? '' : 'Group ' + (grid.v.length + 1)); grid.v.push(grid.cols.map(function () { return blank; })); }
     if (g === '-r' && grid.v.length > 2) { grid.rows.pop(); grid.v.pop(); }
-    if (g === '+c' && grid.cols.length < 6) { grid.cols.push('Category ' + (grid.cols.length + 1)); grid.v.forEach(function (r) { r.push(blank); }); }
+    if (g === '+c' && grid.cols.length < 6) { grid.cols.push(own.chisq ? '' : 'Category ' + (grid.cols.length + 1)); grid.v.forEach(function (r) { r.push(blank); }); }
     if (g === '-c' && grid.cols.length > 2) { grid.cols.pop(); grid.v.forEach(function (r) { r.pop(); }); }
     setTest('chisq');
   });
@@ -768,7 +771,7 @@ var ST2 = (function () {
       step(5, 'Write it up', '<p>A sentence you can adapt, in APA style:</p><div class="cx-report">' + esc(N[0]) + ' ' + (sig ? 'significantly predicted ' : 'did not significantly predict ') + Y + ', <i>b</i> = ' + f2(r.b) + ', <i>t</i>(' + r.df + ') = ' + f2(r.t) + ', ' + pAPA(r.p) + ', and explained ' + Math.round(r.R2 * 100) + '% of the variance, <i>R</i>² = ' + nz(f2(r.R2)) + ', <i>F</i>(1, ' + r.df + ') = ' + f2(r.F) + '.</div>');
   };
   function runChi(out) {
-    var g = grid;
+    var g = { v: grid.v, rows: grid.rows.map(function (r, i) { return (r || '').trim() || 'Group ' + (i + 1); }), cols: grid.cols.map(function (c, j) { return (c || '').trim() || 'Category ' + (j + 1); }) };
     if (own.chisq && g.v.every(function (r) { return r.every(function (x) { return !isFinite(x); }); })) { out.innerHTML = '<div class="cx-wait">Your results will appear here as soon as you fill in the table.</div>'; return; }
     var ok = g.v.every(function (r) { return r.every(function (x) { return isFinite(x) && x >= 0 && Math.floor(x) === x; }); });
     if (!ok) return err('Fill in every cell with a whole number of 0 or more (counts of people, not percentages).');
