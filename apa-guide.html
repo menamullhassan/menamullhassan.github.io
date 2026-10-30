@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APA 7 Guide | M Enam Ull Hassan</title>
+<link rel="canonical" href="https://enamhassan.com/apa-guide.html">
+<meta name="description" content="A plain-language APA 7 guide to page setup, in-text citations, headings, and the reference list, with a reference builder that fills in from a DOI or ISBN. Based on APA Style and Purdue OWL.">
+<script>
+  (function () {
+    var d = document.documentElement;
+    try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') d.setAttribute('data-theme', t); } catch (e) {}
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.theme-toggle');
+      if (!b) return;
+      var cur = d.getAttribute('data-theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      d.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=25">
+<link rel="icon" href="favicon.ico?v=7" sizes="48x48">
+<link rel="icon" href="icon-192.png?v=7" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan</a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero">
+    <p class="eyebrow reveal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 2h9l5 5v15H6zm8 1.5V8h4.5zM9 12h8v1.6H9zm0 3.5h8v1.6H9zm0 3.5h5v1.6H9z"/></svg><a class="crumb" href="resources.html">Resources</a> · Writing guide</p>
+    <h1 class="reveal">APA 7, <em>made simple</em></h1>
+    <p class="lead reveal">A plain-language guide to APA Style (7th edition) for student papers: page setup, in-text citations, headings, the reference list, and the hanging indent, plus a reference builder for your own sources.</p>
+  </div>
+
+  <nav class="wrap g-toc" id="g-toc" aria-label="Guide sections">
+    <a href="#format" data-v="format">1. General format</a><a href="#cite" data-v="cite">2. In-text citations</a><a href="#heads" data-v="heads">3. Headings</a><a href="#refs" data-v="refs">4. References</a><a href="#hang" data-v="hang">5. Hanging indent</a><a href="#builder" data-v="builder">6. Reference builder</a>
+  </nav>
+
+  <!-- 1 GENERAL FORMAT -->
+  <section class="g-sec g-view" id="g-format" data-view="format" aria-labelledby="h-format">
+    <div class="wrap">
+      <div class="sx-card">
+        <div class="sx-head"><span class="sx-n">1</span><div><h2 class="sx-h" id="h-format">General format</h2><p class="sx-sub">Set these once at the start and they apply to the whole paper.</p></div></div>
+        <div class="ap-setup">
+          <div><b>8.5 &times; 11 in</b><span>standard letter-size page</span></div>
+          <div><b>Double</b><span>spacing throughout, including the title page and reference list, with no extra space between paragraphs</span></div>
+          <div><b>1 inch</b><span>margins on all four sides</span></div>
+          <div><b>One font</b><span>used throughout, e.g. 12-pt Times New Roman, 11-pt Calibri, or 11-pt Arial</span></div>
+          <div><b>Top right</b><span>page number on every page, with the title page as page 1</span></div>
+          <div><b>0.5 inch</b><span>indent for the first line of each paragraph</span></div>
+        </div>
+        <h3 class="ap-sh2">The four main parts</h3>
+        <p class="g-p">A student paper has up to four parts, and each one starts on a new page.</p>
+        <div class="g-parts">
+          <article class="g-part">
+            <div class="g-mini" aria-hidden="true"><i class="pn">1</i><div class="g-mini-c"><i class="bl"></i><i class="bl"></i><i class="bl"></i><b class="ln c b" style="--w:72%"></b><b class="ln c b" style="--w:48%"></b><i class="bl"></i><b class="ln c" style="--w:26%"></b><b class="ln c" style="--w:52%"></b><b class="ln c" style="--w:46%"></b><b class="ln c" style="--w:30%"></b><b class="ln c" style="--w:24%"></b></div></div>
+            <h4>Title page</h4>
+            <ul><li>The <b>title</b> three or four lines down from the top of the page: centered, <b>bold</b>, in Title Case.</li><li>One blank double-spaced line, then your <b>name</b>, <b>department and university</b>, <b>course</b> number and name, <b>instructor</b>, and <b>due date</b>, each centered on its own line (not bold).</li><li>Student papers need no running head.</li></ul>
+          </article>
+          <article class="g-part">
+            <div class="g-mini" aria-hidden="true"><i class="pn">2</i><div class="g-mini-c"><b class="ln c b" style="--w:18%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:58%"></b><b class="ln l" style="--w:60%;--m:7.69%"></b></div></div>
+            <h4>Abstract</h4>
+            <ul><li>Only if your instructor asks for one.</li><li>The label <b>Abstract</b> on the first line, centered and bold.</li><li>One paragraph, <b>not indented</b>, usually no more than 250 words.</li><li>Then a new line, indented 0.5 inch, with the label <i>Keywords:</i> in italics followed by a few keywords (not italic).</li></ul>
+          </article>
+          <article class="g-part">
+            <div class="g-mini" aria-hidden="true"><i class="pn">3</i><div class="g-mini-c"><b class="ln c b" style="--w:64%"></b><b class="ln l" style="--w:92.31%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:45%"></b><b class="ln l" style="--w:92.31%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:70%"></b><b class="ln c b" style="--w:22%"></b><b class="ln l" style="--w:92.31%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:40%"></b><b class="ln l b" style="--w:34%"></b><b class="ln l" style="--w:92.31%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:80%"></b></div></div>
+            <h4>Main body</h4>
+            <ul><li>Repeat the paper <b>title</b> on the first line: centered and bold.</li><li>Do not add the heading &ldquo;Introduction.&rdquo;</li><li>Indent each paragraph 0.5 inch. Sections follow each other without page breaks.</li><li>Organize sections with the <a href="#heads">heading levels</a>.</li></ul>
+          </article>
+          <article class="g-part">
+            <div class="g-mini" aria-hidden="true"><i class="pn">4</i><div class="g-mini-c"><b class="ln c b" style="--w:28%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:64%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:92.31%;--m:7.69%"></b><b class="ln l" style="--w:40%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:78%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:92.31%;--m:7.69%"></b><b class="ln l" style="--w:55%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:50%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:92.31%;--m:7.69%"></b><b class="ln l" style="--w:70%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:86%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:92.31%;--m:7.69%"></b><b class="ln l" style="--w:36%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:60%;--m:7.69%"></b><b class="ln l" style="--w:100%"></b><b class="ln l" style="--w:92.31%;--m:7.69%"></b><b class="ln l" style="--w:48%;--m:7.69%"></b></div></div>
+            <h4>References</h4>
+            <ul><li>Starts on a new page with the label <b>References</b> on the first line, centered and bold.</li><li>Entries in alphabetical order, double-spaced, with a <a href="#hang">hanging indent</a>.</li><li>See the <a href="#refs">reference examples</a>.</li></ul>
+          </article>
+        </div>
+        <p class="help g-prio">Your instructor&rsquo;s guidelines always take priority over APA Style.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 IN-TEXT -->
+  <section class="g-sec g-view" id="g-cite" data-view="cite" aria-labelledby="h-cite" hidden>
+    <div class="wrap">
+      <div class="sx-card">
+        <div class="sx-head"><span class="sx-n">2</span><div><h2 class="sx-h" id="h-cite">In-text citations</h2><p class="sx-sub">Every source you use gets a short citation in your sentence and a full entry in your reference list. There are two ways to write the citation.</p></div></div>
+        <div class="g-two">
+          <div><b>Parenthetical</b><p>Author and year go in parentheses, usually at the end of the sentence.</p><p class="g-ex1">&hellip; how speakers perceive color <mark>(Deutscher, 2011)</mark>.</p></div>
+          <div><b>Narrative</b><p>The author is part of your sentence, with the year in parentheses after the name.</p><p class="g-ex1"><mark>Deutscher (2011)</mark> argued that &hellip;</p></div>
+        </div>
+        <div class="g-acc-head"><h3 class="ap-sh2">Common cases</h3><button type="button" class="sx-small" data-expand="1" aria-pressed="false">Expand all</button></div>
+        <div class="g-accs">
+          <details class="g-acc" open><summary><span class="g-acc-t">Quotations</span><span class="g-acc-s">(Garc&iacute;a, 2023, p. 6)</span></summary><div class="g-acc-b">
+            <p>Add the page number: <b>p.</b> for one page, <b>pp.</b> for a range.</p>
+            <dl><dt>Pattern</dt><dd>&ldquo;Quote&rdquo; <mark>(<span class="ph">Lastname</span>, <span class="ph">year</span>, p. <span class="ph">#</span>)</mark>.</dd><dd><mark><span class="ph">Lastname</span> (<span class="ph">year</span>)</mark> wrote that &ldquo;quote&rdquo; <mark>(p. <span class="ph">#</span>)</mark>.</dd>
+            <dt>Examples</dt><dd>&ldquo;Language is not simply a static system of syntactic, semantic, and phonetic rules&rdquo; <mark>(Garc&iacute;a, 2023, p. 6)</mark>.</dd><dd><mark>Garc&iacute;a (2023)</mark> argued that &ldquo;translanguaging pedagogical practices must respond to the ways of languaging of bilinguals&rdquo; <mark>(p. 9)</mark>.</dd></dl>
+            <p class="help">For a quote of 40 words or more, use a block quote: start it on a new line, indent the whole quote 0.5 inch, leave out the quotation marks, and put the citation after the final period.</p>
+          </div></details>
+          <details class="g-acc"><summary><span class="g-acc-t">Summary or paraphrase</span><span class="g-acc-s">(Canale &amp; Swain, 1980)</span></summary><div class="g-acc-b">
+            <p>The author and year are enough. A page number is optional but helpful.</p>
+            <dl><dt>Pattern</dt><dd>Your summary <mark>(<span class="ph">LastnameA</span> &amp; <span class="ph">LastnameB</span>, <span class="ph">year</span>)</mark>.</dd><dd><mark><span class="ph">LastnameA</span> and <span class="ph">LastnameB</span> (<span class="ph">year</span>)</mark> + your summary.</dd>
+            <dt>Examples</dt><dd>Communicative competence includes grammatical, sociolinguistic, and strategic competence <mark>(Canale &amp; Swain, 1980)</mark>.</dd><dd><mark>Canale and Swain (1980)</mark> divided communicative competence into grammatical, sociolinguistic, and strategic competence.</dd></dl>
+            <p class="help">With two authors, write <b>&amp;</b> inside parentheses and <b>and</b> in your sentence.</p>
+          </div></details>
+          <details class="g-acc"><summary><span class="g-acc-t">Three or more authors</span><span class="g-acc-s">(Conrad et al., 2020)</span></summary><div class="g-acc-b">
+            <p>Write the first author&rsquo;s last name and <b>et al.</b> in every citation, including the first one.</p>
+            <dl><dt>Pattern</dt><dd>Your sentence <mark>(<span class="ph">LastnameA</span> et al., <span class="ph">year</span>)</mark>.</dd><dd><mark><span class="ph">LastnameA</span> et al. (<span class="ph">year</span>)</mark> + your sentence.</dd>
+            <dt>Examples</dt><dd>Multilingualism, interdisciplinarity, and technology run as themes through the whole field of applied linguistics <mark>(Conrad et al., 2020)</mark>.</dd><dd><mark>Conrad et al. (2020)</mark> designed their introduction to show students what it is like to do applied linguistics.</dd></dl>
+            <p class="help">Editors are cited the same way as authors, as in this edited book.</p>
+          </div></details>
+          <details class="g-acc"><summary><span class="g-acc-t">Organization as author</span><span class="g-acc-s">(ACTFL, 2024)</span></summary><div class="g-acc-b">
+            <p>Write the organization&rsquo;s full name. If it has a well-known short form, give the short form the first time you cite it, then use only the short form.</p>
+            <dl><dt>Pattern</dt><dd>First time: <mark>(<span class="ph">Full Name</span> [<span class="ph">ABBR</span>], <span class="ph">year</span>)</mark> or <mark><span class="ph">Full Name</span> (<span class="ph">ABBR</span>, <span class="ph">year</span>)</mark></dd><dd>After that: <mark>(<span class="ph">ABBR</span>, <span class="ph">year</span>)</mark> or <mark><span class="ph">ABBR</span> (<span class="ph">year</span>)</mark></dd>
+            <dt>Examples</dt><dd>The 2024 update revised the <i>ACTFL Proficiency Guidelines 2012</i> <mark>(American Council on the Teaching of Foreign Languages [ACTFL], 2024)</mark>.</dd><dd>The <mark>American Council on the Teaching of Foreign Languages (ACTFL, 2024)</mark> released revised proficiency guidelines in 2024.</dd><dd>The update aimed to make the guidelines clearer and easier to use <mark>(ACTFL, 2024)</mark>.</dd><dd><mark>ACTFL (2024)</mark> also aligned the guidelines with its other key documents.</dd></dl>
+            <p class="help">The first two examples show the first citation; the last two show later citations. The short form is only for your text: the reference list always uses the full name.</p>
+          </div></details>
+          <details class="g-acc"><summary><span class="g-acc-t">Authors with the same last name</span><span class="g-acc-s">(N. C. Ellis, 2002)</span></summary><div class="g-acc-b">
+            <p>When two first authors in your reference list share a last name, add their initials in every citation, even if the years differ.</p>
+            <dl><dt>Pattern</dt><dd><mark>(<span class="ph">A.</span> <span class="ph">Lastname</span>, <span class="ph">year</span>; <span class="ph">B.</span> <span class="ph">Lastname</span>, <span class="ph">year</span>)</mark></dd><dd><mark><span class="ph">A.</span> <span class="ph">Lastname</span> (<span class="ph">year</span>)</mark> &hellip; <mark><span class="ph">B.</span> <span class="ph">Lastname</span> (<span class="ph">year</span>)</mark></dd>
+            <dt>Examples</dt><dd>Input and frequency have long been central topics in second language acquisition research <mark>(N. C. Ellis, 2002; R. Ellis, 1994)</mark>.</dd><dd><mark>N. C. Ellis (2002)</mark> reviewed frequency effects in language processing, while <mark>R. Ellis (1994)</mark> surveyed the field of second language acquisition as a whole.</dd></dl>
+          </div></details>
+          <details class="g-acc"><summary><span class="g-acc-t">Same author, same year</span><span class="g-acc-s">(Long, 1983a, 1983b)</span></summary><div class="g-acc-b">
+            <p>Add <b>a</b>, <b>b</b>, and so on after the year, in your text and in your reference list. The letters follow the alphabetical order of the titles.</p>
+            <dl><dt>Pattern</dt><dd><mark>(<span class="ph">Lastname</span>, <span class="ph">year</span>a, <span class="ph">year</span>b)</mark></dd><dd><mark><span class="ph">Lastname</span> (<span class="ph">year</span>a)</mark> &hellip; <mark><span class="ph">Lastname</span> (<span class="ph">year</span>b)</mark></dd>
+            <dt>Examples</dt><dd>Native speakers adjust both their language and the conversation itself when talking with non-native speakers <mark>(Long, 1983a, 1983b)</mark>.</dd><dd><mark>Long (1983b)</mark> argued that these conversational adjustments help make input comprehensible.</dd></dl>
+            <p class="help">In the reference list, &ldquo;Long, M. H. (1983a). Linguistic and conversational adjustments&hellip;&rdquo; comes before &ldquo;Long, M. H. (1983b). Native speaker/non-native speaker conversation&hellip;&rdquo; because the titles are in alphabetical order.</p>
+          </div></details>
+          <details class="g-acc"><summary><span class="g-acc-t">Several sources at once</span><span class="g-acc-s">(Canale &amp; Swain, 1980; Swain, 1985)</span></summary><div class="g-acc-b">
+            <p>In parentheses, list the sources in the same order as your reference list (alphabetical), separated by semicolons. In a narrative sentence, you can name them in any order.</p>
+            <dl><dt>Pattern</dt><dd><mark>(<span class="ph">LastnameA</span>, <span class="ph">year</span>; <span class="ph">LastnameB</span>, <span class="ph">year</span>)</mark></dd>
+            <dt>Examples</dt><dd>Researchers have long debated what it means to communicate successfully in a second language <mark>(Canale &amp; Swain, 1980; Firth &amp; Wagner, 1997; Swain, 1985)</mark>.</dd><dd><mark>Canale and Swain (1980)</mark>, <mark>Swain (1985)</mark>, and <mark>Firth and Wagner (1997)</mark> all examined what successful communication in a second language involves.</dd></dl>
+          </div></details>
+          <details class="g-acc"><summary><span class="g-acc-t">No page numbers</span><span class="g-acc-s">(ACTFL, 2024, para. 2)</span></summary><div class="g-acc-b">
+            <p>When you quote a webpage or another source without page numbers, count the paragraphs and give the paragraph number. You can also name the section heading, or both.</p>
+            <dl><dt>Pattern</dt><dd><mark>(<span class="ph">Lastname</span>, <span class="ph">year</span>, para. <span class="ph">#</span>)</mark></dd><dd><mark>(<span class="ph">Lastname</span>, <span class="ph">year</span>, <span class="ph">Heading</span> section)</mark></dd><dd><mark>(<span class="ph">Lastname</span>, <span class="ph">year</span>, <span class="ph">Heading</span> section, para. <span class="ph">#</span>)</mark></dd>
+            <dt>Examples</dt><dd>First released in 1986, the <i>ACTFL Proficiency Guidelines</i> are &ldquo;widely recognized as the global gold standard for assessing functional language ability&rdquo; <mark>(ACTFL, 2024, para. 2)</mark>.</dd><dd><mark>ACTFL (2024, para. 2)</mark> described its guidelines as &ldquo;widely recognized as the global gold standard for assessing functional language ability.&rdquo;</dd></dl>
+            <p class="help">Both examples quote the same sentence, which is in the second paragraph of the ACTFL webpage, so both cite para. 2. They use the short form ACTFL because the full name was given earlier (see Organization as author).</p>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 HEADINGS -->
+  <section class="g-sec g-view" id="g-heads" data-view="heads" aria-labelledby="h-heads" hidden>
+    <div class="wrap">
+      <div class="sx-card">
+        <div class="sx-head"><span class="sx-n">3</span><div><h2 class="sx-h" id="h-heads">Headings</h2><p class="sx-sub">APA has five heading levels. Use only as many as your paper needs; short papers often need only Levels 1 and 2. All headings use Title Case and are double-spaced like the rest of the paper.</p></div></div>
+        <div class="ap-heads">
+          <div class="ap-hpage" aria-label="Sample page showing the five heading levels">
+            <p class="h1"><span class="h1t">Method<span class="g-tag">Level 1</span></span></p><p class="ap-tx">The paragraph starts on a new line, indented 0.5 inch&hellip;</p>
+            <p class="h2">Participants <span class="g-tag">Level 2</span></p><p class="ap-tx">The paragraph starts on a new line&hellip;</p>
+            <p class="h3">Recruitment <span class="g-tag">Level 3</span></p><p class="ap-tx">The paragraph starts on a new line&hellip;</p>
+            <p class="ap-tx"><span class="h4">Online Participants.</span> The paragraph continues on the same line&hellip; <span class="g-tag">Level 4</span></p>
+            <p class="ap-tx"><span class="h5">Students Under 21.</span> The paragraph continues on the same line&hellip; <span class="g-tag">Level 5</span></p>
+          </div>
+          <table class="ap-htable"><thead><tr><th>Level</th><th>Format</th><th>Text begins</th></tr></thead><tbody>
+            <tr><td>1</td><td>Centered, <b>bold</b>, Title Case</td><td>On a new line</td></tr>
+            <tr><td>2</td><td>Flush left, <b>bold</b>, Title Case</td><td>On a new line</td></tr>
+            <tr><td>3</td><td>Flush left, <b><i>bold italic</i></b>, Title Case</td><td>On a new line</td></tr>
+            <tr><td>4</td><td>Indented 0.5 inch, <b>bold</b>, Title Case, ends with a period</td><td>On the same line</td></tr>
+            <tr><td>5</td><td>Indented 0.5 inch, <b><i>bold italic</i></b>, Title Case, ends with a period</td><td>On the same line</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 REFERENCES -->
+  <section class="g-sec g-view" id="g-refs" data-view="refs" aria-labelledby="h-refs" hidden>
+    <div class="wrap">
+      <div class="sx-card">
+        <div class="sx-head"><span class="sx-n">4</span><div><h2 class="sx-h" id="h-refs">References</h2><p class="sx-sub">Every reference has four parts: <b class="k-a">who</b> wrote it, <b class="k-d">when</b>, <b class="k-t">what</b> it is called, and <b class="k-s">where</b> to find it.</p></div></div>
+        <div class="g-reftools">
+          <div class="g-chips" role="group" aria-label="Show reference examples for">
+            <button type="button" class="sx-tab on" data-rt="all" aria-pressed="true">All</button><button type="button" class="sx-tab" data-rt="book" aria-pressed="false">Books</button><button type="button" class="sx-tab" data-rt="article" aria-pressed="false">Articles</button><button type="button" class="sx-tab" data-rt="thesis" aria-pressed="false">Dissertations</button><button type="button" class="sx-tab" data-rt="web" aria-pressed="false">Online</button>
+          </div>
+          <div class="g-chips"><button type="button" class="sx-small" data-parts="1" aria-pressed="false">Show the four parts</button><button type="button" class="sx-small" data-expand="1" aria-pressed="false">Expand all</button></div>
+        </div>
+        <div class="g-key" aria-hidden="true"><span class="k-a">Author</span><span class="k-d">Date</span><span class="k-t">Title</span><span class="k-s">Source</span></div>
+        <div class="g-accs g-refacc">
+          <details class="g-acc g-ex" data-t="book" open><summary><span class="g-acc-t">Book</span><span class="g-acc-s">(Deutscher, 2011)</span></summary><div class="g-acc-b">
+            <p class="g-r"><span class="pa">Deutscher, G.</span> <span class="pd">(2011).</span> <span class="pt"><i>Through the language glass: Why the world looks different in other languages</i>.</span> <span class="ps">Picador.</span></p><p class="g-c">(Deutscher, 2011) &middot; Deutscher (2011)</p>
+          </div></details>
+          <details class="g-acc g-ex" data-t="book"><summary><span class="g-acc-t">Edited book</span><span class="g-acc-s">(Conrad et al., 2020)</span></summary><div class="g-acc-b">
+            <p class="g-r"><span class="pa">Conrad, S., Hartig, A. J., &amp; Santelmann, L. (Eds.).</span> <span class="pd">(2020).</span> <span class="pt"><i>The Cambridge introduction to applied linguistics</i>.</span> <span class="ps">Cambridge University Press.</span></p><p class="g-c">(Conrad et al., 2020) &middot; Conrad et al. (2020)</p><p class="help">Add (Ed.) for one editor or (Eds.) for more than one.</p>
+          </div></details>
+          <details class="g-acc g-ex" data-t="book"><summary><span class="g-acc-t">Chapter in an edited book</span><span class="g-acc-s">(Swain, 1985)</span></summary><div class="g-acc-b">
+            <p class="g-r"><span class="pa">Swain, M.</span> <span class="pd">(1985).</span> <span class="pt">Communicative competence: Some roles of comprehensible input and comprehensible output in its development.</span> <span class="ps">In S. M. Gass &amp; C. G. Madden (Eds.), <i>Input in second language acquisition</i> (pp. 235&ndash;253). Newbury House.</span></p><p class="g-c">(Swain, 1985) &middot; Swain (1985)</p><p class="help">The chapter title is not italic; the book title is. Editors&rsquo; initials come before their last names.</p>
+          </div></details>
+          <details class="g-acc g-ex" data-t="article"><summary><span class="g-acc-t">Journal article</span><span class="g-acc-s">(Canale &amp; Swain, 1980)</span></summary><div class="g-acc-b">
+            <p class="g-r"><span class="pa">Canale, M., &amp; Swain, M.</span> <span class="pd">(1980).</span> <span class="pt">Theoretical bases of communicative approaches to second language teaching and testing.</span> <span class="ps"><i>Applied Linguistics, 1</i>(1), 1&ndash;47. https://doi.org/10.1093/applin/I.1.1</span></p><p class="g-c">(Canale &amp; Swain, 1980) &middot; Canale and Swain (1980)</p><p class="help">The journal name and volume number are italic; the issue number in parentheses is not.</p>
+          </div></details>
+          <details class="g-acc g-ex" data-t="book"><summary><span class="g-acc-t">Dictionary (author is also the publisher)</span><span class="g-acc-s">(Merriam-Webster, 2025)</span></summary><div class="g-acc-b">
+            <p class="g-r"><span class="pa">Merriam-Webster.</span> <span class="pd">(2025).</span> <span class="pt"><i>Merriam-Webster&rsquo;s collegiate dictionary</i> (12th ed.).</span></p><p class="g-c">(Merriam-Webster, 2025) &middot; Merriam-Webster (2025)</p><p class="help">The organization is the author. When the author and the publisher are the same, leave the publisher out.</p>
+          </div></details>
+          <details class="g-acc g-ex" data-t="thesis"><summary><span class="g-acc-t">Dissertation or thesis</span><span class="g-acc-s">(King, 2025)</span></summary><div class="g-acc-b">
+            <p class="g-r"><span class="pa">King, A. H.</span> <span class="pd">(2025).</span> <span class="pt"><i>Exploring multivocality in co-teaching</i> [Doctoral dissertation, Teachers College, Columbia University].</span> <span class="ps">ProQuest Dissertations &amp; Theses Global.</span></p><p class="g-c">(King, 2025) &middot; King (2025)</p><p class="help">If the database gives a publication number, add it after the title, before the brackets: (Publication No. 1234567). For an unpublished dissertation, write [Unpublished doctoral dissertation] after the title and end with the university&rsquo;s name.</p>
+          </div></details>
+          <details class="g-acc g-ex" data-t="web"><summary><span class="g-acc-t">Webpage</span><span class="g-acc-s">(ACTFL, 2024)</span></summary><div class="g-acc-b">
+            <p class="g-r"><span class="pa">American Council on the Teaching of Foreign Languages.</span> <span class="pd">(2024, April 2).</span> <span class="pt"><i>Revised ACTFL proficiency guidelines released</i>.</span> <span class="ps">https://www.actfl.org/news/revised-actfl-proficiency-guidelines-released</span></p><p class="g-c">(American Council on the Teaching of Foreign Languages [ACTFL], 2024), then (ACTFL, 2024)</p><p class="help">The website name is left out when it is the same as the author.</p>
+          </div></details>
+          <details class="g-acc g-ex" data-t="web"><summary><span class="g-acc-t">TED Talk</span><span class="g-acc-s">(Boroditsky, 2017)</span></summary><div class="g-acc-b">
+            <p class="g-r"><span class="pa">Boroditsky, L.</span> <span class="pd">(2017, November).</span> <span class="pt"><i>How language shapes the way we think</i> [Video].</span> <span class="ps">TED Conferences. https://www.ted.com/talks/lera_boroditsky_how_language_shapes_the_way_we_think</span></p><p class="g-c">(Boroditsky, 2017) &middot; Boroditsky (2017)</p><p class="help">On the TED website, the speaker is the author.</p>
+          </div></details>
+          <details class="g-acc g-ex" data-t="web"><summary><span class="g-acc-t">YouTube video</span><span class="g-acc-s">(TED, 2018)</span></summary><div class="g-acc-b">
+            <p class="g-r"><span class="pa">TED.</span> <span class="pd">(2018, May 2).</span> <span class="pt"><i>How language shapes the way we think | Lera Boroditsky | TED</i> [Video].</span> <span class="ps">YouTube. https://www.youtube.com/watch?v=RKK7wGAYP6k</span></p><p class="g-c">(TED, 2018) &middot; TED (2018)</p><p class="help">On YouTube, the author is the channel that posted the video.</p>
+          </div></details>
+        </div>
+        <div class="g-cta"><p>Need a reference for your own source? The reference builder formats it for you.</p><a class="sx-small dark" href="#builder">Open the reference builder &rarr;</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 HANGING INDENT -->
+  <section class="g-sec g-view" id="g-hang" data-view="hang" aria-labelledby="h-hang" hidden>
+    <div class="wrap">
+      <div class="sx-card">
+        <div class="sx-head"><span class="sx-n">5</span><div><h2 class="sx-h" id="h-hang">Hanging indent</h2><p class="sx-sub">In the reference list, the first line of each entry starts at the left margin and every line after it is indented 0.5 inch.</p></div></div>
+        <div class="g-hgrid">
+          <div>
+            <div class="ap-page g-demo" id="g-demo"><p>Canale, M., &amp; Swain, M. (1980). Theoretical bases of communicative approaches to second language teaching and testing. <i>Applied Linguistics, 1</i>(1), 1&ndash;47. https://doi.org/10.1093/applin/I.1.1</p><p>Deutscher, G. (2011). <i>Through the language glass: Why the world looks different in other languages</i>. Picador.</p></div>
+            <button type="button" class="sx-small dark" data-demo="1" aria-pressed="false" style="margin-top:14px">Apply a hanging indent</button>
+          </div>
+          <div>
+            <div class="g-chips" role="tablist" aria-label="Choose your program">
+              <button type="button" role="tab" class="sx-tab on" data-ht="word" aria-selected="true">Microsoft Word</button><button type="button" role="tab" class="sx-tab" data-ht="gdocs" aria-selected="false">Google Docs</button><button type="button" role="tab" class="sx-tab" data-ht="ruler" aria-selected="false">Using the ruler</button>
+            </div>
+            <ol class="g-steps" data-h="word"><li>Select the references you want to indent.</li><li>On the <b>Home</b> tab, click the small arrow in the corner of the <b>Paragraph</b> group to open the paragraph settings (on a Mac, you can also choose <b>Format &gt; Paragraph</b>).</li><li>On the <b>Indents and Spacing</b> tab, under <b>Special</b>, choose <b>Hanging</b>.</li><li>Set <b>By</b> to <b>0.5&Prime;</b>.</li><li>Click <b>OK</b>.</li></ol>
+            <ol class="g-steps" data-h="gdocs" hidden><li>Select the references you want to indent.</li><li>Open the <b>Format</b> menu.</li><li>Choose <b>Align &amp; indent &gt; Indentation options</b>.</li><li>Under <b>Special indent</b>, choose <b>Hanging</b> and type <b>0.5</b>.</li><li>Click <b>Apply</b>.</li></ol>
+            <ol class="g-steps" data-h="ruler" hidden><li>Turn on the ruler if you do not see it: in Word, <b>View</b> tab &gt; <b>Ruler</b>; in Google Docs, <b>View &gt; Show ruler</b>.</li><li>Select the references you want to indent.</li><li>Drag the <b>left indent</b> marker to 0.5 inch. This moves every line.</li><li>Drag the <b>first line indent</b> marker back to 0. Now only the first line starts at the margin.</li></ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 REFERENCE BUILDER -->
+  <section class="g-sec g-view" id="v-builder" data-view="builder" aria-labelledby="h-builder" hidden>
+    <div class="wrap">
+      <div class="sx-card" id="p-ref">
+        <div class="sx-head"><span class="sx-n">6</span><div><h2 class="sx-h" id="h-builder">Reference builder</h2><p class="sx-sub">Choose what you are citing, fill in what you have, and copy the result. Leave a box empty if the source does not have it.</p></div></div>
+        <div class="ap-types" id="ap-types" role="radiogroup" aria-label="Source type"></div>
+        <div class="sx-calc"><div class="sx-in" id="ap-in"></div><div class="sx-out" id="ap-out" aria-live="polite"></div></div>
+      </div>
+      <div class="sx-card" id="p-list" style="margin-top:22px">
+        <div class="sx-head"><span class="sx-n">&#9776;</span><div><h2 class="sx-h">Your reference list <span class="ap-count" id="ap-count" hidden></span></h2><p class="sx-sub">References you add collect here, sorted in APA order with a hanging indent. You can also paste references you already have.</p></div></div>
+        <div id="ap-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="wrap g-pager" id="g-pager" aria-label="Previous and next section"></nav>
+
+  <div class="wrap g-src"><p>All information on this page was collected from <a href="https://apastyle.apa.org" target="_blank" rel="noopener">APA Style (apa.org)</a> and the <a href="https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_formatting_and_style_guide/index.html" target="_blank" rel="noopener">Purdue Online Writing Lab (Purdue OWL)</a>.</p></div>
+</main>
+
+<footer>
+  <div class="wrap"><nav class="legal-links" aria-label="Site info"><a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a><a href="cookies.html">Cookies Policy</a><a href="cookie-settings.html">Cookie Settings</a><a href="copyright.html">Copyright Notice</a></nav><span class="copy">Copyright © <span id="yr"></span> M Enam Ull Hassan · Boston, MA</span></div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<style>
+  .ap-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+  .ap-count[hidden] { display: none !important; }
+  .ap-jump { display: none; text-align: center; text-decoration: none; }
+  @media (max-width: 900px) { .ap-jump { display: block; } }
+  .ap-count { display: inline-grid; place-items: center; min-width: 22px; height: 22px; margin-left: 6px; padding: 0 6px; border-radius: 999px; font-size: .75rem; background: var(--label); color: #fff; }
+  .sx-card { padding: 26px 28px 30px; border-radius: 24px; box-shadow: var(--neu-out); }
+  .sx-head { display: flex; align-items: flex-start; gap: 16px; }
+  .sx-head > div { flex: 1; min-width: 0; }
+  .sx-n { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; box-shadow: var(--neu-in); font-family: var(--serif); font-size: 1.3rem; }
+  .sx-h { font-family: var(--serif); font-size: 1.6rem; font-weight: 500; line-height: 1.2; }
+  .sx-sub { margin-top: 4px; color: var(--muted); font-size: .95rem; }
+  .sx-small { font: inherit; font-size: .875rem; font-weight: 600; padding: 8px 16px; border: 0; border-radius: 999px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); cursor: pointer; }
+  .sx-small:active { box-shadow: var(--neu-in); }
+  .sx-small.dark { background: #15161b; color: #f4f2ee; box-shadow: none; }
+  .sx-tab { font: inherit; font-size: .9rem; font-weight: 600; padding: 10px 18px; border: 0; border-radius: 999px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); cursor: pointer; }
+  .sx-tab.on { background: #15161b; color: #f4f2ee; box-shadow: none; }
+  .ap-types { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .sx-calc { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 28px; margin-top: 22px; align-items: start; }
+  .sx-in { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .sx-out { min-width: 0; }
+  .sx-in label, .ap-people legend { font-size: .8rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--label); display: block; }
+  .sx-in input[type="text"], .sx-in textarea, .sx-in select, .ap-person input { display: block; width: 100%; margin-top: 6px; padding: 11px 14px; border: 0; border-radius: 14px; font: inherit; font-size: .95rem; color: var(--ink); line-height: 1.5; resize: vertical; background: var(--bg); box-shadow: var(--neu-in); }
+  .sx-in select { appearance: auto; padding-right: 8px; padding-left: 10px; }
+  .sx-in .help, .help { font-size: .84rem; color: var(--muted); line-height: 1.5; margin-top: 6px; }
+  .ap-src { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ap-people { border: 0; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .ap-people legend { margin-bottom: 4px; }
+  .ap-person { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0 8px; align-items: end; padding: 10px 12px 12px; border-radius: 16px; box-shadow: var(--neu-out-sm); }
+  .ap-person input { margin-top: 6px; padding: 9px 12px; font-size: .9rem; }
+  .ap-person .cx-rm { align-self: center; margin-top: 6px; }
+  .ap-kind { grid-column: 1 / -1; display: flex; gap: 6px; }
+  .ap-kind button { font: inherit; font-size: .78rem; font-weight: 600; padding: 4px 12px; border: 0; border-radius: 999px; background: none; color: var(--muted); cursor: pointer; }
+  .ap-kind button.on { background: #15161b; color: #f4f2ee; }
+  .ap-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .ap-check { display: flex !important; align-items: center; gap: 8px; text-transform: none !important; letter-spacing: 0 !important; font-weight: 500 !important; font-size: .875rem !important; color: var(--ink) !important; }
+  .ap-check input { width: auto !important; margin: 0 !important; box-shadow: none !important; }
+  .ap-grid { display: grid; gap: 10px; }
+  .ap-g2 { grid-template-columns: 1fr 1fr; } .ap-g3 { grid-template-columns: .9fr 1.35fr .8fr; }
+  .cx-rm { font: inherit; font-size: 1.1rem; line-height: 1; width: 32px; height: 32px; flex: 0 0 32px; border: 0; border-radius: 50%; background: var(--bg); color: var(--muted); box-shadow: var(--neu-out-sm); cursor: pointer; }
+  .cx-rm:hover { color: var(--ink); }
+  .ap-result { padding: 20px 22px; border-radius: 18px; box-shadow: var(--neu-in); margin-bottom: 14px; }
+  .ap-result .k, .cx-step .t span, .ap-cites span { font-family: var(--sans, Inter, sans-serif); font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--label); }
+  .ap-ref { margin-top: 10px; padding-left: 2em; text-indent: -2em; font-family: 'Times New Roman', Times, var(--serif), serif; font-size: 1.08rem; line-height: 1.75; overflow-wrap: anywhere; }
+  .ap-ref a, .ap-page a, .ap-reflist a { color: inherit; text-decoration: none; }
+  .ap-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .cx-step { padding: 18px 20px; border-radius: 18px; box-shadow: var(--neu-in); margin-bottom: 14px; }
+  .cx-step .t { display: flex; align-items: baseline; gap: 10px; font-family: var(--serif); font-size: 1.15rem; }
+  .cx-step p { margin-top: 8px; font-size: .94rem; line-height: 1.6; }
+  .ap-cites { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-top: 12px; }
+  .ap-cites div { padding: 10px 14px; border-radius: 12px; box-shadow: var(--neu-out-sm); }
+  .ap-cites b { display: block; margin-top: 4px; font-weight: 500; font-family: 'Times New Roman', Times, var(--serif), serif; font-size: 1.02rem; }
+  .ap-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; font-size: .9rem; font-weight: 600; }
+  .ap-inline input { width: 160px; padding: 8px 12px; border: 0; border-radius: 12px; font: inherit; font-size: .9rem; color: var(--ink); background: var(--bg); box-shadow: var(--neu-in); }
+  .ap-notes { margin: 8px 0 0; padding-left: 18px; font-size: .9rem; line-height: 1.6; }
+  .ap-notes li + li { margin-top: 4px; }
+  .ap-link { font: inherit; font-weight: 600; background: none; border: 0; padding: 0; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .cx-wait { padding: 28px 22px; border-radius: 18px; box-shadow: var(--neu-in); color: var(--muted); font-size: .95rem; line-height: 1.6; }
+  .ap-listgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 28px; margin-top: 22px; align-items: start; }
+  .ap-page { background: #fffdf9; color: #1b1b1b; border-radius: 6px; padding: 36px 40px; min-height: 260px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 10px 30px rgba(0,0,0,.08); font-family: 'Times New Roman', Times, serif; font-size: 1.02rem; line-height: 2; }
+  .ap-page-h { text-align: center; font-weight: 700; }
+  .ap-entry { position: relative; padding-right: 36px; }
+  .ap-entry p { padding-left: .5in; text-indent: -.5in; overflow-wrap: anywhere; }
+  .ap-entry .cx-rm { position: absolute; right: 0; top: 6px; width: 26px; height: 26px; font-size: .95rem; background: #fffdf9; box-shadow: 0 0 0 1px rgba(0,0,0,.12); color: #777; }
+  .ap-empty { color: #777; font-family: var(--sans, Inter, sans-serif); font-size: .9rem; line-height: 1.6; text-align: center; margin-top: 18px; }
+  .ap-rules { padding: 16px 18px; border-radius: 16px; box-shadow: var(--neu-in); }
+  .ap-rules h3, .ap-sh2 { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; }
+  .ap-sh2 { margin: 30px 0 10px; }
+  .ap-rules ul { margin: 8px 0 0; padding-left: 18px; font-size: .88rem; line-height: 1.55; }
+  .ap-rules li + li { margin-top: 6px; }
+  .ap-pick { margin-top: 20px; }
+  .ap-pick > p { font-weight: 600; margin-top: 14px; }
+  .fd-opts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .ap-citeout { margin-top: 20px; }
+  .ap-say { font-family: 'Times New Roman', Times, var(--serif), serif; font-size: 1.05rem !important; line-height: 1.8 !important; }
+  .ap-say mark, .ap-det mark, .ap-block mark, .help mark { background: rgba(194,122,44,.22); color: inherit; padding: 1px 3px; border-radius: 4px; }
+  .ap-block { margin: 10px 0 0 2.2em; font-family: 'Times New Roman', Times, var(--serif), serif; font-size: 1.05rem; line-height: 1.8; }
+  .ap-more { display: grid; gap: 10px; }
+  .ap-det { border-radius: 14px; box-shadow: var(--neu-out-sm); padding: 0 16px; }
+  .ap-det summary { cursor: pointer; padding: 13px 0; font-weight: 600; font-size: .95rem; }
+  .ap-det > div { padding: 0 0 14px; font-size: .92rem; line-height: 1.6; }
+  .ap-det > div p + p { margin-top: 8px; }
+  .ap-setup { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+  .ap-setup div { padding: 12px 14px; border-radius: 14px; box-shadow: var(--neu-out-sm); }
+  .ap-setup b { display: block; font-family: var(--serif); font-size: 1.25rem; font-weight: 500; }
+  .ap-setup span { display: block; margin-top: 4px; font-size: .82rem; color: var(--muted); line-height: 1.45; }
+  .ap-fonts { margin-top: 14px; font-size: .92rem; line-height: 1.6; }
+  .ap-fonts ul { margin: 6px 0 0; padding-left: 18px; }
+  .ap-toggle { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .ap-tpgrid { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: start; }
+  .ap-tp { position: relative; aspect-ratio: 8.5 / 11; background: #fffdf9; color: #1b1b1b; border-radius: 4px; padding: 7.5% 9%; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 10px 30px rgba(0,0,0,.08); font-family: 'Times New Roman', Times, serif; font-size: .74rem; line-height: 2; display: flex; flex-direction: column; }
+  .ap-tp-hd { display: flex; justify-content: space-between; font-size: .7rem; }
+  .ap-tp-body { text-align: center; margin-top: 16%; }
+  .ap-tp-title { font-weight: 700; }
+  .ap-tp-gap { height: 2em; }
+  .ap-tp-note { margin-top: auto; margin-bottom: 8%; }
+  .ap-tp-nh { text-align: center; font-weight: 700; }
+  .ap-tp-note p + p { text-indent: 2em; }
+  .ap-tplist { margin: 0; padding-left: 20px; font-size: .92rem; line-height: 1.6; }
+  .ap-tplist li + li { margin-top: 8px; }
+  .ap-heads { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; margin-top: 12px; }
+  .ap-hpage { background: #fffdf9; color: #000; border-radius: 4px; padding: 22px 26px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 10px 30px rgba(0,0,0,.08); font-family: 'Times New Roman', Times, serif; font-size: .95rem; line-height: 2; }
+  .ap-hpage .h1 { text-align: center; font-weight: 700; }
+  .ap-hpage .h1t { position: relative; }
+  .ap-hpage .h1t .g-tag { position: absolute; left: 100%; top: 50%; transform: translateY(-50%); white-space: nowrap; }
+  .ap-hpage .h2 { font-weight: 700; }
+  .ap-hpage .h3 { font-weight: 700; font-style: italic; }
+  .ap-hpage .h4 { font-weight: 700; }
+  .ap-hpage .h5 { font-weight: 700; font-style: italic; }
+  .ap-tx { text-indent: .5in; color: inherit; }
+  .ap-htable { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  .ap-htable th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  .ap-htable td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+  .ap-htable td:first-child { font-family: var(--serif); font-size: 1.1rem; width: 52px; }
+  .ap-order { margin: 0; padding-left: 20px; line-height: 1.8; font-size: .95rem; }
+  .ap-checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .ap-checklist label { display: flex; gap: 10px; align-items: flex-start; font-size: .93rem; line-height: 1.5; cursor: pointer; }
+  .ap-checklist input { margin-top: 4px; width: 17px; height: 17px; accent-color: #15161b; flex: none; }
+  .ap-sources { margin-top: 36px; }
+  .ap-sh { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; }
+  .ap-reflist { margin-top: 14px; font-size: .9rem; line-height: 1.7; }
+  .ap-reflist p { padding-left: 2em; text-indent: -2em; overflow-wrap: anywhere; }
+  .ap-reflist p + p { margin-top: 4px; }
+  .gl-note { margin-top: 10px; font-size: var(--fs-meta, .9rem); color: var(--muted); line-height: 1.6; }
+  .gl-note a { color: var(--accent); }
+  .g-toc { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+  .g-toc a { font-size: .9rem; font-weight: 600; padding: 10px 18px; border-radius: 999px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); text-decoration: none; }
+  .g-toc a.on { background: #15161b; color: #f4f2ee; box-shadow: none; }
+  .g-sec { padding: 0 0 26px; scroll-margin-top: 90px; }
+  .g-sec .sx-card { scroll-margin-top: 90px; }
+  .g-p { margin-top: -2px; color: var(--muted); font-size: .95rem; }
+  .ap-setup { margin-top: 20px; }
+  .g-parts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
+  .g-part { padding: 14px; border-radius: 18px; box-shadow: var(--neu-out-sm); }
+  .g-part h4 { text-align: center; font-family: var(--serif); font-size: 1.15rem; font-weight: 500; margin-top: 12px; }
+  .g-part ul { margin: 6px 0 0; padding-left: 18px; font-size: .88rem; line-height: 1.55; }
+  .g-part li + li { margin-top: 5px; }
+  .g-part a, .g-cta a:not(.sx-small), .g-src a, .g-back a { color: var(--accent); }
+  .w30 { width: 30%; } .w40 { width: 40%; } .w50 { width: 50%; } .w60 { width: 60%; } .w70 { width: 70%; } .w80 { width: 80%; } .w90 { width: 88%; } .w100 { width: 100%; }
+  .g-prio { margin-top: 16px; }
+  .g-two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+  .g-two > div { padding: 16px 18px; border-radius: 16px; box-shadow: var(--neu-in); }
+  .g-two b { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; }
+  .g-two p { margin-top: 4px; font-size: .9rem; color: var(--muted); line-height: 1.55; }
+  .g-two .g-ex1 { color: var(--ink); font-family: 'Times New Roman', Times, serif; font-size: 1.05rem; margin-top: 8px; }
+  mark { background: rgba(194,122,44,.22); color: inherit; padding: 1px 3px; border-radius: 4px; }
+  .ph { font-style: normal; color: var(--label); }
+  .g-tag { display: inline-block; vertical-align: middle; margin-left: 8px; padding: 0 7px; border-radius: 999px; font: 600 .62rem/1.7 var(--sans, Inter, sans-serif); letter-spacing: .06em; text-transform: uppercase; color: #8a5a2b; background: rgba(194,122,44,.16); font-style: normal; text-indent: 0; }
+  .ap-heads { margin-top: 20px; }
+  .ap-htable td:nth-child(3) { color: var(--muted); white-space: nowrap; }
+  .g-reftools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 22px; }
+  .g-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .g-chips .sx-tab { padding: 8px 15px; font-size: .86rem; }
+  .k-a { --k: #2f6aa3; } .k-d { --k: #2e8a5c; } .k-t { --k: #b0582c; } .k-s { --k: #7a52a8; }
+  .sx-sub .k-a, .sx-sub .k-d, .sx-sub .k-t, .sx-sub .k-s { color: var(--k); }
+  .g-key { display: none; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .g-key span { font-size: .78rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; color: var(--k); background: color-mix(in srgb, var(--k) 14%, transparent); }
+  .show-parts .g-key { display: flex; }
+  .g-r { margin-top: 2px; background: #fffdf9; color: #1b1b1b; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 6px 18px rgba(0,0,0,.06); padding: 12px 18px 12px calc(18px + .5in); text-indent: -.5in; font-family: 'Times New Roman', Times, serif; font-size: 1.04rem; line-height: 2; overflow-wrap: anywhere; }
+  .g-c { margin-top: 8px; font-family: 'Times New Roman', Times, serif; font-size: 1rem; color: var(--ink); }
+  .g-c::before { content: 'In text: '; font: 600 .66rem var(--sans, Inter, sans-serif); letter-spacing: .1em; text-transform: uppercase; color: var(--label); margin-right: 4px; }
+  .g-ex .help { margin-top: 6px; }
+  .show-parts .pa, .show-parts .pd, .show-parts .pt, .show-parts .ps { border-radius: 3px; padding: 1px 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .show-parts .pa { background: rgba(47,106,163,.15); box-shadow: inset 0 -2px #2f6aa3; }
+  .show-parts .pd { background: rgba(46,138,92,.15); box-shadow: inset 0 -2px #2e8a5c; }
+  .show-parts .pt { background: rgba(176,88,44,.14); box-shadow: inset 0 -2px #b0582c; }
+  .show-parts .ps { background: rgba(122,82,168,.14); box-shadow: inset 0 -2px #7a52a8; }
+  .g-cta { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 20px; padding: 16px 18px; border-radius: 16px; box-shadow: var(--neu-in); }
+  .g-cta p { font-size: .95rem; }
+  .g-cta .sx-small { text-decoration: none; }
+  .g-hgrid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 28px; margin-top: 20px; align-items: start; }
+  .g-demo { min-height: 0; padding: 26px 30px; }
+  .g-demo p { transition: padding .4s ease, text-indent .4s ease; overflow-wrap: anywhere; }
+  .g-demo.hung p { padding-left: .5in; text-indent: -.5in; }
+  .g-steps[hidden], .g-ex[hidden] { display: none !important; }
+  #g-format .ap-setup { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  @media (max-width: 560px) { #g-format .ap-setup { grid-template-columns: 1fr 1fr; } }
+  .g-steps { margin: 14px 0 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 10px; }
+  .g-steps li { counter-increment: s; position: relative; padding: 12px 14px 12px 52px; border-radius: 14px; box-shadow: var(--neu-out-sm); font-size: .93rem; line-height: 1.55; }
+  .g-steps li::before { content: counter(s); position: absolute; left: 12px; top: 10px; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; box-shadow: var(--neu-in); font-family: var(--serif); font-size: .95rem; }
+  .g-src { margin-top: 6px; }
+  .g-src p { font-size: .9rem; color: var(--muted); line-height: 1.6; }
+  .sx-h .ap-count { vertical-align: middle; }
+  @media (max-width: 1000px) { .g-parts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) { .g-hgrid { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .g-parts, .g-two { grid-template-columns: 1fr; } .g-mini { max-width: 200px; } .g-r { padding-left: calc(14px + .35in); padding-right: 14px; text-indent: -.35in; } .ap-htable td:nth-child(3) { white-space: normal; } .g-toc a { padding: 8px 14px; font-size: .84rem; } }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) :is(.sx-tab.on, .sx-small.dark, .ap-kind button.on, .g-toc a.on) { background: #0e0f13; box-shadow: 0 0 0 1.5px rgba(244,242,238,.35); } :root:not([data-theme="light"]) .ap-checklist input { accent-color: #f4f2ee; } }
+  :root[data-theme="dark"] :is(.sx-tab.on, .sx-small.dark, .ap-kind button.on, .g-toc a.on) { background: #0e0f13; box-shadow: 0 0 0 1.5px rgba(244,242,238,.35); }
+  :root[data-theme="dark"] .ap-checklist input { accent-color: #f4f2ee; }
+  @media (max-width: 900px) { .sx-calc, .ap-listgrid, .ap-tpgrid, .ap-heads { grid-template-columns: 1fr; } .ap-tp { max-width: 360px; } }
+  @media (max-width: 560px) { .sx-card { padding: 20px 16px 22px; } .sx-head { gap: 12px; } .ap-person { grid-template-columns: 1fr auto; } .ap-person input[data-f="given"], .ap-person input[data-f="abbr"] { grid-column: 1; } .ap-g3 { grid-template-columns: 1fr 1fr; } .ap-page { padding: 24px 18px; } .ap-entry p { padding-left: .35in; text-indent: -.35in; } .ap-tabs .sx-tab, .ap-types .sx-tab { padding: 9px 14px; font-size: .85rem; } }
+  /* mini pages: real proportions (1 in margins, 0.5 in indents, 27 double-spaced lines) */
+  .g-mini { position: relative; aspect-ratio: 8.5 / 11; container-type: size; overflow: hidden; background: #fffdf9; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 6px 18px rgba(0,0,0,.07); padding: 0; }
+  .g-mini .pn { position: absolute; top: 3.6cqh; right: 11.765cqw; font-style: normal; font-size: .62rem; line-height: 1; color: #888; font-family: 'Times New Roman', serif; }
+  .g-mini-c { position: absolute; top: 9.091cqh; bottom: 9.091cqh; left: 11.765cqw; right: 11.765cqw; display: grid; grid-auto-rows: calc(81.818cqh / 27); align-content: start; overflow: hidden; }
+  .g-mini .ln { display: block; height: 2px; border-radius: 1px; background: #cfcac2; width: var(--w, 100%); margin-left: var(--m, 0); align-self: center; justify-self: start; }
+  .g-mini .ln.c { justify-self: center; }
+  .g-mini .ln.b { background: #6d6860; }
+  .g-mini .bl { display: block; }
+
+  /* accordions */
+  .g-acc-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 26px; }
+  .g-acc-head .ap-sh2 { margin: 0; }
+  .g-accs { display: grid; gap: 10px; margin-top: 14px; }
+  .g-acc { border-radius: 16px; box-shadow: var(--neu-out-sm); }
+  .g-acc summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 16px; }
+  .g-acc summary::-webkit-details-marker { display: none; }
+  .g-acc summary::after { content: ''; flex: none; width: 8px; height: 8px; margin: 0 2px 4px 0; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform .2s ease; }
+  .g-acc[open] summary::after { transform: rotate(-135deg); margin-bottom: -4px; }
+  .g-acc summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .g-acc-t { flex: 1; font-family: var(--serif); font-size: 1.12rem; font-weight: 500; }
+  .g-acc-s { font-family: 'Times New Roman', Times, serif; font-size: 1rem; color: var(--muted); text-align: right; }
+  .g-acc[open] .g-acc-s { visibility: hidden; }
+  .g-acc-b { padding: 0 18px 18px; }
+  .g-acc-b > p:not(.g-r):not(.g-c) { font-size: .92rem; line-height: 1.55; color: var(--muted); }
+  .g-acc-b dl { margin: 6px 0 0; }
+  .g-acc-b dt { font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--label); margin-top: 10px; }
+  .g-acc-b dd { margin: 3px 0 0; font-family: 'Times New Roman', Times, serif; font-size: 1.04rem; line-height: 1.75; }
+  .g-acc-b .help { margin-top: 10px; }
+  .g-refacc .g-acc-b { padding-top: 2px; }
+  /* section pager */
+  .g-pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 0; margin-bottom: 18px; }
+  .g-pager a { text-decoration: none; }
+  .g-toc a { text-decoration: none; }
+  @media (max-width: 560px) { .g-acc summary { flex-wrap: wrap; row-gap: 2px; padding: 12px 16px; } .g-acc-t { flex: 1 1 0; } .g-acc-s { flex-basis: 100%; order: 3; text-align: left; font-size: .95rem; } .g-acc[open] .g-acc-s { display: none; } .g-acc-b { padding: 0 16px 16px; } .g-pager a { font-size: .82rem; padding: 8px 12px; } }
+  .ap-look { padding: 14px 16px; border-radius: 16px; box-shadow: var(--neu-out-sm); }
+  .ap-look label { display: block; }
+  .ap-lookrow { display: flex; gap: 8px; margin-top: 6px; }
+  .sx-in .ap-lookrow input { flex: 1; min-width: 0; margin-top: 0; }
+  .ap-lookrow .sx-small { flex: none; }
+  .ap-lookrow .sx-small[disabled] { opacity: .7; cursor: progress; }
+  .ap-lookmsg { margin-top: 8px; }
+  .ap-ok { color: #2e8a5c; font-weight: 600; }
+  .ap-err { color: #b0452c; font-weight: 600; }
+  .ap-or { display: flex; align-items: center; gap: 10px; margin: 14px 0 10px; color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; }
+  .ap-or::before, .ap-or::after { content: ''; flex: 1; height: 1px; background: color-mix(in srgb, var(--muted) 30%, transparent); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ap-ok { color: #6fcf9b; } :root:not([data-theme="light"]) .ap-err { color: #ef8f74; } }
+  :root[data-theme="dark"] .ap-ok { color: #6fcf9b; } :root[data-theme="dark"] .ap-err { color: #ef8f74; }
+</style>
+<script>
+(function () {
+  'use strict';
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var $ = function (id) { return document.getElementById(id); };
+  var store = { get: function (k, d) { try { var v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } }, set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+
+  // ---------- views: one section at a time ----------
+  var ORDER = ['format', 'cite', 'heads', 'refs', 'hang', 'builder'];
+  var NAMES = { format: 'General format', cite: 'In-text citations', heads: 'Headings', refs: 'References', hang: 'Hanging indent', builder: 'Reference builder' };
+  var curView = null;
+  function resolve(h) {
+    h = (h || '').replace(/^#/, '');
+    if (ORDER.indexOf(h) > -1) return { v: h, el: null };
+    var el = h && document.getElementById(h), sec = el && el.closest('[data-view]');
+    if (sec) return { v: sec.dataset.view, el: el === sec ? null : el };
+    return { v: 'format', el: null };
+  }
+  function showView(scroll) {
+    var r = resolve(location.hash), changed = r.v !== curView; curView = r.v;
+    document.querySelectorAll('.g-view').forEach(function (s) { s.hidden = s.dataset.view !== r.v; });
+    document.querySelectorAll('#g-toc a').forEach(function (a) { var on = a.dataset.v === r.v; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    var i = ORDER.indexOf(r.v), prev = ORDER[i - 1], next = ORDER[i + 1];
+    $('g-pager').innerHTML = (prev ? '<a class="sx-small" href="#' + prev + '"><span aria-hidden="true">&larr;</span> ' + NAMES[prev] + '</a>' : '<span></span>') + (next ? '<a class="sx-small dark" href="#' + next + '">' + NAMES[next] + ' <span aria-hidden="true">&rarr;</span></a>' : '');
+    if (r.v === 'builder') renderList();
+    if (!scroll) return;
+    if (r.el) { var d = r.el.closest('details'); if (d) d.open = true; r.el.scrollIntoView(); }
+    else if (changed) { var t = $('g-toc'), y = t.getBoundingClientRect().top + window.scrollY - 90; if (window.scrollY > y) window.scrollTo(0, Math.max(0, y)); }
+  }
+  window.addEventListener('hashchange', function () { showView(true); });
+
+  // ---------- guide interactions ----------
+  document.addEventListener('click', function (e) {
+    var x = e.target.closest('[data-expand]'); if (!x) return;
+    var card = x.closest('.sx-card'), open = x.getAttribute('aria-pressed') !== 'true';
+    card.querySelectorAll('details.g-acc').forEach(function (d) { if (!d.hidden) d.open = open; });
+    x.setAttribute('aria-pressed', open); x.textContent = open ? 'Collapse all' : 'Expand all';
+  });
+  var refs = $('g-refs');
+  refs.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-rt]');
+    if (b) { refs.querySelectorAll('[data-rt]').forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); }); var t = b.dataset.rt; refs.querySelectorAll('.g-ex').forEach(function (x) { x.hidden = t !== 'all' && x.dataset.t !== t; }); return; }
+    var p = e.target.closest('[data-parts]');
+    if (p) { var on = !refs.classList.contains('show-parts'); refs.classList.toggle('show-parts', on); p.setAttribute('aria-pressed', on); p.textContent = on ? 'Hide the four parts' : 'Show the four parts'; }
+  });
+  var hi = $('g-hang');
+  hi.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-ht]'); if (b) { hi.querySelectorAll('[data-ht]').forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-selected', on); }); hi.querySelectorAll('.g-steps').forEach(function (x) { x.hidden = x.dataset.h !== b.dataset.ht; }); return; }
+    var d = e.target.closest('[data-demo]'); if (d) { var w = $('g-demo'), on = w.classList.toggle('hung'); d.textContent = on ? 'Remove the hanging indent' : 'Apply a hanging indent'; d.setAttribute('aria-pressed', on); }
+  });
+
+  // ---------- formatting helpers ----------
+  function initials(g) {
+    g = String(g || '').trim(); if (!g) return '';
+    return g.replace(/\./g, '. ').split(/\s+/).filter(Boolean).map(function (p) { return p.split('-').filter(Boolean).map(function (s) { return s.charAt(0).toUpperCase() + '.'; }).join('-'); }).join(' ');
+  }
+  function isPerson(a) { return a.kind !== 'group'; }
+  function filled(a) { return isPerson(a) ? (a.last || '').trim() : (a.name || '').trim(); }
+  function refName(a) { if (!isPerson(a)) return a.name.trim(); var i = initials(a.given); return a.last.trim() + (i ? ', ' + i : ''); }
+  function edName(a) { var i = initials(a.given); return (i ? i + ' ' : '') + a.last.trim(); }
+  function joinRef(items) {
+    var n = items.length; if (!n) return '';
+    if (n === 1) return items[0];
+    if (n <= 20) return items.slice(0, -1).join(', ') + ', & ' + items[n - 1];
+    return items.slice(0, 19).join(', ') + ', . . . ' + items[n - 1];
+  }
+  function joinEd(items) { var n = items.length; if (n === 1) return items[0]; if (n === 2) return items[0] + ' & ' + items[1]; return items.slice(0, -1).join(', ') + ', & ' + items[n - 1]; }
+  function endDot(s) { s = s.trim(); return /[.?!]$/.test(s) ? s : s + '.'; }
+  function stripEnd(s) { return String(s || '').trim().replace(/[.\s]+$/, ''); }
+  function italTitle(t, after) { // italic title, optional non-italic parenthetical/bracket, then period
+    t = String(t || '').trim(); var q = /[?!]$/.test(t);
+    if (after) return '<i>' + esc(t.replace(/\.$/, '')) + '</i> ' + after + '.';
+    return '<i>' + esc(q ? t : t.replace(/\.$/, '')) + '</i>' + (q ? '' : '.');
+  }
+  function plainTitle(t, after) { t = String(t || '').trim(); if (after) return esc(t.replace(/\.$/, '')) + ' ' + after + '.'; return esc(endDot(t)); }
+  function link(s) {
+    s = String(s || '').trim().replace(/\.+$/, ''); if (!s) return '';
+    var m;
+    if ((m = s.match(/^doi:\s*(.+)$/i))) s = 'https://doi.org/' + m[1];
+    else if ((m = s.match(/^https?:\/\/(?:dx\.)?doi\.org\/(.+)$/i))) s = 'https://doi.org/' + m[1];
+    else if (/^10\.\d{4,}\//.test(s)) s = 'https://doi.org/' + s;
+    else if (/^www\./i.test(s)) s = 'https://' + s;
+    return s;
+  }
+  function dash(s) { return String(s || '').trim().replace(/(\d)\s*[-–—]+\s*(\d)/g, '$1–$2'); }
+  function edition(s) {
+    s = String(s || '').trim(); if (!s) return '';
+    if (/^\d+$/.test(s)) { var n = +s, sfx = (n % 100 >= 11 && n % 100 <= 13) ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] || 'th'); return n + sfx + ' ed.'; }
+    if (/^\d+(st|nd|rd|th)$/i.test(s)) return s.toLowerCase() + ' ed.';
+    return s.replace(/edition/i, 'ed.').replace(/ed$/i, 'ed.');
+  }
+  var SMALL = /^(a|an|the|and|but|or|nor|for|so|yet|as|at|by|in|of|off|on|per|to|up|via|vs\.?)$/i;
+  function titleCase(t) {
+    var startNext = true;
+    return String(t || '').split(/(\s+)/).map(function (w) {
+      if (/^\s+$/.test(w) || !w) return w;
+      var bare = w.replace(/[^A-Za-z.]/g, ''), out;
+      if (/[A-Z].*[A-Z]/.test(w)) out = w;
+      else if (!startNext && SMALL.test(bare)) out = w.toLowerCase();
+      else out = w.replace(/^([^A-Za-z]*)([a-z])/, function (m, p, c) { return p + c.toUpperCase(); }).replace(/-([a-z])/g, function (m, c) { return '-' + c.toUpperCase(); });
+      startNext = /[:?!—]$/.test(w);
+      return out;
+    }).join('');
+  }
+  var prevWord = '';
+  function looksTitleCase(t) {
+    var words = String(t || '').replace(/[:—]\s*\S+/g, ' ').split(/\s+/).slice(1).filter(function (w) { return /^[A-Za-z]/.test(w) && !SMALL.test(w) && w.length > 3; });
+    if (words.length < 2) return false;
+    var caps = words.filter(function (w) { return /^[A-Z][a-z]/.test(w); }).length;
+    return caps / words.length >= 0.6;
+  }
+  function sentenceCase(t) {
+    var startNext = true;
+    return String(t || '').split(/(\s+)/).map(function (w) {
+      if (/^\s+$/.test(w) || !w) return w;
+      var keep = /[A-Z].*[A-Z]/.test(w) || /\d/.test(w); // acronyms like ESL, COVID-19
+      var out = keep ? w : (startNext ? w.replace(/^([^A-Za-z]*)([a-z])/, function (m, p, c) { return p + c.toUpperCase(); }) : w.toLowerCase());
+      startNext = /[:?!—]$/.test(w);
+      return out;
+    }).join('');
+  }
+
+  // ---------- source types ----------
+  var MONTHS = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var TYPES = {
+    article: { label: 'Journal article', who: 'Authors', italic: false },
+    book: { label: 'Book', who: 'Authors', italic: true },
+    chapter: { label: 'Chapter in an edited book', who: 'Chapter authors', italic: false },
+    web: { label: 'Webpage', who: 'Authors', italic: true },
+    report: { label: 'Report', who: 'Authors', italic: true },
+    thesis: { label: 'Dissertation or thesis', who: 'Author', italic: true },
+    video: { label: 'Video (TED, YouTube)', who: 'Speaker or channel', italic: true }
+  };
+  var P = function (last, given) { return { kind: 'person', last: last, given: given }; }, G = function (name, abbr) { return { kind: 'group', name: name, abbr: abbr || '' }; };
+  var EX = {
+    article: { authors: [P('Canale', 'Michael'), P('Swain', 'Merrill')], year: '1980', title: 'Theoretical bases of communicative approaches to second language teaching and testing', journal: 'Applied Linguistics', volume: '1', issue: '1', pages: '1-47', artno: '', doi: '10.1093/applin/I.1.1' },
+    book: { authors: [P('Deutscher', 'Guy')], edited: false, year: '2011', title: 'Through the language glass: Why the world looks different in other languages', edition: '', publisher: 'Picador', doi: '' },
+    chapter: { authors: [P('Swain', 'Merrill')], year: '1985', title: 'Communicative competence: Some roles of comprehensible input and comprehensible output in its development', editors: [P('Gass', 'Susan M.'), P('Madden', 'Carolyn G.')], book: 'Input in second language acquisition', edition: '', pages: '235-253', publisher: 'Newbury House', doi: '' },
+    web: { authors: [G('American Council on the Teaching of Foreign Languages', 'ACTFL')], year: '2024', month: '4', day: '2', title: 'Revised ACTFL proficiency guidelines released', site: 'American Council on the Teaching of Foreign Languages', url: 'https://www.actfl.org/news/revised-actfl-proficiency-guidelines-released', retrieved: '' },
+    report: { authors: [G('American Council on the Teaching of Foreign Languages', 'ACTFL')], year: '2024', title: 'ACTFL proficiency guidelines 2024', reportno: '', publisher: 'American Council on the Teaching of Foreign Languages', url: '' },
+    thesis: { authors: [P('King', 'Allie Hope')], year: '2025', title: 'Exploring multivocality in co-teaching', pubno: '', kind: 'Doctoral dissertation', institution: 'Teachers College, Columbia University', database: 'ProQuest Dissertations & Theses Global', url: '' },
+    video: { authors: [P('Boroditsky', 'Lera')], year: '2017', month: '11', day: '', title: 'How language shapes the way we think', site: 'TED Conferences', url: 'https://www.ted.com/talks/lera_boroditsky_how_language_shapes_the_way_we_think' }
+  };
+
+  var state = {}, cur = store.get('enam-apa-type', 'article');
+  if (!TYPES[cur]) cur = 'article';
+  function freshEx(k) { return JSON.parse(JSON.stringify(EX[k])); }
+  Object.keys(TYPES).forEach(function (k) { state[k] = blank(k); });
+  function blank(k) {
+    var s = { authors: [P('', '')], year: '' }, e = EX[k];
+    Object.keys(e).forEach(function (f) { if (!(f in s)) s[f] = Array.isArray(e[f]) ? [P('', '')] : (typeof e[f] === 'boolean' ? false : ''); });
+    if (k === 'thesis') s.kind = 'Doctoral dissertation'; if (k === 'video') s.site = ''; s.ex = false;
+    return s;
+  }
+
+  // ---------- build the reference ----------
+  function build(k, s) {
+    var A = s.authors.filter(filled), notes = [], ital = TYPES[k].italic;
+    var authorStr = joinRef(A.map(refName));
+    if (k === 'book' && s.edited && A.length) authorStr += A.length > 1 ? ' (Eds.)' : ' (Ed.)';
+    var yr = String(s.year || '').trim(), date = yr || 'n.d.';
+    if ((k === 'web' || k === 'video') && yr && s.month) date += ', ' + MONTHS[+s.month] + (String(s.day || '').trim() ? ' ' + dash(s.day) : '');
+    if (!yr) notes.push('No year given, so the date shows as <b>n.d.</b> (no date). Add the year if you can find it.');
+    var title = String(s.title || '').trim(), titleEl = '', src = '', lk = link(k === 'web' || k === 'report' || k === 'video' || k === 'thesis' ? s.url : s.doi);
+    if (!title) return { html: '', empty: true };
+    if (k === 'article') {
+      titleEl = plainTitle(title);
+      var j = String(s.journal || '').trim(), v = String(s.volume || '').trim(), is = String(s.issue || '').trim(), pg = dash(s.pages), an = String(s.artno || '').trim();
+      if (j) { src = '<i>' + esc(j) + (v ? ', ' + esc(v) : '') + '</i>' + (v && is ? '(' + esc(is) + ')' : '') + (an ? ', Article ' + esc(an) : (pg ? ', ' + esc(pg) : '')) + '.'; }
+      if (!lk) notes.push('Add the DOI if the article has one (usually on its first page). Without a DOI, articles from library databases need no URL.');
+    } else if (k === 'book') {
+      var ed = edition(s.edition); titleEl = italTitle(title, ed ? '(' + esc(ed) + ')' : '');
+      var pub = stripEnd(s.publisher); if (pub && !(A.length === 1 && !isPerson(A[0]) && A[0].name.trim() === pub)) src = esc(pub) + '.';
+    } else if (k === 'chapter') {
+      titleEl = plainTitle(title);
+      var E = (s.editors || []).filter(filled), bk = String(s.book || '').trim(), ed2 = edition(s.edition), pg2 = dash(s.pages), bits = [];
+      if (ed2) bits.push(esc(ed2)); if (pg2) bits.push((/[–,]/.test(pg2) ? 'pp. ' : 'p. ') + esc(pg2));
+      if (bk) src = 'In ' + (E.length ? esc(joinEd(E.map(edName))) + (E.length > 1 ? ' (Eds.), ' : ' (Ed.), ') : '') + '<i>' + esc(bk.replace(/\.$/, '')) + '</i>' + (bits.length ? ' (' + bits.join(', ') + ')' : '') + '.';
+      var pub2 = stripEnd(s.publisher); if (pub2) src += ' ' + esc(pub2) + '.';
+    } else if (k === 'web') {
+      titleEl = italTitle(title);
+      var site = stripEnd(s.site), sameAsAuthor = A.length === 1 && !isPerson(A[0]) && A[0].name.trim().toLowerCase() === site.toLowerCase();
+      if (site && !sameAsAuthor) src = esc(site) + '.';
+      if (sameAsAuthor) notes.push('The site name is left out because it is the same as the author.');
+      if (String(s.retrieved || '').trim() && lk) { lk = 'Retrieved ' + esc(String(s.retrieved).trim()) + ', from ' + lk; notes.push('Use a retrieval date only for pages that change over time and are not archived, such as a live data page.'); }
+    } else if (k === 'report') {
+      var rn = String(s.reportno || '').trim(); titleEl = italTitle(title, rn ? '(' + esc(rn) + ')' : '');
+      var pub3 = stripEnd(s.publisher), same3 = A.length === 1 && !isPerson(A[0]) && A[0].name.trim().toLowerCase() === pub3.toLowerCase();
+      if (pub3 && !same3) src = esc(pub3) + '.'; if (same3) notes.push('The publisher is left out because it is the same as the author.');
+    } else if (k === 'thesis') {
+      var pn = String(s.pubno || '').trim(), inst = stripEnd(s.institution), db = stripEnd(s.database), kd = s.kind || 'Doctoral dissertation';
+      if (!db && !lk) {
+        titleEl = italTitle(title, '[Unpublished ' + esc(kd.charAt(0).toLowerCase() + kd.slice(1)) + ']');
+        if (inst) src = esc(inst) + '.';
+        notes.push('With no database or URL, the work is treated as unpublished: [Unpublished &hellip;] after the title, then the university.');
+      } else {
+        titleEl = italTitle(title, (pn ? '(Publication No. ' + esc(pn) + ') ' : '') + '[' + esc(kd) + (inst ? ', ' + esc(inst) : '') + ']');
+        if (db) src = esc(db) + '.';
+      }
+    } else if (k === 'video') {
+      titleEl = italTitle(title, '[Video]');
+      var vs = stripEnd(s.site); if (vs) src = esc(vs) + '.';
+    }
+    var datePart = '(' + esc(date) + ').', parts;
+    if (A.length) parts = [esc(endDot(authorStr)), datePart, titleEl];
+    else { parts = [titleEl, datePart]; notes.push('With no author, the title moves to the front of the reference.'); }
+    if (src) parts.push(src); if (lk) parts.push(/^Retrieved/.test(lk) ? lk.replace(/(https?:\S+)$/, function (u) { return '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(u) + '</a>'; }) : '<a href="' + esc(lk) + '" target="_blank" rel="noopener">' + esc(lk) + '</a>');
+    if (A.length >= 21) notes.push('With 21 or more authors, list the first 19, then an ellipsis (. . .), then the last author.');
+    if (A.some(function (a) { return isPerson(a) && /[a-z]{2}/.test(a.given || ''); })) notes.push('First and middle names are shortened to initials.');
+    if (title && looksTitleCase(title) && k !== 'x') notes.push('<span data-sc="1">The title looks like it uses Title Case. In references, titles use <b>sentence case</b>: capitalize only the first word, the first word after a colon, and proper nouns. <button type="button" class="ap-link" data-fix="title">Convert to sentence case</button> (then re-capitalize any names or places).</span>');
+    if (k === 'chapter' && s.book && looksTitleCase(s.book)) notes.push('The book title also uses sentence case. <button type="button" class="ap-link" data-fix="book">Convert book title</button>');
+    if (lk && /doi\.org/.test(lk) && String(s.doi || s.url).trim() !== lk) notes.push('The DOI is written as a link starting with https://doi.org/, as APA 7 requires.');
+    return { html: parts.join(' '), notes: notes, authors: A, date: yr || 'n.d.', title: title };
+  }
+  function citeName(A, k, s, title, first) {
+    if (!A.length) { var t = titleCase(title.split(/[:?!]/)[0].trim()); return TYPES[k].italic ? '<i>' + esc(t) + '</i>' : '“' + esc(t) + ',”'; }
+    var nm = function (a, nar) { if (isPerson(a)) return esc(a.last.trim()); var ab = (a.abbr || '').trim(); if (!ab) return esc(a.name.trim()); return first ? esc(a.name.trim()) + (nar ? ' (' + esc(ab) + ', ' : ' [' + esc(ab) + ']') : esc(ab); };
+    return { par: A.length === 1 ? nm(A[0]) : A.length === 2 ? nm(A[0]) + ' &amp; ' + nm(A[1]) : nm(A[0]) + ' et al.', nar: A.length === 1 ? nm(A[0], true) : A.length === 2 ? nm(A[0]) + ' and ' + nm(A[1]) : nm(A[0]) + ' et al.' };
+  }
+  function cites(r, k, s, pg) {
+    var loc = String(pg || '').trim(), out = [], loc2 = '';
+    if (loc && k === 'video') loc2 = loc; else if (loc) loc2 = /^(p|pp|para|paras|Chapter|Table|Figure|Slide)\b/i.test(loc) ? loc : (/[–\-,]/.test(loc) ? 'pp. ' + dash(loc) : 'p. ' + loc);
+    var yr = esc(r.date), A = r.authors;
+    var groupAbbr = A.length === 1 && !isPerson(A[0]) && (A[0].abbr || '').trim();
+    [true, false].forEach(function (first) {
+      if (!first && !groupAbbr) return;
+      var n = citeName(A, k, s, r.title, first);
+      if (typeof n === 'string') { var q = /,”$/.test(n); out.push(['Parenthetical', '(' + n + (q ? ' ' : ', ') + yr + (loc2 ? ', ' + esc(loc2) : '') + ')']); out.push(['Narrative', (q ? n.replace(/,”$/, '”') : n) + ' (' + yr + ')' + (loc2 ? ' … (' + esc(loc2) + ')' : '')]); return; }
+      var lab = groupAbbr ? (first ? ' (first time)' : ' (after that)') : '';
+      out.push(['Parenthetical' + lab, '(' + n.par + ', ' + yr + (loc2 ? ', ' + esc(loc2) : '') + ')']);
+      out.push(['Narrative' + lab, groupAbbr && first ? n.nar + yr + ')' + (loc2 ? ' … (' + esc(loc2) + ')' : '') : n.nar + ' (' + yr + ')' + (loc2 ? ' … (' + esc(loc2) + ')' : '')]);
+    });
+    return out;
+  }
+
+  // ---------- auto-fill from DOI or ISBN ----------
+  var lookVal = '', lookMsg = '', looking = false;
+  function isbnOk(d) {
+    var i, s = 0;
+    if (d.length === 10) { for (i = 0; i < 10; i++) s += (d[i] === 'X' ? 10 : +d[i]) * (10 - i); return s % 11 === 0; }
+    for (i = 0; i < 13; i++) s += +d[i] * (i % 2 ? 3 : 1); return s % 10 === 0;
+  }
+  function parseId(v) {
+    v = String(v || '').trim(); var m = v.match(/10\.\d{4,9}\/\S+/);
+    if (m) return { doi: m[0].replace(/[.,;)\]]+$/, '') };
+    var d = v.replace(/^isbn(?:-1[03])?:?\s*/i, '').replace(/[\s\-]/g, '').toUpperCase();
+    if (/^\d{9}[\dX]$/.test(d) || /^97[89]\d{10}$/.test(d)) return isbnOk(d) ? { isbn: d } : { bad: 'That ISBN does not look right. Check the digits and try again.' };
+    return { bad: 'Enter a DOI (it starts with 10.) or a 10- or 13-digit ISBN.' };
+  }
+  function getJSON(url, headers) {
+    var ctl = window.AbortController ? new AbortController() : null, tm = setTimeout(function () { if (ctl) ctl.abort(); }, 12000);
+    return fetch(url, { headers: headers || {}, signal: ctl ? ctl.signal : undefined }).then(function (r) { clearTimeout(tm); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }, function (e) { clearTimeout(tm); throw e; });
+  }
+  var first = function (x) { return Array.isArray(x) ? (x[0] || '') : (x || ''); };
+  function clean(t) { var d = document.createElement('div'); d.innerHTML = String(t || '').replace(/<[^>]*>/g, ''); return d.textContent.replace(/\s+/g, ' ').trim(); }
+  function fixCaps(n) { n = clean(n); return n && !/[a-z]/.test(n) && /[A-Z]{2}/.test(n) ? n.toLowerCase().replace(/(^|[\s\-'’])([a-z])/g, function (m, p, c) { return p + c.toUpperCase(); }) : n; }
+  function apaTitle(t, flags) {
+    t = clean(t); if (!t) return '';
+    if (!/[a-z]/.test(t)) { t = t.toLowerCase(); flags.caps = true; }
+    if (looksTitleCase(t) || flags.caps) { t = sentenceCase(t); flags.sc = true; }
+    return t.replace(/^([^A-Za-z]*)([a-z])/, function (m, p, c) { return p + c.toUpperCase(); });
+  }
+  function pubName(p) { return clean(p).replace(/,?\s+(Inc\.?|Ltd\.?|LLC|L\.L\.C\.|Co\.|Corp\.?|Pvt\.? Ltd\.?|GmbH|S\.A\.)$/i, '').trim(); }
+  function personsFrom(list) { return (list || []).map(function (a) { if (a.family) return P(fixCaps(a.family), fixCaps(a.given || '')); if (a.literal || a.name) return G(clean(a.literal || a.name), ''); return null; }).filter(Boolean); }
+  function splitName(n) { n = clean(n); if (!n) return null; if (n.indexOf(',') > -1) { var q = n.split(','); return P(q[0].trim(), q.slice(1).join(' ').trim()); } var w = n.split(' '); return w.length === 1 ? P(w[0], '') : P(w[w.length - 1], w.slice(0, -1).join(' ')); }
+  function fromDOI(m, doi) {
+    var ty = String(m.type || '').toLowerCase(), k = 'article', flags = {};
+    var hasBook = !!first(m['container-title']);
+    if (/^(book-chapter|book-section|book-part|chapter|reference-entry|entry|entry-encyclopedia|entry-dictionary|paper-conference|proceedings-article)$/.test(ty)) k = hasBook ? 'chapter' : 'article';
+    else if (/^(book|monograph|edited-book|reference-book|book-set|book-series|edited_book)$/.test(ty)) k = 'book';
+    else if (/^(report|report-component|report-series)$/.test(ty)) k = 'report';
+    else if (/^(dissertation|thesis)$/.test(ty)) k = 'thesis';
+    var s = blank(k), dp = (m.issued || m['published-print'] || m['published-online'] || m.published || m.created || {})['date-parts'];
+    s.year = dp && dp[0] && dp[0][0] ? String(dp[0][0]) : '';
+    var title = clean(first(m.title)), sub = clean(first(m.subtitle));
+    if (sub && title.toLowerCase().indexOf(sub.toLowerCase()) < 0) title += ': ' + sub;
+    s.title = apaTitle(title, flags);
+    var A = personsFrom(m.author), E = personsFrom(m.editor);
+    if (k === 'book' && !A.length && E.length) { A = E; s.edited = true; }
+    s.authors = A.length ? A : [P('', '')];
+    var link = 'https://doi.org/' + doi;
+    if (k === 'article') { s.journal = clean(first(m['container-title'])); s.volume = clean(m.volume); s.issue = clean(m.issue); s.pages = clean(m.page); s.artno = clean(m['article-number']); s.doi = link; }
+    else if (k === 'chapter') { s.book = apaTitle(first(m['container-title']), flags); s.editors = E.length ? E : [P('', '')]; s.pages = clean(m.page); s.publisher = pubName(m.publisher); s.doi = link; }
+    else if (k === 'book') { s.publisher = pubName(m.publisher); s.edition = clean(m['edition-number'] || m.edition); s.doi = link; }
+    else if (k === 'report') { s.publisher = pubName(m.publisher); s.url = link; }
+    else if (k === 'thesis') { s.institution = clean((m.institution && (m.institution[0] || {}).name) || m.publisher); s.url = link; }
+    return { k: k, s: s, flags: flags };
+  }
+  function fromISBN(v) {
+    var s = blank('book'), flags = {}, title = clean(v.title), sub = clean(v.subtitle);
+    if (sub && title.toLowerCase().indexOf(sub.toLowerCase()) < 0) title += ': ' + sub;
+    s.title = apaTitle(title, flags);
+    var A = (v.authors || []).map(function (n) { return splitName(typeof n === 'string' ? n : n.name); }).filter(Boolean);
+    s.authors = A.length ? A : [P('', '')];
+    var y = String(v.date || '').match(/\d{4}/); s.year = y ? y[0] : '';
+    s.publisher = pubName(v.publisher);
+    return { k: 'book', s: s, flags: flags };
+  }
+  function lookupDOI(doi) {
+    return getJSON('https://api.crossref.org/works/' + encodeURIComponent(doi)).then(function (j) { return { m: j.message, src: 'Crossref' }; })
+      .catch(function () { return getJSON('https://doi.org/' + doi, { Accept: 'application/vnd.citationstyles.csl+json' }).then(function (j) { return { m: j, src: 'doi.org' }; }); })
+      .then(function (r) { if (!r.m || !first(r.m.title)) throw new Error('empty'); return fromDOI(r.m, doi); });
+  }
+  function lookupISBN(isbn) {
+    return getJSON('https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn).then(function (j) {
+      var v = j.items && j.items[0] && j.items[0].volumeInfo; if (!v || !v.title) throw new Error('none');
+      return fromISBN({ title: v.title, subtitle: v.subtitle, authors: v.authors, publisher: v.publisher, date: v.publishedDate });
+    }).catch(function () {
+      return getJSON('https://openlibrary.org/api/books?bibkeys=ISBN:' + isbn + '&format=json&jscmd=data').then(function (j) {
+        var v = j['ISBN:' + isbn]; if (!v || !v.title) throw new Error('none');
+        return fromISBN({ title: v.title, subtitle: v.subtitle, authors: v.authors, publisher: first(v.publishers) && (first(v.publishers).name || first(v.publishers)), date: v.publish_date });
+      });
+    });
+  }
+  function doLookup() {
+    var id = parseId(lookVal);
+    if (id.bad) { lookMsg = '<span class="ap-err">' + id.bad + '</span>'; renderIn(); focusLook(); return; }
+    looking = true; lookMsg = ''; renderIn();
+    (id.doi ? lookupDOI(id.doi) : lookupISBN(id.isbn)).then(function (r) {
+      looking = false; r.s.ex = false; state[r.k] = r.s; cur = r.k; store.set('enam-apa-type', r.k);
+      var miss = [];
+      if (!r.s.year) miss.push('year');
+      if (!filled(r.s.authors[0])) miss.push('author');
+      if (r.k === 'book' && !r.s.publisher) miss.push('publisher');
+      if (r.k === 'article' && !(r.s.pages || r.s.artno)) miss.push('pages');
+      lookMsg = '<span class="ap-ok">Filled in as a <b>' + TYPES[r.k].label.toLowerCase() + '</b> from ' + (id.doi ? 'the DOI' : 'the ISBN') + '.</span> Check every box against the source' +
+        (r.flags.sc ? ', especially the title: it was changed to sentence case, so re-capitalize names, places, and languages' : '') +
+        (id.isbn ? '. Book databases can list a different edition or publisher, so compare with the copyright page' : '') +
+        (miss.length ? '. Missing: ' + miss.join(', ') + '; add ' + (miss.length > 1 ? 'them' : 'it') + ' if you can' : '') + '.';
+      renderTypes(); renderIn(); renderOut();
+    }, function () {
+      looking = false;
+      lookMsg = '<span class="ap-err">' + (id.doi ? 'No record was found for that DOI.' : 'No book was found for that ISBN.') + '</span> Check it and try again, or fill in the boxes yourself.';
+      renderIn(); focusLook();
+    });
+  }
+  function focusLook() { var i = $('ap-look'); if (i) { i.focus(); try { i.setSelectionRange(i.value.length, i.value.length); } catch (x) {} } }
+
+  // ---------- builder UI ----------
+  var LAB = { year: 'Year', month: 'Month', day: 'Day', title: 'Title', journal: 'Journal name', volume: 'Volume', issue: 'Issue', pages: 'Pages', artno: 'Article number', doi: 'DOI or URL', edition: 'Edition', publisher: 'Publisher', book: 'Book title', site: 'Website name', url: 'URL', retrieved: 'Retrieved on', reportno: 'Report number', pubno: 'Publication number', institution: 'University', database: 'Database or repository', conference: 'Conference name', location: 'Location' };
+  var HINT = {
+    title: 'Copy it as it appears. If it is in Title Case, a button below the reference converts it to sentence case.', journal: 'Use the full name in Title Case, e.g. Language Learning.', pages: 'e.g. 45-67', artno: 'Only if the journal uses article numbers instead of pages, e.g. e0193972.',
+    doi: 'Paste the DOI in any form; it becomes https://doi.org/…', edition: 'e.g. 2 for a second edition. Leave empty for a first edition.', publisher: 'Name only, no city.', site: 'Left out automatically if it matches a group author.',
+    retrieved: 'Only for pages that keep changing, e.g. January 9, 2020.', reportno: 'As shown on the report, e.g. Report No. 12.', pubno: 'From ProQuest or similar, if there is one.', database: 'e.g. ProQuest Dissertations & Theses Global, or your university repository.',
+    url: 'Include it if readers can open it without logging in.', location: 'City, State/Region, Country, or Virtual.', day: 'e.g. 8 or 8-11 for a range.', year: 'Leave empty if there is no date.'
+  };
+  var FIELDS = {
+    article: [['year'], ['title'], ['journal'], ['volume', 'issue', 'pages'], ['artno'], ['doi']],
+    book: [['year'], ['title'], ['edition'], ['publisher'], ['doi']],
+    chapter: [['year'], ['title'], ['editors'], ['book'], ['edition', 'pages'], ['publisher'], ['doi']],
+    web: [['year', 'month', 'day'], ['title'], ['site'], ['url'], ['retrieved']],
+    report: [['year'], ['title'], ['reportno'], ['publisher'], ['url']],
+    thesis: [['year'], ['title'], ['pubno'], ['kind', 'institution'], ['database'], ['url']],
+    video: [['year', 'month', 'day'], ['title'], ['site'], ['url']]
+  };
+  function personRows(list, key, who, allowGroup) {
+    return '<fieldset class="ap-people"><legend>' + who + '</legend>' + list.map(function (a, i) {
+      var grp = !isPerson(a);
+      return '<div class="ap-person" data-list="' + key + '" data-i="' + i + '">' +
+        (allowGroup ? '<div class="ap-kind" role="group" aria-label="Author ' + (i + 1) + ' type"><button type="button" class="' + (grp ? '' : 'on') + '" data-kind="person" aria-pressed="' + !grp + '">Person</button><button type="button" class="' + (grp ? 'on' : '') + '" data-kind="group" aria-pressed="' + grp + '">Organization</button></div>' : '') +
+        (grp ? '<input type="text" data-f="name" value="' + esc(a.name) + '" placeholder="e.g. World Health Organization" aria-label="Organization name"><input type="text" data-f="abbr" class="ap-sm" value="' + esc(a.abbr) + '" placeholder="Short form (optional), e.g. WHO" aria-label="Abbreviation">'
+          : '<input type="text" data-f="last" value="' + esc(a.last) + '" placeholder="Last name" aria-label="Last name ' + (i + 1) + '"><input type="text" data-f="given" value="' + esc(a.given) + '" placeholder="First name" aria-label="First name ' + (i + 1) + '">') +
+        (list.length > 1 ? '<button type="button" class="cx-rm" data-del="' + i + '" aria-label="Remove ' + (i + 1) + '">×</button>' : '') + '</div>';
+    }).join('') + '<div class="ap-row"><button type="button" class="sx-small" data-add="' + key + '">+ Add ' + (key === 'editors' ? 'editor' : 'another') + '</button>' + (key === 'authors' && cur === 'book' ? '<label class="ap-check"><input type="checkbox" data-f="edited"' + (state.book.edited ? ' checked' : '') + '> These are editors, not authors</label>' : '') + '</div></fieldset>';
+  }
+  function field(f, s) {
+    if (f === 'editors') return personRows(s.editors, 'editors', 'Book editors', false);
+    if (f === 'month') return '<div><label for="ap-month">Month</label><select id="ap-month" data-f="month">' + MONTHS.map(function (m, i) { return '<option value="' + (i || '') + '"' + (String(s.month) === String(i || '') ? ' selected' : '') + '>' + (m || '—') + '</option>'; }).join('') + '</select></div>';
+    if (f === 'kind') return '<div><label for="ap-kind">Type</label><select id="ap-kind" data-f="kind">' + ['Doctoral dissertation', 'Master’s thesis', 'Undergraduate honors thesis'].map(function (o) { return '<option' + (s.kind === o ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div>';
+    if (f === 'desc') return '<div><label for="ap-desc">Kind of presentation</label><select id="ap-desc" data-f="desc">' + ['Paper presentation', 'Poster session', 'Conference presentation', 'Conference session', 'Keynote address', 'Symposium'].map(function (o) { return '<option' + (s.desc === o ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></div>';
+    var big = f === 'title' || f === 'book';
+    return '<div><label for="ap-' + f + '">' + LAB[f] + '</label>' + (big ? '<textarea id="ap-' + f + '" data-f="' + f + '" rows="3">' + esc(s[f]) + '</textarea>' : '<input type="text" id="ap-' + f + '" data-f="' + f + '" value="' + esc(s[f]) + '">') + ((cur === 'video' && f === 'site' ? 'e.g. TED Conferences or YouTube.' : HINT[f]) ? '<p class="help">' + (cur === 'video' && f === 'site' ? 'e.g. TED Conferences or YouTube.' : HINT[f]) + '</p>' : '') + '</div>';
+  }
+  function renderTypes() { $('ap-types').innerHTML = Object.keys(TYPES).map(function (k) { return '<button type="button" role="radio" class="sx-tab' + (k === cur ? ' on' : '') + '" aria-checked="' + (k === cur) + '" data-type="' + k + '">' + TYPES[k].label + '</button>'; }).join(''); }
+  function renderIn() {
+    var s = state[cur];
+    var h = '<div class="ap-look"><label for="ap-look">Fill in automatically from a DOI or ISBN</label><div class="ap-lookrow"><input type="text" id="ap-look" value="' + esc(lookVal) + '" placeholder="e.g. 10.1093/applin/I.1.1 or 978-0-312-61049-4" autocomplete="off" spellcheck="false"><button type="button" class="sx-small dark" data-act="lookup"' + (looking ? ' disabled' : '') + '>' + (looking ? 'Looking up\u2026' : 'Fill in') + '</button></div><p class="help ap-lookmsg" id="ap-lookmsg" aria-live="polite">' + (lookMsg || 'Works for journal articles, books, and chapters that have a DOI, and for books with an ISBN. Always check the result against the source.') + '</p></div>';
+    h += '<div class="ap-or"><span>or</span></div>';
+    h += '<div class="ap-src"><button type="button" class="sx-small" data-act="example">Show an example</button><button type="button" class="sx-small" data-act="clear">Clear</button></div>';
+    h += '<p class="help">' + (s.ex ? 'This is a real example from linguistics. Press <b>Clear</b> to enter your own source.' : 'Fill in what you have. The reference updates as you type.') + '</p>';
+    h += personRows(s.authors, 'authors', TYPES[cur].who, true);
+    h += FIELDS[cur].map(function (row) { return row.length > 1 ? '<div class="ap-grid ap-g' + row.length + '">' + row.map(function (f) { return field(f, s); }).join('') + '</div>' : field(row[0], s); }).join('');
+    h += '<a class="sx-small dark ap-jump" href="#ap-out">See the reference \u2193</a>';
+    $('ap-in').innerHTML = h;
+  }
+  var pageLoc = '';
+  function renderOut() {
+    var s = state[cur], r = build(cur, s), o = $('ap-out');
+    if (r.empty) { o.innerHTML = '<div class="cx-wait">Your reference will appear here once you add a title. Not sure where to start? Press <b>Show an example</b>.</div>'; return; }
+    var c = cites(r, cur, s, pageLoc);
+    o.innerHTML = '<div class="ap-result"><span class="k">Reference</span><p class="ap-ref" id="ap-ref">' + r.html + '</p><div class="ap-actions"><button type="button" class="sx-small dark" data-act="copy">Copy reference</button><button type="button" class="sx-small" data-act="add">Add to my reference list</button></div></div>' +
+      '<div class="cx-step"><div class="t"><span>In your text</span>Citations</div><p>Use the <b>parenthetical</b> form at the end of a sentence, or the <b>narrative</b> form as part of the sentence.</p><div class="ap-cites">' + c.map(function (x) { return '<div><span>' + x[0] + '</span><b>' + x[1] + '</b></div>'; }).join('') + '</div><label class="ap-inline">' + (cur === 'video' ? 'Quoting? Add the time stamp: ' : 'Quoting? Add the page: ') + '<input type="text" id="ap-page" value="' + esc(pageLoc) + '" placeholder="' + (cur === 'video' ? 'e.g. 8:51' : 'e.g. 45 or 45-46') + '" aria-label="' + (cur === 'video' ? 'Time stamp' : 'Page number') + ' for a quotation"></label><p class="help">APA uses only the year in citations, even when the reference has a full date. For three or more authors, use the first name and et al. every time.</p></div>' +
+      (r.notes.length ? '<div class="cx-step"><div class="t"><span>Notes</span>What the builder did for you</div><ul class="ap-notes">' + r.notes.map(function (n) { return '<li>' + n + '</li>'; }).join('') + '</ul></div>' : '');
+  }
+  function setType(k) { cur = k; store.set('enam-apa-type', k); renderTypes(); renderIn(); renderOut(); }
+  $('ap-types').addEventListener('click', function (e) { var b = e.target.closest('[data-type]'); if (b) setType(b.dataset.type); });
+  var inp = $('ap-in'), tmr;
+  inp.addEventListener('input', function (e) {
+    var t = e.target, s = state[cur], row = t.closest('.ap-person');
+    if (t.id === 'ap-look') { lookVal = t.value; return; }
+    if (row) s[row.dataset.list][+row.dataset.i][t.dataset.f] = t.value;
+    else if (t.dataset.f === 'edited') s.edited = t.checked;
+    else if (t.dataset.f) s[t.dataset.f] = t.value;
+    s.ex = false; clearTimeout(tmr); tmr = setTimeout(renderOut, 200);
+  });
+  inp.addEventListener('keydown', function (e) { if (e.target.id === 'ap-look' && e.key === 'Enter') { e.preventDefault(); doLookup(); } });
+  inp.addEventListener('change', function (e) { if (e.target.tagName === 'SELECT' || e.target.type === 'checkbox') { var t = e.target; if (t.dataset.f === 'edited') state[cur].edited = t.checked; else state[cur][t.dataset.f] = t.value; renderOut(); } });
+  inp.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return; var s = state[cur], row = b.closest('.ap-person');
+    if (b.dataset.kind && row) { var L = s[row.dataset.list], i = +row.dataset.i; L[i] = b.dataset.kind === 'group' ? G('', '') : P('', ''); renderIn(); renderOut(); return; }
+    if (b.dataset.del != null) { var L2 = s[b.closest('.ap-person').dataset.list]; L2.splice(+b.dataset.del, 1); renderIn(); renderOut(); return; }
+    if (b.dataset.add) { s[b.dataset.add].push(P('', '')); renderIn(); var rows = inp.querySelectorAll('.ap-person[data-list="' + b.dataset.add + '"] input'); if (rows.length) rows[rows.length - 2].focus(); renderOut(); return; }
+    if (b.dataset.act === 'clear') { state[cur] = blank(cur); pageLoc = ''; lookMsg = ''; lookVal = ''; renderIn(); renderOut(); var f = inp.querySelector('.ap-person input'); if (f) f.focus(); return; }
+    if (b.dataset.act === 'lookup') { doLookup(); return; }
+    if (b.dataset.act === 'example') { state[cur] = freshEx(cur); state[cur].ex = true; pageLoc = ''; renderIn(); renderOut(); return; }
+  });
+  var out = $('ap-out');
+  out.addEventListener('input', function (e) { if (e.target.id === 'ap-page') { pageLoc = e.target.value; clearTimeout(tmr); tmr = setTimeout(function () { var pos = e.target.selectionStart; renderOut(); var p = $('ap-page'); p.focus(); try { p.setSelectionRange(pos, pos); } catch (x) {} }, 400); } });
+  function flash(b, t) { var o = b.dataset.o || b.textContent; b.dataset.o = o; b.textContent = t; setTimeout(function () { b.textContent = o; }, 1800); }
+  function copyRich(html, text, b) {
+    var ok = function () { flash(b, '✓ Copied'); }, fail = function () { flash(b, 'Select the text and copy it'); };
+    try {
+      if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([text], { type: 'text/plain' }) })]).then(ok, function () { navigator.clipboard.writeText(text).then(ok, fail); });
+      else if (navigator.clipboard) navigator.clipboard.writeText(text).then(ok, fail); else fail();
+    } catch (x) { fail(); }
+  }
+  var WORD = 'font-family:Times New Roman,serif;font-size:12pt;line-height:2;margin:0 0 0 .5in;text-indent:-.5in';
+  out.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var r = build(cur, state[cur]);
+    if (b.dataset.fix) { var key = b.dataset.fix; state[cur][key] = sentenceCase(state[cur][key]); state[cur].ex = false; renderIn(); renderOut(); return; }
+    if (b.dataset.act === 'copy') { var el = $('ap-ref'); copyRich('<p style="' + WORD + '">' + el.innerHTML.replace(/<a [^>]*>|<\/a>/g, '') + '</p>', el.innerText, b); }
+    if (b.dataset.act === 'add') {
+      var L = getList(), html = r.html.replace(/<a [^>]*>|<\/a>/g, ''), text = $('ap-ref').innerText;
+      if (L.some(function (x) { return x.text === text; })) { flash(b, 'Already in your list'); return; }
+      L.push({ html: html, text: text }); saveList(L); flash(b, '✓ Added'); updateCount(); renderList();
+    }
+  });
+
+  // ---------- reference list ----------
+  var LKEY = 'enam-apa-list-v1';
+  function getList() { return store.get(LKEY, []); }
+  function saveList(L) { store.set(LKEY, L); }
+  function sortKey(t) {
+    var m = t.match(/^(.*?)\s\((n\.d\.(?:-[a-z])?|in press|\d{4}[a-z]?)(?:,[^)]*)?\)/i), who = m ? m[1] : t, d = m ? m[2].toLowerCase() : '';
+    var dk = /^n\.d/.test(d) ? 0 : d === 'in press' ? 99999 : (parseInt(d, 10) || 50000);
+    return [who.replace(/^(the|a|an)\s+/i, '').toLowerCase(), dk, t.toLowerCase()];
+  }
+  function sorted(L) { return L.map(function (x, i) { return { x: x, i: i, k: sortKey(x.text) }; }).sort(function (a, b) { var c = a.k[0].localeCompare(b.k[0], 'en', { sensitivity: 'base' }); if (c) return c; if (a.k[1] !== b.k[1]) return a.k[1] - b.k[1]; return a.k[2].localeCompare(b.k[2]); }); }
+  function updateCount() { var n = getList().length, c = $('ap-count'); c.hidden = !n; c.textContent = n; }
+  function renderList() {
+    var L = getList(), S = sorted(L);
+    $('ap-list').innerHTML = '<div class="ap-listgrid"><div><div class="ap-page" aria-label="Reference list preview"><p class="ap-page-h">' + (L.length === 1 ? 'Reference' : 'References') + '</p>' + (L.length ? S.map(function (o) { return '<div class="ap-entry"><p>' + o.x.html + '</p><button type="button" class="cx-rm" data-rmref="' + o.i + '" aria-label="Remove this reference">×</button></div>'; }).join('') : '<p class="ap-empty">Your list is empty. Build a reference and press <b>Add to my reference list</b>, or paste references on the right.</p>') + '</div>' +
+      (L.length ? '<div class="ap-actions"><button type="button" class="sx-small dark" data-act="copyall">Copy the whole list</button><button type="button" class="sx-small" data-act="clearall">Clear the list</button></div><p class="help">The copied list keeps italics, double spacing, and the hanging indent when you paste it into Word or Google Docs.</p>' : '') + '</div>' +
+      '<div class="sx-in"><div><label for="ap-paste">Paste references you already have</label><textarea id="ap-paste" rows="6" placeholder="One reference per line or paragraph"></textarea><p class="help">They are added to the list and sorted. Pasted text loses italics, so check those afterwards.</p></div><button type="button" class="sx-small" data-act="paste">Add and sort</button>' +
+      '<div class="ap-rules"><h3>Reference list rules</h3><ul><li>Start the list on a new page after your text, with the label <b>References</b> bold and centered.</li><li>Double-space everything, with no extra space between entries.</li><li>Use a 0.5-inch hanging indent: the first line of each entry is flush left and the rest are indented.</li><li>Put entries in alphabetical order by the first author&rsquo;s last name. Works by the same author go from oldest to newest, with undated (n.d.) works first.</li><li>Every source cited in your text must be in the list, and every entry in the list must be cited. Personal communications are the exception: they appear only in the text.</li></ul></div></div></div>';
+  }
+  $('ap-list').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return; var L = getList();
+    if (b.dataset.rmref != null) { L.splice(+b.dataset.rmref, 1); saveList(L); renderList(); updateCount(); return; }
+    if (b.dataset.act === 'clearall') { if (b.dataset.sure) { saveList([]); renderList(); updateCount(); } else { b.dataset.sure = 1; b.textContent = 'Press again to clear'; setTimeout(function () { if (b.isConnected) { delete b.dataset.sure; b.textContent = 'Clear the list'; } }, 3000); } return; }
+    if (b.dataset.act === 'copyall') { var S = sorted(L); copyRich('<p style="font-family:Times New Roman,serif;font-size:12pt;line-height:2;text-align:center;margin:0"><b>' + (L.length === 1 ? 'Reference' : 'References') + '</b></p>' + S.map(function (o) { return '<p style="' + WORD + '">' + o.x.html + '</p>'; }).join(''), (L.length === 1 ? 'Reference' : 'References') + '\n' + S.map(function (o) { return o.x.text; }).join('\n'), b); return; }
+    if (b.dataset.act === 'paste') { var v = $('ap-paste').value.split(/\n+/).map(function (x) { return x.trim(); }).filter(function (x) { return x.length > 10; }); v.forEach(function (t) { if (!L.some(function (x) { return x.text === t; })) L.push({ html: esc(t), text: t }); }); saveList(L); renderList(); updateCount(); }
+  });
+
+  renderTypes(); renderIn(); renderOut(); updateCount(); showView(!!location.hash && !/^#(format|cite|heads|refs|hang|builder)?$/.test(location.hash));
+})();
+</script>
+</body>
+</html>
