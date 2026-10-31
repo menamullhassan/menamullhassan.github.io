@@ -96,8 +96,16 @@
               <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M11 8v6M20 20l-4-4"/></svg></button>
           </div>
           <div class="sm-tgroup sm-right">
-            <button type="button" class="sm-tb primary" id="sm-export" title="Download your map as a picture">
-              <svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Save as image</span></button>
+            <div class="sm-menu">
+              <button type="button" class="sm-tb primary" id="sm-export" aria-haspopup="true" aria-expanded="false" title="Download your map as a picture">
+                <svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Save as image</span></button>
+              <div class="sm-dropdown sm-dropdown-r" id="sm-export-menu" hidden>
+                <button type="button" data-bg="white">White page <small>Plain white background</small></button>
+                <button type="button" data-bg="white-dots">White page with dots <small>Keeps the dotted grid you see on screen</small></button>
+                <button type="button" data-bg="black">Black page <small>Plain black background</small></button>
+                <button type="button" data-bg="black-dots">Black page with dots <small>Black background with a light dotted grid</small></button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -122,6 +130,12 @@
 <style>
   .sm-canvas-wrap .sm-editor { padding: 0; margin: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; white-space: pre; overflow: hidden; caret-color: currentColor; }
   .sm-canvas-wrap .sm-editor::placeholder { color: currentColor; opacity: .45; }
+  /* the site-wide input style must not paint a box behind the text you type on the canvas */
+  .sm-dropdown.sm-dropdown-r { left: auto; right: 0; }
+  .sm-canvas-wrap textarea.sm-editor { background: transparent !important; box-shadow: none !important; border: 0 !important; }
+  /* dark swatches need an outline to be visible on the dark panel */
+  @media (prefers-color-scheme: dark) { :where(html:not([data-theme="light"])) .sm-sw { border-color: rgba(255,255,255,.35); } }
+  :where(html[data-theme="dark"]) .sm-sw { border-color: rgba(255,255,255,.35); }
   .sm-empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; pointer-events: none; text-align: center; padding: 20px; font-family: "Kalam", "Comic Sans MS", cursive; color: #8a857c; }
   .sm-empty p { margin: 0; font-size: 1.75rem; line-height: 1.2; color: #0F4C81; }
   .sm-empty span { font-size: 1.125rem; }
@@ -775,7 +789,17 @@
   $('sm-zoom-in').addEventListener('click', () => zoomAt(1.2));
   $('sm-zoom-out').addEventListener('click', () => zoomAt(1 / 1.2));
   $('sm-fit').addEventListener('click', fitView);
-  $('sm-export').addEventListener('click', exportPNG);
+  const expBtn = $('sm-export'), expMenu = $('sm-export-menu');
+  expBtn.addEventListener('click', () => {
+    if (!doc.nodes.length) { toast('Add a word first, then save your map as an image'); return; }
+    const open = expMenu.hidden; expMenu.hidden = !open; expBtn.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', (ev) => { if (!ev.target.closest('.sm-right .sm-menu')) { expMenu.hidden = true; expBtn.setAttribute('aria-expanded', false); } });
+  expMenu.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-bg]'); if (!b) return;
+    expMenu.hidden = true; expBtn.setAttribute('aria-expanded', false);
+    const v = b.dataset.bg; exportPNG({ dark: v.indexOf('black') === 0, dots: /dots$/.test(v) });
+  });
 
   function mapName() {
     const c = doc.nodes.slice().sort((a, b) => b.size - a.size)[0];
@@ -811,7 +835,15 @@
     fontCache[chars] = css; return css;
   }
   let exporting = false;
-  async function exportPNG() {
+  function isDarkColor(c) {
+    const m = String(c || '').trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i); if (!m) return false;
+    let h = m[1]; if (h.length === 3) h = h.split('').map((x) => x + x).join('');
+    const r = parseInt(h.slice(0, 2), 16), g = parseInt(h.slice(2, 4), 16), bl = parseInt(h.slice(4, 6), 16);
+    return (0.2126 * r + 0.7152 * g + 0.0722 * bl) / 255 < 0.25;
+  }
+  async function exportPNG(opts) {
+    opts = opts || {};
+    const BG = opts.dark ? '#111214' : '#ffffff', DOT = opts.dark ? 'rgba(255,255,255,.16)' : 'rgba(27,29,36,.13)';
     if (!doc.nodes.length) { toast('Add a word first, then save your map as an image'); return; }
     if (exporting) return; exporting = true;
     if (editing) endEdit(true);
@@ -819,25 +851,37 @@
     try {
       const fontCSS = await handFontCSS();
       const b = bbox(doc.nodes), pad = 40, W = b.x2 - b.x1 + pad * 2, H = b.y2 - b.y1 + pad * 2;
-      const out = document.createElementNS(NS, 'svg');
-      out.setAttribute('xmlns', NS); out.setAttribute('width', W); out.setAttribute('height', H);
-      out.setAttribute('viewBox', (b.x1 - pad) + ' ' + (b.y1 - pad) + ' ' + W + ' ' + H);
-      if (fontCSS) { const st = el('style', {}, el('defs', {}, out)); st.textContent = fontCSS; }
-      el('rect', { x: b.x1 - pad, y: b.y1 - pad, width: W, height: H, fill: '#ffffff' }, out);
-      const byId = Object.fromEntries(doc.nodes.map((n) => [n.id, n]));
-      const ge = el('g', {}, out), gn = el('g', {}, out);
-      doc.edges.forEach((e) => drawEdge(ge, e, byId, false)); doc.nodes.forEach((n) => drawNode(gn, n, false));
-      const data = new XMLSerializer().serializeToString(out);
       const MIN = 2000, MAX = 8000;
       let scale = Math.max(2, MIN / W, MIN / H);
       if (Math.max(W, H) * scale > MAX) scale = MAX / Math.max(W, H);
       const cw = Math.max(MIN, Math.round(W * scale)), ch = Math.max(MIN, Math.round(H * scale));
+      // the picture covers the whole image, so the background and dots reach every edge
+      const W2 = cw / scale, H2 = ch / scale, X0 = b.x1 - pad - (W2 - W) / 2, Y0 = b.y1 - pad - (H2 - H) / 2;
+      const out = document.createElementNS(NS, 'svg');
+      out.setAttribute('xmlns', NS); out.setAttribute('width', W2); out.setAttribute('height', H2);
+      out.setAttribute('viewBox', X0 + ' ' + Y0 + ' ' + W2 + ' ' + H2);
+      if (fontCSS) { const st = el('style', {}, el('defs', {}, out)); st.textContent = fontCSS; }
+      el('rect', { x: X0, y: Y0, width: W2, height: H2, fill: BG }, out);
+      if (opts.dots) {
+        const defs = el('defs', {}, out), pat = el('pattern', { id: 'smdots', width: 22, height: 22, patternUnits: 'userSpaceOnUse' }, defs);
+        el('circle', { cx: 11, cy: 11, r: 0.9, fill: DOT }, pat);
+        el('rect', { x: X0, y: Y0, width: W2, height: H2, fill: 'url(#smdots)' }, out);
+      }
+      const byId = Object.fromEntries(doc.nodes.map((n) => [n.id, n]));
+      const ge = el('g', {}, out), gn = el('g', {}, out);
+      doc.edges.forEach((e) => drawEdge(ge, e, byId, false)); doc.nodes.forEach((n) => drawNode(gn, n, false));
+      // on a black page, very dark lines and arrows would disappear, so draw them light instead
+      if (opts.dark) ge.querySelectorAll('*').forEach((x) => {
+        if (x.tagName.toLowerCase() === 'text') return;
+        ['stroke', 'fill'].forEach((a) => { if (isDarkColor(x.getAttribute(a))) x.setAttribute(a, '#e8e6e1'); });
+      });
+      const data = new XMLSerializer().serializeToString(out);
       const img = new Image();
       await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(data); });
       await new Promise((r) => setTimeout(r, 120));   // give the embedded font a moment to settle
       const c = document.createElement('canvas'); c.width = cw; c.height = ch;
-      const ctx = c.getContext('2d'); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cw, ch);
-      ctx.drawImage(img, (cw - W * scale) / 2, (ch - H * scale) / 2, W * scale, H * scale);
+      const ctx = c.getContext('2d'); ctx.fillStyle = BG; ctx.fillRect(0, 0, cw, ch);
+      ctx.drawImage(img, 0, 0, cw, ch);
       await new Promise((res) => c.toBlob((blob) => { download(blob, mapName() + '.png'); res(); }, 'image/png'));
       toast('High-resolution image downloaded (' + cw + ' × ' + ch + ' px)');
     } catch (e) { toast('Sorry, the image couldn’t be created in this browser'); }
