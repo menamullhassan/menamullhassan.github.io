@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Poster Studio | M Enam Ull Hassan</title>
 <link rel="canonical" href="https://enamhassan.com/poster-studio.html">
-<meta name="description" content="Make conference posters, slides, flyers, and handouts in your browser. Add text and images and the layout arranges itself, or place everything freely. Export PNG or PDF.">
+<meta name="description" content="Make conference posters, slides, flyers, and handouts in your browser. Pick a modern design, click any text to type over it, drop in your photos, and export PNG or PDF.">
 <script>
   (function () {
     var d = document.documentElement;
@@ -58,7 +58,7 @@
   <div class="wrap page-hero ps-hero">
     <p class="eyebrow reveal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3h8v10H3zm10 0h8v6h-8zm0 8h8v10h-8zM3 15h8v6H3z"/></svg><a class="crumb" href="resources.html">Resources</a> · Design tool</p>
     <h1 class="reveal">Poster <em>Studio</em></h1>
-    <p class="lead reveal">Make conference posters, slides, flyers, and handouts from ready-made pieces. Add your text and images and let the page arrange itself, or switch to free layout and place everything yourself.</p>
+    <p class="lead reveal">Pick a modern design, click any text to type over it, and drop in your photos. The layout keeps itself neat, and you can switch designs at any time without losing your words.</p>
   </div>
 
   <section class="ps-section">
@@ -72,6 +72,17 @@
               <button type="button" class="ps-tb" id="ps-new" title="Start a new design"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span>New</span></button>
               <label class="ps-vh" for="ps-name">Design name</label>
               <input type="text" class="ps-name" id="ps-name" value="Untitled design" autocomplete="off">
+            </div>
+            <div class="ps-tgroup ps-menu ps-addwrap">
+              <button type="button" class="ps-tb" id="ps-add" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Add</span></button>
+              <div class="ps-dropdown ps-addmenu" id="ps-add-menu" hidden>
+                <button type="button" data-add="text">Section <small>A heading and a paragraph</small></button>
+                <button type="button" data-add="image">Photo <small>A picture from your computer</small></button>
+                <button type="button" data-add="chart">Chart <small>A bar or pie chart from your numbers</small></button>
+                <button type="button" data-add="qr">QR code <small>Paste a link and the code is made for you</small></button>
+                <button type="button" data-add="takeaway">Key message <small>One sentence in a color band</small></button>
+                <button type="button" data-add="byline">Byline <small>Names and affiliation under the title</small></button>
+              </div>
             </div>
             <div class="ps-seg" role="group" aria-label="Layout mode">
               <button type="button" data-mode="simple" aria-pressed="true">Simple mode</button>
@@ -108,6 +119,7 @@
                 <div class="ps-stage" id="ps-stage">
                   <svg class="ps-svg" id="ps-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Design preview"></svg>
                   <textarea class="ps-edit" id="ps-edit" hidden aria-label="Edit text" spellcheck="true"></textarea>
+                  <div class="ps-btb" id="ps-btb" role="toolbar" aria-label="Selected block" hidden></div>
                 </div>
               </div>
               <div class="ps-pages" id="ps-pages" hidden></div>
@@ -120,7 +132,7 @@
         <input type="file" id="ps-file-proj" accept=".json,application/json" hidden>
         <div class="ps-toast" id="ps-toast" role="status" aria-live="polite" hidden></div>
       </div>
-      <p class="ps-foot">Your design is kept only in this browser. Use <b>Export › Project file</b> to keep a copy you can open again on any computer. Fonts are open-source (SIL Open Font License) and free to use in print.</p>
+      <p class="ps-foot">Click any text on the page to change it. Your design is kept only in this browser. Use <b>Export › Project file</b> to keep a copy you can open again on any computer. Fonts are open-source (SIL Open Font License) and free to use in print.</p>
     </div>
   </section>
 </main>
@@ -326,6 +338,63 @@
     .ps-push { margin-left: 0; }
     .ps-pages { flex-wrap: wrap; overflow-x: visible; }
   }
+
+  .ps-lookhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .ps-keep { gap: 6px 14px; margin-bottom: 4px; }
+  .ps-keep label { display: inline-flex; align-items: center; gap: 6px; font-size: .8125rem; color: var(--muted); cursor: pointer; }
+  .ps-keep input { width: 15px; height: 15px; accent-color: var(--ink); margin: 0; }
+  .ps-sub { margin: 12px 0 6px; font-size: .6875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .ps-looks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ps-look { display: flex; flex-direction: column; gap: 6px; padding: 6px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; text-align: left; font: inherit; color: var(--ink); min-width: 0; transition: transform .15s ease, box-shadow .15s ease; }
+  .ps-look:hover { transform: translateY(-2px); box-shadow: var(--neu-out-sm); }
+  .ps-look[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .ps-look .th { display: flex; align-items: center; justify-content: center; aspect-ratio: 1 / 1; background: rgba(0,0,0,.04); border-radius: 8px; overflow: hidden; }
+  .ps-look svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 1px 2px rgba(0,0,0,.15)); }
+  .ps-look .nm { font-size: .78rem; font-weight: 600; padding: 0 2px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ps-dots { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ps-dot { width: 30px; height: 30px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; }
+  .ps-dot[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .ps-aas { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .ps-aa { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; color: var(--ink); font: inherit; min-width: 0; }
+  .ps-aa span { font-size: 1.2rem; line-height: 1.1; }
+  .ps-aa small { font-size: .62rem; color: var(--muted); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ps-aa[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .ps-paste { width: 100%; box-sizing: border-box; padding: 14px 16px; border-radius: 14px; font: inherit; font-size: .9375rem; line-height: 1.55; color: var(--ink); min-height: 240px; resize: vertical; }
+  .ps-pastebox .ps-row { align-items: center; gap: 10px; }
+  .ps-more { margin-top: 26px; }
+  .ps-more summary { cursor: pointer; font-weight: 600; color: var(--muted); padding: 6px 0; }
+  .ps-more .ps-tpls { margin-top: 14px; }
+  .ps-bgs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .ps-bgt { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; color: var(--ink); font: inherit; min-width: 0; }
+  .ps-bgt svg { width: 100%; aspect-ratio: 1 / 1; display: block; border-radius: 6px; }
+  .ps-bgt span { font-size: .66rem; color: var(--muted); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ps-bgt[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .ps-app.ps-simple .ps-left { display: none; }
+  .ps-app.ps-simple .ps-body { grid-template-columns: minmax(0, 1fr) 330px; }
+  .ps-app.ps-free .ps-addwrap { display: none; }
+  .ps-simple .ps-svg .ps-el { cursor: pointer; }
+  .ps-simple .ps-svg .ps-el:hover { filter: drop-shadow(0 0 1.5px rgba(43,108,255,.9)); }
+  .ps-bsel { fill: none; stroke: #2b6cff; pointer-events: none; }
+  .ps-stage-wrap textarea.ps-edit { outline-color: #2b6cff; }
+  .ps-btb { position: absolute; z-index: 6; display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: #15161b; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+  .ps-btb button { height: 32px; min-width: 32px; padding: 0 8px; border: 0; border-radius: 8px; background: transparent; color: #f4f2ee; font: inherit; font-size: .8125rem; font-weight: 600; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; }
+  .ps-btb button:hover { background: rgba(255,255,255,.12); }
+  .ps-btb button:disabled { opacity: .35; cursor: default; background: transparent; }
+  .ps-btb svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .ps-addmenu { left: 0; right: auto; }
+  .ps-selsec { padding: 14px; border-radius: 14px; border: 1.5px solid #2b6cff; }
+  .ps-starthead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
+  .ps-starthead p { margin: 6px 0 0; color: var(--muted); max-width: 62ch; }
+  .ps-starthead .ps-resume { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ps-fmtbar { display: flex; flex-wrap: wrap; gap: 10px 26px; align-items: center; }
+  .ps-designs { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 22px; }
+  .ps-dcard { display: flex; flex-direction: column; gap: 10px; padding: 10px; border: 0; border-radius: 18px; background: var(--bg); color: var(--ink); text-align: left; box-shadow: var(--neu-out-sm); cursor: pointer; font: inherit; transition: transform .15s ease; min-width: 0; }
+  .ps-dcard:hover { transform: translateY(-3px); }
+  .ps-dcard .th { display: flex; align-items: center; justify-content: center; aspect-ratio: 3 / 4; }
+  .ps-dcard .th svg { width: 100%; height: 100%; filter: drop-shadow(0 6px 14px rgba(27,29,36,.16)); }
+  .ps-dcard b { font-size: .9375rem; padding: 0 4px 4px; }
+  @media (max-width: 1180px) { .ps-app.ps-simple .ps-body { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 560px) { .ps-designs { grid-template-columns: 1fr 1fr; gap: 12px; } .ps-dcard { padding: 6px; } .ps-dcard b { font-size: .8125rem; } }
 </style>
 <script>
 (function () {
@@ -338,6 +407,11 @@
 
   // ---------- design options ----------
   var PAIRS = [
+    { id: 'jakarta', d: 'Plus Jakarta Sans', b: 'Plus Jakarta Sans', dw: 800, df: "'Plus Jakarta Sans', system-ui, sans-serif", bf: "'Plus Jakarta Sans', system-ui, sans-serif", g: 'family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,800;1,400' },
+    { id: 'intertight', d: 'Inter Tight', b: 'Inter', dw: 800, df: "'Inter Tight', system-ui, sans-serif", bf: "'Inter', system-ui, sans-serif", g: 'family=Inter+Tight:wght@400;800&family=Inter:ital,wght@0,400;0,600;1,400' },
+    { id: 'unbounded', d: 'Unbounded', b: 'Inter', dw: 700, df: "'Unbounded', system-ui, sans-serif", bf: "'Inter', system-ui, sans-serif", g: 'family=Unbounded:wght@400;700&family=Inter:ital,wght@0,400;0,600;1,400' },
+    { id: 'sora', d: 'Sora', b: 'Inter', dw: 700, df: "'Sora', system-ui, sans-serif", bf: "'Inter', system-ui, sans-serif", g: 'family=Sora:wght@400;700&family=Inter:ital,wght@0,400;0,600;1,400' },
+    { id: 'archivo', d: 'Archivo Black', b: 'Archivo', dw: 400, df: "'Archivo Black', system-ui, sans-serif", bf: "'Archivo', system-ui, sans-serif", g: 'family=Archivo+Black&family=Archivo:ital,wght@0,400;0,600;1,400' },
     { id: 'fraunces', d: 'Fraunces', b: 'Inter', dw: 600, df: "'Fraunces', Georgia, serif", bf: "'Inter', system-ui, sans-serif", g: 'family=Fraunces:opsz,wght@144,400;144,600&family=Inter:ital,wght@0,400;0,600;1,400' },
     { id: 'bricolage', d: 'Bricolage Grotesque', b: 'Figtree', dw: 700, ink: 1, df: "'Bricolage Grotesque', system-ui, sans-serif", bf: "'Figtree', system-ui, sans-serif", g: 'family=Bricolage+Grotesque:opsz,wght@12,400;12,700&family=Figtree:ital,wght@0,400;0,600;1,400' },
     { id: 'familjen', d: 'Familjen Grotesk', b: 'Source Serif 4', dw: 700, ink: 1, df: "'Familjen Grotesk', system-ui, sans-serif", bf: "'Source Serif 4', Georgia, serif", g: 'family=Familjen+Grotesk:wght@400;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400' },
@@ -350,6 +424,14 @@
     { id: 'syne', d: 'Syne', b: 'Work Sans', dw: 700, df: "'Syne', system-ui, sans-serif", bf: "'Work Sans', system-ui, sans-serif", g: 'family=Syne:wght@400;700&family=Work+Sans:ital,wght@0,400;0,600;1,400' }
   ];
   var PALS = [
+    { id: 'lilac', name: 'Lilac', paper: '#f7f5ff', ink: '#1a1433', muted: '#5d5677', accent: '#6d4aff', accent2: '#ff8fc7', soft: '#ebe5ff', line: '#ddd6f7', on: '#ffffff' },
+    { id: 'neon', name: 'Neon night', paper: '#0b0d12', ink: '#f4f5f7', muted: '#9aa3b2', accent: '#7c5cff', accent2: '#2ee6d6', soft: '#171b25', line: '#262b36', on: '#ffffff' },
+    { id: 'citrus', name: 'Citrus', paper: '#fffdf2', ink: '#1d1a0c', muted: '#5f5a40', accent: '#ff5a1f', accent2: '#ffd60a', soft: '#fff1b0', line: '#efe6b8', on: '#ffffff' },
+    { id: 'sky', name: 'Sky', paper: '#f3f8ff', ink: '#0a1a33', muted: '#4d5f7a', accent: '#1f6bff', accent2: '#5fd4ff', soft: '#dfeaff', line: '#d3e1f5', on: '#ffffff' },
+    { id: 'mint', name: 'Mint', paper: '#f2fbf6', ink: '#0c1f17', muted: '#4b6359', accent: '#00976f', accent2: '#9cf0c9', soft: '#d9f2e6', line: '#cfe6da', on: '#ffffff' },
+    { id: 'ember', name: 'Ember', paper: '#120d0c', ink: '#fbf3ee', muted: '#bfa79c', accent: '#ff6a3d', accent2: '#ffc14d', soft: '#221815', line: '#36281f', on: '#120d0c' },
+    { id: 'mono', name: 'Mono red', paper: '#f2f2f0', ink: '#0a0a0a', muted: '#555555', accent: '#0a0a0a', accent2: '#ff3b30', soft: '#e4e4e0', line: '#d4d4cf', on: '#ffffff' },
+    { id: 'berry', name: 'Berry', paper: '#fff6f8', ink: '#2a0f1c', muted: '#73505f', accent: '#e0245e', accent2: '#7a5cff', soft: '#ffe1ea', line: '#f2d3dc', on: '#ffffff' },
     { id: 'blue', name: 'Classic blue', paper: '#fbfaf7', ink: '#1b1d24', muted: '#5c5a55', accent: '#0F4C81', accent2: '#6667AB', soft: '#e3ebf4', line: '#d9d6cf', on: '#ffffff' },
     { id: 'clay', name: 'Clay', paper: '#fbf6f1', ink: '#2a1a12', muted: '#6b5a50', accent: '#a8481f', accent2: '#d99a6c', soft: '#f6e4d6', line: '#e4d6ca', on: '#ffffff' },
     { id: 'forest', name: 'Forest', paper: '#f7f8f4', ink: '#17211b', muted: '#56605a', accent: '#2f6a4f', accent2: '#8fb39a', soft: '#e2ece4', line: '#d6ddd5', on: '#ffffff' },
@@ -368,7 +450,24 @@
     handout: { name: 'Handout', sizes: [{ id: 'letter', label: 'US Letter', w: 8.5, h: 11 }, { id: 'a4', label: 'A4', w: 8.27, h: 11.69 }], minBody: 10, minCap: 8, dpi: 300, check: 'comfortable to read in print', what: 'handout' }
   };
   var LAYOUTS = [{ id: 'col2', name: 'Two columns' }, { id: 'col3', name: 'Three columns' }, { id: 'imgtop', name: 'Big image on top' }, { id: 'cover', name: 'Bold cover' }];
+  // A look is a complete design: layout, fonts, colors, header, sections, and decoration.
+  var LOOKS = [
+    { id: 'bento', name: 'Bento', layout: 'col2', pal: 'lilac', pair: 'jakarta', s: { header: 'card', headFill: 'gradient', sections: 'bento', cycle: ['soft', 'accent', 'tint', 'ink', 'soft'], round: 0.9, tight: 1, takeFill: 'ink' } },
+    { id: 'bentonight', name: 'Bento night', layout: 'col3', pal: 'neon', pair: 'intertight', bg: 'glow', s: { header: 'card', headFill: 'gradient', sections: 'glass', round: 0.9, tight: 1, heads: 'pill', takeFill: 'gradient' } },
+    { id: 'swiss', name: 'Swiss', layout: 'col3', pal: 'mono', pair: 'intertight', s: { header: 'rule', ruleFill: 'accent2', sections: 'topline', numbered: 1, headInk: 1, titleScale: 1.5, takeFill: 'accent2' } },
+    { id: 'headline', name: 'Headline', layout: 'col2', pal: 'citrus', pair: 'archivo', s: { header: 'panel', sections: 'plain', titleScale: 1.45, heads: 'pill', takeFill: 'ink', round: 0.6 } },
+    { id: 'mesh', name: 'Gradient mesh', layout: 'col2', pal: 'sky', pair: 'sora', bg: 'mesh', s: { header: 'plain', sections: 'glass', titleScale: 1.3, heads: 'pill', round: 0.9, tight: 1, takeFill: 'gradient' } },
+    { id: 'glow', name: 'Glow', layout: 'col2', pal: 'ember', pair: 'unbounded', bg: 'glow', s: { header: 'plain', sections: 'topline', titleScale: 1.25, headInk: 0, takeFill: 'gradient', round: 0.7 } },
+    { id: 'block', name: 'Color block', layout: 'col2', pal: 'mint', pair: 'jakarta', s: { header: 'panel', panelFill: 'gradient', sections: 'bento', cycle: ['soft', 'tint', 'accent', 'soft'], round: 0.8, tight: 1, takeFill: 'accent' } },
+    { id: 'pills', name: 'Pills', layout: 'col2', pal: 'berry', pair: 'sora', bg: 'dots', s: { header: 'centered', sections: 'cards', heads: 'pill', round: 0.9, tight: 1, titleScale: 1.15, takeFill: 'gradient' } },
+    { id: 'lab', name: 'Grid lab', layout: 'col3', pal: 'mono', pair: 'grotesk', bg: 'grid', s: { header: 'stripe', panelFill: 'accent2', sections: 'bar', numbered: 1, titleScale: 1.25, takeFill: 'ink' } },
+    { id: 'sunset', name: 'Sunset', layout: 'col2', pal: 'citrus', pair: 'jakarta', bg: 'mesh', s: { header: 'plain', sections: 'glass', titleScale: 1.4, numbered: 1, round: 0.9, tight: 1, takeFill: 'gradient' } },
+    { id: 'neonwave', name: 'Neon waves', layout: 'col3', pal: 'neon', pair: 'archivo', bg: 'waves', s: { header: 'plain', sections: 'bar', titleScale: 1.35, heads: 'pill', pillFill: 'accent2', takeFill: 'accent' } },
+    { id: 'soft', name: 'Soft blobs', layout: 'col2', pal: 'lilac', pair: 'bricolage', bg: 'blobs', s: { header: 'plain', sections: 'glass', heads: 'pill', titleScale: 1.2, round: 0.9, tight: 1, takeFill: 'accent' } }
+  ];
+  var MIX = { header: ['plain', 'card', 'panel', 'rule', 'centered', 'stripe'], sections: ['bento', 'glass', 'cards', 'topline', 'bar', 'plain'], heads: ['plain', 'pill'], scale: [1, 1.2, 1.35, 1.5], bg: ['none', 'none', 'mesh', 'glow', 'dots', 'grid', 'lines', 'diag', 'cross', 'halftone', 'waves', 'confetti', 'gradient', 'blobs'], layout: ['col2', 'col3', 'imgtop'], take: ['accent', 'gradient', 'ink'], cycles: [['soft', 'accent', 'tint', 'ink'], ['soft', 'tint', 'accent'], ['accent', 'soft', 'ink', 'tint']] };
   var FONTS = [
+    ['Plus Jakarta Sans', 'sans-serif', [400, 800]], ['Inter Tight', 'sans-serif', [400, 800]], ['Unbounded', 'sans-serif', [400, 700]], ['Sora', 'sans-serif', [400, 700]], ['Archivo Black', 'sans-serif', [400]], ['Archivo', 'sans-serif', [400, 600]],
     ['Fraunces', 'serif', [400, 600]], ['Bricolage Grotesque', 'sans-serif', [400, 700]], ['Familjen Grotesk', 'sans-serif', [400, 700]], ['DM Serif Display', 'serif', [400]],
     ['Instrument Serif', 'serif', [400]], ['Playfair Display', 'serif', [400, 600]], ['Space Grotesk', 'sans-serif', [400, 600]], ['Young Serif', 'serif', [400]],
     ['Cormorant', 'serif', [400, 600]], ['Syne', 'sans-serif', [400, 700]], ['Inter', 'sans-serif', [400, 600]], ['Figtree', 'sans-serif', [400, 600]],
@@ -377,7 +476,9 @@
   ].map(function (f) { return { name: f[0], css: "'" + f[0] + "', " + (f[1] === 'serif' ? 'Georgia, serif' : 'system-ui, sans-serif'), w: f[2] }; });
   function fontRec(css) { return FONTS.filter(function (f) { return f.css === css; })[0]; }
   var BGZ = [0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3];
-  var BGS = [{ id: 'none', name: 'Plain' }, { id: 'dots', name: 'Dots' }, { id: 'grid', name: 'Grid' }];
+  var BGS = [{ id: 'none', name: 'Plain' }, { id: 'dots', name: 'Dots' }, { id: 'grid', name: 'Grid' }, { id: 'lines', name: 'Lines', sz: 1 }, { id: 'diag', name: 'Stripes', sz: 1 },
+    { id: 'cross', name: 'Crosses', sz: 1 }, { id: 'halftone', name: 'Halftone', sz: 1 }, { id: 'waves', name: 'Waves', sz: 1 }, { id: 'confetti', name: 'Confetti', sz: 1 }, { id: 'gradient', name: 'Gradient' }, { id: 'mesh', name: 'Mesh' }, { id: 'glow', name: 'Glow' }, { id: 'blobs', name: 'Blobs' }];
+  BGS[1].sz = BGS[2].sz = 1;
   var KINDS = {
     title: { label: 'Title', badge: 'T', bg: '#15161b', fg: '#f4f2ee' },
     byline: { label: 'Byline', badge: 'Aa', bg: '#e3ebf4', fg: '#0F4C81' },
@@ -394,7 +495,9 @@
     PAIRS.forEach(function (p) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?' + p.g + '&display=swap'; document.head.appendChild(l); });
   })();
 
+  if (document.fonts) { var fT; document.fonts.addEventListener('loadingdone', function () { clearTimeout(fT); fT = setTimeout(function () { if (view === 'start') renderStart(); else if (doc) { renderStage(); renderRight(); } }, 250); }); }
   // ---------- state ----------
+  var selB = null, editingB = null;
   var doc = null, images = {}, blobs = {}, view = 'start', sel = null, zoom = 0, fitZoom = 1, startSel = { format: 'poster', size: '36x48', orient: 'portrait' };
   var KEY = 'enam-studio-v1';
   var store = {
@@ -429,8 +532,8 @@
     lastKey = key || ''; lastT = now;
     hist.push(JSON.stringify(doc)); if (hist.length > 80) hist.shift(); fut = []; updUndo();
   }
-  function undo() { if (!hist.length) return; fut.push(JSON.stringify(doc)); doc = JSON.parse(hist.pop()); lastKey = ''; sel = null; renderAll(); }
-  function redo() { if (!fut.length) return; hist.push(JSON.stringify(doc)); doc = JSON.parse(fut.pop()); lastKey = ''; sel = null; renderAll(); }
+  function undo() { if (!hist.length) return; fut.push(JSON.stringify(doc)); doc = JSON.parse(hist.pop()); lastKey = ''; sel = null; selB = null; editingB = null; ta.hidden = true; renderAll(); }
+  function redo() { if (!fut.length) return; hist.push(JSON.stringify(doc)); doc = JSON.parse(fut.pop()); lastKey = ''; sel = null; selB = null; editingB = null; ta.hidden = true; renderAll(); }
   function updUndo() { $('ps-undo').disabled = !hist.length; $('ps-redo').disabled = !fut.length; }
   var saveT;
   function autosave() {
@@ -476,13 +579,18 @@
   function arrange(pg, d) {
     d = d || doc;
     var D = dims(d), W = D.W, H = D.H, pr = P(d), f = D.f, land = W > H;
+    var palA = C(d);
     var sp = pg.spacing == null ? 0.4 : pg.spacing, emph = pg.emphasis || 'balanced', L = pg.layout || 'col2';
     var m = W * (0.075 - 0.035 * sp), g = W * (0.03 - 0.012 * sp), inner = W - 2 * m;
     var minB = f.minBody / 72 * D.upi;
     var blocks = pg.blocks || [];
     var title = blocks.filter(function (b) { return b.t === 'title'; })[0], by = blocks.filter(function (b) { return b.t === 'byline'; })[0], tk = blocks.filter(function (b) { return b.t === 'takeaway'; })[0];
     var body = blocks.filter(function (b) { return b.t === 'text' || b.t === 'image' || b.t === 'chart' || b.t === 'qr'; });
+    var lk = d.look || {}, HS = lk.header || (L === 'cover' ? 'band' : 'rule'), SS = lk.sections || 'plain';
+    if (L === 'cover' && !d.look) HS = 'band';
     var cols = L === 'col3' ? 3 : 2;
+    // wide pages read better with more, narrower columns
+    if (land && cols === 2 && body.length >= 5 && W / H > 1.2) cols = 3;
     if (body.length <= 1) cols = 1;
     var start = minB * (emph === 'text' ? 2.4 : 2.1) * (1.12 - sp * 0.25), best = null;
     for (var bs = start; bs > minB * 0.5; bs *= 0.95) {
@@ -494,30 +602,55 @@
     return best;
 
     function T(o) { o.type = 'text'; o.lh = o.lh || 1.3; o.id = o.id || uid('t'); return o; }
+    function isDark() { return lum(palA.paper) < 0.45; }
+    // the most readable text color on a given fill
+    function onColor(fill) {
+      var c = fill === 'gradient' ? palA.accent : fill === 'glass' ? palA.paper : col(fill, palA);
+      if (fill === 'glass') return 'ink';
+      var L0 = rl(c), cands = [palA.ink, palA.paper, '#ffffff', '#111111'], best = cands[0], bc = 0;
+      cands.forEach(function (x) { var L1 = rl(x), cr = (Math.max(L0, L1) + 0.05) / (Math.min(L0, L1) + 0.05); if (cr > bc + 0.6) { bc = cr; best = x; } });
+      return best;
+    }
     function attempt(bs) {
-      var els = [], y = m, cover = L === 'cover', ink = cover ? 'on' : 'ink';
-      var bandAt = els.length;
+      var els = [], y = m, num = 0, ctr = HS === 'centered', boxed = HS === 'boxed', hcard = HS === 'card', panel = HS === 'band' || HS === 'panel';
+      var R = bs * (lk.round || 0.45), gg = g * (lk.tight ? 0.65 : 1);
+      // page decorations sit behind everything
+      if (lk.deco === 'circles') { var cr = W * 0.2, cr2 = W * 0.085; els.push({ type: 'ellipse', id: uid('d'), x: W - cr * 1.3, y: -cr * 0.75, w: cr * 2, h: cr * 2, fill: 'tint', deco: 1 }); els.push({ type: 'ellipse', id: uid('d'), x: -cr2 * 0.7, y: H - cr2 * 1.3, w: cr2 * 2, h: cr2 * 2, fill: 'tint2', deco: 1 }); }
+      if (lk.deco === 'frame') { var fr = m * 0.42, th0 = Math.max(2, bs * 0.14); [[fr, fr, W - 2 * fr, th0], [fr, H - fr - th0, W - 2 * fr, th0], [fr, fr, th0, H - 2 * fr], [W - fr - th0, fr, th0, H - 2 * fr]].forEach(function (q) { els.push({ type: 'rect', id: uid('d'), x: q[0], y: q[1], w: q[2], h: q[3], fill: 'accent', r: 0, deco: 1 }); }); }
+      if (lk.deco === 'footer') els.push({ type: 'rect', id: uid('d'), x: 0, y: H - m * 0.42, w: W, h: m * 0.42, fill: 'accent', r: 0, deco: 1 });
+      if (HS === 'stripe') els.push({ type: 'rect', id: uid('d'), x: 0, y: 0, w: W, h: m * 0.4, fill: lk.panelFill || 'accent', r: 0, deco: 1 });
+      // header: title and byline, on the page, in a card, or on a full-width color panel
+      var headFill = hcard ? (lk.headFill || 'gradient') : boxed ? 'soft' : panel ? (lk.panelFill || 'accent') : null;
+      var tcol = headFill && headFill !== 'soft' ? onColor(headFill) : (lk.titleAccent ? 'accent' : 'ink'), bcol = headFill && headFill !== 'soft' ? tcol : 'muted';
+      var bandAt = els.length, bp = (boxed || hcard) ? bs * 1.2 : 0, hx = m + bp, hw = inner - 2 * bp, y0 = y;
+      if (panel) y = m * 0.95;
+      if (boxed || hcard) y += bp;
+      var big = land ? Math.min(lk.titleScale || 1, 1.15) : (lk.titleScale || 1);
       if (title && title.text) {
-        var ts = bs * (land ? 2.5 : 2.9), maxL = land ? 2 : 3, t;
-        for (var i = 0; i < 12; i++) { t = T({ x: m, y: y, w: inner, text: title.text, size: ts, font: 'display', color: ink, lh: 1.1, role: 'title', block: blocks.indexOf(title) }); if (textBox(t, pr).lines.length <= maxL) break; ts *= 0.92; }
-        els.push(t); y += textBox(t, pr).h + bs * 0.35;
+        var ts = bs * (land ? 2.5 : 2.9) * big, maxL = (land ? 2 : 3) + (big > 1.2 ? 1 : 0), t;
+        for (var i = 0; i < 14; i++) { t = T({ x: hx, y: y, w: hw, text: title.text, size: ts, font: 'display', color: tcol, lh: big > 1.2 ? 1.02 : 1.1, role: 'title', align: ctr ? 'center' : 'left', block: blocks.indexOf(title) }); var tb0 = textBox(t, pr); mctx.font = weightOf(t, pr) + ' ' + ts + 'px ' + fontOf(t, pr); if (tb0.lines.length <= maxL && tb0.lines.every(function (ln) { return mctx.measureText(ln).width <= hw * 1.001; })) break; ts *= 0.92; }
+        els.push(t); y += textBox(t, pr).h + bs * (big > 1.2 ? 0.55 : 0.35);
       }
-      if (by && by.text) { var b = T({ x: m, y: y, w: inner, text: by.text, size: bs * 1.05, font: 'body', color: cover ? 'on' : 'muted', role: 'byline', block: blocks.indexOf(by) }); els.push(b); y += textBox(b, pr).h; }
+      if (by && by.text) { var b = T({ x: hx, y: y, w: hw, text: by.text, size: bs * 1.05, font: 'body', color: bcol, role: 'byline', align: ctr ? 'center' : 'left', block: blocks.indexOf(by) }); els.push(b); y += textBox(b, pr).h; }
+      if (boxed || hcard) { y += bp * 0.8; els.splice(bandAt, 0, { type: 'rect', id: uid('r'), x: m, y: y0, w: inner, h: y - y0, fill: headFill, r: R * 1.2, deco: 1 }); }
+      var rule = function (yy) { var rw = bs * 3.2; return { type: 'rect', id: uid('r'), x: ctr ? (W - rw) / 2 : m, y: yy, w: rw, h: Math.max(2, bs * 0.22), fill: lk.ruleFill || 'accent', r: 0, deco: 1 }; };
       if (!body.length && !(tk && tk.text)) {
-        var hh = y - m, off = Math.max(0, (H - hh) / 2 - m);
-        els.forEach(function (e) { e.y += off; });
-        if (cover) els.unshift({ type: 'rect', id: uid('r'), x: 0, y: 0, w: W, h: H, fill: 'accent', r: 0, deco: 1 });
-        else els.push({ type: 'rect', id: uid('r'), x: m, y: y + off + bs * 0.55, w: bs * 3.2, h: Math.max(2, bs * 0.22), fill: 'accent', r: 0, deco: 1 });
+        var hh = y - y0, off = Math.max(0, (H - hh) / 2 - y0);
+        els.forEach(function (e, k) { if (k >= bandAt) e.y += off; });
+        if (panel) els.splice(bandAt, 0, { type: 'rect', id: uid('r'), x: 0, y: 0, w: W, h: H, fill: headFill, r: 0, deco: 1 });
+        else if (!boxed && !hcard && HS !== 'plain') els.push(rule(y + off + bs * 0.55));
         return { ok: true, els: els, bs: bs };
       }
-      if (cover) { els.splice(bandAt, 0, { type: 'rect', id: uid('r'), x: 0, y: 0, w: W, h: y + m * 0.7, fill: 'accent', r: 0, deco: 1 }); y += m * 0.7 + g; }
-      else { y += bs * 0.55; els.push({ type: 'rect', id: uid('r'), x: m, y: y, w: bs * 3.2, h: Math.max(2, bs * 0.22), fill: 'accent', r: 0, deco: 1 }); y += bs * 0.22 + g * 1.1; }
+      if (panel) { els.splice(bandAt, 0, { type: 'rect', id: uid('r'), x: 0, y: 0, w: W, h: y + m * 0.7, fill: headFill, r: 0, deco: 1 }); y += m * 0.7 + gg; }
+      else if (boxed || hcard) y += gg;
+      else if (HS === 'plain') y += gg * 1.2;
+      else { y += bs * 0.55; els.push(rule(y)); y += bs * 0.22 + gg * 1.1; }
       var top = y, bottom = H - m;
       if (tk && tk.text) {
-        var pad = bs * 0.9, tt = T({ x: m + pad, y: 0, w: inner - pad * 2, text: tk.text, size: bs * 1.25, font: 'display', color: 'on', lh: 1.25, role: 'takeaway', block: blocks.indexOf(tk) });
+        var tf = lk.takeFill || 'accent', pad = bs * 0.95, tt = T({ x: m + pad, y: 0, w: inner - pad * 2, text: tk.text, size: bs * 1.25, font: 'display', color: onColor(tf), lh: 1.25, role: 'takeaway', block: blocks.indexOf(tk) });
         var th = textBox(tt, pr).h + pad * 2; tt.y = H - m - th + pad;
-        els.push({ type: 'rect', id: uid('r'), x: m, y: H - m - th, w: inner, h: th, fill: 'accent', r: bs * 0.35, deco: 1 }); els.push(tt);
-        bottom = H - m - th - g;
+        els.push({ type: 'rect', id: uid('r'), x: m, y: H - m - th, w: inner, h: th, fill: tf, r: R, deco: 1, stroke: tf === 'glass' ? 'glassline' : null }); els.push(tt);
+        bottom = H - m - th - gg;
       }
       if (bottom - top < bs * 5) return { ok: false, els: els, bs: bs };
       var items = body.slice();
@@ -525,54 +658,82 @@
         var ii = -1; items.forEach(function (it, k) { if (ii < 0 && it.t === 'image') ii = k; });
         if (ii > -1) {
           var ib = items.splice(ii, 1)[0], ar = imgAR(ib), frac = emph === 'image' ? 0.55 : emph === 'text' ? 0.3 : 0.42;
-          var bh = Math.min(inner / ar, (bottom - top) * frac);
-          els.push({ type: 'image', id: uid('i'), x: m, y: top, w: inner, h: bh, img: ib.img || '', r: bs * 0.3, block: blocks.indexOf(ib) });
-          top += bh;
+          var bh0 = Math.min(inner / ar, (bottom - top) * frac);
+          els.push({ type: 'image', id: uid('i'), x: m, y: top, w: inner, h: bh0, img: ib.img || '', r: R, block: blocks.indexOf(ib) });
+          top += bh0;
           if (ib.caption) { var cp = T({ x: m, y: top + bs * 0.35, w: inner, text: ib.caption, size: bs * 0.8, font: 'body', color: 'muted', italic: true, role: 'caption', block: blocks.indexOf(ib) }); els.push(cp); top += bs * 0.35 + textBox(cp, pr).h; }
-          top += g;
+          top += gg;
         }
       }
-      var nC = Math.max(1, Math.min(cols, items.length)); while (nC > 1 && (inner - (nC - 1) * g) / nC < bs * 11) nC--;
-      var colW = (inner - (nC - 1) * g) / nC, avail = bottom - top;
+      var nC = Math.max(1, Math.min(cols, items.length)); while (nC > 1 && (inner - (nC - 1) * gg) / nC < bs * 11) nC--;
+      var colW = (inner - (nC - 1) * gg) / nC, avail = bottom - top;
+      var carded = SS === 'cards' || SS === 'bento' || SS === 'glass';
+      var pl = 0, pR = 0, pt = 0, pb = 0;
+      if (carded) pl = pR = pt = pb = bs * 1.0;
+      if (SS === 'bar') pl = bs * 1.05;
+      if (SS === 'topline') pt = bs * 0.8;
+      var cw = colW - pl - pR, cyc = lk.cycle || ['soft', 'accent', 'tint', 'soft', 'ink'], ci = 0;
       var capFrac = emph === 'image' ? 0.75 : emph === 'text' ? 0.36 : 0.52;
       var meas = items.map(function (it) {
         var parts = [], h = 0, k = blocks.indexOf(it);
-        if ((it.t === 'text' || it.t === 'chart') && it.head) { var hd = T({ x: 0, y: 0, w: colW, text: it.head, size: bs * 1.45, font: 'display', color: 'accent', lh: 1.15, role: 'heading', block: k }); var hh = textBox(hd, pr).h; parts.push({ el: hd, dy: 0 }); h = hh + bs * 0.45; }
-        if (it.t === 'text') { var bd = T({ x: 0, y: 0, w: colW, text: it.body || '', size: bs, font: 'body', color: 'ink', lh: 1.4, role: 'body', block: k }); parts.push({ el: bd, dy: h }); h += textBox(bd, pr).h; }
-        if (it.t === 'image') { var ar2 = imgAR(it), ih = Math.min(colW / ar2, avail * capFrac); parts.push({ el: { type: 'image', id: uid('i'), x: 0, y: 0, w: colW, h: ih, img: it.img || '', r: bs * 0.3, block: k }, dy: 0, grow: true }); h = ih; if (it.caption) { var c2 = T({ x: 0, y: 0, w: colW, text: it.caption, size: bs * 0.8, font: 'body', color: 'muted', italic: true, role: 'caption', block: k }); parts.push({ el: c2, dy: h + bs * 0.35, afterImg: true }); h += bs * 0.35 + textBox(c2, pr).h; } }
-        if (it.t === 'chart') { var chH = Math.max(bs * 5, Math.min(colW * (emph === 'text' ? 0.5 : 0.66), avail * 0.85 - h)); parts.push({ el: { type: 'chart', id: uid('c'), x: 0, y: 0, w: colW, h: chH, rows: it.rows || '', kind: it.kind === 'pie' ? 'pie' : 'bar', size: bs * 0.8, block: k }, dy: h, grow: true }); h += chH; }
+        // card color for this block; strong colors only behind text
+        var fill = SS === 'cards' ? 'soft' : SS === 'glass' ? 'glass' : SS === 'bento' ? (it.t === 'text' ? cyc[ci++ % cyc.length] : 'soft') : null;
+        var dark = fill && fill !== 'soft' && fill !== 'glass' && fill !== 'tint' && fill !== 'tint2' ? true : (fill === 'glass' && isDark());
+        var txt = fill && dark && fill !== 'glass' ? onColor(fill) : 'ink', hcol = fill && dark && fill !== 'glass' ? txt : (lk.headInk ? 'ink' : 'accent');
+        if ((it.t === 'text' || it.t === 'chart') && it.head) {
+          if (lk.numbered) { num++; var kk = T({ x: 0, y: 0, w: cw, text: (num < 10 ? '0' : '') + num, size: bs * 1.05, font: 'display', color: dark && fill !== 'glass' ? txt : 'accent2', lh: 1.1, role: 'kicker', deco: 1, block: k }); parts.push({ el: kk, dy: 0 }); h = textBox(kk, pr).h + bs * 0.15; }
+          var pill = lk.heads === 'pill', hsz = pill ? bs * 1.0 : bs * 1.45, hd = T({ x: 0, y: 0, w: cw, text: it.head, size: hsz, font: 'display', color: hcol, lh: 1.15, role: 'heading', block: k });
+          if (pill) { var px = hsz * 0.75; hd.w = cw - px * 2; }
+          var lines = textBox(hd, pr).lines;
+          if (pill && lines.length === 1) {
+            mctx.font = weightOf(hd, pr) + ' ' + hsz + 'px ' + fontOf(hd, pr); var tw = mctx.measureText(lines[0]).width, ph = hsz * 1.7;
+            var pf = dark && fill !== 'glass' ? 'pillon' : (lk.pillFill || 'accent');
+            hd.color = pf === 'pillon' ? txt : onColor(pf); hd.w = tw + 2;
+            parts.push({ el: { type: 'rect', id: uid('r'), x: 0, y: 0, w: tw + px * 2, h: ph, fill: pf, r: ph / 2, deco: 1 }, dy: h });
+            parts.push({ el: hd, dy: h + (ph - hsz * 1.15) / 2, dx: px }); h += ph + bs * 0.55;
+          } else { if (pill) { hd.w = cw; hd.size = bs * 1.3; } var hh = textBox(hd, pr).h; parts.push({ el: hd, dy: h }); h += hh + bs * 0.45; }
+        }
+        if (it.t === 'text') { var bd = T({ x: 0, y: 0, w: cw, text: it.body || '', size: bs, font: 'body', color: txt, lh: 1.4, role: 'body', block: k }); parts.push({ el: bd, dy: h }); h += textBox(bd, pr).h; }
+        if (it.t === 'image') { var ar2 = imgAR(it), ih = Math.min(cw / ar2, avail * capFrac); parts.push({ el: { type: 'image', id: uid('i'), x: 0, y: 0, w: cw, h: ih, img: it.img || '', r: R * 0.7, block: k }, dy: 0, grow: true }); h = ih; if (it.caption) { var c2 = T({ x: 0, y: 0, w: cw, text: it.caption, size: bs * 0.8, font: 'body', color: 'muted', italic: true, role: 'caption', block: k }); parts.push({ el: c2, dy: h + bs * 0.35, afterImg: true }); h += bs * 0.35 + textBox(c2, pr).h; } }
+        if (it.t === 'chart') { var chH = Math.max(bs * 5, Math.min(cw * (emph === 'text' ? 0.5 : 0.66), avail * 0.85 - h)); parts.push({ el: { type: 'chart', id: uid('c'), x: 0, y: 0, w: cw, h: chH, rows: it.rows || '', kind: it.kind === 'pie' ? 'pie' : 'bar', size: bs * 0.8, block: k }, dy: h, grow: true }); h += chH; }
         if (it.t === 'qr') {
-          var side = Math.max(bs * 6, Math.min(colW * 0.34, avail * 0.4)), lab = (it.label || '').trim();
+          var side = Math.max(bs * 6, Math.min(cw * 0.34, avail * 0.4)), lab = (it.label || '').trim();
           parts.push({ el: { type: 'qr', id: uid('q'), x: 0, y: 0, w: side, h: side, url: it.url || '', block: k }, dy: 0 }); h = side;
           if (lab) {
-            var gap = bs * 0.9, lw = colW - side - gap, below = lw < bs * 7;
-            var ql = T({ x: 0, y: 0, w: below ? colW : lw, text: lab, size: bs * 0.9, font: 'body', color: 'ink', role: 'caption', block: k }), qh = textBox(ql, pr).h;
+            var gap = bs * 0.9, lw = cw - side - gap, below = lw < bs * 7;
+            var ql = T({ x: 0, y: 0, w: below ? cw : lw, text: lab, size: bs * 0.9, font: 'body', color: 'ink', role: 'caption', block: k }), qh = textBox(ql, pr).h;
             if (below) { parts.push({ el: ql, dy: side + bs * 0.35 }); h = side + bs * 0.35 + qh; }
             else { parts.push({ el: ql, dy: Math.max(0, (side - qh) / 2), dx: side + gap }); h = Math.max(side, qh); }
           }
         }
-        return { parts: parts, h: h };
+        if (pl || pt) parts.forEach(function (p) { p.dx = (p.dx || 0) + pl; p.dy += pt; });
+        return { parts: parts, h: h + pt + pb, fill: fill };
       });
       // split the blocks, in order, into columns of the most even height
-      var split = partition(meas.map(function (x) { return x.h; }), nC, g);
+      var split = partition(meas.map(function (x) { return x.h; }), nC, gg);
       if (split.max > avail) return { ok: false, els: els, bs: bs };
       var packs = [], hs = [];
-      split.groups.forEach(function (gr) { var pk = gr.map(function (k) { return meas[k]; }); packs.push(pk); hs.push(pk.reduce(function (s, it, k) { return s + it.h + (k ? g : 0); }, 0)); });
-      packs.forEach(function (pk, ci) {
-        var x = m + ci * (colW + g), left = avail - hs[ci], grow = 0, extraGap = 0;
+      split.groups.forEach(function (gr) { var pk = gr.map(function (k) { return meas[k]; }); packs.push(pk); hs.push(pk.reduce(function (s, it, k) { return s + it.h + (k ? gg : 0); }, 0)); });
+      packs.forEach(function (pk, ci2) {
+        var x = m + ci2 * (colW + gg), left = avail - hs[ci2], grow = 0, extraGap = 0, stretch = 0;
         var imgs = pk.filter(function (it) { return it.parts.some(function (p) { return p.grow; }); });
         if (emph !== 'text' && imgs.length && left > 0) grow = Math.min(left / imgs.length, colW * (emph === 'image' ? 0.9 : 0.5));
         left -= grow * imgs.length;
-        if (pk.length > 1 && left > 0) extraGap = Math.min(left / (pk.length - 1), g * 2.5);
+        // cards stretch so every column ends on the same line; plain sections spread out instead
+        if (carded && left > 0) stretch = left / pk.length;
+        else if (pk.length > 1 && left > 0) extraGap = Math.min(left / (pk.length - 1), gg * 2.5);
         var yy = top;
         pk.forEach(function (it) {
-          var hasImg = it.parts.some(function (p) { return p.grow; }), add = hasImg ? grow : 0;
+          var hasImg = it.parts.some(function (p) { return p.grow; }), add = hasImg ? grow : 0, bh = it.h + add + stretch;
+          if (carded) els.push({ type: 'rect', id: uid('r'), x: x, y: yy, w: colW, h: bh, fill: it.fill, r: R, deco: 1, stroke: it.fill === 'glass' ? 'glassline' : null });
+          if (SS === 'bar') els.push({ type: 'rect', id: uid('r'), x: x, y: yy, w: Math.max(2, bs * 0.2), h: bh, fill: 'accent', r: bs * 0.1, deco: 1 });
+          if (SS === 'topline') els.push({ type: 'rect', id: uid('r'), x: x, y: yy, w: colW, h: Math.max(2, bs * 0.12), fill: lk.ruleFill || 'accent', r: 0, deco: 1 });
           it.parts.forEach(function (p) {
             var el = p.el; el.x = x + (p.dx || 0); el.y = yy + p.dy + (p.afterImg ? add : 0);
             if (p.grow) el.h += add;
             els.push(el);
           });
-          yy += it.h + add + g + extraGap;
+          yy += bh + gg + extraGap;
         });
       });
       return { ok: true, els: els, bs: bs };
@@ -593,9 +754,18 @@
 
   // ---------- rendering ----------
   function pageEls(pg, d) { d = d || doc; if (d.mode === 'free' && pg.els) return { els: pg.els, ok: true, free: true }; return arrange(pg, d); }
-  function col(name, pal) { return pal[name] || name || pal.ink; }
+  function col(name, pal) {
+    if (name === 'tint') return mix(pal.accent2, pal.paper, 0.6); if (name === 'tint2') return mix(pal.accent, pal.paper, 0.8);
+    var dk = lum(pal.paper) < 0.45;
+    if (name === 'glass') return dk ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.62)';
+    if (name === 'glassline') return dk ? 'rgba(255,255,255,0.14)' : rgba(pal.line, 0.95);
+    if (name === 'pillon') return 'rgba(255,255,255,0.22)';
+    return pal[name] || name || pal.ink;
+  }
   function hex(c) { c = String(c).replace('#', ''); if (c.length === 3) c = c.replace(/./g, '$&$&'); return [parseInt(c.slice(0, 2), 16), parseInt(c.slice(2, 4), 16), parseInt(c.slice(4, 6), 16)]; }
   function mix(a, b, t) { var x = hex(a), y = hex(b); return '#' + x.map(function (v, i) { return ('0' + Math.round(v + (y[i] - v) * t).toString(16)).slice(-2); }).join(''); }
+  function rl(c) { return hex(c).map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }).reduce(function (a, v, i) { return a + v * [0.2126, 0.7152, 0.0722][i]; }, 0); }
+  function rgba(c, a) { var x = hex(c); return 'rgba(' + x[0] + ',' + x[1] + ',' + x[2] + ',' + a + ')'; }
   function lum(c) { var x = hex(c); return (0.2126 * x[0] + 0.7152 * x[1] + 0.0722 * x[2]) / 255; }
 
   // ---------- QR codes (byte mode, error correction level M) ----------
@@ -696,15 +866,39 @@
     o.push({ k: 'rect', x: el.x, y: el.y, w: el.w, h: el.h, r: r == null ? (el.r || 0) : r, fill: pal.soft });
     o.push(tp(label, el.x + el.w / 2, el.y + el.h / 2 + fs * 0.35, fs, pr.bf, 400, pal.muted, 'middle'));
   }
-  function bgPrims(d) {
-    var D = dims(d), pal = C(d), o = [{ k: 'rect', x: 0, y: 0, w: D.W, h: D.H, r: 0, fill: pal.paper }], sp = Math.max(D.W, D.H) / 40 * (d.bgz || 1);
-    if (d.bg === 'dots') o.push({ k: 'dots', W: D.W, H: D.H, sp: sp, r: sp * 0.075, fill: mix(pal.line, pal.muted, 0.25) });
-    if (d.bg === 'grid') o.push({ k: 'grid', W: D.W, H: D.H, sp: sp, sw: Math.max(0.6, sp * 0.03), stroke: pal.line });
+  function bgPrims(d) { var D = dims(d); return bgPattern(d.bg, D.W, D.H, Math.max(D.W, D.H) / 40 * (d.bgz || 1), C(d)); }
+  // every background is made of plain shapes or paths, so the screen and the exports match
+  function bgPattern(kind, W, H, sp, pal) {
+    var o = [{ k: 'rect', x: 0, y: 0, w: W, h: H, r: 0, fill: pal.paper }], q = function (v) { return Math.round(v * 10) / 10; }, d = '';
+    var tint = mix(pal.accent2, pal.paper, 0.62), tint2 = mix(pal.accent, pal.paper, 0.82), faint = mix(pal.line, pal.muted, 0.25);
+    var circ = function (cx, cy, r) { return 'M' + q(cx + r) + ' ' + q(cy) + 'a' + q(r) + ' ' + q(r) + ' 0 1 0 ' + q(-2 * r) + ' 0a' + q(r) + ' ' + q(r) + ' 0 1 0 ' + q(2 * r) + ' 0'; };
+    var sx = (W / 2) % sp, sy = (H / 2) % sp, x, y;
+    if (kind === 'dots') o.push({ k: 'dots', W: W, H: H, sp: sp, r: sp * 0.075, fill: faint });
+    if (kind === 'grid') o.push({ k: 'grid', W: W, H: H, sp: sp, sw: Math.max(0.6, sp * 0.03), stroke: pal.line });
+    if (kind === 'lines') { for (y = sy; y <= H; y += sp) d += 'M0 ' + q(y) + 'H' + W; o.push({ k: 'path', d: d, stroke: pal.line, sw: Math.max(0.6, sp * 0.035) }); }
+    if (kind === 'diag') { var st = sp * 0.9; for (var c = -H; c < W; c += st) { var y0 = Math.max(0, -c), y1 = Math.min(H, W - c); if (y1 > y0) d += 'M' + q(y0 + c) + ' ' + q(y0) + 'L' + q(y1 + c) + ' ' + q(y1); } o.push({ k: 'path', d: d, stroke: mix(pal.accent, pal.paper, 0.88), sw: sp * 0.2, cap: 'butt' }); }
+    if (kind === 'cross') { var a = sp * 0.14; for (x = sx; x <= W; x += sp) for (y = sy; y <= H; y += sp) d += 'M' + q(x - a) + ' ' + q(y) + 'H' + q(x + a) + 'M' + q(x) + ' ' + q(y - a) + 'V' + q(y + a); o.push({ k: 'path', d: d, stroke: faint, sw: Math.max(0.6, sp * 0.035) }); }
+    if (kind === 'halftone') { var hs = sp * 0.8; for (x = hs / 2; x < W; x += hs) for (y = hs / 2; y < H; y += hs) { var t = Math.max(0, (x / W + y / H) / 2 - 0.35) / 0.65, r = hs * 0.42 * Math.pow(t, 1.4); if (r > hs * 0.04) d += circ(x, y, r); } o.push({ k: 'path', d: d, fill: tint }); }
+    if (kind === 'waves') { var L = sp * 2.4, amp = sp * 0.28; for (y = sy; y <= H + sp; y += sp * 1.3) { d += 'M0 ' + q(y); for (x = 0, k = 0; x < W; x += L / 2, k++) d += 'Q' + q(x + L / 4) + ' ' + q(y + (k % 2 ? amp : -amp)) + ' ' + q(x + L / 2) + ' ' + q(y); } o.push({ k: 'path', d: d, stroke: pal.line, sw: Math.max(0.6, sp * 0.04) }); var k; }
+    if (kind === 'confetti') {
+      // scattered only along the edges, in soft colors, so the text stays easy to read
+      var seed = 7, rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }, ds = ['', '', ''], cols = [mix(pal.accent, pal.paper, 0.35), mix(pal.accent2, pal.paper, 0.2), tint], n = Math.round(W * H / (sp * sp * 2.2)), edge = Math.min(W, H) * 0.075;
+      for (var i = 0; i < n; i++) { var cx = rnd() * W, cy = rnd() * H, sz = sp * (0.09 + rnd() * 0.12), ci = Math.floor(rnd() * 3); if (Math.min(cx, cy, W - cx, H - cy) > edge * (0.6 + rnd() * 0.8)) continue; ds[ci] += rnd() < 0.5 ? circ(cx, cy, sz) : 'M' + q(cx - sz) + ' ' + q(cy - sz) + 'h' + q(sz * 2) + 'v' + q(sz * 2) + 'h' + q(-sz * 2) + 'z'; }
+      ds.forEach(function (p, i) { if (p) o.push({ k: 'path', d: p, fill: cols[i] }); });
+    }
+    if (kind === 'gradient') o.push({ k: 'grad', x: 0, y: 0, w: W, h: H, r: 0, c1: pal.paper, c2: mix(pal.accent2, pal.paper, 0.55) });
+    var M2 = Math.max(W, H), rg = function (cx, cy, r, c, a) { o.push({ k: 'rgrad', W: W, H: H, cx: cx, cy: cy, r: r, c: c, a: a }); };
+    if (kind === 'mesh') { rg(W * 0.1, H * 0.08, M2 * 0.62, pal.accent2, 0.55); rg(W * 0.95, H * 0.3, M2 * 0.55, pal.accent, 0.28); rg(W * 0.25, H * 0.95, M2 * 0.6, pal.accent2, 0.4); rg(W, H, M2 * 0.45, pal.accent, 0.22); }
+    if (kind === 'glow') { rg(W * 0.88, H * 0.02, M2 * 0.55, pal.accent, 0.5); rg(W * 0.02, H * 0.62, M2 * 0.5, pal.accent2, 0.32); rg(W * 0.7, H * 1.02, M2 * 0.45, pal.accent, 0.28); }
+    if (kind === 'blobs') { var M = Math.max(W, H); o.push({ k: 'ellipse', cx: 0, cy: 0, rx: M * 0.42, ry: M * 0.36, fill: tint2 }); o.push({ k: 'ellipse', cx: W, cy: H, rx: M * 0.48, ry: M * 0.4, fill: tint }); o.push({ k: 'ellipse', cx: W * 1.02, cy: H * 0.34, rx: M * 0.14, ry: M * 0.14, fill: tint2 }); }
     return o;
   }
   function prims(el, d, interactive) {
     var pr = P(d), pal = C(d), o = [];
-    if (el.type === 'rect') o.push({ k: 'rect', x: el.x, y: el.y, w: el.w, h: el.h, r: el.r || 0, fill: col(el.fill, pal) });
+    if (el.type === 'rect') {
+      if (el.fill === 'gradient') o.push({ k: 'grad', x: el.x, y: el.y, w: el.w, h: el.h, r: el.r || 0, c1: pal.accent, c2: mix(pal.accent, pal.accent2, 0.6) });
+      else o.push({ k: 'rect', x: el.x, y: el.y, w: el.w, h: el.h, r: el.r || 0, fill: col(el.fill, pal), stroke: el.stroke ? col(el.stroke, pal) : null, sw: el.stroke ? Math.max(1, Math.min(el.w, el.h) * 0.006) : 0 });
+    }
     else if (el.type === 'ellipse') o.push({ k: 'ellipse', cx: el.x + el.w / 2, cy: el.y + el.h / 2, rx: el.w / 2, ry: el.h / 2, fill: col(el.fill, pal) });
     else if (el.type === 'line') { if (interactive) o.push({ k: 'rect', x: el.x, y: el.y - 8, w: el.w, h: 16, r: 0, fill: 'transparent' }); o.push({ k: 'line', x1: el.x, y1: el.y, x2: el.x + el.w, y2: el.y, stroke: col(el.stroke || 'ink', pal), sw: el.sw || 3 }); }
     else if (el.type === 'image') { if (images[el.img]) o.push({ k: 'image', x: el.x, y: el.y, w: el.w, h: el.h, r: el.r || 0, img: el.img }); else placeholder(o, el, '[Your image]', pal, pr); }
@@ -772,7 +966,8 @@
   var svgN = 0;
   function n2(v) { return r1(v); }
   function primSVG(p, pfx, n) {
-    if (p.k === 'rect') return '<rect x="' + n2(p.x) + '" y="' + n2(p.y) + '" width="' + n2(Math.max(0, p.w)) + '" height="' + n2(Math.max(0, p.h)) + '"' + (p.r ? ' rx="' + n2(p.r) + '"' : '') + ' fill="' + p.fill + '"/>';
+    if (p.k === 'rect') return '<rect x="' + n2(p.x) + '" y="' + n2(p.y) + '" width="' + n2(Math.max(0, p.w)) + '" height="' + n2(Math.max(0, p.h)) + '"' + (p.r ? ' rx="' + n2(p.r) + '"' : '') + ' fill="' + p.fill + '"' + (p.stroke ? ' stroke="' + p.stroke + '" stroke-width="' + n2(p.sw) + '"' : '') + '/>';
+    if (p.k === 'rgrad') { var rid = pfx + 'r' + n; return '<defs><radialGradient id="' + rid + '" gradientUnits="userSpaceOnUse" cx="' + n2(p.cx) + '" cy="' + n2(p.cy) + '" r="' + n2(p.r) + '"><stop offset="0" stop-color="' + p.c + '" stop-opacity="' + p.a + '"/><stop offset="1" stop-color="' + p.c + '" stop-opacity="0"/></radialGradient></defs><rect x="0" y="0" width="' + p.W + '" height="' + p.H + '" fill="url(#' + rid + ')"/>'; }
     if (p.k === 'ellipse') return '<ellipse cx="' + n2(p.cx) + '" cy="' + n2(p.cy) + '" rx="' + n2(p.rx) + '" ry="' + n2(p.ry) + '" fill="' + p.fill + '"/>';
     if (p.k === 'line') return '<line x1="' + n2(p.x1) + '" y1="' + n2(p.y1) + '" x2="' + n2(p.x2) + '" y2="' + n2(p.y2) + '" stroke="' + p.stroke + '" stroke-width="' + n2(p.sw) + '" stroke-linecap="' + (p.cap || 'round') + '"/>';
     if (p.k === 'text') return '<text x="' + n2(p.x) + '" y="' + n2(p.y) + '" xml:space="preserve" font-family="' + esc(p.font) + '" font-size="' + n2(p.size) + '" font-weight="' + p.weight + '"' + (p.italic ? ' font-style="italic"' : '') + ' fill="' + p.fill + '" text-anchor="' + p.anchor + '">' + esc(p.t) + '</text>';
@@ -788,6 +983,8 @@
       for (var y = 0; y < q.size; y++) for (var x = 0; x < q.size; x++) if (q.m[y][x]) d += 'M' + (Math.round((p.x + x * c) * 100) / 100) + ' ' + (Math.round((p.y + y * c) * 100) / 100) + 'h' + (Math.round(c * 100) / 100) + 'v' + (Math.round(c * 100) / 100) + 'h-' + (Math.round(c * 100) / 100) + 'z';
       return '<path d="' + d + '" fill="' + p.fill + '" shape-rendering="crispEdges"/>';
     }
+    if (p.k === 'path') return '<path d="' + p.d + '" fill="' + (p.fill || 'none') + '"' + (p.stroke ? ' stroke="' + p.stroke + '" stroke-width="' + n2(p.sw) + '" stroke-linecap="' + (p.cap || 'round') + '"' : '') + '/>';
+    if (p.k === 'grad') { var gid = pfx + 'g' + n; return '<defs><linearGradient id="' + gid + '" gradientUnits="userSpaceOnUse" x1="' + n2(p.x) + '" y1="' + n2(p.y) + '" x2="' + n2(p.x + p.w) + '" y2="' + n2(p.y + p.h) + '"><stop offset="0" stop-color="' + p.c1 + '"/><stop offset="1" stop-color="' + p.c2 + '"/></linearGradient></defs><rect x="' + n2(p.x) + '" y="' + n2(p.y) + '" width="' + n2(p.w) + '" height="' + n2(p.h) + '"' + (p.r ? ' rx="' + n2(p.r) + '"' : '') + ' fill="url(#' + gid + ')"/>'; }
     if (p.k === 'dots' || p.k === 'grid') {
       var pid = pfx + 'bg', ox = n2(p.W / 2 - p.sp / 2), oy = n2(p.H / 2 - p.sp / 2), h = p.sp / 2;
       var inner = p.k === 'dots' ? '<circle cx="' + n2(h) + '" cy="' + n2(h) + '" r="' + n2(p.r) + '" fill="' + p.fill + '"/>' : '<path d="M' + n2(h) + ' 0V' + n2(p.sp) + 'M0 ' + n2(h) + 'H' + n2(p.sp) + '" stroke="' + p.stroke + '" stroke-width="' + n2(p.sw) + '" fill="none"/>';
@@ -820,7 +1017,8 @@
   }
   function cssFont(p) { return (p.italic ? 'italic ' : '') + p.weight + ' ' + p.size + 'px ' + p.font; }
   function paint(x, p, imgs) {
-    if (p.k === 'rect') { if (p.fill === 'transparent' || p.w <= 0 || p.h <= 0) return; x.fillStyle = p.fill; rr(x, p.x, p.y, p.w, p.h, p.r); x.fill(); }
+    if (p.k === 'rect') { if (p.fill === 'transparent' || p.w <= 0 || p.h <= 0) return; x.fillStyle = p.fill; rr(x, p.x, p.y, p.w, p.h, p.r); x.fill(); if (p.stroke) { x.strokeStyle = p.stroke; x.lineWidth = p.sw; x.stroke(); } }
+    else if (p.k === 'rgrad') { var rg = x.createRadialGradient(p.cx, p.cy, 0, p.cx, p.cy, p.r); rg.addColorStop(0, rgba(p.c, p.a)); rg.addColorStop(1, rgba(p.c, 0)); x.fillStyle = rg; x.fillRect(0, 0, p.W, p.H); }
     else if (p.k === 'ellipse') { x.fillStyle = p.fill; x.beginPath(); x.ellipse(p.cx, p.cy, Math.max(0, p.rx), Math.max(0, p.ry), 0, 0, Math.PI * 2); x.fill(); }
     else if (p.k === 'line') { x.strokeStyle = p.stroke; x.lineWidth = p.sw; x.lineCap = p.cap || 'round'; x.beginPath(); x.moveTo(p.x1, p.y1); x.lineTo(p.x2, p.y2); x.stroke(); }
     else if (p.k === 'text') { x.font = cssFont(p); x.fillStyle = p.fill; x.textAlign = p.anchor === 'middle' ? 'center' : p.anchor === 'end' ? 'right' : 'left'; x.textBaseline = 'alphabetic'; x.fillText(p.t, p.x, p.y); }
@@ -835,6 +1033,8 @@
     }
     else if (p.k === 'qr') { x.fillStyle = p.fill; x.beginPath(); for (var yy = 0; yy < p.q.size; yy++) for (var xx = 0; xx < p.q.size; xx++) if (p.q.m[yy][xx]) x.rect(p.x + xx * p.cell, p.y + yy * p.cell, p.cell, p.cell); x.fill(); }
     else if (p.k === 'dots') { x.fillStyle = p.fill; x.beginPath(); var sx = (p.W / 2) % p.sp, sy = (p.H / 2) % p.sp; for (var a = sx; a < p.W + p.r; a += p.sp) for (var b = sy; b < p.H + p.r; b += p.sp) { x.moveTo(a + p.r, b); x.arc(a, b, p.r, 0, Math.PI * 2); } x.fill(); }
+    else if (p.k === 'path') { var pp = new Path2D(p.d); if (p.fill) { x.fillStyle = p.fill; x.fill(pp); } if (p.stroke) { x.strokeStyle = p.stroke; x.lineWidth = p.sw; x.lineCap = p.cap || 'round'; x.lineJoin = 'round'; x.stroke(pp); } }
+    else if (p.k === 'grad') { var gr = x.createLinearGradient(p.x, p.y, p.x + p.w, p.y + p.h); gr.addColorStop(0, p.c1); gr.addColorStop(1, p.c2); x.fillStyle = gr; rr(x, p.x, p.y, p.w, p.h, p.r || 0); x.fill(); }
     else if (p.k === 'grid') { x.strokeStyle = p.stroke; x.lineWidth = p.sw; x.lineCap = 'butt'; x.beginPath(); for (var gx = (p.W / 2) % p.sp; gx <= p.W; gx += p.sp) { x.moveTo(gx, 0); x.lineTo(gx, p.H); } for (var gy = (p.H / 2) % p.sp; gy <= p.H; gy += p.sp) { x.moveTo(0, gy); x.lineTo(p.W, gy); } x.stroke(); }
   }
   function pagePrims(pg, d) { var o = bgPrims(d); pageEls(pg, d).els.forEach(function (el) { o = o.concat(prims(el, d, false)); }); return o; }
@@ -880,10 +1080,46 @@
     $('ps-zoom').textContent = Math.round(z / fitZoom * 100) + '%';
     renderCheck(res);
     if (doc.pages.length > 1 || doc.format === 'slides') renderPages();
+    if (editingB) placeTA();
+    placeBtb(res);
     autosave();
   }
+  function placeBtb(res) {
+    var bar = $('ps-btb'), pg = page(), sb = selB != null ? pg.blocks[selB] : null, bx = sb && doc.mode !== 'free' ? blockBox(res.els, selB) : null;
+    if (!bx) { bar.hidden = true; return; }
+    var body = /^(text|image|chart|qr)$/.test(sb.t), idx = pg.blocks.map(function (b, i) { return /^(text|image|chart|qr)$/.test(b.t) ? i : -1; }).filter(function (i) { return i > -1; }), at = idx.indexOf(selB);
+    bar.innerHTML = (body ? '<button type="button" data-bt="up" title="Move earlier" aria-label="Move earlier"' + (at > 0 ? '' : ' disabled') + '>' + ICON.up + '</button><button type="button" data-bt="down" title="Move later" aria-label="Move later"' + (at < idx.length - 1 ? '' : ' disabled') + '>' + ICON.down + '</button>' : '') +
+      (sb.t === 'image' ? '<button type="button" data-bt="photo" class="wide">' + (images[sb.img] ? 'Replace photo' : 'Add photo') + '</button>' : '') +
+      '<button type="button" data-bt="del" title="Remove" aria-label="Remove">' + ICON.del + '</button>';
+    bar.hidden = false;
+    var z = zoomNow(), sr = svgEl.getBoundingClientRect(), wr = $('ps-wrap').getBoundingClientRect(), w = bar.offsetWidth;
+    var left = sr.left - wr.left + $('ps-wrap').scrollLeft + (bx.x + bx.w) * z - w, top = sr.top - wr.top + $('ps-wrap').scrollTop + bx.y * z - 44;
+    if (top < $('ps-wrap').scrollTop + 4) top = sr.top - wr.top + $('ps-wrap').scrollTop + (bx.y + bx.h) * z + 10;
+    bar.style.left = Math.max(4, left) + 'px'; bar.style.top = top + 'px';
+  }
+  $('ps-wrap').appendChild($('ps-btb'));
+  $('ps-btb').addEventListener('pointerdown', function (e) { e.preventDefault(); });
+  $('ps-btb').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-bt]'); if (!b || selB == null) return;
+    var pg = page(), k = b.dataset.bt;
+    if (editingB) { editingB = null; ta.hidden = true; }
+    if (k === 'photo') { pickTarget = { block: selB }; $('ps-file-img').click(); return; }
+    snap();
+    if (k === 'del') { pg.blocks.splice(selB, 1); selB = null; }
+    if (k === 'up' || k === 'down') {
+      var idx = pg.blocks.map(function (x, i) { return /^(text|image|chart|qr)$/.test(x.t) ? i : -1; }).filter(function (i) { return i > -1; }), at = idx.indexOf(selB), to = idx[at + (k === 'up' ? -1 : 1)];
+      if (to != null) { var t = pg.blocks[to]; pg.blocks[to] = pg.blocks[selB]; pg.blocks[selB] = t; selB = to; }
+    }
+    renderStage(); renderRight();
+  });
+  function blockBox(els, bi) {
+    var x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    els.forEach(function (e) { if (e.block !== bi || e.role === 'kicker') return; var b = boxOf(e); x0 = Math.min(x0, b.x); y0 = Math.min(y0, b.y); x1 = Math.max(x1, b.x + b.w); y1 = Math.max(y1, b.y + b.h); });
+    return x0 === Infinity ? null : { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+  }
   function overlay(els) {
-    if (doc.mode !== 'free' || !sel) return '';
+    if (doc.mode !== 'free') { if (selB == null) return ''; var bx = blockBox(els, selB); if (!bx) return ''; var z = zoomNow(), p = 6 / z; return '<rect class="ps-bsel" x="' + r1(bx.x - p) + '" y="' + r1(bx.y - p) + '" width="' + r1(bx.w + 2 * p) + '" height="' + r1(bx.h + 2 * p) + '" rx="' + r1(4 / z) + '" stroke-width="' + r1(1.6 / z) + '" stroke-dasharray="' + r1(5 / z) + ' ' + r1(4 / z) + '"/>'; }
+    if (!sel) return '';
     var el = els.filter(function (e) { return e.id === sel; })[0]; if (!el) return '';
     var b = boxOf(el), z = zoomNow(), hs = 9 / z, o = '<rect class="ps-sel" x="' + r1(b.x) + '" y="' + r1(b.y) + '" width="' + r1(b.w) + '" height="' + r1(b.h) + '" stroke-width="' + r1(1.5 / z) + '"/>';
     handlesOf(el).forEach(function (h) { var p = hpos(b, h); o += '<rect class="ps-hdl" data-h="' + h + '" x="' + r1(p.x - hs / 2) + '" y="' + r1(p.y - hs / 2) + '" width="' + r1(hs) + '" height="' + r1(hs) + '" stroke-width="' + r1(1.5 / z) + '" style="cursor:' + ({ nw: 'nwse', se: 'nwse', ne: 'nesw', sw: 'nesw', e: 'ew', w: 'ew' })[h] + '-resize"/>'; });
@@ -937,8 +1173,7 @@
   function renderLeft() {
     var host = $('ps-left'), pg = page();
     if (doc.mode !== 'free') {
-      var h = '<div><p class="ps-lead">Your content</p><p class="ps-note" style="margin-top:6px">Type or drop things in. The ' + F().what + ' arranges itself. Use the arrows to change the order.</p></div>' +
-        '<div class="ps-tip"><b>Always lined up.</b> Simple mode keeps every margin, column, and gap even for you. If a page gets messy in Free layout, come back here and it is re-aligned automatically. Your text, images, charts, and QR codes are kept.</div><div class="ps-blocks">';
+      var h = '<div><p class="ps-lead">Your content</p><p class="ps-note" style="margin-top:6px">Edit your words here. To add a picture, drop it onto the ' + F().what + '. Everything stays lined up for you.</p></div><div class="ps-blocks">';
       pg.blocks.forEach(function (b, i) {
         var K = KINDS[b.t];
         h += '<div class="ps-block" data-i="' + i + '"><div class="ps-bhead"><span class="ps-badge" style="background:' + K.bg + ';color:' + K.fg + '" aria-hidden="true">' + K.badge + '</span><span class="ps-bkind">' + K.label + '</span>' +
@@ -982,33 +1217,46 @@
 
   function renderRight() {
     var host = $('ps-right'), pg = page(), h = '<div class="ps-check ok" id="ps-check"></div>', D0 = dims();
+    if (doc.mode !== 'free') {
+      if (!mixes.length) shuffle();
+      var sb = selB != null ? pg.blocks[selB] : null;
+      if (sb) h += selBlockPanel(sb);
+      h += '<section><p class="ps-h">Designs</p><p class="ps-note" style="margin:-2px 0 8px">Your own words, shown in each design.</p>' +
+        '<div class="ps-row ps-keep"><label><input type="checkbox" data-keep="colors"' + (keep.colors ? ' checked' : '') + '> Keep my colors</label><label><input type="checkbox" data-keep="fonts"' + (keep.fonts ? ' checked' : '') + '> Keep my fonts</label></div>' +
+        '<div class="ps-looks">' + LOOKS.map(function (l) { return lookCard(l, D0); }).join('') + '</div>' +
+        '<div class="ps-lookhead" style="margin-top:14px"><p class="ps-sub" style="margin:0">Fresh ideas</p><button type="button" class="ps-pill" data-shuffle="1">Shuffle</button></div><div class="ps-looks">' + mixes.map(function (l) { return lookCard(l, D0); }).join('') + '</div></section>';
+    }
     h += '<section><p class="ps-h">Page</p>';
     if (F().sizes.length > 1) h += '<div class="ps-row" role="group" aria-label="Size" style="margin-bottom:8px">' + F().sizes.map(function (z) { return '<button type="button" class="ps-pill' + (z.id === doc.size ? ' on' : '') + '" data-psize="' + z.id + '" aria-pressed="' + (z.id === doc.size) + '">' + z.label + '</button>'; }).join('') + '</div>';
     h += '<div class="ps-row" role="group" aria-label="Orientation" style="margin-bottom:8px">' + [['portrait', 'Portrait'], ['landscape', 'Landscape']].map(function (o) { var on = doc.orient === o[0]; return '<button type="button" class="ps-pill ps-or' + (on ? ' on' : '') + '" data-orient="' + o[0] + '" aria-pressed="' + on + '"><i class="' + o[0] + '" aria-hidden="true"></i>' + o[1] + '</button>'; }).join('') + '</div>';
-    h += '<div class="ps-row" role="group" aria-label="Background">' + BGS.map(function (o) { var on = (doc.bg || 'none') === o.id; return '<button type="button" class="ps-pill' + (on ? ' on' : '') + '" data-bg="' + o.id + '" aria-pressed="' + on + '">' + o.name + '</button>'; }).join('') + '</div>';
-    if ((doc.bg || 'none') !== 'none') { var z = doc.bgz || 1; h += '<div class="ps-row" style="margin-top:10px"><span class="ps-note" style="margin-right:auto">Pattern size</span><div class="ps-size"><button type="button" class="ps-tb icon" data-bgz="-1" aria-label="Smaller pattern"' + (z <= BGZ[0] ? ' disabled' : '') + '>−</button><span>' + Math.round(z * 100) + '%</span><button type="button" class="ps-tb icon" data-bgz="1" aria-label="Larger pattern"' + (z >= BGZ[BGZ.length - 1] ? ' disabled' : '') + '>+</button></div></div>'; }
+    var bpal = C();
+    h += '<p class="ps-h" style="margin-top:4px">Background</p><div class="ps-bgs" role="group" aria-label="Background">' + BGS.map(function (o) { var on = (doc.bg || 'none') === o.id; return '<button type="button" class="ps-bgt" data-bg="' + o.id + '" aria-pressed="' + on + '" title="' + o.name + '"><svg viewBox="0 0 120 120" aria-hidden="true">' + bgPattern(o.id, 120, 120, 20, bpal).map(function (p, i) { return primSVG(p, 'bt' + o.id + '_', i); }).join('') + '</svg><span>' + o.name + '</span></button>'; }).join('') + '</div>';
+    var curBg = BGS.filter(function (o) { return o.id === (doc.bg || 'none'); })[0];
+    if (curBg && curBg.sz) { var z = doc.bgz || 1; h += '<div class="ps-row" style="margin-top:10px"><span class="ps-note" style="margin-right:auto">Pattern size</span><div class="ps-size"><button type="button" class="ps-tb icon" data-bgz="-1" aria-label="Smaller pattern"' + (z <= BGZ[0] ? ' disabled' : '') + '>−</button><span>' + Math.round(z * 100) + '%</span><button type="button" class="ps-tb icon" data-bgz="1" aria-label="Larger pattern"' + (z >= BGZ[BGZ.length - 1] ? ' disabled' : '') + '>+</button></div></div>'; }
     h += '<p class="ps-note" style="margin-top:8px">' + esc(r1(D0.wi) + ' × ' + r1(D0.hi) + ' in') + (doc.mode === 'free' ? '. Turning the page moves everything with it.' : '. Turning the page re-arranges everything to fit.') + '</p></section>';
     if (doc.mode !== 'free') {
-      h += '<section><p class="ps-h">What should stand out?</p><div class="ps-row">' + [['balanced', 'Balanced'], ['image', 'The image'], ['text', 'The text']].map(function (o) { return '<button type="button" class="ps-pill' + (pg.emphasis === o[0] ? ' on' : '') + '" data-emph="' + o[0] + '" aria-pressed="' + (pg.emphasis === o[0]) + '">' + o[1] + '</button>'; }).join('') + '</div></section>';
       h += '<section><label class="ps-h" for="ps-spacing" style="display:block">Spacing</label><input type="range" class="ps-range" id="ps-spacing" min="0" max="1" step="0.05" value="' + (pg.spacing == null ? 0.4 : pg.spacing) + '"><div class="ps-rlabels"><span>Roomy</span><span>Compact</span></div></section>';
-      h += '<section><p class="ps-h">Arrangement</p><div class="ps-layouts">' + LAYOUTS.map(function (l) {
-        var D = dims(), tmp = JSON.parse(JSON.stringify(pg)); tmp.layout = l.id; var r = arrange(tmp);
-        return '<button type="button" class="ps-lay" data-lay="' + l.id + '" aria-pressed="' + (pg.layout === l.id) + '"><svg viewBox="0 0 ' + D.W + ' ' + D.H + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + svgMarkup(r.els, doc) + '</svg>' + l.name + '</button>';
-      }).join('') + '</div></section>';
     } else {
       var el = selEl();
       if (el) h += selPanel(el);
       else h += '<p class="ps-note">Select something on the ' + F().what + ' to change its text, color, or size.</p>';
     }
     var pr = P(), pal = C();
-    h += '<section><p class="ps-h">Font pairing</p><div class="ps-pairs">' + PAIRS.map(function (p) {
-      return '<button type="button" class="ps-pair" data-pair="' + p.id + '" aria-pressed="' + (p.id === pr.id) + '"><span class="aa" style="font-family:' + esc(p.df) + ';font-weight:' + p.dw + '">Aa</span><span class="nm"><span style="font-family:' + esc(p.df) + ';font-weight:' + p.dw + '">' + p.d + '</span><small style="font-family:' + esc(p.bf) + '">with ' + p.b + '</small></span></button>';
-    }).join('') + '</div></section>';
-    h += '<section><p class="ps-h">Color palette</p><div class="ps-pals">' + PALS.map(function (p) {
-      return '<button type="button" class="ps-pal" data-pal="' + p.id + '" aria-pressed="' + (p.id === pal.id) + '"><span class="strip"><i style="background:' + p.paper + '"></i><i style="background:' + p.soft + '"></i><i style="background:' + p.accent2 + '"></i><i style="background:' + p.accent + '"></i><i style="background:' + p.ink + '"></i></span>' + p.name + '</button>';
+    h += '<section><p class="ps-h">Colors</p><div class="ps-dots">' + PALS.map(function (p) {
+      return '<button type="button" class="ps-dot" data-pal="' + p.id + '" aria-pressed="' + (p.id === pal.id) + '" aria-label="' + esc(p.name) + '" title="' + esc(p.name) + '" style="background:linear-gradient(135deg,' + p.accent + ' 0 50%,' + p.accent2 + ' 50% 100%);box-shadow:inset 0 0 0 3px ' + p.paper + '"></button>';
+    }).join('') + '</div><p class="ps-h" style="margin-top:14px">Fonts</p><div class="ps-aas">' + PAIRS.map(function (p) {
+      return '<button type="button" class="ps-aa" data-pair="' + p.id + '" aria-pressed="' + (p.id === pr.id) + '" title="' + esc(p.d + ' with ' + p.b) + '"><span style="font-family:' + esc(p.df) + ';font-weight:' + p.dw + '">Aa</span><small>' + esc(p.d.split(' ')[0]) + '</small></button>';
     }).join('') + '</div></section>';
     host.innerHTML = h;
     if (lastRes) renderCheck(lastRes);
+  }
+  function selBlockPanel(sb) {
+    var h = '<section class="ps-selsec"><p class="ps-h">' + ({ title: 'Title', byline: 'Byline', text: 'Section', image: 'Photo', chart: 'Chart', qr: 'QR code', takeaway: 'Key message' })[sb.t] + '</p>';
+    if (sb.t === 'chart') h += '<div class="ps-row" role="group" aria-label="Chart type" style="margin-bottom:10px">' + [['bar', 'Bar chart'], ['pie', 'Pie chart']].map(function (o) { var on = (sb.kind === 'pie' ? 'pie' : 'bar') === o[0]; return '<button type="button" class="ps-pill' + (on ? ' on' : '') + '" data-bck="' + o[0] + '" aria-pressed="' + on + '">' + o[1] + '</button>'; }).join('') + '</div><label class="ps-h" for="ps-bnums" style="display:block">Numbers, one per line</label><textarea class="ps-field" id="ps-bnums" rows="5" placeholder="Label, number">' + esc(sb.rows) + '</textarea>';
+    else if (sb.t === 'qr') h += '<label class="ps-h" for="ps-burl" style="display:block">Link</label><input type="url" class="ps-field" id="ps-burl" value="' + esc(sb.url) + '" placeholder="Paste a link, like enamhassan.com" inputmode="url" autocomplete="off" spellcheck="false"><p class="ps-note ps-qrnote" style="margin:8px 0 10px">' + qrNote(sb.url) + '</p><label class="ps-h" for="ps-blabel" style="display:block">Text beside the code</label><input type="text" class="ps-field" id="ps-blabel" value="' + esc(sb.label) + '" placeholder="Optional">';
+    else if (sb.t === 'image') h += '<div class="ps-row" style="margin-bottom:10px"><button type="button" class="ps-pill" data-bimg="1">' + (images[sb.img] ? 'Replace photo' : 'Choose a photo') + '</button>' + (images[sb.img] ? '<button type="button" class="ps-pill" data-bimgrm="1">Remove photo</button>' : '') + '</div><label class="ps-h" for="ps-bcap" style="display:block">Caption</label><input type="text" class="ps-field" id="ps-bcap" value="' + esc(sb.caption) + '" placeholder="Optional">';
+    else h += '<p class="ps-note">Type right on the page. Click outside the text when you are done.</p>' + (sb.t === 'text' && !sb.head ? '<div class="ps-row" style="margin-top:8px"><button type="button" class="ps-pill" data-bhead="1">Add a heading</button></div>' : '');
+    return h + '</section>';
   }
   function selEl() { var pg = page(); return sel && pg.els ? pg.els.filter(function (e) { return e.id === sel; })[0] : null; }
   function selPanel(el) {
@@ -1058,7 +1306,7 @@
   function newPage(kind, fmt) {
     var what = FORMATS[fmt].what;
     if (kind === 'slide-title') return { layout: 'cover', emphasis: 'balanced', spacing: 0.4, blocks: [blk('title', { text: '[Your talk title]' }), blk('byline', { text: '[Your name] · [Event, date]' })] };
-    if (kind === 'slide-content') return { layout: 'col2', emphasis: 'balanced', spacing: 0.4, blocks: [blk('title', { text: '[Slide heading]' }), blk('text', { head: '', body: '- [First point]\n- [Second point]\n- [Third point]' }), blk('image', { img: '', caption: '' })] };
+    if (kind === 'slide-content') return { layout: 'col2', emphasis: 'balanced', spacing: 0.4, blocks: [blk('title', { text: 'New slide' }), blk('text', { head: '', body: '- First point\n- Second point\n- Third point' })] };
     if (kind === 'slide-data') return { layout: 'col2', emphasis: 'balanced', spacing: 0.4, blocks: [blk('title', { text: '[What the data shows]' }), blk('chart', { head: '', rows: '[Group A], 42\n[Group B], 68\n[Group C], 55' }), blk('text', { head: '', body: '[One or two sentences explaining the chart]' }), blk('takeaway', { text: '[Your main point in one sentence]' })] };
     if (kind === 'blank') return { layout: 'col2', emphasis: 'balanced', spacing: 0.4, blocks: [blk('title', { text: '[Your ' + what + ' title]' })] };
     var base = [blk('title', { text: '[Your ' + what + ' title, set in one or two lines]' }), blk('byline', { text: fmt === 'poster' ? '[Author names] · [Department, University]' : '[Organizer] · [Date, time, place]' })];
@@ -1080,7 +1328,7 @@
     return [{ id: 'columns', name: fmt === 'poster' ? 'Classic columns' : 'Clean columns', note: 'Even columns, easy to scan' }, { id: 'cover', name: 'Bold cover', note: 'A strong colored header' }, { id: 'imgtop', name: 'Image-led', note: 'A large picture on top' }, { id: 'blank', name: 'Blank page', note: 'Only a title to start' }];
   }
   function makeDoc(fmt, size, tpl, orient) {
-    var d = { v: 1, name: 'Untitled ' + FORMATS[fmt].what, format: fmt, size: size, orient: orient, pairing: 'fraunces', palette: 'blue', mode: 'simple', bg: 'none', cur: 0, pages: [] };
+    var d = { v: 1, name: 'Untitled ' + FORMATS[fmt].what, format: fmt, size: size, orient: orient, pairing: 'jakarta', palette: 'lilac', mode: 'simple', bg: 'none', cur: 0, pages: [], look: JSON.parse(JSON.stringify(LOOKS[0].s)), lookId: 'bento' };
     normalize(d);
     if (fmt === 'slides') d.pages = tpl === 'blank' ? [newPage('blank', fmt)] : [newPage('slide-title', fmt), newPage('slide-content', fmt), newPage('slide-data', fmt)];
     else d.pages = [newPage(tpl === 'columns' ? 'columns' : tpl, fmt)];
@@ -1088,26 +1336,105 @@
     return d;
   }
 
+  // ---------- paste your text: it is sorted into blocks for you ----------
+  var SAMPLE = {
+    poster: 'How Multilingual Students Use Translation Apps in First-Year Writing\nYour Name · Department of Applied Linguistics, Your University\n\nIntroduction\nMany first-year writers use translation apps while drafting. We know little about when they use them and how the apps shape their writing.\n\nResearch question\nWhen do multilingual students turn to translation apps, and what do they do with the results?\n\nMethods\n- 24 first-year students in two writing courses\n- Screen recordings of drafting sessions\n- Short interviews after each session\n\nFindings (example numbers)\nPlanning, 18\nDrafting, 42\nRevising, 27\nChecking words, 35\n\nWhat it means\nStudents used the apps most while drafting sentences, not while planning. Teachers can show students how to check translated phrases against course readings.\n\nReferences\n- Author, A. A. (2024). Title of the work. Journal Name, 12(3), 45–67.\n\nFull paper: enamhassan.com\nTakeaway: Translation apps help students draft, but students need support checking the results.',
+    flyer: 'Writing Center Open House\nTuesday, March 3 · 4–6 pm · Campus Center, Room 2\n\nWhat it is\nMeet the tutors, see how a session works, and get help with a draft you are working on.\n\nDetails\n- Free and open to all students\n- Bring a draft or just stop by\n- Snacks provided\n\nSign up: enamhassan.com\nTakeaway: Drop in any time between 4 and 6 pm.'
+  };
+  SAMPLE.slides = SAMPLE.poster; SAMPLE.handout = SAMPLE.flyer.replace('Writing Center Open House', 'Writing Center Guide');
+  function parseText(src, fmt) {
+    var L = String(src || '').replace(/\r/g, '').split('\n').map(function (x) { return x.replace(/\s+$/, ''); });
+    var nonEmpty = function (i) { for (var j = i; j < L.length; j++) if (L[j].trim()) return j; return -1; };
+    var DATA = /^\s*(.{1,40}?)\s*[,:\t]\s*(-?\d+(?:\.\d+)?)\s*%?\s*$/, URL = /(https?:\/\/\S+|www\.\S+|\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|org|edu|net|io|gov|co|uk|ca|au|me|info|dev|ai)(?:\/\S*)?)/i;
+    var TK = /^\s*(takeaway|key (?:message|point|takeaway)|bottom line|main point|in short)\s*[:\-–]\s*/i, BUL = /^\s*(?:[-•*▪◦]|\d+[.)])\s+/;
+    var isHead = function (t, nxt) { t = t.trim(); if (/^#{1,6}\s/.test(t)) return true; if (BUL.test(t) || DATA.test(t)) return false; if (t.length > 60 || t.split(/\s+/).length > 8) return false; if (/[.!?,;]$/.test(t)) return false; if (/:$/.test(t)) return true; return nxt >= 0; };
+    var out = [], title = null, by = null, tk = null, sec = null, rows = [], brk = false, i = nonEmpty(0);
+    if (i < 0) return null;
+    title = blk('title', { text: L[i].replace(/^#+\s*/, '').trim() }); i++;
+    var j = nonEmpty(i);
+    if (j >= 0) { var c = L[j].trim(); if (c.length < 170 && !/[.!?]$/.test(c) && !TK.test(c) && !DATA.test(c) && (j === i || /[·|,@]|\band\b|universit|college|school|\d/i.test(c)) && !(isHead(c, nonEmpty(j + 1)) && j > i && !/[·|,@]/.test(c))) { by = blk('byline', { text: c }); i = j + 1; } }
+    var flush = function () {
+      if (rows.length >= 2) { var head = ''; if (sec && !sec.body) { head = sec.head; out.splice(out.indexOf(sec), 1); } out.push(blk('chart', { head: head, rows: rows.map(function (r) { return r[0] + ', ' + r[1]; }).join('\n'), kind: 'bar' })); sec = null; }
+      else if (rows.length === 1) addText(rows[0].raw);
+      rows = [];
+    };
+    var addText = function (t) {
+      if (!sec) { sec = blk('text', { head: '', body: '' }); out.push(sec); }
+      var bul = BUL.test(t), line = bul ? '- ' + t.replace(BUL, '') : t.trim();
+      sec.body += sec.body ? ((bul || brk || /^- /.test(sec.body.split('\n').pop()) && bul) ? '\n' : ' ') + line : line;
+      brk = false;
+    };
+    for (; i < L.length; i++) {
+      var raw = L[i], t = raw.trim();
+      if (!t) { brk = true; if (rows.length) flush(); continue; }
+      var dm = t.match(DATA);
+      if (dm && !URL.test(t)) { rows.push([dm[1], dm[2]]); rows[rows.length - 1].raw = t; continue; }
+      if (rows.length) flush();
+      if (TK.test(t)) { tk = blk('takeaway', { text: t.replace(TK, '') }); sec = null; continue; }
+      var um = t.match(URL);
+      if (um && t.replace(um[1], '').replace(/[:\-–\s]+$/, '').trim().length < 50) { out.push(blk('qr', { url: um[1], label: t.replace(um[1], '').replace(/[:\-–\s]+$/, '').trim() || (fmt === 'poster' ? 'Scan for the full paper' : 'Scan to learn more') })); sec = null; continue; }
+      if (isHead(t, nonEmpty(i + 1)) && !(sec && !sec.body && !brk)) { sec = blk('text', { head: t.replace(/^#+\s*/, '').replace(/:$/, '').trim(), body: '' }); out.push(sec); brk = false; continue; }
+      addText(raw);
+    }
+    if (rows.length) flush();
+    out = out.filter(function (b) { return b.t !== 'text' || b.head || b.body; });
+    if (fmt === 'slides') {
+      var pages = [{ layout: 'cover', emphasis: 'balanced', spacing: 0.4, blocks: [title].concat(by ? [by] : []) }], cur = null;
+      out.forEach(function (b) {
+        if (b.t === 'qr' && cur) { cur.blocks.push(b); return; }
+        var head = b.head || ''; var nb = JSON.parse(JSON.stringify(b)); if (nb.head != null) nb.head = '';
+        cur = { layout: 'col2', emphasis: 'balanced', spacing: 0.4, blocks: [blk('title', { text: head || title.text })].concat(nb.t === 'text' && !nb.body ? [] : [nb]) }; pages.push(cur);
+      });
+      if (tk) (cur || pages[0]).blocks.push(tk);
+      return pages;
+    }
+    return [{ layout: fmt === 'poster' ? 'col3' : 'col2', emphasis: 'balanced', spacing: 0.4, blocks: [title].concat(by ? [by] : [], out, tk ? [tk] : []) }];
+  }
+  // looks
+  var keep = { colors: false, fonts: false }, mixes = [];
+  function hasImg(pg) { return (pg.blocks || []).some(function (b) { return b.t === 'image'; }); }
+  function lookDoc(lk) { var d = Object.assign({}, doc, { look: lk.s, bg: lk.bg || 'none' }); if (!keep.colors) d.palette = lk.pal; if (!keep.fonts) d.pairing = lk.pair; return d; }
+  function lookLayout(lk, pg) { if (doc.format === 'slides') return pg.layout === 'cover' ? 'col2' : pg.layout; return lk.layout === 'imgtop' && !hasImg(pg) ? 'col2' : lk.layout; }
+  function lookPage(lk, pg) { var p = Object.assign({}, pg); p.layout = lookLayout(lk, pg); return p; }
+  function shuffle() {
+    var pick = function (a) { return a[Math.floor(Math.random() * a.length)]; }; mixes = [];
+    for (var i = 0; i < 6; i++) {
+      var hd = pick(MIX.header);
+      mixes.push({ id: 'mix' + Date.now().toString(36) + i, name: 'New idea ' + (i + 1), layout: pick(MIX.layout), pal: pick(PALS.slice(0, 8)).id, pair: pick(PAIRS.slice(0, 7)).id, bg: pick(MIX.bg),
+        s: { header: hd, headFill: pick(['gradient', 'accent', 'ink']), panelFill: pick(['accent', 'gradient']), sections: pick(MIX.sections), cycle: pick(MIX.cycles), heads: pick(MIX.heads), titleScale: pick(MIX.scale), numbered: Math.random() < 0.3 ? 1 : 0, headInk: Math.random() < 0.3 ? 1 : 0, round: pick([0.45, 0.7, 0.9]), tight: Math.random() < 0.6 ? 1 : 0, takeFill: pick(MIX.take) } });
+    }
+  }
+  function findLook(id) { return LOOKS.concat(mixes).filter(function (l) { return l.id === id; })[0]; }
+  function applyLook(lk) {
+    snap(); applyLookTo(doc, lk, true);
+    whenFonts(function () { renderAll(); }); renderAll();
+  }
+  function lookCard(lk, D) {
+    var d = lookDoc(lk), r = arrange(lookPage(lk, page()), d), on = doc.lookId === lk.id;
+    return '<button type="button" class="ps-look" data-look="' + lk.id + '" aria-pressed="' + on + '"><span class="th"><svg viewBox="0 0 ' + D.W + ' ' + D.H + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + svgMarkup(r.els, d) + '</svg></span><span class="nm">' + esc(lk.name) + '</span></button>';
+  }
+
   // ---------- start screen ----------
+  function designDoc(fmt, lk) {
+    var d = makeDoc(fmt, startSel.size, 'blank', startSel.orient); d.pages = parseText(SAMPLE[fmt], fmt); applyLookTo(d, lk, false); return d;
+  }
+  function applyLookTo(d, lk, keepMine) {
+    d.look = JSON.parse(JSON.stringify(lk.s)); d.lookId = lk.id; d.bg = lk.bg || 'none';
+    if (!(keepMine && keep.colors)) d.palette = lk.pal; if (!(keepMine && keep.fonts)) d.pairing = lk.pair;
+    d.pages.forEach(function (pg) { if (d.format === 'slides') { if (pg.layout !== 'cover') pg.layout = 'col2'; } else pg.layout = lk.layout === 'imgtop' && !hasImg(pg) ? 'col2' : lk.layout; });
+  }
   function renderStart() {
-    var f = FORMATS[startSel.format], saved = store.get(), h = '';
-    h += '<ol class="ps-steps" aria-label="Steps"><li class="on">1 · What are you making?</li><li>2 · Pick a starting point</li><li>3 · Make it yours</li></ol>';
-    if (saved && saved.doc) h += '<div class="ps-resume"><button type="button" class="ps-pill on" data-resume="1">Continue “' + esc(saved.doc.name || 'Untitled design') + '”</button><button type="button" class="ps-pill" data-openproj="1">Open a project file</button></div>';
-    else h += '<div class="ps-resume"><button type="button" class="ps-pill" data-openproj="1">Open a project file</button></div>';
-    h += '<section><h2>What are you making?</h2><p>Pick a format. You can change the size or turn the page later without losing your work.</p><div class="ps-formats">';
-    var icons = { poster: '<i style="width:58px;height:78px;border-top:6px solid #0F4C81"></i>', slides: '<i style="width:112px;height:63px;border-left:6px solid #6667AB"></i>', flyer: '<i style="width:62px;height:80px;border-bottom:18px solid #a8481f"></i>', handout: '<i style="width:62px;height:80px;background:repeating-linear-gradient(#fff 0 12px,#d9d6cf 12px 14px)!important"></i>' };
-    var subs = { poster: '36 × 48 in or A0', slides: '16:9, several pages', flyer: 'US Letter or A4', handout: 'One printable page' };
-    Object.keys(FORMATS).forEach(function (k) { h += '<button type="button" class="ps-fcard" data-fmt="' + k + '" aria-pressed="' + (k === startSel.format) + '"><span class="ico">' + icons[k] + '</span><b>' + FORMATS[k].name + '</b><small>' + subs[k] + '</small></button>'; });
-    h += '</div>';
-    h += '<div class="ps-sizes">';
-    if (f.sizes.length > 1) h += '<div class="ps-row" role="group" aria-label="Size">' + f.sizes.map(function (s) { return '<button type="button" class="ps-pill' + (s.id === startSel.size ? ' on' : '') + '" data-size="' + s.id + '" aria-pressed="' + (s.id === startSel.size) + '">' + s.label + '</button>'; }).join('') + '</div>';
-    h += '<div class="ps-row" role="group" aria-label="Orientation">' + [['portrait', 'Portrait'], ['landscape', 'Landscape']].map(function (o) { var on = startSel.orient === o[0]; return '<button type="button" class="ps-pill ps-or' + (on ? ' on' : '') + '" data-sorient="' + o[0] + '" aria-pressed="' + on + '"><i class="' + o[0] + '" aria-hidden="true"></i>' + o[1] + '</button>'; }).join('') + '</div></div>';
-    h += '</section><section><h2 style="font-size:clamp(1.3rem,2.2vw,1.7rem)">Pick a starting point</h2><p>Every starting point works with any font pairing and color palette.</p><div class="ps-tpls">';
-    templatesFor(startSel.format).forEach(function (t) {
-      var d = makeDoc(startSel.format, startSel.size, t.id, startSel.orient), D = dims(d), r = arrange(d.pages[0], d), th = t.id === 'blank' ? '<span class="blank">+</span>' : '<svg viewBox="0 0 ' + D.W + ' ' + D.H + '" width="' + (D.W > D.H ? 170 : Math.round(200 * D.W / D.H)) + '" aria-hidden="true">' + svgMarkup(r.els, d) + '</svg>';
-      h += '<button type="button" class="ps-tcard" data-tpl="' + t.id + '"><span class="th">' + th + '</span><b>' + t.name + '</b><small>' + t.note + '</small></button>';
-    });
-    $('ps-start').innerHTML = h + '</div></section>';
+    var fm = startSel.format, f = FORMATS[fm], saved = store.get(), h = '';
+    h += '<div class="ps-starthead"><div><h2>Pick a design</h2><p>Each design is filled with example text. Pick one you like, then click any text on the page to type over it and drop in your photos.</p></div><div class="ps-resume">' +
+      (saved && saved.doc ? '<button type="button" class="ps-pill on" data-resume="1">Continue “' + esc((saved.doc.name || 'Untitled design').slice(0, 40)) + '”</button>' : '') + '<button type="button" class="ps-pill" data-openproj="1">Open a project file</button></div></div>';
+    h += '<div class="ps-fmtbar"><div class="ps-row" role="group" aria-label="What are you making?">' + Object.keys(FORMATS).map(function (k) { return '<button type="button" class="ps-pill' + (k === fm ? ' on' : '') + '" data-fmt="' + k + '" aria-pressed="' + (k === fm) + '">' + FORMATS[k].name + '</button>'; }).join('') + '</div><div class="ps-row">';
+    if (f.sizes.length > 1) h += f.sizes.map(function (z) { return '<button type="button" class="ps-pill' + (z.id === startSel.size ? ' on' : '') + '" data-size="' + z.id + '" aria-pressed="' + (z.id === startSel.size) + '">' + z.label + '</button>'; }).join('');
+    h += [['portrait', 'Portrait'], ['landscape', 'Landscape']].map(function (o) { var on = startSel.orient === o[0]; return '<button type="button" class="ps-pill ps-or' + (on ? ' on' : '') + '" data-sorient="' + o[0] + '" aria-pressed="' + on + '"><i class="' + o[0] + '" aria-hidden="true"></i>' + o[1] + '</button>'; }).join('') + '</div></div>';
+    h += '<div class="ps-designs">' + LOOKS.map(function (lk) {
+      var d = designDoc(fm, lk), pg = d.pages[fm === 'slides' && d.pages[1] ? 1 : 0], D = dims(d), r = arrange(pg, d);
+      return '<button type="button" class="ps-dcard" data-design="' + lk.id + '"><span class="th"><svg viewBox="0 0 ' + D.W + ' ' + D.H + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + svgMarkup(r.els, d) + '</svg></span><b>' + esc(lk.name) + '</b></button>';
+    }).join('') + '</div>';
+    $('ps-start').innerHTML = h;
   }
   function showView(v) {
     view = v; $('ps-start').hidden = v !== 'start'; $('ps-editor').hidden = v !== 'editor';
@@ -1145,13 +1472,14 @@
       if (t.block != null) { page().blocks[t.block].img = id; renderLeft(); }
       else if (t.el) { var el = page().els.filter(function (x) { return x.id === t.el; })[0]; if (el) { el.img = id; var ar = images[id].ar; el.h = el.w / ar; } renderRight(); }
       else if (t.add) addEl('image', id);
+      else if (t.addBlock) { addBlock('image', id); return; }
       renderStage(); if (doc.mode !== 'free') renderRight();
     });
   });
 
   // ---------- free layout ----------
   function toFree() {
-    snap();
+    snap(); selB = null; editingB = null; ta.hidden = true;
     doc.pages.forEach(function (pg) { if (!pg.els) pg.els = freeEls(pg); });
     doc.mode = 'free'; sel = null; renderAll();
   }
@@ -1160,7 +1488,7 @@
   function elsToBlocks(pg) {
     var D = dims(), old = pg.blocks || [], groups = [], byKey = {};
     pg.els.forEach(function (e) {
-      if (!/^(text|image|chart|qr)$/.test(e.type)) return;
+      if (!/^(text|image|chart|qr)$/.test(e.type) || e.role === 'kicker') return;
       if (e.type === 'text' && !String(e.text || '').trim()) return;
       var key = e.blk != null && old[e.blk] ? 'b' + e.blk : 'n' + e.id, g = byKey[key];
       if (!g) { g = byKey[key] = { blk: e.blk, els: [] }; groups.push(g); }
@@ -1261,7 +1589,15 @@
     var hd = e.target.closest('[data-h]'), g = e.target.closest('[data-id]'), p = toU(e);
     if (doc.mode !== 'free') {
       var el = g && lastRes.els.filter(function (x) { return x.id === g.dataset.id; })[0];
-      if (el && el.block != null) { var card = $('ps-left').querySelector('.ps-block[data-i="' + el.block + '"]'); if (card) { document.querySelectorAll('.ps-block.hl').forEach(function (c) { c.classList.remove('hl'); }); card.classList.add('hl'); card.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); var f = card.querySelector('textarea, input'); if (f) f.focus({ preventScroll: true }); } }
+      if (editingB) { editingB = null; ta.hidden = true; }
+      if (!el || el.block == null) { if (selB != null) { selB = null; renderStage(); renderRight(); } return; }
+      e.preventDefault();
+      var changed = selB !== el.block; selB = el.block;
+      if (el.type === 'text' && fieldOf(el)) { renderStage(); if (changed) renderRight(); var ne = lastRes.els.filter(function (x) { return x.block === el.block && x.role === el.role && x.type === 'text'; })[0]; startEditB(ne || el); return; }
+      renderStage(); renderRight();
+      if (el.type === 'image' && !images[el.img]) { pickTarget = { block: el.block }; $('ps-file-img').click(); }
+      if (el.type === 'chart') { var nb = $('ps-bnums'); if (nb) nb.focus(); }
+      if (el.type === 'qr') { var nu = $('ps-burl'); if (nu) nu.focus(); }
       return;
     }
     endEdit();
@@ -1313,6 +1649,27 @@
 
   // editing text on the page
   var editing = null, ta = $('ps-edit');
+  function fieldOf(el) {
+    var b = page().blocks[el.block]; if (!b) return null; var r = el.role;
+    if (r === 'title' || r === 'byline' || r === 'takeaway') return 'text'; if (r === 'heading') return 'head'; if (r === 'body') return 'body';
+    if (r === 'caption') return b.t === 'qr' ? 'label' : 'caption'; return null;
+  }
+  function edEl() { return editingB && lastRes ? lastRes.els.filter(function (x) { return x.block === editingB.block && x.role === editingB.role && x.type === 'text'; })[0] : null; }
+  function startEditB(el) {
+    var f = fieldOf(el); if (!f) return;
+    snap(); editingB = { block: el.block, role: el.role, field: f };
+    ta.value = page().blocks[el.block][f] || ''; ta.hidden = false; $('ps-wrap').appendChild(ta);
+    placeTA(); ta.focus({ preventScroll: true }); var n = ta.value.length; ta.setSelectionRange(n, n);
+  }
+  function placeTA() {
+    var el = edEl(); if (!el) return;
+    var z = zoomNow(), pr = P(), pal = C(), b = boxOf(el), sr = svgEl.getBoundingClientRect(), wr = $('ps-wrap').getBoundingClientRect(), s = ta.style;
+    s.left = (sr.left - wr.left + $('ps-wrap').scrollLeft + b.x * z) + 'px'; s.top = (sr.top - wr.top + $('ps-wrap').scrollTop + b.y * z) + 'px';
+    s.width = Math.max(b.w * z + 4, 40) + 'px'; s.height = Math.max(b.h * z, el.size * z * 1.4) + 'px';
+    s.fontFamily = fontOf(el, pr); s.fontSize = (el.size * z) + 'px'; s.fontWeight = weightOf(el, pr); s.fontStyle = el.italic ? 'italic' : 'normal';
+    s.lineHeight = (el.size * (el.lh || 1.3) * z) + 'px'; s.color = col(el.color, pal); s.textAlign = el.align || 'left';
+    var gEl = svgEl.querySelector('[data-id="' + el.id + '"]'); if (gEl) gEl.style.opacity = 0;
+  }
   function startEdit(el) {
     editing = el.id; var z = zoomNow(), pr = P(), pal = C(), b = boxOf(el);
     var st = $('ps-stage'), sr = svgEl.getBoundingClientRect(), wr = $('ps-wrap').getBoundingClientRect();
@@ -1325,10 +1682,11 @@
     $('ps-wrap').appendChild(ta);
     ta.focus(); ta.select();
   }
-  function endEdit() { if (!editing) return; editing = null; ta.hidden = true; renderStage(); }
-  ta.addEventListener('input', function () { var el = selEl(); if (!el) return; el.text = ta.value; renderStage(); ta.style.height = Math.max(boxOf(el).h * zoomNow(), el.size * zoomNow() * 1.4) + 'px'; });
+  function endEdit() { if (editingB) { editingB = null; ta.hidden = true; renderStage(); renderRight(); return; } if (!editing) return; editing = null; ta.hidden = true; renderStage(); }
+  var rT; ta.addEventListener('input', function () { if (editingB) { var bb = page().blocks[editingB.block]; if (!bb) return; snap('e' + editingB.block + editingB.field); bb[editingB.field] = ta.value; renderStage(); clearTimeout(rT); rT = setTimeout(function () { if (!editingB) return; var a = document.activeElement; renderRight(); if (a === ta) ta.focus({ preventScroll: true }); }, 900); return; } var el = selEl(); if (!el) return; el.text = ta.value; renderStage(); ta.style.height = Math.max(boxOf(el).h * zoomNow(), el.size * zoomNow() * 1.4) + 'px'; });
   ta.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); endEdit(); } });
-  ta.addEventListener('blur', function () { setTimeout(endEdit, 0); });
+  // finish only the edit that lost focus, not one that started a moment later
+  ta.addEventListener('blur', function () { var tokB = editingB, tok = editing; setTimeout(function () { if (editingB && editingB === tokB) endEdit(); else if (!editingB && editing && editing === tok) endEdit(); }, 0); });
 
   // ---------- events: editor ----------
   $('ps-left').addEventListener('input', function (e) {
@@ -1367,13 +1725,20 @@
     e.preventDefault(); var f = e.dataTransfer.files[0]; if (!f) return;
     readImage(f, function (id) {
       if (doc.mode === 'free') addEl('image', id);
-      else { snap(); var pg = page(), nb = blk('image', { img: id, caption: '' }); var last = pg.blocks.length && pg.blocks[pg.blocks.length - 1].t === 'takeaway'; pg.blocks.splice(last ? pg.blocks.length - 1 : pg.blocks.length, 0, nb); renderLeft(); renderStage(); renderRight(); }
+      else { snap(); var pg = page(), empty = pg.blocks.filter(function (x) { return x.t === 'image' && !images[x.img]; })[0]; if (empty) { empty.img = id; renderLeft(); renderStage(); renderRight(); return; } var nb = blk('image', { img: id, caption: '' }); var last = pg.blocks.length && pg.blocks[pg.blocks.length - 1].t === 'takeaway'; pg.blocks.splice(last ? pg.blocks.length - 1 : pg.blocks.length, 0, nb); renderLeft(); renderStage(); renderRight(); }
     });
   });
 
   $('ps-right').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     var pg = page(), el = selEl(), D = dims();
+    if (b.dataset.shuffle) { shuffle(); renderRight(); return; }
+    var sbk = selB != null ? pg.blocks[selB] : null;
+    if (sbk && b.dataset.bck) { snap(); sbk.kind = b.dataset.bck; renderStage(); renderRight(); return; }
+    if (sbk && b.dataset.bimg) { pickTarget = { block: selB }; $('ps-file-img').click(); return; }
+    if (sbk && b.dataset.bimgrm) { snap(); sbk.img = ''; renderStage(); renderRight(); return; }
+    if (sbk && b.dataset.bhead) { snap(); sbk.head = 'Heading'; renderStage(); renderRight(); var he = lastRes.els.filter(function (x) { return x.block === selB && x.role === 'heading'; })[0]; if (he) { startEditB(he); ta.select(); } return; }
+    if (b.dataset.look) { var lk = findLook(b.dataset.look); if (lk) applyLook(lk); return; }
     if (b.dataset.emph) { snap(); pg.emphasis = b.dataset.emph; renderRight(); renderStage(); return; }
     if (b.dataset.lay) { snap(); pg.layout = b.dataset.lay; renderRight(); renderStage(); return; }
     if (b.dataset.pair) { snap(); doc.pairing = b.dataset.pair; whenFonts(function () { renderAll(); }); renderAll(); return; }
@@ -1402,11 +1767,14 @@
   $('ps-right').addEventListener('input', function (e) {
     var t = e.target, pg = page();
     if (t.id === 'ps-spacing') { snap('spacing'); pg.spacing = +t.value; renderStage(); }
+    var sbi = selB != null ? pg.blocks[selB] : null, fmap = { 'ps-bnums': 'rows', 'ps-burl': 'url', 'ps-blabel': 'label', 'ps-bcap': 'caption' };
+    if (sbi && fmap[t.id]) { snap('bf' + t.id); sbi[fmap[t.id]] = t.value; renderStage(); if (t.id === 'ps-burl') { var qn2 = $('ps-right').querySelector('.ps-qrnote'); if (qn2) qn2.innerHTML = qrNote(t.value); } }
     if (t.id === 'ps-chartdata') { var el = selEl(); if (el) { snap('chart' + el.id); el.rows = t.value; renderStage(); } }
     if (t.id === 'ps-qrurl') { var q = selEl(); if (q) { snap('qr' + q.id); q.url = t.value; renderStage(); var qn = $('ps-right').querySelector('.ps-qrnote'); if (qn) qn.innerHTML = qrNote(t.value); } }
   });
   $('ps-right').addEventListener('change', function (e) {
     if (e.target.id === 'ps-spacing') renderRight();
+    if (e.target.dataset.keep) { keep[e.target.dataset.keep] = e.target.checked; renderRight(); return; }
     if (e.target.id === 'ps-ff') {
       var el = selEl(); if (!el) return; snap(); var v = e.target.value;
       if (v === 'display' || v === 'body') { el.font = v; delete el.ff; } else { el.ff = v; if (!el.font) el.font = 'body'; }
@@ -1417,9 +1785,9 @@
 
   $('ps-pages').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
-    if (b.dataset.pg != null) { doc.cur = +b.dataset.pg; sel = null; renderAll(); return; }
+    if (b.dataset.pg != null) { doc.cur = +b.dataset.pg; sel = null; selB = null; renderAll(); return; }
     snap();
-    if (b.dataset.addpg) { var np = newPage('slide-content', doc.format); if (doc.mode === 'free') np.els = freeEls(np); doc.pages.splice(doc.cur + 1, 0, np); doc.cur++; }
+    selB = null; if (b.dataset.addpg) { var np = newPage('slide-content', doc.format); if (doc.mode === 'free') np.els = freeEls(np); doc.pages.splice(doc.cur + 1, 0, np); doc.cur++; }
     if (b.dataset.delpg && doc.pages.length > 1) { doc.pages.splice(doc.cur, 1); doc.cur = Math.max(0, doc.cur - 1); }
     if (b.dataset.pgmv) { var j = doc.cur + +b.dataset.pgmv; if (j >= 0 && j < doc.pages.length) { var x = doc.pages.splice(doc.cur, 1)[0]; doc.pages.splice(j, 0, x); doc.cur = j; } }
     sel = null; renderAll();
@@ -1456,6 +1824,10 @@
   // start screen events
   $('ps-start').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.design) {
+      var lk0 = findLook(b.dataset.design); doc = designDoc(startSel.format, lk0); doc.name = 'My ' + FORMATS[startSel.format].what;
+      hist = []; fut = []; sel = null; selB = null; shuffle(); showView('editor'); toast('Click any text to type over it. Drop a photo onto the page to add it.'); return;
+    }
     if (b.dataset.fmt) { startSel.format = b.dataset.fmt; var s0 = FORMATS[b.dataset.fmt].sizes[0]; startSel.size = s0.id; startSel.orient = natOr(s0); renderStart(); return; }
     if (b.dataset.size) { startSel.size = b.dataset.size; renderStart(); return; }
     if (b.dataset.sorient) { startSel.orient = b.dataset.sorient; renderStart(); return; }
@@ -1471,6 +1843,31 @@
       catch (x) { toast('That file is not a Poster Studio project'); }
     };
     fr.readAsText(f);
+  });
+
+  // ---------- adding blocks in Simple mode ----------
+  function addBlock(k, img) {
+    var pg = page(), have = function (t) { for (var i = 0; i < pg.blocks.length; i++) if (pg.blocks[i].t === t) return i; return -1; };
+    if ((k === 'takeaway' || k === 'byline' || k === 'title') && have(k) > -1) { selB = have(k); renderStage(); renderRight(); toast('Your ' + F().what + ' already has one. It is selected.'); return; }
+    snap();
+    var nb = k === 'text' ? blk('text', { head: 'New section', body: 'Type your text here.' }) : k === 'image' ? blk('image', { img: img || '', caption: '' }) : k === 'chart' ? blk('chart', { head: 'Chart title', rows: 'Group A, 42\nGroup B, 68\nGroup C, 55', kind: 'bar' }) : k === 'qr' ? blk('qr', { url: '', label: doc.format === 'poster' ? 'Scan for the full paper' : 'Scan to learn more' }) : k === 'takeaway' ? blk('takeaway', { text: 'Your main message in one sentence' }) : k === 'byline' ? blk('byline', { text: 'Your name · Your organization' }) : blk('title', { text: 'Your title' });
+    var at;
+    if (k === 'title') at = 0; else if (k === 'byline') at = have('title') + 1; else if (k === 'takeaway') at = pg.blocks.length;
+    else if (selB != null && /^(text|image|chart|qr)$/.test((pg.blocks[selB] || {}).t)) at = selB + 1;
+    else { var tk = have('takeaway'); at = tk > -1 ? tk : pg.blocks.length; }
+    pg.blocks.splice(at, 0, nb); selB = at; renderStage(); renderRight();
+    if (k === 'text' || k === 'title' || k === 'byline' || k === 'takeaway') { var role = k === 'text' ? 'heading' : k, el = lastRes.els.filter(function (x) { return x.block === at && x.role === role; })[0]; if (el) { startEditB(el); ta.select(); } }
+    if (k === 'qr') { var u = $('ps-burl'); if (u) u.focus(); }
+    if (k === 'chart') { var nn = $('ps-bnums'); if (nn) nn.focus(); }
+  }
+  var addBtn = $('ps-add'), addMenu = $('ps-add-menu');
+  addBtn.addEventListener('click', function () { var o = addMenu.hidden; addMenu.hidden = !o; addBtn.setAttribute('aria-expanded', o); });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.ps-addwrap')) { addMenu.hidden = true; addBtn.setAttribute('aria-expanded', false); } });
+  addMenu.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-add]'); if (!b) return; addMenu.hidden = true; addBtn.setAttribute('aria-expanded', false);
+    if (doc.mode === 'free') toSimple();
+    if (b.dataset.add === 'image') { pickTarget = { addBlock: true }; $('ps-file-img').click(); return; }
+    addBlock(b.dataset.add);
   });
 
   // ---------- export ----------
