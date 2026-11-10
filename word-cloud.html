@@ -76,11 +76,12 @@
               <textarea id="wc-text" rows="8" spellcheck="false" placeholder="Paste an article, survey answers, interview notes, or a list of words."></textarea>
               <div class="wc-row">
                 <button type="button" class="wc-btn" id="wc-upload"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>Open file</button>
-                <input type="file" id="wc-file" accept=".txt,.csv,.md,text/plain" hidden>
+                <input type="file" id="wc-file" accept=".txt,.csv,.md,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
                 <button type="button" class="wc-btn ghost" id="wc-example">Example</button>
                 <button type="button" class="wc-btn ghost" id="wc-clear">Clear</button>
               </div>
-              <p class="wc-note">Want a word bigger? Type one word per line with a number, like <code>learning: 12</code>.</p>
+              <p class="wc-filemsg" id="wc-filemsg" role="status" aria-live="polite" hidden></p>
+              <p class="wc-note">Open a .txt, Word (.docx), or PDF file, or drop it on the box. Want a word bigger? Type one word per line with a number, like <code>learning: 12</code>.</p>
 
               <div class="wc-checks">
                 <label class="wc-check"><input type="checkbox" id="wc-skip" checked><span>Skip common words <small>(the, and, of…)</small></span></label>
@@ -111,7 +112,7 @@
               <label class="wc-h" for="wc-pad">Space between words <output id="wc-pad-out">Normal</output></label>
               <input type="range" id="wc-pad" min="0" max="8" step="1" value="3">
               <label class="wc-h" for="wc-contrast">Size difference <output id="wc-contrast-out">Normal</output></label>
-              <input type="range" id="wc-contrast" min="1" max="5" step="1" value="3">
+              <input type="range" id="wc-contrast" min="0" max="7" step="1" value="3">
             </div>
           </aside>
 
@@ -201,6 +202,11 @@
   .wc-pane textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 150px; padding: 12px 14px; border-radius: 14px; font: inherit; font-size: .875rem; line-height: 1.55; color: var(--ink); }
   .wc-pane input[type="text"] { width: 100%; box-sizing: border-box; height: 42px; padding: 0 14px; border-radius: 12px; font: inherit; font-size: .875rem; color: var(--ink); }
   .wc-pane input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .wc-filemsg { margin: 10px 0 0; padding: 9px 12px; border-radius: 10px; font-size: .8125rem; line-height: 1.5; color: var(--muted); box-shadow: var(--neu-in); }
+  .wc-filemsg.err { color: #b42318; box-shadow: none; background: rgba(180,35,24,.08); border: 1px solid rgba(180,35,24,.3); }
+  :where(html[data-theme="dark"]) .wc-filemsg.err { color: #ff9b8f; }
+  @media (prefers-color-scheme: dark) { :where(html:not([data-theme="light"])) .wc-filemsg.err { color: #ff9b8f; } }
+  .wc-pane textarea.drop { outline: 2px dashed var(--accent); outline-offset: 2px; }
   .wc-checks { display: grid; gap: 8px; margin-top: 18px; }
   .wc-check { display: flex; align-items: center; gap: 10px; font-size: .875rem; cursor: pointer; }
   .wc-check input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
@@ -419,7 +425,7 @@
     var list = words.slice(0, st.max);
     if (!list.length) return [];
     var wmax = list[0].n, wmin = list[list.length - 1].n;
-    var expo = [0.45, 0.65, 0.85, 1.1, 1.45][st.contrast - 1], minR = [0.42, 0.3, 0.2, 0.14, 0.1][st.contrast - 1];
+    var expo = [1, 0.45, 0.65, 0.85, 1.1, 1.45, 1.9, 2.5][st.contrast], minR = [1, 0.42, 0.3, 0.2, 0.14, 0.1, 0.065, 0.045][st.contrast];
     var lmax = Math.log(wmax + 1), lmin = Math.log(wmin + 1);
     var rel = list.map(function (w) { var lin = wmax === wmin ? 1 : (w.n - wmin) / (wmax - wmin), lg = lmax === lmin ? 1 : (Math.log(w.n + 1) - lmin) / (lmax - lmin); var t = 0.5 * lin + 0.5 * lg; return minR + (1 - minR) * Math.pow(t, expo); });
     mx.textAlign = 'center';
@@ -562,7 +568,7 @@
     $('wc-max').value = S.max; $('wc-max-out').textContent = S.max; $('wc-stop').value = S.extra;
     $('wc-pad').value = S.pad; $('wc-pad-out').textContent = ['Touching', 'Very tight', 'Tight', 'Normal', 'Normal +', 'Roomy', 'Roomy +', 'Airy', 'Very airy'][S.pad];
     $('wc-rand').value = S.rand; $('wc-rand-out').textContent = S.rand === 0 ? 'None' : S.rand <= 3 ? 'A little' : S.rand <= 6 ? 'Some' : S.rand <= 8 ? 'A lot' : 'Wild';
-    $('wc-contrast').value = S.contrast; $('wc-contrast-out').textContent = ['Very small', 'Small', 'Normal', 'Big', 'Very big'][S.contrast - 1];
+    $('wc-contrast').value = S.contrast; $('wc-contrast-out').textContent = ['Same size', 'Very small', 'Small', 'Normal', 'Big', 'Very big', 'Huge', 'Extreme'][S.contrast];
     pressed($('wc-fonts'), 'font', S.font); pressed($('wc-pals'), 'pal', S.pal);
     pressed($('wc-angles'), 'ang', S.ang); pressed($('wc-format'), 'v', S.format);
   }
@@ -586,9 +592,13 @@
     $('wc-rand').oninput = function () { S.rand = +this.value; syncUI(); clearTimeout(t); t = setTimeout(rebuild, 250); };
     $('wc-contrast').oninput = function () { S.contrast = +this.value; syncUI(); clearTimeout(t); t = setTimeout(rebuild, 250); };
     $('wc-example').onclick = function () { S.text = SAMPLE; S.hidden = {}; syncUI(); rebuild(); };
-    $('wc-clear').onclick = function () { S.text = ''; S.hidden = {}; syncUI(); rebuild(); $('wc-text').focus(); };
+    $('wc-clear').onclick = function () { showFileMsg(''); S.text = ''; S.hidden = {}; syncUI(); rebuild(); $('wc-text').focus(); };
     $('wc-upload').onclick = function () { $('wc-file').click(); };
-    $('wc-file').onchange = function () { var f = this.files[0]; if (!f) return; var rd = new FileReader(); rd.onload = function () { S.text = String(rd.result); S.hidden = {}; syncUI(); rebuild(); }; rd.readAsText(f); this.value = ''; };
+    $('wc-file').onchange = function () { var f = this.files[0]; if (f) openFile(f); this.value = ''; };
+    var ta = $('wc-text');
+    ['dragover', 'dragenter'].forEach(function (ev) { ta.addEventListener(ev, function (e) { if (e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types, 'Files') >= 0) { e.preventDefault(); ta.classList.add('drop'); } }); });
+    ['dragleave', 'drop'].forEach(function (ev) { ta.addEventListener(ev, function () { ta.classList.remove('drop'); }); });
+    ta.addEventListener('drop', function (e) { var f = e.dataTransfer && e.dataTransfer.files[0]; if (f) { e.preventDefault(); openFile(f); } });
 
     onPick($('wc-fonts'), 'font', function (v) { S.font = v; rebuild(); });
     onPick($('wc-pals'), 'pal', function (v) { S.pal = v; paint(); });
@@ -626,6 +636,108 @@
       var b = e.target.closest('[data-dl]'); if (!b) return;
       var kind = b.getAttribute('data-dl'); menu.hidden = true;
       download(kind);
+    });
+  }
+
+  /* ---------- opening files (.txt, .docx, .pdf) ---------- */
+  var PDFJS = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/';
+  function fail(code) { var e = new Error(code); e.code = code; return e; }
+  var FILE_ERRORS = {
+    scanned: 'This PDF has no text that can be read. It looks like a scanned document (pictures of pages), so a word cloud can’t be made from it.',
+    password: 'This PDF is password-protected. Remove the password and try again.',
+    pdf: 'This PDF could not be read. It may be damaged.',
+    pdflib: 'The PDF reader could not load. Check your internet connection and try again.',
+    doc: 'Older .doc files can’t be opened. In Word, choose File › Save As and pick .docx, then try again.',
+    docx: 'This Word file could not be read. Try saving it again as .docx.',
+    type: 'This file type can’t be opened. Use a .txt, .docx, or .pdf file.',
+    empty: 'This file has no text in it.'
+  };
+  function showFileMsg(msg, isErr) { var el = $('wc-filemsg'); el.textContent = msg || ''; el.hidden = !msg; el.classList.toggle('err', !!isErr); }
+
+  function unzipEntry(buf, want) {
+    var dv = new DataView(buf), u8 = new Uint8Array(buf), i, eocd = -1;
+    for (i = buf.byteLength - 22; i >= Math.max(0, buf.byteLength - 66000); i--) if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+    if (eocd < 0) return Promise.reject(fail('docx'));
+    var n = dv.getUint16(eocd + 10, true), p = dv.getUint32(eocd + 16, true), dec = new TextDecoder();
+    for (i = 0; i < n; i++) {
+      if (dv.getUint32(p, true) !== 0x02014b50) break;
+      var method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true), nl = dv.getUint16(p + 28, true), el = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true), off = dv.getUint32(p + 42, true);
+      var name = dec.decode(u8.subarray(p + 46, p + 46 + nl));
+      if (name === want) {
+        var start = off + 30 + dv.getUint16(off + 26, true) + dv.getUint16(off + 28, true), data = u8.slice(start, start + csize);
+        if (method === 0) return Promise.resolve(dec.decode(data));
+        if (method !== 8 || typeof DecompressionStream === 'undefined') return Promise.reject(fail('docx'));
+        return new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text();
+      }
+      p += 46 + nl + el + cl;
+    }
+    return Promise.reject(fail('docx'));
+  }
+  function readDocx(file) {
+    return file.arrayBuffer().then(function (buf) { return unzipEntry(buf, 'word/document.xml'); }).then(function (xml) {
+      var doc = new DOMParser().parseFromString(xml, 'application/xml');
+      if (doc.getElementsByTagName('parsererror').length) throw fail('docx');
+      var out = [];
+      Array.prototype.forEach.call(doc.getElementsByTagName('w:p'), function (p) {
+        var line = '', w = doc.createTreeWalker(p, NodeFilter.SHOW_ELEMENT), node;
+        while ((node = w.nextNode())) {
+          if (node.nodeName === 'w:t') line += node.textContent;
+          else if (node.nodeName === 'w:tab') line += ' ';
+          else if (node.nodeName === 'w:br' || node.nodeName === 'w:cr') line += '\n';
+        }
+        out.push(line);
+      });
+      return out.join('\n');
+    }).catch(function (e) { throw e && e.code ? e : fail('docx'); });
+  }
+
+  var pdfLib = null;
+  function loadPdfLib() {
+    if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    if (pdfLib) return pdfLib;
+    pdfLib = new Promise(function (res, rej) {
+      var s = document.createElement('script'); s.src = PDFJS + 'pdf.min.js'; s.async = true;
+      s.onload = function () { if (window.pdfjsLib) { window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + 'pdf.worker.min.js'; res(window.pdfjsLib); } else rej(fail('pdflib')); };
+      s.onerror = function () { pdfLib = null; s.remove(); rej(fail('pdflib')); };
+      document.head.appendChild(s);
+    });
+    return pdfLib;
+  }
+  function readPdf(file) {
+    return Promise.all([loadPdfLib(), file.arrayBuffer()]).then(function (r) {
+      return r[0].getDocument({ data: new Uint8Array(r[1]) }).promise.then(null, function (e) { throw fail(e && e.name === 'PasswordException' ? 'password' : 'pdf'); });
+    }).then(function (pdf) {
+      var total = Math.min(pdf.numPages, 600), pages = [], k = 0;
+      function next() {
+        if (k >= total) return pages.join('\n');
+        k++; showFileMsg('Reading page ' + k + ' of ' + total + '…');
+        return pdf.getPage(k).then(function (pg) { return pg.getTextContent(); }).then(function (tc) {
+          pages.push(tc.items.map(function (it) { return (it.str || '') + (it.hasEOL ? '\n' : ' '); }).join(''));
+          return next();
+        });
+      }
+      return next().then(function (text) {
+        var letters = (text.match(/\p{L}/gu) || []).length;
+        if (letters < 20) throw fail('scanned');
+        return text;
+      });
+    });
+  }
+  function openFile(f) {
+    var name = (f.name || '').toLowerCase(), job;
+    if (/\.pdf$/.test(name) || f.type === 'application/pdf') job = readPdf(f);
+    else if (/\.docx$/.test(name)) job = readDocx(f);
+    else if (/\.doc$/.test(name)) job = Promise.reject(fail('doc'));
+    else if (/\.(txt|csv|md|tsv|text)$/.test(name) || /^text\//.test(f.type)) job = f.text();
+    else job = Promise.reject(fail('type'));
+    showFileMsg('Opening ' + f.name + '…');
+    job.then(function (text) {
+      text = String(text || '').replace(/\r\n?/g, '\n').replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+      if (!text) throw fail('empty');
+      S.text = text; S.hidden = {}; syncUI(); rebuild();
+      showFileMsg('Opened ' + f.name + '.');
+    }).catch(function (e) {
+      showFileMsg(FILE_ERRORS[e && e.code] || FILE_ERRORS.pdf, true);
     });
   }
 
@@ -670,7 +782,7 @@
 
   /* ---------- start ---------- */
   buildPanels(); syncUI(); wire(); rebuild();
-  window.__wc = { S: S, analyze: analyze, layout: layout, placed: function () { return placed; }, words: function () { return lastWords; }, rebuild: rebuild, toSVG: toSVG };
+  window.__wc = { S: S, analyze: analyze, layout: layout, placed: function () { return placed; }, words: function () { return lastWords; }, rebuild: rebuild, toSVG: toSVG, openFile: openFile };
 })();
 </script>
 </body>
