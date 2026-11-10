@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Cloud Maker | M Enam Ull Hassan</title>
+<link rel="canonical" href="https://enamhassan.com/word-cloud.html">
+<meta name="description" content="Make a clean word cloud from any text. Choose the font, colors, and word direction, then download it as a PNG or SVG image.">
+<script>
+  (function () {
+    var d = document.documentElement;
+    try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') d.setAttribute('data-theme', t); } catch (e) {}
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.theme-toggle');
+      if (!b) return;
+      var cur = d.getAttribute('data-theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      d.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=25">
+<link rel="icon" href="favicon.ico?v=7" sizes="48x48">
+<link rel="icon" href="icon-192.png?v=7" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan</a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero wc-hero">
+    <p class="eyebrow reveal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 19a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 17.6 8.5 5 5 0 0 1 17.5 19z"/></svg><a class="crumb" href="resources.html">Resources</a> · Design tool</p>
+    <h1 class="reveal">Word Cloud <em>Maker</em></h1>
+    <p class="lead reveal">Paste any text and get a clean word cloud in seconds. Choose a font and direction, then download it as an image.</p>
+  </div>
+
+  <section class="wc-section">
+    <div class="wrap">
+      <div class="wc-app" id="wc-app">
+        <div class="wc-main">
+          <aside class="wc-panel" aria-label="Word cloud settings">
+            <div class="wc-tabs" role="tablist">
+              <button type="button" role="tab" data-tab="words" aria-selected="true">Words</button>
+              <button type="button" role="tab" data-tab="style" aria-selected="false">Style</button>
+            </div>
+
+            <div class="wc-pane" data-pane="words">
+              <label class="wc-h" for="wc-text">Your text</label>
+              <textarea id="wc-text" rows="8" spellcheck="false" placeholder="Paste an article, survey answers, interview notes, or a list of words."></textarea>
+              <div class="wc-row">
+                <button type="button" class="wc-btn" id="wc-upload"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>Open file</button>
+                <input type="file" id="wc-file" accept=".txt,.csv,.md,text/plain" hidden>
+                <button type="button" class="wc-btn ghost" id="wc-example">Example</button>
+                <button type="button" class="wc-btn ghost" id="wc-clear">Clear</button>
+              </div>
+              <p class="wc-note">Want a word bigger? Type one word per line with a number, like <code>learning: 12</code>.</p>
+
+              <div class="wc-checks">
+                <label class="wc-check"><input type="checkbox" id="wc-skip" checked><span>Skip common words <small>(the, and, of…)</small></span></label>
+                <label class="wc-check"><input type="checkbox" id="wc-lower" checked><span>Make all words lowercase</span></label>
+              </div>
+
+              <label class="wc-h" for="wc-max">How many words <output id="wc-max-out">100</output></label>
+              <input type="range" id="wc-max" min="10" max="250" step="5" value="100">
+
+              <label class="wc-h" for="wc-stop">Leave these words out</label>
+              <input type="text" id="wc-stop" placeholder="e.g. students, also, chapter" autocomplete="off">
+
+              <div class="wc-listhead"><p class="wc-h">Top 10 words</p><span class="wc-note" id="wc-count"></span></div>
+              <ol class="wc-list" id="wc-list"></ol>
+              <div class="wc-hidden" id="wc-hidden" hidden></div>
+            </div>
+
+            <div class="wc-pane" data-pane="style" hidden>
+              <p class="wc-h">Colors</p>
+              <div class="wc-pals" id="wc-pals"></div>
+              <p class="wc-h">Font</p>
+              <div class="wc-fonts" id="wc-fonts"></div>
+              <p class="wc-h">Word direction</p>
+              <div class="wc-angles" id="wc-angles"></div>
+              <label class="wc-h" for="wc-rand">Randomness <output id="wc-rand-out">None</output></label>
+              <input type="range" id="wc-rand" min="0" max="10" step="1" value="0">
+              <p class="wc-note">Moves words away from the middle and tilts them. Press Shuffle for a new arrangement.</p>
+              <label class="wc-h" for="wc-pad">Space between words <output id="wc-pad-out">Normal</output></label>
+              <input type="range" id="wc-pad" min="0" max="8" step="1" value="3">
+              <label class="wc-h" for="wc-contrast">Size difference <output id="wc-contrast-out">Normal</output></label>
+              <input type="range" id="wc-contrast" min="1" max="5" step="1" value="3">
+            </div>
+          </aside>
+
+          <div class="wc-stagewrap">
+            <div class="wc-bar">
+              <div class="wc-seg" id="wc-format" role="group" aria-label="Image size">
+                <button type="button" data-v="wide">Wide</button>
+                <button type="button" data-v="square">Square</button>
+                <button type="button" data-v="portrait">Portrait</button>
+                <button type="button" data-v="story">Story</button>
+              </div>
+              <div class="wc-bargroup">
+                <button type="button" class="wc-btn" id="wc-shuffle" title="Arrange the words again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>Shuffle</button>
+                <div class="wc-dl">
+                  <button type="button" class="wc-btn primary" id="wc-dlbtn" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg>Download</button>
+                  <div class="wc-menu" id="wc-menu" hidden>
+                    <button type="button" data-dl="png">PNG image <small id="wc-dim1"></small></button>
+                    <button type="button" data-dl="png2">Large PNG, for print <small id="wc-dim2"></small></button>
+                    <button type="button" data-dl="svg">SVG <small>Sharp at any size, editable</small></button>
+                    <button type="button" data-dl="copy">Copy image <small>Paste into slides or a doc</small></button>
+                    <label class="wc-check"><input type="checkbox" id="wc-transparent"><span>Transparent background</span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wc-stage" id="wc-stage">
+              <canvas id="wc-canvas" role="img" aria-label="Word cloud"></canvas>
+              <div class="wc-busy" id="wc-busy" hidden><span></span>Arranging words…</div>
+            </div>
+            <p class="wc-note wc-tip">Tip: click a word in the cloud to hide it.</p>
+          </div>
+        </div>
+      </div>
+      <p class="wc-foot">Everything happens in your browser. Your text is not uploaded or saved anywhere.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><nav class="legal-links" aria-label="Site info"><a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a><a href="cookies.html">Cookies Policy</a><a href="cookie-settings.html">Cookie Settings</a><a href="copyright.html">Copyright Notice</a></nav><span class="copy">Copyright © <span id="yr"></span> M Enam Ull Hassan · Boston, MA</span></div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<style>
+  .wc-hero { padding-bottom: 36px; }
+  .wc-section { padding-top: 0; }
+  .wc-section .wrap { max-width: 1400px; }
+  .wc-app { border-radius: 22px; background: var(--bg); box-shadow: var(--neu-out); padding: 26px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .wc-looks { min-width: 0; }
+  .wc-app button { font: inherit; cursor: pointer; }
+  .wc-app [hidden] { display: none !important; }
+  .wc-h { display: flex; justify-content: space-between; align-items: baseline; font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--label); margin: 22px 0 10px; }
+  .wc-h output { letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 500; font-size: .8125rem; }
+  .wc-note { font-size: .8125rem; line-height: 1.5; color: var(--muted); margin: 8px 0 0; }
+  .wc-note code { font-size: .8125rem; padding: 1px 6px; border-radius: 6px; box-shadow: var(--neu-in); }
+  .wc-foot { margin-top: 14px; font-size: .875rem; color: var(--muted); }
+
+  .wc-btn { display: inline-flex; align-items: center; gap: 7px; height: 40px; padding: 0 14px; border: 0; border-radius: 12px; background: var(--bg); color: var(--ink); font-size: .875rem; font-weight: 600; box-shadow: var(--neu-out-sm); white-space: nowrap; }
+  .wc-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .wc-btn:active { box-shadow: var(--neu-in); }
+  .wc-btn.ghost { box-shadow: none; color: var(--muted); padding: 0 10px; }
+  .wc-btn.primary { background: #15161b; color: #f4f2ee; box-shadow: none; }
+  .wc-seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 999px; box-shadow: var(--neu-in); }
+  .wc-seg button { height: 34px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: .8125rem; font-weight: 600; }
+  .wc-seg button[aria-pressed="true"] { background: #15161b; color: #f4f2ee; }
+  .wc-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+  /* main */
+  .wc-main { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 26px; align-items: start; }
+  .wc-panel { border-radius: 18px; padding: 16px 18px 22px; box-shadow: var(--neu-in); max-height: 820px; overflow-y: auto; }
+  .wc-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 999px; box-shadow: var(--neu-out-sm); position: sticky; top: 0; background: var(--bg); z-index: 2; }
+  .wc-tabs button { flex: 1; height: 36px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-weight: 600; font-size: .875rem; }
+  .wc-tabs button[aria-selected="true"] { background: #15161b; color: #f4f2ee; }
+  .wc-pane textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 150px; padding: 12px 14px; border-radius: 14px; font: inherit; font-size: .875rem; line-height: 1.55; color: var(--ink); }
+  .wc-pane input[type="text"] { width: 100%; box-sizing: border-box; height: 42px; padding: 0 14px; border-radius: 12px; font: inherit; font-size: .875rem; color: var(--ink); }
+  .wc-pane input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .wc-checks { display: grid; gap: 8px; margin-top: 18px; }
+  .wc-check { display: flex; align-items: center; gap: 10px; font-size: .875rem; cursor: pointer; }
+  .wc-check input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
+  .wc-check small { color: var(--muted); }
+  .wc-listhead { display: flex; justify-content: space-between; align-items: baseline; }
+  .wc-listhead .wc-note { margin: 22px 0 10px; }
+  .wc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: w; }
+  .wc-list li { display: grid; grid-template-columns: 26px 1fr auto 30px; align-items: center; gap: 6px; font-size: .875rem; padding: 3px 0; counter-increment: w; }
+  .wc-list li::before { content: counter(w); color: var(--muted); font-size: .75rem; }
+  .wc-list li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .wc-list li em { font-style: normal; color: var(--muted); font-size: .8125rem; font-variant-numeric: tabular-nums; }
+  .wc-list li button, .wc-hidden button { border: 0; background: transparent; color: var(--muted); width: 30px; height: 28px; border-radius: 8px; font-size: 1rem; line-height: 1; }
+  .wc-list li button:hover { color: var(--ink); box-shadow: var(--neu-out-sm); }
+  .wc-more { color: var(--muted); font-size: .8125rem; padding-top: 6px; }
+  .wc-hidden { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: .8125rem; color: var(--muted); }
+  .wc-hidden button { width: auto; height: 30px; padding: 0 10px; border-radius: 999px; box-shadow: var(--neu-out-sm); color: var(--ink); font-size: .8125rem; }
+
+  .wc-fonts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .wc-fonts button { height: 54px; border: 0; border-radius: 12px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); font-size: 1.25rem; line-height: 1; overflow: hidden; }
+  .wc-pals { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .wc-pals button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; height: 76px; border: 0; border-radius: 14px; box-shadow: var(--neu-out-sm), inset 0 0 0 1px rgba(128,128,128,.25); }
+  .wc-pals b { font-family: "Bricolage Grotesque", var(--sans); font-weight: 800; font-size: 1.4rem; line-height: 1; }
+  .wc-pals small { font-size: .75rem; font-weight: 600; }
+  .wc-app .wc-pals [aria-pressed="true"].wc-opt { box-shadow: 0 0 0 3px var(--accent); }
+  .wc-angles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .wc-angles button { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 6px 7px; border: 0; border-radius: 12px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); font-size: .75rem; font-weight: 600; }
+  .wc-angles svg { width: 40px; height: 32px; fill: currentColor; opacity: .8; }
+  .wc-angles svg { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; }
+  .wc-app [aria-pressed="true"].wc-opt { box-shadow: var(--neu-in), 0 0 0 2px var(--accent); }
+
+  /* stage */
+  .wc-stagewrap { min-width: 0; }
+  .wc-bar { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .wc-bargroup { display: flex; gap: 10px; }
+  .wc-dl { position: relative; }
+  .wc-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 20; width: 270px; padding: 8px; border-radius: 16px; background: var(--bg); box-shadow: var(--neu-out), 0 16px 40px rgba(0,0,0,.12); display: grid; gap: 2px; }
+  .wc-menu button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 12px; border: 0; border-radius: 10px; background: transparent; color: var(--ink); font-size: .875rem; font-weight: 600; text-align: left; }
+  .wc-menu button:hover, .wc-menu button:focus-visible { box-shadow: var(--neu-in); }
+  .wc-menu small { color: var(--muted); font-weight: 400; font-size: .75rem; }
+  .wc-menu .wc-check { padding: 10px 12px 6px; border-top: 1px solid var(--line); margin-top: 4px; }
+  .wc-stage { position: relative; display: flex; justify-content: center; align-items: center; min-height: 300px; padding: 22px; border-radius: 18px; box-shadow: var(--neu-in); }
+  .wc-stage canvas { display: block; max-width: 100%; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 12px 34px rgba(27,29,36,.16); cursor: pointer; }
+  .wc-busy { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 8px 16px; border-radius: 999px; background: #15161b; color: #f4f2ee; font-size: .8125rem; font-weight: 600; }
+  .wc-busy span { width: 12px; height: 12px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: wcspin .7s linear infinite; }
+  @keyframes wcspin { to { transform: rotate(360deg); } }
+  .wc-tip { text-align: center; }
+  .wc-toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 50; padding: 10px 18px; border-radius: 999px; background: #15161b; color: #f4f2ee; font-size: .875rem; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+
+  @media (max-width: 960px) {
+    .wc-main { grid-template-columns: 1fr; }
+    .wc-stagewrap { order: -1; }
+    .wc-panel { max-height: none; }
+  }
+  @media (max-width: 560px) {
+    .wc-app { padding: 16px; border-radius: 18px; }
+    .wc-stage { padding: 12px; min-height: 200px; }
+    .wc-bar { flex-direction: column; align-items: stretch; }
+    .wc-bargroup { justify-content: space-between; }
+    .wc-seg { justify-content: center; }
+    .wc-seg button { padding: 0 11px; }
+  }
+</style>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------- data ---------- */
+  var FONTS = [
+    { id: 'bricolage', n: 'Bricolage Grotesque', w: 800, g: 'family=Bricolage+Grotesque:opsz,wght@12..96,800' },
+    { id: 'jakarta', n: 'Plus Jakarta Sans', w: 800, g: 'family=Plus+Jakarta+Sans:wght@800' },
+    { id: 'unbounded', n: 'Unbounded', w: 700, g: 'family=Unbounded:wght@700' },
+    { id: 'bebas', n: 'Bebas Neue', w: 400, g: 'family=Bebas+Neue' },
+    { id: 'archivo', n: 'Archivo Black', w: 400, g: 'family=Archivo+Black' },
+    { id: 'fraunces', n: 'Fraunces', w: 700, g: 'family=Fraunces:opsz,wght@144,700' },
+    { id: 'playfair', n: 'Playfair Display', w: 800, g: 'family=Playfair+Display:wght@800' },
+    { id: 'caveat', n: 'Caveat', w: 700, g: 'family=Caveat:wght@700' }
+  ];
+  var PALS = [
+    { id: 'light', n: 'Black on white', bg: '#ffffff', c: '#111111' },
+    { id: 'dark', n: 'White on black', bg: '#0c0c0c', c: '#ffffff' }
+  ];
+  var ANGLES = [
+    { id: 'straight', n: 'Across', icon: '<path d="M6 10h28M6 16h20M6 22h26"/>' },
+    { id: 'updown', n: 'Across & up', icon: '<path d="M6 10h18M6 16h14M6 22h20M32 6v20"/>' },
+    { id: 'tilt', n: 'Slanted', icon: '<path d="m6 24 12-12M14 26l10-10M22 26 34 14M8 12h10"/>' },
+    { id: 'any', n: 'Any angle', icon: '<path d="m6 20 10-12M20 26 34 18M18 8h14M8 28l6-2"/>' }
+  ];
+  var FORMATS = { wide: [1600, 900], square: [1200, 1200], portrait: [1080, 1350], story: [1080, 1920] };
+  var SAMPLE = 'Language learning happens in conversation, in community, and in the classroom. Multilingual learners bring rich language resources, cultural knowledge, and identity to every lesson. Teachers who value translanguaging invite students to use their full linguistic repertoire, so learning becomes meaningful, creative, and connected to home and community. Writing, reading, speaking and listening grow together when feedback is kind, specific and timely. Research in applied linguistics shows that motivation, identity, and belonging shape how learners participate, how they take risks, and how they grow confidence. Good teaching builds on what learners already know. Language is social; learning is social. Students learn vocabulary through stories, games, discussion and play. Assessment should support learning, not only measure it. Every learner has a voice, and every language matters. Communication, culture, community, identity, belonging, curiosity, collaboration, feedback, reflection, inclusion, equity, multilingual, translanguaging, literacy, discourse, pedagogy, learners, language, learning, learning, language, students, teachers, voice, stories.';
+
+  var STOP = ('a about above after again against all also am an and any are aren as at be because been before being below between both but by can cannot could did do does doing down during each either else etc even ever every few for from further get gets got had has have having he her here hers herself him himself his how however i if in into is isn it its itself just let like may me might more most much must my myself no nor not now of off often on once one only or other others our ours ourselves out over own per quite rather really same say says shall she should since so some such than that the their theirs them themselves then there these they this those though through thus to too toward under until up upon us use used using very via was we well were what when where whether which while who whom whose why will with within without would yet you your yours yourself yourselves s t ve ll re d m don doesn didn isn wasn weren won wouldn couldn shouldn can\'t don\'t it\'s i\'m that\'s there\'s')
+    .split(' ').reduce(function (o, w) { o[w] = 1; return o; }, {});
+
+  /* ---------- state ---------- */
+  var S = { text: SAMPLE, skip: true, lower: true, max: 100, extra: '', hidden: {}, font: 'bricolage', pal: 'light', ang: 'straight', pad: 3, contrast: 3, rand: 0, format: 'wide', seed: 7, transparent: false };
+  var placed = [], lastWords = [];
+
+  /* ---------- helpers ---------- */
+  function rng(seed) { var a = seed >>> 0; return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function byId(list, id) { for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i]; return list[0]; }
+  function fontCss(f, px) { return f.w + ' ' + px + 'px "' + f.n + '"'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function toast(msg) { var t = document.createElement('div'); t.className = 'wc-toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(function () { t.remove(); }, 2200); }
+
+  /* ---------- text → words ---------- */
+  function analyze(st) {
+    var text = st.text || '';
+    var extra = {}; (st.extra || '').toLowerCase().split(/[,;\n]+/).forEach(function (w) { w = w.trim(); if (w) extra[w] = 1; });
+    var lines = text.split(/\n/).map(function (l) { return l.trim(); }).filter(Boolean);
+    var re = /^(.+?)\s*[:\t;=,]\s*(\d+(?:\.\d+)?)\s*$/;
+    var weighted = lines.length >= 2 && lines.filter(function (l) { return re.test(l); }).length >= lines.length * 0.6;
+    var map = {};
+    function add(word, n) {
+      var key = word.toLowerCase();
+      if (!key || extra[key] || st.hidden[key]) return;
+      var e = map[key] || (map[key] = { k: key, n: 0, forms: {} });
+      e.n += n; e.forms[word] = (e.forms[word] || 0) + n;
+    }
+    if (weighted) {
+      lines.forEach(function (l) { var m = l.match(re); if (m) add(m[1].trim(), parseFloat(m[2])); });
+    } else {
+      var toks = text.match(/[\p{L}\p{N}][\p{L}\p{M}\p{N}'’\-]*/gu) || [];
+      toks.forEach(function (t) {
+        t = t.replace(/['’]s$/i, '').replace(/['’\-]+$/, '');
+        if (t.length < 2 && !/\p{Lo}/u.test(t)) return;
+        var low = t.toLowerCase();
+        if (st.skip && (STOP[low] || /^\d+$/.test(t))) return;
+        add(t, 1);
+      });
+    }
+    var out = Object.keys(map).map(function (k) {
+      var e = map[k], best = k, bn = -1;
+      Object.keys(e.forms).forEach(function (f) { if (e.forms[f] > bn) { bn = e.forms[f]; best = f; } });
+      return { k: k, t: st.lower ? k : best, n: e.n };
+    });
+    out.sort(function (a, b) { return b.n - a.n || a.k.localeCompare(b.k); });
+    return out;
+  }
+
+  /* ---------- layout ---------- */
+  var mc = document.createElement('canvas'), mx = mc.getContext('2d', { willReadFrequently: true });
+
+  function makeBoard(st, W, H, c) {
+    var GW = Math.ceil(W / c), GH = Math.ceil(H / c), b = new Uint8Array(GW * GH);
+    var mxg = Math.round(GW * 0.03), myg = Math.round(GH * 0.03), x, y;
+    for (y = 0; y < GH; y++) for (x = 0; x < GW; x++) if (x < mxg || x >= GW - mxg || y < myg || y >= GH - myg) b[y * GW + x] = 1;
+    return { GW: GW, GH: GH, b: b, area: (GW - 2 * mxg) * (GH - 2 * myg) * c * c, cx: GW / 2, cy: GH / 2, bw: (GW - 2 * mxg) * c };
+  }
+
+  // move the finished cloud to the middle of the image and grow it to fill the free space
+  function centerFit(list, W, H) {
+    if (!list || !list.length) return list || [];
+    var x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+    list.forEach(function (w) {
+      var th = w.a * Math.PI / 180, co = Math.abs(Math.cos(th)), si = Math.abs(Math.sin(th));
+      var hw = w.gw * w.s / 2, hh = w.gh * w.s / 2, ex = co * hw + si * hh, ey = si * hw + co * hh;
+      x0 = Math.min(x0, w.x - ex); x1 = Math.max(x1, w.x + ex); y0 = Math.min(y0, w.y - ey); y1 = Math.max(y1, w.y + ey);
+    });
+    var m = Math.min(W, H) * 0.07, k = Math.min((W - 2 * m) / (x1 - x0), (H - 2 * m) / (y1 - y0), 1.8);
+    var cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+    return list.map(function (w) { return Object.assign({}, w, { x: W / 2 + (w.x - cx) * k, y: H / 2 + (w.y - cy) * k, s: w.s * k }); });
+  }
+
+  function angleFor(mode, r, i) {
+    if (i === 0) return 0;
+    var x = r();
+    if (mode === 'updown') return x < 0.34 ? -90 : 0;
+    if (mode === 'tilt') return x < 0.33 ? -24 : x < 0.66 ? 0 : 24;
+    if (mode === 'any') return Math.round((r() * 2 - 1) * 60);
+    return 0;
+  }
+
+  function sprite(f, text, px, deg, pad) {
+    mx.font = fontCss(f, px);
+    var m = mx.measureText(text);
+    var L = m.actualBoundingBoxLeft || 0, R = m.actualBoundingBoxRight || m.width;
+    var A = m.actualBoundingBoxAscent || px * 0.75, D = m.actualBoundingBoxDescent || px * 0.2;
+    // bounding box measured with textAlign=center
+    mx.textAlign = 'center'; m = mx.measureText(text);
+    L = m.actualBoundingBoxLeft; R = m.actualBoundingBoxRight;
+    var gw = L + R, gh = A + D, ox = (L - R) / 2, oy = (A - D) / 2;
+    var th = deg * Math.PI / 180, co = Math.abs(Math.cos(th)), si = Math.abs(Math.sin(th));
+    var hw = gw / 2 + pad, hh = gh / 2 + pad;
+    var bw = co * hw + si * hh, bh = si * hw + co * hh;
+    var cw = Math.ceil(bw * 2) + 4, ch = Math.ceil(bh * 2) + 4;
+    if (mc.width < cw || mc.height < ch) { mc.width = Math.max(mc.width, cw); mc.height = Math.max(mc.height, ch); }
+    mx.setTransform(1, 0, 0, 1, 0, 0); mx.clearRect(0, 0, cw, ch);
+    mx.translate(cw / 2, ch / 2); mx.rotate(th);
+    mx.font = fontCss(f, px); mx.textAlign = 'center'; mx.textBaseline = 'alphabetic';
+    mx.fillStyle = '#000'; mx.fillText(text, ox, oy);
+    if (pad > 0) { mx.lineJoin = 'round'; mx.lineWidth = pad * 2; mx.strokeStyle = '#000'; mx.strokeText(text, ox, oy); }
+    mx.setTransform(1, 0, 0, 1, 0, 0);
+    var data = mx.getImageData(0, 0, cw, ch).data, xs = [], ys = [], hx = cw / 2 | 0, hy = ch / 2 | 0;
+    for (var y = 0; y < ch; y++) for (var x = 0; x < cw; x++) if (data[(y * cw + x) * 4 + 3] > 20) { xs.push(x - hx); ys.push(y - hy); }
+    var n = xs.length, sxs = [], sys = [], step = Math.max(1, Math.floor(n / 14));
+    for (var k = 0; k < n; k += step) { sxs.push(xs[k]); sys.push(ys[k]); }
+    var minx = 1e9, maxx = -1e9, miny = 1e9, maxy = -1e9;
+    for (k = 0; k < n; k++) { if (xs[k] < minx) minx = xs[k]; if (xs[k] > maxx) maxx = xs[k]; if (ys[k] < miny) miny = ys[k]; if (ys[k] > maxy) maxy = ys[k]; }
+    return { xs: Int16Array.from(xs), ys: Int16Array.from(ys), sx: sxs, sy: sys, minx: minx, maxx: maxx, miny: miny, maxy: maxy, ox: ox / px, oy: oy / px, gw: gw / px, gh: gh / px };
+  }
+
+  function fits(B, sp, px, py) {
+    if (px + sp.minx < 0 || py + sp.miny < 0 || px + sp.maxx >= B.GW || py + sp.maxy >= B.GH) return false;
+    var b = B.b, GW = B.GW, k;
+    for (k = 0; k < sp.sx.length; k++) if (b[(py + sp.sy[k]) * GW + px + sp.sx[k]]) return false;
+    var xs = sp.xs, ys = sp.ys, n = xs.length;
+    for (k = 0; k < n; k++) if (b[(py + ys[k]) * GW + px + xs[k]]) return false;
+    return true;
+  }
+  function mark(B, sp, px, py) { var xs = sp.xs, ys = sp.ys; for (var k = 0; k < xs.length; k++) B.b[(py + ys[k]) * B.GW + px + xs[k]] = 1; }
+
+  function layout(st, words, W, H) {
+    var f = byId(FONTS, st.font);
+    var c = W >= 1000 ? 3 : 2;
+    var list = words.slice(0, st.max);
+    if (!list.length) return [];
+    var wmax = list[0].n, wmin = list[list.length - 1].n;
+    var expo = [0.45, 0.65, 0.85, 1.1, 1.45][st.contrast - 1], minR = [0.42, 0.3, 0.2, 0.14, 0.1][st.contrast - 1];
+    var lmax = Math.log(wmax + 1), lmin = Math.log(wmin + 1);
+    var rel = list.map(function (w) { var lin = wmax === wmin ? 1 : (w.n - wmin) / (wmax - wmin), lg = lmax === lmin ? 1 : (Math.log(w.n + 1) - lmin) / (lmax - lmin); var t = 0.5 * lin + 0.5 * lg; return minR + (1 - minR) * Math.pow(t, expo); });
+    mx.textAlign = 'center';
+    var areas = list.map(function (w) { mx.font = fontCss(f, 100); var m = mx.measureText(w.t); return (m.width * 1.0) * 100 * 1.02 / 1e4; });
+    var base0 = makeBoard(st, W, H, c);
+    var sum = 0; for (var i = 0; i < list.length; i++) sum += areas[i] * rel[i] * rel[i];
+    var fill = 0.64;
+    var S0 = Math.sqrt(fill * base0.area / sum);
+    var w0 = areas[0] / 1.02; // width of first word per px of font size (×100/100)
+    S0 = Math.min(S0, base0.bw * 0.82 / (w0 || 1), H * 0.34);
+    var pad = st.pad * (W / 1600) + 0.6;
+    var best = null, scale = 1;
+    for (var attempt = 0; attempt < 6; attempt++) {
+      var r = rng(st.seed * 31 + attempt), B = attempt ? makeBoard(st, W, H, c) : base0, out = [], miss = 0, topMiss = false;
+      for (i = 0; i < list.length; i++) {
+        var size = Math.max(rel[i] * S0 * scale, W * 0.009);
+        var deg = angleFor(st.ang, r, i), rnd = (st.rand || 0) / 10;
+        if (rnd) deg = Math.round(deg + (r() * 2 - 1) * 28 * rnd);
+        var sp = sprite(f, list[i].t, size / c, deg, pad / c);
+        if (!sp.xs.length) continue;
+        var cx = B.cx + (i && rnd ? (r() - 0.5) * B.GW * 0.7 * rnd : 0), cy = B.cy + (i && rnd ? (r() - 0.5) * B.GH * 0.7 * rnd : 0), asp = Math.sqrt(B.GW / B.GH);
+        var ok = false, th = r() * Math.PI * 2, rad = 0, maxR = Math.hypot(B.GW, B.GH) * 0.6, dir = r() < 0.5 ? 1 : -1;
+        while (rad < maxR) {
+          var px = Math.round(cx + rad * Math.cos(th) * asp), py = Math.round(cy + rad * Math.sin(th) / asp);
+          if (fits(B, sp, px, py)) { mark(B, sp, px, py); out.push({ t: list[i].t, k: list[i].k, n: list[i].n, i: i, x: px * c, y: py * c, s: size, a: deg, ox: sp.ox, oy: sp.oy, gw: sp.gw, gh: sp.gh }); ok = true; break; }
+          var dth = Math.min(0.6, 1.3 / Math.max(rad, 1));
+          th += dth * dir; rad += dth * 0.4;
+        }
+        if (!ok) { miss++; if (i < 3) topMiss = true; }
+      }
+      if (!best || out.length > best.length) best = out;
+      if (!topMiss && miss <= Math.max(1, list.length * 0.06)) { best = out; break; }
+      scale *= 0.86;
+    }
+    return centerFit(best, W, H);
+  }
+
+  /* ---------- drawing ---------- */
+  function drawWords(ctx, st, pal, list, k) {
+    var f = byId(FONTS, st.font);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = pal.c;
+    list.forEach(function (w) {
+      ctx.save();
+      ctx.translate(w.x * k, w.y * k); ctx.rotate(w.a * Math.PI / 180);
+      var px = w.s * k; ctx.font = fontCss(f, px);
+      ctx.fillText(w.t, w.ox * px, w.oy * px);
+      ctx.restore();
+    });
+  }
+
+  function render(canvas, st, list, W, H, k, transparent) {
+    canvas.width = Math.round(W * k); canvas.height = Math.round(H * k);
+    var ctx = canvas.getContext('2d'), pal = byId(PALS, st.pal);
+    if (!transparent) { ctx.fillStyle = pal.bg; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+    drawWords(ctx, st, pal, list, k);
+  }
+
+  /* ---------- fonts ---------- */
+  var fontLink = document.createElement('link'); fontLink.rel = 'stylesheet';
+  fontLink.href = 'https://fonts.googleapis.com/css2?' + FONTS.map(function (f) { return f.g; }).join('&') + '&display=swap';
+  document.head.appendChild(fontLink);
+  var sheetReady = new Promise(function (res) { fontLink.onload = res; fontLink.onerror = res; setTimeout(res, 5000); });
+  var fontReady = {};
+  function loadFont(id) {
+    if (fontReady[id]) return fontReady[id];
+    var f = byId(FONTS, id);
+    fontReady[id] = sheetReady.then(function () {
+      if (!document.fonts || !document.fonts.load) return;
+      return Promise.race([document.fonts.load(fontCss(f, 40), 'Aa'), new Promise(function (r) { setTimeout(r, 4000); })]);
+    }).catch(function () {}).then(function () { return f; });
+    return fontReady[id];
+  }
+
+  /* ---------- UI ---------- */
+  var canvas = $('wc-canvas'), stage = $('wc-stage');
+  function dims() { return FORMATS[S.format]; }
+
+  var job = 0;
+  function rebuild(opts) {
+    var my = ++job;
+    $('wc-busy').hidden = false;
+    loadFont(S.font).then(function () {
+      setTimeout(function () {
+        if (my !== job) return;
+        lastWords = analyze(S);
+        var d = dims();
+        placed = layout(S, lastWords, d[0], d[1]);
+        paint();
+        $('wc-busy').hidden = true;
+        renderList();
+      }, 20);
+    });
+  }
+  function fitCanvas() {
+    var d = dims(), cs = getComputedStyle(stage);
+    var avW = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    var avH = Math.max(300, Math.min(window.innerHeight * 0.74, 860));
+    var s = Math.min(avW / d[0], avH / d[1]);
+    canvas.style.width = Math.round(d[0] * s) + 'px'; canvas.style.height = Math.round(d[1] * s) + 'px';
+    return d[0] * s;
+  }
+  function paint() {
+    var d = dims(), cssW = fitCanvas();
+    var k = Math.max(0.5, Math.min(1.25, cssW * Math.min(2, window.devicePixelRatio || 1) / d[0]));
+    render(canvas, S, placed, d[0], d[1], k, false);
+    var shown = placed.length;
+    canvas.setAttribute('aria-label', 'Word cloud with ' + shown + ' words. Largest: ' + placed.slice(0, 5).map(function (w) { return w.t; }).join(', '));
+    $('wc-dim1').textContent = d[0] * 1.5 + ' × ' + d[1] * 1.5 + ' px';
+    $('wc-dim2').textContent = d[0] * 3 + ' × ' + d[1] * 3 + ' px';
+  }
+
+  function renderList() {
+    var ol = $('wc-list'), max = Math.min(lastWords.length, S.max), show = Math.min(max, 10), placedSet = {};
+    placed.forEach(function (p) { placedSet[p.k] = 1; });
+    ol.innerHTML = '';
+    for (var i = 0; i < show; i++) {
+      var w = lastWords[i], li = document.createElement('li');
+      li.innerHTML = '<span>' + esc(w.t) + '</span><em>' + (Math.round(w.n * 10) / 10) + '</em><button type="button" aria-label="Hide ' + esc(w.t) + '" title="Hide this word">×</button>';
+      li.querySelector('button').onclick = (function (key) { return function () { hide(key); }; })(w.k);
+      ol.appendChild(li);
+    }
+    var extra = placed.length - show;
+    if (extra > 0) { var more = document.createElement('li'); more.className = 'wc-more'; more.style.display = 'block'; more.textContent = '+ ' + extra + ' more in the cloud'; ol.appendChild(more); }
+    $('wc-count').textContent = lastWords.length ? (placed.length + ' of ' + lastWords.length + ' shown') : 'No words yet';
+    var hid = Object.keys(S.hidden), hb = $('wc-hidden');
+    hb.hidden = !hid.length; hb.innerHTML = hid.length ? '<span>Hidden:</span>' : '';
+    hid.forEach(function (k) { var b = document.createElement('button'); b.type = 'button'; b.textContent = k + ' ↺'; b.title = 'Show this word again'; b.onclick = function () { delete S.hidden[k]; rebuild(); }; hb.appendChild(b); });
+  }
+  function hide(key) { S.hidden[key] = 1; rebuild(); }
+
+  function pressed(container, attr, val) { container.querySelectorAll('[data-' + attr + ']').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-' + attr) === String(val))); }); }
+
+  function buildPanels() {
+    $('wc-fonts').innerHTML = FONTS.map(function (f) { return '<button type="button" class="wc-opt" data-font="' + f.id + '" title="' + f.n + '" style="font-family:\'' + f.n + '\';font-weight:' + f.w + '">Words</button>'; }).join('');
+    $('wc-pals').innerHTML = PALS.map(function (p) { return '<button type="button" class="wc-opt" data-pal="' + p.id + '" style="background:' + p.bg + ';color:' + p.c + '"><b>Aa</b><small>' + p.n + '</small></button>'; }).join('');
+    $('wc-angles').innerHTML = ANGLES.map(function (a) { return '<button type="button" class="wc-opt" data-ang="' + a.id + '"><svg viewBox="0 0 40 32" aria-hidden="true">' + a.icon + '</svg>' + a.n + '</button>'; }).join('');
+  }
+  function syncUI() {
+    $('wc-text').value = S.text; $('wc-skip').checked = S.skip; $('wc-lower').checked = S.lower;
+    $('wc-max').value = S.max; $('wc-max-out').textContent = S.max; $('wc-stop').value = S.extra;
+    $('wc-pad').value = S.pad; $('wc-pad-out').textContent = ['Touching', 'Very tight', 'Tight', 'Normal', 'Normal +', 'Roomy', 'Roomy +', 'Airy', 'Very airy'][S.pad];
+    $('wc-rand').value = S.rand; $('wc-rand-out').textContent = S.rand === 0 ? 'None' : S.rand <= 3 ? 'A little' : S.rand <= 6 ? 'Some' : S.rand <= 8 ? 'A lot' : 'Wild';
+    $('wc-contrast').value = S.contrast; $('wc-contrast-out').textContent = ['Very small', 'Small', 'Normal', 'Big', 'Very big'][S.contrast - 1];
+    pressed($('wc-fonts'), 'font', S.font); pressed($('wc-pals'), 'pal', S.pal);
+    pressed($('wc-angles'), 'ang', S.ang); pressed($('wc-format'), 'v', S.format);
+  }
+
+  function onPick(container, attr, fn) {
+    container.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-' + attr + ']'); if (!b) return;
+      fn(b.getAttribute('data-' + attr)); syncUI();
+    });
+  }
+
+  /* events */
+  function wire() {
+    var t;
+    $('wc-text').addEventListener('input', function () { S.text = this.value; S.hidden = {}; clearTimeout(t); t = setTimeout(rebuild, 450); });
+    $('wc-stop').addEventListener('input', function () { S.extra = this.value; clearTimeout(t); t = setTimeout(rebuild, 450); });
+    $('wc-skip').onchange = function () { S.skip = this.checked; rebuild(); };
+    $('wc-lower').onchange = function () { S.lower = this.checked; rebuild(); };
+    $('wc-max').oninput = function () { S.max = +this.value; $('wc-max-out').textContent = S.max; clearTimeout(t); t = setTimeout(rebuild, 250); };
+    $('wc-pad').oninput = function () { S.pad = +this.value; syncUI(); clearTimeout(t); t = setTimeout(rebuild, 250); };
+    $('wc-rand').oninput = function () { S.rand = +this.value; syncUI(); clearTimeout(t); t = setTimeout(rebuild, 250); };
+    $('wc-contrast').oninput = function () { S.contrast = +this.value; syncUI(); clearTimeout(t); t = setTimeout(rebuild, 250); };
+    $('wc-example').onclick = function () { S.text = SAMPLE; S.hidden = {}; syncUI(); rebuild(); };
+    $('wc-clear').onclick = function () { S.text = ''; S.hidden = {}; syncUI(); rebuild(); $('wc-text').focus(); };
+    $('wc-upload').onclick = function () { $('wc-file').click(); };
+    $('wc-file').onchange = function () { var f = this.files[0]; if (!f) return; var rd = new FileReader(); rd.onload = function () { S.text = String(rd.result); S.hidden = {}; syncUI(); rebuild(); }; rd.readAsText(f); this.value = ''; };
+
+    onPick($('wc-fonts'), 'font', function (v) { S.font = v; rebuild(); });
+    onPick($('wc-pals'), 'pal', function (v) { S.pal = v; paint(); });
+    onPick($('wc-angles'), 'ang', function (v) { S.ang = v; rebuild(); });
+    onPick($('wc-format'), 'v', function (v) { S.format = v; rebuild(); });
+    $('wc-shuffle').onclick = function () { S.seed = (S.seed * 9301 + 49297) % 233280; rebuild(); };
+
+    document.querySelectorAll('.wc-tabs [data-tab]').forEach(function (b) {
+      b.onclick = function () {
+        var tab = b.getAttribute('data-tab');
+        document.querySelectorAll('.wc-tabs [data-tab]').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+        document.querySelectorAll('.wc-pane').forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== tab; });
+      };
+    });
+
+    canvas.addEventListener('click', function (e) {
+      var r = canvas.getBoundingClientRect(), d = dims();
+      var x = (e.clientX - r.left) / r.width * d[0], y = (e.clientY - r.top) / r.height * d[1], hit = null, ha = 1e12;
+      placed.forEach(function (w) {
+        var th = -w.a * Math.PI / 180, dx = x - w.x, dy = y - w.y;
+        var lx = dx * Math.cos(th) - dy * Math.sin(th), ly = dx * Math.sin(th) + dy * Math.cos(th);
+        var hw = w.gw * w.s / 2, hh = w.gh * w.s / 2;
+        if (Math.abs(lx) <= hw && Math.abs(ly) <= hh && hw * hh < ha) { hit = w; ha = hw * hh; }
+      });
+      if (hit) { toast('“' + hit.t + '” hidden. Find it under Top words to bring it back.'); hide(hit.k); }
+    });
+    canvas.addEventListener('mousemove', function (e) { canvas.title = 'Click a word to hide it'; });
+
+    var menu = $('wc-menu'), btn = $('wc-dlbtn');
+    btn.onclick = function (e) { e.stopPropagation(); menu.hidden = !menu.hidden; btn.setAttribute('aria-expanded', String(!menu.hidden)); };
+    document.addEventListener('click', function (e) { if (!menu.hidden && !e.target.closest('.wc-dl')) { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { menu.hidden = true; btn.focus(); } });
+    $('wc-transparent').onchange = function () { S.transparent = this.checked; };
+    menu.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-dl]'); if (!b) return;
+      var kind = b.getAttribute('data-dl'); menu.hidden = true;
+      download(kind);
+    });
+  }
+
+  function fileName(ext) { var top = placed[0] ? placed[0].t.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').slice(0, 30) : 'cloud'; return 'word-cloud-' + top + '.' + ext; }
+  var dlCap = (window.claude && window.claude.use) ? Promise.resolve(window.claude.use('downloads')).catch(function () { return null; }) : Promise.resolve(null);
+  function saveBlob(blob, name) {
+    dlCap.then(function (d) {
+      if (d) { d.save({ filename: name, data: blob }).then(function () { toast('Downloaded'); }, function (e) { if (!e || e.code !== 'declined') toast('This file could not be saved here'); }); }
+      else { anchorSave(blob, name); toast('Downloaded'); }
+    });
+  }
+  function anchorSave(blob, name) { var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
+
+  function download(kind) {
+    var d = dims(), tr = S.transparent;
+    if (kind === 'svg') { saveBlob(new Blob([toSVG(tr)], { type: 'image/svg+xml' }), fileName('svg')); return; }
+    var cv = document.createElement('canvas');
+    render(cv, S, placed, d[0], d[1], kind === 'png2' ? 3 : 1.5, tr);
+    cv.toBlob(function (blob) {
+      if (kind === 'copy') {
+        if (navigator.clipboard && window.ClipboardItem) {
+          navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]).then(function () { toast('Image copied. Paste it anywhere.'); }, function () { toast('Copying is blocked here. Use Download instead.'); });
+        } else toast('Your browser cannot copy images. Use Download instead.');
+        return;
+      }
+      saveBlob(blob, fileName('png'));
+    }, 'image/png');
+  }
+
+  function toSVG(transparent) {
+    var d = dims(), W = d[0], H = d[1], pal = byId(PALS, S.pal), f = byId(FONTS, S.font);
+    var bg = transparent ? '' : '<rect width="' + W + '" height="' + H + '" fill="' + pal.bg + '"/>\n';
+    var words = placed.map(function (w) {
+      return '<text transform="translate(' + w.x.toFixed(1) + ' ' + w.y.toFixed(1) + ') rotate(' + w.a + ')" x="' + (w.ox * w.s).toFixed(1) + '" y="' + (w.oy * w.s).toFixed(1) + '" font-size="' + w.s.toFixed(1) + '">' + esc(w.t) + '</text>';
+    }).join('\n');
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '">\n' +
+      '<defs><style>@import url(\'https://fonts.googleapis.com/css2?' + f.g.replace(/&/g, '&amp;') + '&amp;display=swap\');</style></defs>\n' + bg +
+      '<g font-family="\'' + f.n + '\', sans-serif" font-weight="' + f.w + '" text-anchor="middle" fill="' + pal.c + '">\n' + words + '\n</g>\n</svg>\n';
+  }
+
+  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(paint, 150); });
+
+  /* ---------- start ---------- */
+  buildPanels(); syncUI(); wire(); rebuild();
+  window.__wc = { S: S, analyze: analyze, layout: layout, placed: function () { return placed; }, words: function () { return lastWords; }, rebuild: rebuild, toSVG: toSVG };
+})();
+</script>
+</body>
+</html>
