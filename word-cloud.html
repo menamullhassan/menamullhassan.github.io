@@ -94,6 +94,13 @@
               <label class="wc-h" for="wc-stop">Leave these words out</label>
               <input type="text" id="wc-stop" placeholder="e.g. students, also, chapter" autocomplete="off">
 
+              <label class="wc-h" for="wc-hl">Highlight words</label>
+              <div class="wc-hlrow">
+                <input type="text" id="wc-hl" placeholder="e.g. identity, belonging" autocomplete="off">
+                <input type="color" id="wc-hlcolor" value="#C41E3A" aria-label="Highlight color" title="Highlight color">
+              </div>
+              <p class="wc-note">Type words to show them in color, or tap ☆ next to a word below.</p>
+
               <div class="wc-listhead"><p class="wc-h">Top 10 words</p><span class="wc-note" id="wc-count"></span></div>
               <ol class="wc-list" id="wc-list"></ol>
               <div class="wc-hidden" id="wc-hidden" hidden></div>
@@ -207,6 +214,14 @@
   :where(html[data-theme="dark"]) .wc-filemsg.err { color: #ff9b8f; }
   @media (prefers-color-scheme: dark) { :where(html:not([data-theme="light"])) .wc-filemsg.err { color: #ff9b8f; } }
   .wc-pane textarea.drop { outline: 2px dashed var(--accent); outline-offset: 2px; }
+  .wc-hlrow { display: flex; gap: 8px; align-items: center; }
+  .wc-hlrow input[type="text"] { flex: 1; min-width: 0; }
+  .wc-hlrow input[type="color"] { flex: none; width: 46px; height: 42px; padding: 4px; border: 0; border-radius: 12px; background: var(--bg); box-shadow: var(--neu-out-sm); cursor: pointer; }
+  .wc-hlrow input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+  .wc-hlrow input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 8px; }
+  .wc-hlrow input[type="color"]::-moz-color-swatch { border: 0; border-radius: 8px; }
+  .wc-list li .wc-star { font-size: 1.05rem; }
+  .wc-list li.hl span { font-weight: 700; }
   .wc-checks { display: grid; gap: 8px; margin-top: 18px; }
   .wc-check { display: flex; align-items: center; gap: 10px; font-size: .875rem; cursor: pointer; }
   .wc-check input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
@@ -214,13 +229,14 @@
   .wc-listhead { display: flex; justify-content: space-between; align-items: baseline; }
   .wc-listhead .wc-note { margin: 22px 0 10px; }
   .wc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: w; }
-  .wc-list li { display: grid; grid-template-columns: 26px 1fr auto 30px; align-items: center; gap: 6px; font-size: .875rem; padding: 3px 0; counter-increment: w; }
+  .wc-list li { display: grid; grid-template-columns: 26px 1fr auto 30px 30px; align-items: center; gap: 6px; font-size: .875rem; padding: 3px 0; counter-increment: w; }
   .wc-list li::before { content: counter(w); color: var(--muted); font-size: .75rem; }
   .wc-list li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .wc-list li em { font-style: normal; color: var(--muted); font-size: .8125rem; font-variant-numeric: tabular-nums; }
   .wc-list li button, .wc-hidden button { border: 0; background: transparent; color: var(--muted); width: 30px; height: 28px; border-radius: 8px; font-size: 1rem; line-height: 1; }
   .wc-list li button:hover { color: var(--ink); box-shadow: var(--neu-out-sm); }
-  .wc-more { color: var(--muted); font-size: .8125rem; padding-top: 6px; }
+  .wc-list li.wc-more { display: block; counter-increment: none; color: var(--muted); font-size: .8125rem; padding-top: 6px; }
+  .wc-list li.wc-more::before { content: none; }
   .wc-hidden { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: .8125rem; color: var(--muted); }
   .wc-hidden button { width: auto; height: 30px; padding: 0 10px; border-radius: 999px; box-shadow: var(--neu-out-sm); color: var(--ink); font-size: .8125rem; }
 
@@ -302,7 +318,7 @@
     .split(' ').reduce(function (o, w) { o[w] = 1; return o; }, {});
 
   /* ---------- state ---------- */
-  var S = { text: SAMPLE, skip: true, lower: true, max: 100, extra: '', hidden: {}, font: 'bricolage', pal: 'light', ang: 'straight', pad: 3, contrast: 3, rand: 0, format: 'wide', seed: 7, transparent: false };
+  var S = { text: SAMPLE, skip: true, lower: true, max: 100, extra: '', hidden: {}, font: 'bricolage', pal: 'light', ang: 'straight', pad: 3, contrast: 3, rand: 0, hl: '', hlColor: '#C41E3A', format: 'wide', seed: 7, transparent: false };
   var placed = [], lastWords = [];
 
   /* ---------- helpers ---------- */
@@ -464,11 +480,40 @@
   }
 
   /* ---------- drawing ---------- */
+  // highlighted words: typed in the box (comma separated) or starred in Top words
+  function hlSet(st) {
+    var o = {};
+    String(st.hl || '').split(/[,;\n]+/).forEach(function (w) { w = w.trim().toLowerCase(); if (w) o[w] = 1; });
+    return o;
+  }
+  // on the black background, lighten the highlight until it reads clearly (keeps the same hue)
+  function lum(h) { var n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }).reduce(function (s, v, i) { return s + v * [0.2126, 0.7152, 0.0722][i]; }, 0); }
+  function contrast(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  function hsl2hex(h, s, l) {
+    function f(n) { var k = (n + h / 30) % 12, c = l - s * Math.min(l, 1 - l) * Math.max(-1, Math.min(k - 3, 9 - k, 1)); return Math.round(c * 255).toString(16).padStart(2, '0'); }
+    return '#' + f(0) + f(8) + f(4);
+  }
+  function hex2hsl(hx) {
+    var n = parseInt(hx.slice(1), 16), r = (n >> 16 & 255) / 255, g = (n >> 8 & 255) / 255, b = (n & 255) / 255;
+    var mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn, l = (mx + mn) / 2, s = d ? d / (1 - Math.abs(2 * l - 1)) : 0, h = 0;
+    if (d) h = mx === r ? 60 * (((g - b) / d) % 6) : mx === g ? 60 * ((b - r) / d + 2) : 60 * ((r - g) / d + 4);
+    return [(h + 360) % 360, s, l];
+  }
+  function hlFor(st, pal) {
+    var c = /^#[0-9a-f]{6}$/i.test(st.hlColor || '') ? st.hlColor : '#C41E3A';
+    if (pal.id !== 'dark' || contrast(c, pal.bg) >= 5.5) return c;
+    if (c.toUpperCase() === '#C41E3A') return '#EE4B2B'; // chosen red for the black background
+    // keep the hue, make it brighter and more vivid so it glows on black instead of looking muddy
+    var hs = hex2hsl(c), s = Math.max(hs[1], 0.85), l = hs[2], out = c;
+    while (l < 0.85) { l += 0.02; out = hsl2hex(hs[0], s, l); if (contrast(out, pal.bg) >= 5.5) break; }
+    return out;
+  }
+  function wordColor(st, pal, w, hs) { return hs[w.k] ? hlFor(st, pal) : pal.c; }
   function drawWords(ctx, st, pal, list, k) {
-    var f = byId(FONTS, st.font);
-    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = pal.c;
+    var f = byId(FONTS, st.font), hs = hlSet(st);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
     list.forEach(function (w) {
-      ctx.save();
+      ctx.save(); ctx.fillStyle = wordColor(st, pal, w, hs);
       ctx.translate(w.x * k, w.y * k); ctx.rotate(w.a * Math.PI / 180);
       var px = w.s * k; ctx.font = fontCss(f, px);
       ctx.fillText(w.t, w.ox * px, w.oy * px);
@@ -538,13 +583,18 @@
   }
 
   function renderList() {
-    var ol = $('wc-list'), max = Math.min(lastWords.length, S.max), show = Math.min(max, 10), placedSet = {};
+    var ol = $('wc-list'), max = Math.min(lastWords.length, S.max), show = Math.min(max, 10), placedSet = {}, hs = hlSet(S);
     placed.forEach(function (p) { placedSet[p.k] = 1; });
     ol.innerHTML = '';
     for (var i = 0; i < show; i++) {
       var w = lastWords[i], li = document.createElement('li');
-      li.innerHTML = '<span>' + esc(w.t) + '</span><em>' + (Math.round(w.n * 10) / 10) + '</em><button type="button" aria-label="Hide ' + esc(w.t) + '" title="Hide this word">×</button>';
-      li.querySelector('button').onclick = (function (key) { return function () { hide(key); }; })(w.k);
+      var on = !!hs[w.k];
+      li.className = on ? 'hl' : '';
+      li.innerHTML = '<span' + (on ? ' style="color:' + esc(S.hlColor) + '"' : '') + '>' + esc(w.t) + '</span><em>' + (Math.round(w.n * 10) / 10) + '</em>' +
+        '<button type="button" class="wc-star" aria-pressed="' + on + '" aria-label="Highlight ' + esc(w.t) + '" title="' + (on ? 'Remove highlight' : 'Highlight this word') + '"' + (on ? ' style="color:' + esc(S.hlColor) + '"' : '') + '>' + (on ? '★' : '☆') + '</button>' +
+        '<button type="button" class="wc-x" aria-label="Hide ' + esc(w.t) + '" title="Hide this word">×</button>';
+      li.querySelector('.wc-x').onclick = (function (key) { return function () { hide(key); }; })(w.k);
+      li.querySelector('.wc-star').onclick = (function (key) { return function () { toggleHl(key); }; })(w.k);
       ol.appendChild(li);
     }
     var extra = placed.length - show;
@@ -553,6 +603,11 @@
     var hid = Object.keys(S.hidden), hb = $('wc-hidden');
     hb.hidden = !hid.length; hb.innerHTML = hid.length ? '<span>Hidden:</span>' : '';
     hid.forEach(function (k) { var b = document.createElement('button'); b.type = 'button'; b.textContent = k + ' ↺'; b.title = 'Show this word again'; b.onclick = function () { delete S.hidden[k]; rebuild(); }; hb.appendChild(b); });
+  }
+  function toggleHl(key) {
+    var hs = hlSet(S), list = String(S.hl || '').split(/[,;\n]+/).map(function (w) { return w.trim(); }).filter(Boolean);
+    if (hs[key]) list = list.filter(function (w) { return w.toLowerCase() !== key; }); else list.push(key);
+    S.hl = list.join(', '); $('wc-hl').value = S.hl; paint(); renderList();
   }
   function hide(key) { S.hidden[key] = 1; rebuild(); }
 
@@ -565,7 +620,7 @@
   }
   function syncUI() {
     $('wc-text').value = S.text; $('wc-skip').checked = S.skip; $('wc-lower').checked = S.lower;
-    $('wc-max').value = S.max; $('wc-max-out').textContent = S.max; $('wc-stop').value = S.extra;
+    $('wc-max').value = S.max; $('wc-max-out').textContent = S.max; $('wc-stop').value = S.extra; $('wc-hl').value = S.hl; $('wc-hlcolor').value = S.hlColor;
     $('wc-pad').value = S.pad; $('wc-pad-out').textContent = ['Touching', 'Very tight', 'Tight', 'Normal', 'Normal +', 'Roomy', 'Roomy +', 'Airy', 'Very airy'][S.pad];
     $('wc-rand').value = S.rand; $('wc-rand-out').textContent = S.rand === 0 ? 'None' : S.rand <= 3 ? 'A little' : S.rand <= 6 ? 'Some' : S.rand <= 8 ? 'A lot' : 'Wild';
     $('wc-contrast').value = S.contrast; $('wc-contrast-out').textContent = ['Same size', 'Very small', 'Small', 'Normal', 'Big', 'Very big', 'Huge', 'Extreme'][S.contrast];
@@ -584,6 +639,9 @@
   function wire() {
     var t;
     $('wc-text').addEventListener('input', function () { S.text = this.value; S.hidden = {}; clearTimeout(t); t = setTimeout(rebuild, 450); });
+    var ht;
+    $('wc-hl').addEventListener('input', function () { S.hl = this.value; clearTimeout(ht); ht = setTimeout(function () { paint(); renderList(); }, 200); });
+    $('wc-hlcolor').addEventListener('input', function () { S.hlColor = this.value; paint(); renderList(); });
     $('wc-stop').addEventListener('input', function () { S.extra = this.value; clearTimeout(t); t = setTimeout(rebuild, 450); });
     $('wc-skip').onchange = function () { S.skip = this.checked; rebuild(); };
     $('wc-lower').onchange = function () { S.lower = this.checked; rebuild(); };
@@ -768,10 +826,10 @@
   }
 
   function toSVG(transparent) {
-    var d = dims(), W = d[0], H = d[1], pal = byId(PALS, S.pal), f = byId(FONTS, S.font);
+    var d = dims(), W = d[0], H = d[1], pal = byId(PALS, S.pal), f = byId(FONTS, S.font), hs = hlSet(S);
     var bg = transparent ? '' : '<rect width="' + W + '" height="' + H + '" fill="' + pal.bg + '"/>\n';
     var words = placed.map(function (w) {
-      return '<text transform="translate(' + w.x.toFixed(1) + ' ' + w.y.toFixed(1) + ') rotate(' + w.a + ')" x="' + (w.ox * w.s).toFixed(1) + '" y="' + (w.oy * w.s).toFixed(1) + '" font-size="' + w.s.toFixed(1) + '">' + esc(w.t) + '</text>';
+      return '<text transform="translate(' + w.x.toFixed(1) + ' ' + w.y.toFixed(1) + ') rotate(' + w.a + ')" x="' + (w.ox * w.s).toFixed(1) + '" y="' + (w.oy * w.s).toFixed(1) + '" font-size="' + w.s.toFixed(1) + '"' + (hs[w.k] ? ' fill="' + hlFor(S, pal) + '"' : '') + '>' + esc(w.t) + '</text>';
     }).join('\n');
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '">\n' +
       '<defs><style>@import url(\'https://fonts.googleapis.com/css2?' + f.g.replace(/&/g, '&amp;') + '&amp;display=swap\');</style></defs>\n' + bg +
