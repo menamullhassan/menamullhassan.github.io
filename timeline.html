@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Applied Linguistics Timeline | M Enam Ull Hassan</title>
+<link rel="canonical" href="https://enamhassan.com/timeline.html">
+<meta name="description" content="An interactive timeline of applied linguistics from the 1880s to today: key events, people, terms and sources, searchable and filterable by theme.">
+<script>
+  (function () {
+    var d = document.documentElement;
+    try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') d.setAttribute('data-theme', t); } catch (e) {}
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.theme-toggle');
+      if (!b) return;
+      var cur = d.getAttribute('data-theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      d.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=25">
+<link rel="icon" href="favicon.ico?v=7" sizes="48x48">
+<link rel="icon" href="icon-192.png?v=7" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="index.html" class="logo">M Enam Ull Hassan</a>
+    <nav>
+      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-hero tl-hero">
+    <p class="eyebrow reveal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16zm-1 3v6l5 3 1-1.7-4-2.4V7z"/></svg><a class="crumb" href="resources.html">Resources</a> · Reference</p>
+    <h1 class="reveal">Applied Linguistics <em>Timeline</em></h1>
+    <p class="lead reveal">Follow the path from today back to the Reform Movement of the 1880s. Click any event to read about the people, ideas and sources behind it.</p>
+  </div>
+
+  <section class="tl-section">
+    <div class="tl-bar" id="tl-bar">
+      <div class="wrap tl-bar-in">
+        <div class="tl-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input type="search" id="tl-q" placeholder="Search events, people, or terms" autocomplete="off" aria-label="Search the timeline" aria-controls="tl-results">
+          <div class="tl-results" id="tl-results" role="listbox" hidden></div>
+        </div>
+        <div class="tl-eras" id="tl-eras" role="navigation" aria-label="Jump to era"></div>
+      </div>
+      <div class="wrap"><div class="tl-themes" id="tl-themes" role="group" aria-label="Show themes"></div></div>
+    </div>
+
+    <div class="wrap">
+      <div class="tl-path" id="tl-path"></div>
+
+      <details class="tl-refs">
+        <summary>Sources used to check the timeline</summary>
+        <p>Each event lists its own key source. Dates were also cross-checked against these histories of the field and against the records of the organizations named.</p>
+        <ul id="tl-refs"></ul>
+      </details>
+    </div>
+  </section>
+
+  <dialog class="tl-modal" id="tl-modal" aria-labelledby="tl-m-title">
+    <div class="tl-m-inner" id="tl-m-inner"></div>
+  </dialog>
+</main>
+
+<footer>
+  <div class="wrap"><nav class="legal-links" aria-label="Site info"><a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a><a href="cookies.html">Cookies Policy</a><a href="cookie-settings.html">Cookie Settings</a><a href="copyright.html">Copyright Notice</a></nav><span class="copy">Copyright © <span id="yr"></span> M Enam Ull Hassan · Boston, MA</span></div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<style>
+  .tl-section { padding: 0 0 96px; }
+  .tl-hero { padding-bottom: 28px; }
+  :root {
+    --t-field: #0F4C81; --t-field-bg: #dde6f0;
+    --t-teaching: #b4532a; --t-teaching-bg: #fbe6da;
+    --t-sla: #6b4e3d; --t-sla-bg: #efe4de;
+    --t-society: #4d4e93; --t-society-bg: #e5e5f3;
+    --t-testing: #7a6500; --t-testing-bg: #faf1c4;
+    --t-analysis: #1f6b5c; --t-analysis-bg: #dcefe9;
+    --e0: #3d7fd6; --e1: #5a6fd0; --e2: #2f9a8a; --e3: #4aa36b; --e4: #d39a2f; --e5: #d4743a; --e6: #a77b5f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      --t-field: #8fb6de; --t-field-bg: #1c2a3b; --t-teaching: #f0a77a; --t-teaching-bg: #3a2519;
+      --t-sla: #d4ab97; --t-sla-bg: #33251e; --t-society: #a9aae0; --t-society-bg: #25264a;
+      --t-testing: #f0d65c; --t-testing-bg: #3a3414; --t-analysis: #7fd1bd; --t-analysis-bg: #173129;
+      --e0: #7fb0f0; --e1: #9aa4f0; --e2: #6fd0bf; --e3: #86d39f; --e4: #f0c56a; --e5: #f0a77a; --e6: #cfa58b;
+    }
+  }
+  :root:where([data-theme="dark"]) {
+    --t-field: #8fb6de; --t-field-bg: #1c2a3b; --t-teaching: #f0a77a; --t-teaching-bg: #3a2519;
+    --t-sla: #d4ab97; --t-sla-bg: #33251e; --t-society: #a9aae0; --t-society-bg: #25264a;
+    --t-testing: #f0d65c; --t-testing-bg: #3a3414; --t-analysis: #7fd1bd; --t-analysis-bg: #173129;
+    --e0: #7fb0f0; --e1: #9aa4f0; --e2: #6fd0bf; --e3: #86d39f; --e4: #f0c56a; --e5: #f0a77a; --e6: #cfa58b;
+  }
+  .th-field { --tc: var(--t-field); --tb: var(--t-field-bg); }
+  .th-teaching { --tc: var(--t-teaching); --tb: var(--t-teaching-bg); }
+  .th-sla { --tc: var(--t-sla); --tb: var(--t-sla-bg); }
+  .th-society { --tc: var(--t-society); --tb: var(--t-society-bg); }
+  .th-testing { --tc: var(--t-testing); --tb: var(--t-testing-bg); }
+  .th-analysis { --tc: var(--t-analysis); --tb: var(--t-analysis-bg); }
+  .er-0 { --ec: var(--e0); } .er-1 { --ec: var(--e1); } .er-2 { --ec: var(--e2); } .er-3 { --ec: var(--e3); }
+  .er-4 { --ec: var(--e4); } .er-5 { --ec: var(--e5); } .er-6 { --ec: var(--e6); }
+
+  /* sticky controls */
+  .tl-bar { position: sticky; top: 64px; z-index: 8; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); padding: 12px 0 10px; }
+  .tl-bar-in { display: grid; grid-template-columns: minmax(0, 320px) 1fr; gap: 14px; align-items: center; }
+  .tl-search { position: relative; }
+  .tl-search > svg { position: absolute; left: 14px; top: 50%; width: 17px; height: 17px; transform: translateY(-50%); fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; pointer-events: none; }
+  .tl-search input { width: 100%; box-sizing: border-box; font: 15px var(--sans); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px 9px 40px; outline: none; }
+  .tl-search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+  .tl-results { position: absolute; left: 0; top: calc(100% + 6px); z-index: 30; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,.14); max-height: 340px; overflow-y: auto; padding: 6px; width: min(440px, calc(100vw - 32px)); box-sizing: border-box; }
+  .tl-results button { display: grid; grid-template-columns: 46px 1fr; gap: 10px; align-items: baseline; width: 100%; text-align: left; background: none; border: 0; border-radius: 9px; padding: 8px 10px; cursor: pointer; font: 14px/1.35 var(--sans); color: var(--ink); }
+  .tl-results button:hover, .tl-results button.on { background: var(--bg); }
+  .tl-results b { font: 600 13px var(--sans); color: var(--ec); }
+  .tl-results small { display: block; color: var(--muted); font-size: 12.5px; margin-top: 1px; }
+  .tl-results .none { padding: 12px; color: var(--muted); font-size: 14px; }
+  .tl-eras { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; justify-content: flex-end; }
+  .tl-eras::-webkit-scrollbar { display: none; }
+  .tl-eras button { flex: none; display: inline-flex; align-items: center; gap: 6px; font: 500 12.5px var(--sans); color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 6px 10px; cursor: pointer; white-space: nowrap; }
+  .tl-eras button i { width: 8px; height: 8px; border-radius: 50%; background: var(--ec); }
+  .tl-eras button:hover { color: var(--ink); }
+  .tl-eras button.on { color: var(--ink); background: var(--surface); box-shadow: 0 0 0 1px var(--line); }
+  .tl-themes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tl-theme { display: inline-flex; align-items: center; gap: 6px; font: 500 12px var(--sans); color: var(--ink); background: var(--tb); border: 1px solid transparent; border-radius: 999px; padding: 4px 10px 4px 8px; cursor: pointer; white-space: nowrap; }
+  .tl-theme svg { width: 14px; height: 14px; fill: none; stroke: var(--tc); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .tl-all { --tc: var(--ink); --tb: var(--surface); border-color: var(--line); }
+  .tl-all[aria-pressed="true"] { --tc: var(--bg); background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .tl-theme[aria-pressed="false"] { background: transparent; border-color: var(--line); color: var(--muted); }
+
+  /* the winding path */
+  .tl-path { position: relative; margin-top: 34px; }
+  .tl-svg { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+  .tl-svg path { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .tl-era-h { position: absolute; left: 0; right: 0; padding: 0 70px; box-sizing: border-box; }
+  .tl-era-h small { display: inline-flex; align-items: center; gap: 8px; font: 600 12px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ec); }
+  .tl-era-h small::before { content: ""; width: 22px; height: 3px; border-radius: 3px; background: var(--ec); }
+  .tl-era-h h2 { font: 400 clamp(24px, 2.8vw, 32px)/1.15 var(--serif); margin: 6px 0 0; }
+  .tl-node { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: var(--bg); border: 4px solid var(--ec); box-sizing: border-box; z-index: 2; transition: transform .15s ease; }
+  .tl-node.big { width: 24px; height: 24px; margin: -12px 0 0 -12px; background: var(--ec); box-shadow: 0 0 0 5px color-mix(in srgb, var(--ec) 25%, transparent); }
+  .tl-node.hov { transform: scale(1.3); }
+  .tl-cap { position: absolute; transform: translate(-50%, -100%); margin-top: -18px; font: 600 11.5px var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ec); white-space: nowrap; }
+  .tl-card { position: absolute; box-sizing: border-box; text-align: left; font: inherit; color: var(--ink); background: none; border: 0; padding: 10px 12px 12px; cursor: pointer; border-radius: 14px; transition: background .15s ease; }
+  .tl-card:hover { background: color-mix(in srgb, var(--surface) 80%, transparent); box-shadow: 0 0 0 1px var(--line); }
+  .tl-card .c-head { display: flex; align-items: flex-start; gap: 10px; }
+  .tl-card .c-ic { flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--tb); display: grid; place-items: center; margin-top: 1px; }
+  .tl-card .c-ic svg { width: 19px; height: 19px; fill: none; stroke: var(--tc); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .tl-card .c-year { display: block; font: 600 12.5px var(--sans); letter-spacing: .06em; color: var(--ec); }
+  .tl-card .c-t { display: -webkit-box; font: 600 16px/1.3 var(--sans); color: var(--ink); margin-top: 1px; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .tl-card p { margin: 8px 0 0 44px; font-size: 14px; line-height: 1.5; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .tl-card .c-more { display: inline-block; margin: 6px 0 0 44px; font: 500 13px var(--sans); color: var(--accent); }
+  .tl-card:hover .c-t, .tl-card:focus-visible .c-t { color: var(--tc); }
+  .tl-card:hover .c-more { text-decoration: underline; text-underline-offset: 2px; }
+  .tl-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tl-card.flash { animation: tlFlash 1.8s ease; }
+  @keyframes tlFlash { 0%, 45% { background: color-mix(in srgb, var(--ec) 18%, transparent); box-shadow: 0 0 0 2px var(--ec); } 100% { background: transparent; box-shadow: none; } }
+  .tl-empty { padding: 60px 0; text-align: center; color: var(--muted); }
+
+  /* phones: a single line down the left */
+  .tl-path.m { padding-left: 32px; margin-top: 18px; }
+  .tl-path.m::before { content: ""; position: absolute; left: 9px; top: 10px; bottom: 10px; width: 4px; border-radius: 4px; background: linear-gradient(var(--e0), var(--e1), var(--e2), var(--e3), var(--e4), var(--e5), var(--e6)); }
+  .tl-path.m .tl-era-h { position: relative; padding: 24px 0 6px; }
+  .tl-path.m .tl-era-h small::before { display: none; }
+  .tl-path.m .tl-card { position: relative; display: block; width: 100%; padding: 12px 0 12px; }
+  .tl-path.m .tl-card:hover { background: none; box-shadow: none; }
+  .tl-path.m .tl-card::before { content: ""; position: absolute; left: -30px; top: 21px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 4px solid var(--ec); box-sizing: border-box; }
+
+  /* modal */
+  .tl-modal { position: fixed; inset: 0; margin: auto; height: fit-content; border: 0; padding: 0; border-radius: 22px; width: min(720px, calc(100vw - 32px)); max-height: calc(100vh - 48px); background: var(--surface); color: var(--ink); box-shadow: 0 30px 80px rgba(0,0,0,.3); overflow: hidden; }
+  .tl-modal::backdrop { background: rgba(10, 12, 18, .45); backdrop-filter: blur(3px); }
+  .tl-m-inner { position: relative; padding: 30px 34px 26px; border-top: 6px solid var(--ec); overflow-y: auto; max-height: calc(100vh - 48px); box-sizing: border-box; }
+  .tl-m-close { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+  .tl-m-close svg, .tl-m-nav svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .tl-m-year { font: 400 54px/1 var(--serif); color: var(--ec); letter-spacing: -.02em; }
+  .tl-m-era { font: 600 11.5px var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 6px 0 12px; }
+  .tl-tag { display: inline-flex; align-items: center; gap: 6px; font: 600 11px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--tc); background: var(--tb); border-radius: 999px; padding: 4px 10px; }
+  .tl-tag svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .tl-m-inner h3 { font: 400 clamp(24px, 3vw, 30px)/1.2 var(--serif); margin: 10px 0; padding-right: 30px; }
+  .tl-m-inner > p { margin: 0; font-size: 16.5px; line-height: 1.65; }
+  .tl-meta { display: grid; gap: 8px; margin-top: 16px; }
+  .tl-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
+  .tl-row > b { font: 600 11px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); width: 58px; flex: none; }
+  .tl-person, span.tl-term { font: 500 13px var(--sans); color: var(--ink); border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 2px 9px; }
+  .tl-person { cursor: pointer; }
+  .tl-person:hover { border-color: var(--ink); }
+  a.tl-term { font: 500 13px var(--sans); color: var(--tc); background: var(--tb); border-radius: 8px; padding: 3px 9px; text-decoration: none; }
+  a.tl-term:hover { text-decoration: underline; text-underline-offset: 2px; }
+  .tl-src { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+  .tl-src b { font: 600 11px var(--sans); letter-spacing: .08em; text-transform: uppercase; margin-right: 6px; }
+  .tl-m-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 20px; }
+  .tl-m-nav { display: inline-flex; align-items: center; gap: 8px; font: 500 14px var(--sans); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; max-width: 48%; text-align: left; }
+  .tl-m-nav span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tl-m-nav small { display: block; font: 600 10.5px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .tl-m-nav.nx { text-align: right; }
+  .tl-m-nav:hover { border-color: var(--ink); }
+  .tl-m-nav:disabled { visibility: hidden; }
+
+  .tl-refs { margin-top: 48px; border-top: 1px solid var(--line); padding-top: 16px; }
+  .tl-refs summary { cursor: pointer; font: 500 15px var(--sans); color: var(--ink); }
+  .tl-refs > p { color: var(--muted); font-size: 14px; margin: 10px 0; }
+  .tl-refs ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .tl-refs li { font-size: 14px; line-height: 1.55; padding-left: 1.6em; text-indent: -1.6em; }
+
+  @media (max-width: 960px) {
+    .tl-bar-in { grid-template-columns: 1fr; }
+    .tl-eras { justify-content: flex-start; }
+  }
+  @media (max-width: 700px) {
+    .tl-bar { position: static; backdrop-filter: none; -webkit-backdrop-filter: none; background: none; }
+    .tl-themes { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+    .tl-themes::-webkit-scrollbar { display: none; }
+    .tl-m-inner { padding: 24px 20px 20px; }
+    .tl-m-year { font-size: 42px; }
+    .tl-row > b { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tl-card.flash { animation: none; } }
+</style>
+<script>
+window.TL_EVENTS=[{"y": 1878, "c": "teaching", "t": "Berlitz opens his first language school", "d": "Maximilian Berlitz opened a language school in Providence, Rhode Island, teaching only through the target language with no translation. Berlitz schools spread worldwide and popularized what became known as the Direct Method.", "p": ["Maximilian Berlitz"], "k": ["Direct Method"], "w": "Howatt, A. P. R., & Widdowson, H. G. (2004). <i>A history of English language teaching<\/i> (2nd ed.). Oxford University Press."}, {"y": 1880, "c": "teaching", "t": "Gouin’s Series Method", "d": "François Gouin published <i>L’art d’enseigner et d’étudier les langues<\/i>, proposing that languages be taught through sequences of connected actions described in sentences. His ideas anticipated later action-based methods such as Total Physical Response.", "p": ["François Gouin"], "k": ["Series Method", "Total Physical Response (TPR)"], "w": "Gouin, F. (1880). <i>L’art d’enseigner et d’étudier les langues<\/i>. Librairie Fischbacher."}, {"y": 1882, "c": "teaching", "t": "The Reform Movement begins", "d": "Wilhelm Viëtor’s pamphlet <i>Der Sprachunterricht muss umkehren!<\/i> (“Language teaching must start afresh!”) attacked grammar-translation and called for teaching based on phonetics, spoken language and connected texts. It launched the Reform Movement, led by phoneticians such as Viëtor, Henry Sweet, Otto Jespersen and Paul Passy.", "p": ["Wilhelm Viëtor", "Henry Sweet", "Otto Jespersen", "Paul Passy"], "k": ["Reform Movement", "Grammar-Translation Method", "Phonetics"], "w": "Viëtor, W. [Quousque Tandem] (1882). <i>Der Sprachunterricht muss umkehren!<\/i> Henninger."}, {"y": 1886, "c": "analysis", "t": "The International Phonetic Association is founded", "d": "French phonetician Paul Passy founded the Phonetic Teachers’ Association in Paris, renamed the International Phonetic Association in 1897. Its alphabet, first published in 1888, became the standard tool for transcribing the sounds of any language.", "p": ["Paul Passy", "Daniel Jones", "Otto Jespersen"], "k": ["International Phonetic Alphabet (IPA)", "Phonetic transcription"], "w": "International Phonetic Association. (1999). <i>Handbook of the International Phonetic Association<\/i>. Cambridge University Press."}, {"y": 1899, "c": "teaching", "t": "Sweet’s <i>The Practical Study of Languages<\/i>", "d": "Henry Sweet set out principles for language teaching grounded in phonetics and linguistic analysis, including careful selection and grading of material. The book is often cited as an early example of applying linguistics to language teaching.", "p": ["Henry Sweet"], "k": ["Phonetics"], "w": "Sweet, H. (1899). <i>The practical study of languages: A guide for teachers and learners<\/i>. Dent."}, {"y": 1916, "c": "analysis", "t": "Saussure’s <i>Course in General Linguistics<\/i>", "d": "Published after Ferdinand de Saussure’s death from his students’ lecture notes, the <i>Cours<\/i> founded structural linguistics. It introduced distinctions such as langue and parole, and synchronic and diachronic study, that shaped 20th-century linguistics.", "p": ["Ferdinand de Saussure", "Charles Bally", "Albert Sechehaye"], "k": ["Structuralism", "Langue and parole", "Synchronic linguistics"], "w": "Saussure, F. de. (1916). <i>Cours de linguistique générale<\/i> (C. Bally & A. Sechehaye, Eds.). Payot."}, {"y": 1917, "c": "teaching", "t": "Palmer’s scientific approach to language teaching", "d": "Harold Palmer published <i>The Scientific Study and Teaching of Languages<\/i>, arguing for principled, research-based teaching. His later work in Japan on oral methods and vocabulary control made him a key figure in early English language teaching.", "p": ["Harold E. Palmer"], "k": ["Oral Approach"], "w": "Palmer, H. E. (1917). <i>The scientific study and teaching of languages<\/i>. Harrap."}, {"y": 1930, "c": "teaching", "t": "Ogden’s Basic English", "d": "C. K. Ogden proposed Basic English, a simplified version of English with a core vocabulary of 850 words, as an international auxiliary language. It was an influential example of vocabulary control in the interwar years.", "p": ["C. K. Ogden"], "k": ["Controlled vocabulary"], "w": "Ogden, C. K. (1930). <i>Basic English: A general introduction with rules and grammar<\/i>. Kegan Paul."}, {"y": 1933, "c": "analysis", "t": "Bloomfield’s <i>Language<\/i>", "d": "Leonard Bloomfield’s book became the foundational text of American structuralism, emphasizing the systematic description of observable linguistic forms. Its methods strongly influenced American language teaching in the 1940s and 1950s.", "p": ["Leonard Bloomfield"], "k": ["Structuralism", "Descriptive linguistics"], "w": "Bloomfield, L. (1933). <i>Language<\/i>. Holt."}, {"y": 1941, "c": "field", "t": "Michigan’s English Language Institute opens", "d": "The University of Michigan established the English Language Institute in June 1941, founded by Charles C. Fries. It became a leading center for linguistically based English teaching, materials and testing.", "p": ["Charles C. Fries", "Robert Lado"], "k": ["Oral Approach"], "w": "Howatt, A. P. R., & Widdowson, H. G. (2004). <i>A history of English language teaching<\/i> (2nd ed.). Oxford University Press."}, {"y": 1942, "c": "teaching", "t": "The Army Specialized Training Program", "d": "Established during World War II, the U.S. Army Specialized Training Program trained soldiers in many languages through intensive courses that combined drills with native-speaker informants and linguists. The program’s success fed into the Audiolingual Method.", "p": ["Leonard Bloomfield"], "k": ["Audiolingual Method"], "w": "Richards, J. C., & Rodgers, T. S. (2014). <i>Approaches and methods in language teaching<\/i> (3rd ed.). Cambridge University Press."}, {"y": 1945, "c": "teaching", "t": "Fries’s <i>Teaching and Learning English as a Foreign Language<\/i>", "d": "Charles C. Fries argued that the most effective materials are based on a scientific comparison of the learner’s first language with the language being learned. The book helped establish the contrastive principle and the linguistic basis of audiolingual teaching.", "p": ["Charles C. Fries"], "k": ["Contrastive Analysis Hypothesis", "Audiolingual Method"], "w": "Fries, C. C. (1945). <i>Teaching and learning English as a foreign language<\/i>. University of Michigan Press."}, {"y": 1946, "c": "field", "t": "<i>English Language Teaching<\/i> journal is founded", "d": "A. S. Hornby founded <i>English Language Teaching<\/i> (now <i>ELT Journal<\/i>) in Britain, one of the first journals devoted to the practice of teaching English. Hornby also produced the influential <i>Advanced Learner’s Dictionary<\/i>.", "p": ["A. S. Hornby"], "k": ["English language teaching (ELT)"], "w": "Howatt, A. P. R., & Widdowson, H. G. (2004). <i>A history of English language teaching<\/i> (2nd ed.). Oxford University Press."}, {"y": 1948, "c": "field", "t": "<i>Language Learning<\/i>: “A Journal of Applied Linguistics”", "d": "Founded at the University of Michigan, <i>Language Learning<\/i> carried the subtitle “A Quarterly Journal of Applied Linguistics.” This is generally taken as the point at which the term <i>applied linguistics<\/i> came into common use.", "p": ["Charles C. Fries"], "k": ["Applied linguistics"], "w": "Smith, R. (2016). Building ‘applied linguistic historiography’: Rationale, scope, and methods. <i>Applied Linguistics<\/i>, <i>37<\/i>(1), 71–87."}, {"y": 1953, "c": "analysis", "t": "West’s <i>General Service List<\/i>", "d": "Michael West published a list of about 2,000 high-frequency words judged most useful for learners of English. It remained a reference for vocabulary teaching and graded readers for decades.", "p": ["Michael West"], "k": ["General Service List (GSL)", "Word frequency"], "w": "West, M. (1953). <i>A general service list of English words<\/i>. Longman."}, {"y": 1953, "c": "society", "t": "Weinreich’s <i>Languages in Contact<\/i>", "d": "Uriel Weinreich’s study of bilingualism described interference between languages and the process of interlingual identification. It became a foundation for research on language contact and transfer.", "p": ["Uriel Weinreich"], "k": ["Interlingual identification", "Language transfer", "Bilingualism"], "w": "Weinreich, U. (1953). <i>Languages in contact: Findings and problems<\/i>. Linguistic Circle of New York."}, {"y": 1957, "c": "field", "t": "Edinburgh’s School of Applied Linguistics", "d": "The University of Edinburgh established the School of Applied Linguistics, the first department of applied linguistics in Britain, founded by J. C. (Ian) Catford. Its staff and graduates shaped British applied linguistics for decades.", "p": ["J. C. Catford", "S. Pit Corder"], "k": ["Applied linguistics"], "w": "Davies, A. (2007). <i>An introduction to applied linguistics: From practice to theory<\/i> (2nd ed.). Edinburgh University Press."}, {"y": 1957, "c": "sla", "t": "Lado’s <i>Linguistics Across Cultures<\/i>", "d": "Robert Lado proposed that learners find easy the features similar to their first language and difficult those that differ. This Contrastive Analysis Hypothesis dominated thinking about learner difficulty until the 1970s.", "p": ["Robert Lado"], "k": ["Contrastive Analysis Hypothesis", "Language transfer", "Negative transfer"], "w": "Lado, R. (1957). <i>Linguistics across cultures: Applied linguistics for language teachers<\/i>. University of Michigan Press."}, {"y": 1957, "c": "sla", "t": "Skinner’s <i>Verbal Behavior<\/i>", "d": "B. F. Skinner explained language as behavior shaped by reinforcement. Behaviorist learning theory underpinned the Audiolingual Method’s reliance on drills and habit formation.", "p": ["B. F. Skinner"], "k": ["Behaviorism", "Habit formation", "Audiolingual Method"], "w": "Skinner, B. F. (1957). <i>Verbal behavior<\/i>. Appleton-Century-Crofts."}, {"y": 1957, "c": "analysis", "t": "Chomsky’s <i>Syntactic Structures<\/i>", "d": "Noam Chomsky introduced transformational-generative grammar, shifting linguistics toward the study of the mental rules that generate sentences. The generative approach later shaped nativist theories of language acquisition.", "p": ["Noam Chomsky"], "k": ["Generative grammar", "Transformation"], "w": "Chomsky, N. (1957). <i>Syntactic structures<\/i>. Mouton."}, {"y": 1959, "c": "sla", "t": "Chomsky’s review of Skinner", "d": "Chomsky’s review of <i>Verbal Behavior<\/i> argued that behaviorism cannot explain the creativity of language or how children acquire it from limited input. It was a turning point toward cognitive and nativist views of acquisition.", "p": ["Noam Chomsky", "B. F. Skinner"], "k": ["Behaviorism", "Poverty of the stimulus", "Nativism"], "w": "Chomsky, N. (1959). Review of <i>Verbal behavior<\/i> by B. F. Skinner. <i>Language<\/i>, <i>35<\/i>(1), 26–58."}, {"y": 1959, "c": "field", "t": "The Center for Applied Linguistics is founded", "d": "The Center for Applied Linguistics (CAL) was established in Washington, D.C., with a Ford Foundation grant to the Modern Language Association. Charles A. Ferguson was its founder and first director.", "p": ["Charles A. Ferguson"], "k": ["Applied linguistics"], "w": "Center for Applied Linguistics. (n.d.). <i>Our history<\/i>. https://www.cal.org/who-we-are/our-history/"}, {"y": 1959, "c": "society", "t": "Ferguson’s “Diglossia”", "d": "Charles Ferguson described communities that use two varieties of one language for different functions, a high variety for formal domains and a low variety for everyday talk. The concept became central to sociolinguistics and language policy.", "p": ["Charles A. Ferguson"], "k": ["Diglossia"], "w": "Ferguson, C. A. (1959). Diglossia. <i>Word<\/i>, <i>15<\/i>, 325–340."}, {"y": 1959, "c": "sla", "t": "The critical period idea takes shape", "d": "Neurosurgeon Wilder Penfield and Lamar Roberts argued that the brain is best suited to language learning before about age nine. The proposal was developed by Eric Lenneberg in 1967 into the Critical Period Hypothesis.", "p": ["Wilder Penfield", "Lamar Roberts"], "k": ["Critical Period Hypothesis", "Age effects"], "w": "Penfield, W., & Roberts, L. (1959). <i>Speech and brain mechanisms<\/i>. Princeton University Press."}, {"y": 1959, "c": "sla", "t": "Gardner and Lambert on motivation", "d": "Robert Gardner and Wallace Lambert showed that English-speaking students’ success in learning French in Canada was linked to their attitudes and motivation, not just aptitude. This began the long tradition of research on integrative and instrumental motivation.", "p": ["Robert C. Gardner", "Wallace E. Lambert"], "k": ["Integrative motivation", "Instrumental motivation", "Socio-educational model"], "w": "Gardner, R. C., & Lambert, W. E. (1959). Motivational variables in second-language acquisition. <i>Canadian Journal of Psychology<\/i>, <i>13<\/i>(4), 266–272."}, {"y": 1959, "c": "testing", "t": "The Modern Language Aptitude Test", "d": "John B. Carroll and Stanley Sapon published the MLAT, which measures phonetic coding, grammatical sensitivity, rote memory and inductive learning ability. It became the most widely used measure of language aptitude.", "p": ["John B. Carroll", "Stanley Sapon"], "k": ["Modern Language Aptitude Test", "Language aptitude"], "w": "Carroll, J. B., & Sapon, S. M. (1959). <i>Modern Language Aptitude Test<\/i>. Psychological Corporation."}, {"y": 1961, "c": "testing", "t": "Lado’s <i>Language Testing<\/i>", "d": "Robert Lado proposed testing separate elements of language, such as sounds, vocabulary and grammar, using objective items. This discrete-point approach dominated language testing into the 1970s.", "p": ["Robert Lado"], "k": ["Discrete-point test"], "w": "Lado, R. (1961). <i>Language testing: The construction and use of foreign language tests<\/i>. Longman."}, {"y": 1963, "c": "teaching", "t": "Gattegno’s Silent Way", "d": "Caleb Gattegno introduced the Silent Way, in which the teacher stays mostly silent while learners work out the language using colored rods and charts. It was one of several “humanistic” or “designer” methods of the 1960s and 1970s.", "p": ["Caleb Gattegno"], "k": ["Silent Way"], "w": "Richards, J. C., & Rodgers, T. S. (2014). <i>Approaches and methods in language teaching<\/i> (3rd ed.). Cambridge University Press."}, {"y": 1964, "c": "field", "t": "AILA is founded", "d": "The International Association of Applied Linguistics (AILA, from its French name) was founded at the International Colloquium of Applied Linguistics at the University of Nancy, France. It now federates national applied linguistics associations around the world.", "p": [], "k": ["Applied linguistics"], "w": "AILA. (n.d.). <i>History<\/i>. https://aila.info/about/history/"}, {"y": 1964, "c": "field", "t": "Halliday, McIntosh and Strevens on language teaching", "d": "<i>The Linguistic Sciences and Language Teaching<\/i> argued that linguistics, including the study of varieties and registers, should inform language teaching. It was an influential statement of British applied linguistics.", "p": ["M. A. K. Halliday", "Angus McIntosh", "Peter Strevens"], "k": ["Register"], "w": "Halliday, M. A. K., McIntosh, A., & Strevens, P. (1964). <i>The linguistic sciences and language teaching<\/i>. Longman."}, {"y": 1964, "c": "analysis", "t": "The Brown Corpus", "d": "W. Nelson Francis and Henry Kučera completed the Brown Corpus at Brown University, one million words of American English from 500 texts published in 1961. It was the first major computer-readable corpus and a model for many that followed.", "p": ["W. Nelson Francis", "Henry Kučera"], "k": ["Corpus linguistics", "Corpus"], "w": "Kučera, H., & Francis, W. N. (1967). <i>Computational analysis of present-day American English<\/i>. Brown University Press."}, {"y": 1964, "c": "testing", "t": "The TOEFL is first administered", "d": "The Test of English as a Foreign Language was introduced to assess the English of non-native speakers applying to North American universities. It became one of the world’s most widely used high-stakes tests.", "p": [], "k": ["High-stakes testing", "Proficiency test"], "w": "Spolsky, B. (1995). <i>Measured words: The development of objective language testing<\/i>. Oxford University Press."}, {"y": 1965, "c": "analysis", "t": "Chomsky’s <i>Aspects of the Theory of Syntax<\/i>", "d": "Chomsky distinguished linguistic competence, a speaker’s underlying knowledge of language, from performance, its use in real situations. The distinction provoked responses such as Hymes’s notion of communicative competence.", "p": ["Noam Chomsky"], "k": ["Competence and performance", "Language acquisition device"], "w": "Chomsky, N. (1965). <i>Aspects of the theory of syntax<\/i>. MIT Press."}, {"y": 1965, "c": "teaching", "t": "The St. Lambert immersion experiment", "d": "English-speaking parents near Montreal started a French immersion kindergarten in St. Lambert, Quebec. Its evaluation by Wallace Lambert and G. Richard Tucker launched immersion education worldwide.", "p": ["Wallace E. Lambert", "G. Richard Tucker"], "k": ["Immersion education", "Additive bilingualism"], "w": "Lambert, W. E., & Tucker, G. R. (1972). <i>Bilingual education of children: The St. Lambert experiment<\/i>. Newbury House."}, {"y": 1966, "c": "field", "t": "TESOL is founded", "d": "Teachers of English to Speakers of Other Languages (now TESOL International Association) was formed in the United States by several professional groups, with James E. Alatis as its first executive director. Its journal <i>TESOL Quarterly<\/i> became a leading outlet for research on English teaching and learning.", "p": ["James E. Alatis"], "k": ["English language teaching (ELT)"], "w": "Center for Applied Linguistics. (2015, March 2). <i>In memoriam: James E. Alatis<\/i>. https://www.cal.org/news/memoriam-alatis/"}, {"y": 1966, "c": "society", "t": "Labov’s New York City study", "d": "William Labov showed that pronunciation varies systematically with social class and speaking style, for example in the pronunciation of /r/. The study founded variationist sociolinguistics.", "p": ["William Labov"], "k": ["Variationist sociolinguistics", "Sociolinguistic variable", "Style"], "w": "Labov, W. (1966). <i>The social stratification of English in New York City<\/i>. Center for Applied Linguistics."}, {"y": 1967, "c": "field", "t": "BAAL is founded", "d": "The British Association for Applied Linguistics held its founding meeting at the University of Reading. In 1969 it organized the second AILA congress at Cambridge.", "p": ["Peter Strevens", "S. Pit Corder"], "k": ["Applied linguistics"], "w": "British Association for Applied Linguistics. (2017). <i>History of BAAL<\/i>. https://www.baal.org.uk"}, {"y": 1967, "c": "sla", "t": "Corder’s “The significance of learner’s errors”", "d": "S. Pit Corder argued that learners’ errors are not simply bad habits but evidence of the system they are building, and distinguished systematic errors from occasional mistakes. The paper launched error analysis and the study of learner language.", "p": ["S. Pit Corder"], "k": ["Error analysis", "Error–mistake distinction", "Interlanguage"], "w": "Corder, S. P. (1967). The significance of learner’s errors. <i>International Review of Applied Linguistics in Language Teaching<\/i>, <i>5<\/i>(4), 161–170."}, {"y": 1967, "c": "sla", "t": "Lenneberg’s <i>Biological Foundations of Language<\/i>", "d": "Eric Lenneberg proposed that language acquisition is tied to brain maturation and is best achieved before puberty. His Critical Period Hypothesis set the agenda for decades of research on age and language learning.", "p": ["Eric Lenneberg"], "k": ["Critical Period Hypothesis", "Lateralization"], "w": "Lenneberg, E. H. (1967). <i>Biological foundations of language<\/i>. Wiley."}, {"y": 1968, "c": "society", "t": "The U.S. Bilingual Education Act", "d": "Title VII of the Elementary and Secondary Education Act provided the first federal funding for bilingual education programs for students with limited English. It shaped decades of policy debate about the education of language minority students.", "p": [], "k": ["Bilingual education", "Language policy"], "w": "Crawford, J. (2004). <i>Educating English learners: Language diversity in the classroom<\/i> (5th ed.). Bilingual Educational Services."}, {"y": 1969, "c": "teaching", "t": "Asher’s Total Physical Response", "d": "James Asher described Total Physical Response, in which learners respond physically to commands before they are asked to speak. It reflected interest in comprehension-first teaching.", "p": ["James J. Asher"], "k": ["Total Physical Response (TPR)"], "w": "Asher, J. J. (1969). The total physical response approach to second language learning. <i>The Modern Language Journal<\/i>, <i>53<\/i>(1), 3–17."}, {"y": 1972, "c": "sla", "t": "Selinker’s “Interlanguage”", "d": "Larry Selinker proposed that learners build a separate linguistic system, an interlanguage, that differs from both their first language and the target language. He also introduced the idea of fossilization.", "p": ["Larry Selinker"], "k": ["Interlanguage", "Fossilization"], "w": "Selinker, L. (1972). Interlanguage. <i>International Review of Applied Linguistics in Language Teaching<\/i>, <i>10<\/i>(1–4), 209–232."}, {"y": 1972, "c": "society", "t": "Hymes’s “On communicative competence”", "d": "Dell Hymes argued that knowing a language means knowing not only grammar but also when, where and how to use it appropriately. Communicative competence, first presented in 1966, became a foundation of communicative language teaching.", "p": ["Dell Hymes"], "k": ["Communicative competence", "Ethnography of communication"], "w": "Hymes, D. (1972). On communicative competence. In J. B. Pride & J. Holmes (Eds.), <i>Sociolinguistics<\/i> (pp. 269–293). Penguin."}, {"y": 1972, "c": "teaching", "t": "Curran’s Community Language Learning", "d": "Charles Curran applied counseling techniques to language learning, with the teacher acting as a supportive “counselor” who helps learners say what they want to say. It was another of the humanistic methods of the period.", "p": ["Charles A. Curran"], "k": ["Community Language Learning"], "w": "Curran, C. A. (1972). <i>Counseling-learning: A whole-person model for education<\/i>. Grune & Stratton."}, {"y": 1974, "c": "sla", "t": "The morpheme order studies", "d": "Heidi Dulay and Marina Burt found that children learning English as a second language acquire grammatical morphemes in a similar order regardless of their first language. The findings challenged contrastive analysis and supported the idea of natural developmental sequences.", "p": ["Heidi Dulay", "Marina Burt"], "k": ["Morpheme order studies", "Natural Order Hypothesis", "Developmental sequence"], "w": "Dulay, H. C., & Burt, M. K. (1974). Natural sequences in child second language acquisition. <i>Language Learning<\/i>, <i>24<\/i>(1), 37–53."}, {"y": 1974, "c": "society", "t": "<i>Lau v. Nichols<\/i>", "d": "The U.S. Supreme Court ruled that San Francisco schools violated the Civil Rights Act by not providing English language support to Chinese-speaking students. The decision required schools to take steps to give English learners equal access to education.", "p": [], "k": ["Language policy", "Language rights"], "w": "<i>Lau v. Nichols<\/i>, 414 U.S. 563 (1974)."}, {"y": 1974, "c": "analysis", "t": "The turn-taking paper", "d": "Harvey Sacks, Emanuel Schegloff and Gail Jefferson described the systematic rules by which speakers take turns in conversation. The paper became a founding text of conversation analysis.", "p": ["Harvey Sacks", "Emanuel A. Schegloff", "Gail Jefferson"], "k": ["Conversation analysis", "Turn-taking", "Adjacency pair"], "w": "Sacks, H., Schegloff, E. A., & Jefferson, G. (1974). A simplest systematics for the organization of turn-taking for conversation. <i>Language<\/i>, <i>50<\/i>(4), 696–735."}, {"y": 1975, "c": "analysis", "t": "Grice’s conversational maxims", "d": "Paul Grice proposed that conversation is guided by a Cooperative Principle and maxims of quantity, quality, relation and manner, and explained how speakers imply more than they say. His work became central to pragmatics.", "p": ["H. Paul Grice"], "k": ["Cooperative Principle", "Conversational implicature", "Gricean maxims"], "w": "Grice, H. P. (1975). Logic and conversation. In P. Cole & J. L. Morgan (Eds.), <i>Syntax and semantics: Vol. 3. Speech acts<\/i> (pp. 41–58). Academic Press."}, {"y": 1975, "c": "analysis", "t": "Sinclair and Coulthard’s classroom discourse", "d": "John Sinclair and Malcolm Coulthard analyzed classroom talk and identified the Initiation–Response–Feedback exchange as its typical pattern. Their work launched classroom discourse analysis.", "p": ["John Sinclair", "Malcolm Coulthard"], "k": ["IRF sequence", "Classroom discourse", "Discourse analysis"], "w": "Sinclair, J. McH., & Coulthard, R. M. (1975). <i>Towards an analysis of discourse: The English used by teachers and pupils<\/i>. Oxford University Press."}, {"y": 1975, "c": "teaching", "t": "The Council of Europe’s <i>Threshold Level<\/i>", "d": "Jan van Ek specified the language functions and notions a learner needs to communicate independently in everyday situations. Together with David Wilkins’s <i>Notional Syllabuses<\/i> (1976), it laid the groundwork for communicative syllabuses in Europe.", "p": ["Jan van Ek", "David Wilkins"], "k": ["Notional-functional syllabus", "Communicative language teaching"], "w": "van Ek, J. A. (1975). <i>The threshold level in a European unit/credit system for modern language learning by adults<\/i>. Council of Europe."}, {"y": 1976, "c": "analysis", "t": "Halliday and Hasan’s <i>Cohesion in English<\/i>", "d": "M. A. K. Halliday and Ruqaiya Hasan described how texts are held together by reference, substitution, ellipsis, conjunction and lexical cohesion. The framework became widely used in text analysis and the teaching of reading and writing.", "p": ["M. A. K. Halliday", "Ruqaiya Hasan"], "k": ["Cohesion", "Coherence", "Systemic Functional Linguistics (SFL)"], "w": "Halliday, M. A. K., & Hasan, R. (1976). <i>Cohesion in English<\/i>. Longman."}, {"y": 1977, "c": "field", "t": "AAAL is founded", "d": "The American Association for Applied Linguistics was founded, and its annual conference became one of the main meetings of the field. Today it covers a broad range of language-related research.", "p": [], "k": ["Applied linguistics"], "w": "American Association for Applied Linguistics. (n.d.). <i>About AAAL<\/i>. https://www.aaal.org/about-us"}, {"y": 1978, "c": "sla", "t": "Vygotsky’s <i>Mind in Society<\/i> in English", "d": "A collection of Lev Vygotsky’s writings, including his account of the zone of proximal development, was published in English. It later became the foundation of sociocultural theory in second language research.", "p": ["Lev Vygotsky", "Michael Cole"], "k": ["Zone of proximal development (ZPD)", "Sociocultural theory", "Scaffolding"], "w": "Vygotsky, L. S. (1978). <i>Mind in society: The development of higher psychological processes<\/i> (M. Cole et al., Eds.). Harvard University Press."}, {"y": 1978, "c": "teaching", "t": "Lozanov’s Suggestopedia in English", "d": "Bulgarian psychiatrist Georgi Lozanov’s Suggestopedia, which used relaxation, music and a comfortable setting to lower learners’ anxiety, became widely known in English. It is often cited as an example of the “designer methods” of the era.", "p": ["Georgi Lozanov"], "k": ["Suggestopedia"], "w": "Lozanov, G. (1978). <i>Suggestology and outlines of suggestopedy<\/i>. Gordon and Breach."}, {"y": 1979, "c": "society", "t": "Cummins’s BICS and CALP", "d": "Jim Cummins distinguished conversational fluency from the academic language needed for school success, noting that the second takes much longer to develop. The distinction shaped policy and teaching for bilingual students.", "p": ["Jim Cummins"], "k": ["Basic interpersonal communicative skills (BICS)", "Cognitive academic language proficiency (CALP)", "Bilingual education"], "w": "Cummins, J. (2008). BICS and CALP: Empirical and theoretical status of the distinction. In B. Street & N. H. Hornberger (Eds.), <i>Encyclopedia of language and education: Vol. 2. Literacy<\/i> (2nd ed., pp. 71–83). Springer."}, {"y": 1979, "c": "teaching", "t": "<i>The Communicative Approach to Language Teaching<\/i>", "d": "Christopher Brumfit and Keith Johnson collected key papers by Hymes, Halliday, Wilkins, Widdowson and others that defined communicative language teaching. The volume marked the consolidation of the communicative approach.", "p": ["Christopher Brumfit", "Keith Johnson", "Henry Widdowson"], "k": ["Communicative language teaching"], "w": "Brumfit, C. J., & Johnson, K. (Eds.). (1979). <i>The communicative approach to language teaching<\/i>. Oxford University Press."}, {"y": 1980, "c": "testing", "t": "Canale and Swain’s communicative competence", "d": "Michael Canale and Merrill Swain proposed that communicative competence includes grammatical, sociolinguistic and strategic competence (Canale added discourse competence in 1983). Their framework, published in the first volume of <i>Applied Linguistics<\/i>, shaped communicative teaching and testing.", "p": ["Michael Canale", "Merrill Swain"], "k": ["Communicative competence", "Strategic competence", "Sociolinguistic competence"], "w": "Canale, M., & Swain, M. (1980). Theoretical bases of communicative approaches to second language teaching and testing. <i>Applied Linguistics<\/i>, <i>1<\/i>(1), 1–47."}, {"y": 1980, "c": "field", "t": "The journal <i>Applied Linguistics<\/i> is launched", "d": "Oxford University Press launched the journal <i>Applied Linguistics<\/i>; its first issue opened with Canale and Swain’s framework of communicative competence. The journal became one of the leading outlets for research across the field.", "p": ["Michael Canale", "Merrill Swain"], "k": ["Applied linguistics"], "w": "de Bot, K. (2015). <i>A history of applied linguistics: From 1980 to the present<\/i>. Routledge."}, {"y": 1981, "c": "sla", "t": "Long’s Interaction Hypothesis", "d": "Michael Long argued that conversational adjustments, such as clarification requests and confirmation checks, make input comprehensible and promote acquisition. He updated the hypothesis in 1996 to stress feedback and attention.", "p": ["Michael H. Long"], "k": ["Interaction Hypothesis", "Negotiation of meaning", "Comprehensible input"], "w": "Long, M. H. (1981). Input, interaction, and second language acquisition. <i>Annals of the New York Academy of Sciences<\/i>, <i>379<\/i>, 259–278."}, {"y": 1982, "c": "sla", "t": "Krashen’s Monitor Model", "d": "Stephen Krashen presented five hypotheses: acquisition versus learning, the monitor, the natural order, the input hypothesis and the affective filter. The model was hugely influential in teaching, and heavily criticized in research.", "p": ["Stephen Krashen", "Tracy Terrell"], "k": ["Monitor Model", "Input Hypothesis", "Affective Filter Hypothesis", "Acquisition–learning distinction"], "w": "Krashen, S. D. (1982). <i>Principles and practice in second language acquisition<\/i>. Pergamon."}, {"y": 1984, "c": "testing", "t": "<i>Language Testing<\/i> journal is founded", "d": "The first journal dedicated to language testing and assessment research was launched; Arthur Hughes and Don Porter edited its first volumes (1984–1988). It reflected the growth of language testing as a specialized area within applied linguistics.", "p": ["Arthur Hughes", "Don Porter"], "k": ["Language assessment"], "w": "Harding, L., & Winke, P. (2020). Editorial. <i>Language Testing<\/i>, <i>37<\/i>(1), 3–5."}, {"y": 1985, "c": "sla", "t": "Swain’s Output Hypothesis", "d": "Based on findings that French immersion students understood French well but spoke and wrote less accurately, Merrill Swain argued that producing language pushes learners to process grammar more deeply.", "p": ["Merrill Swain"], "k": ["Output Hypothesis", "Pushed output", "Immersion education"], "w": "Swain, M. (1985). Communicative competence: Some roles of comprehensible input and comprehensible output in its development. In S. Gass & C. Madden (Eds.), <i>Input in second language acquisition<\/i> (pp. 235–253). Newbury House."}, {"y": 1985, "c": "society", "t": "Kachru’s three circles of English", "d": "Braj Kachru described English worldwide as an Inner Circle (such as the U.K. and U.S.), an Outer Circle of post-colonial varieties (such as India and Nigeria) and an Expanding Circle where it is a foreign language. The model launched the study of World Englishes.", "p": ["Braj B. Kachru"], "k": ["World Englishes", "Kachru’s Three Circles"], "w": "Kachru, B. B. (1985). Standards, codification and sociolinguistic realism: The English language in the outer circle. In R. Quirk & H. G. Widdowson (Eds.), <i>English in the world<\/i> (pp. 11–30). Cambridge University Press."}, {"y": 1986, "c": "testing", "t": "ACTFL Proficiency Guidelines", "d": "The American Council on the Teaching of Foreign Languages published proficiency guidelines describing what speakers can do at levels from Novice to Superior. They became the reference for proficiency-oriented teaching and testing in the United States.", "p": [], "k": ["ACTFL Proficiency Guidelines", "Oral Proficiency Interview (OPI)"], "w": "American Council on the Teaching of Foreign Languages. (1986). <i>ACTFL proficiency guidelines<\/i>. ACTFL."}, {"y": 1987, "c": "teaching", "t": "Prabhu’s Bangalore Project", "d": "N. S. Prabhu reported on a project in southern Indian schools (1979–1984) in which English was taught through meaning-focused problem-solving tasks without a grammar syllabus. It is widely seen as a forerunner of task-based language teaching.", "p": ["N. S. Prabhu"], "k": ["Task-based language teaching", "Task"], "w": "Prabhu, N. S. (1987). <i>Second language pedagogy<\/i>. Oxford University Press."}, {"y": 1987, "c": "analysis", "t": "The COBUILD dictionary", "d": "John Sinclair’s team at the University of Birmingham published the first learner’s dictionary based entirely on a large corpus of real English. It showed how corpus evidence could transform dictionaries and teaching materials.", "p": ["John Sinclair"], "k": ["Corpus linguistics", "Collocation", "Concordance"], "w": "Sinclair, J. (Ed.). (1987). <i>Collins COBUILD English language dictionary<\/i>. Collins."}, {"y": 1987, "c": "analysis", "t": "Brown and Levinson’s politeness theory", "d": "Penelope Brown and Stephen Levinson explained politeness as strategies for managing threats to people’s positive and negative face. First published in 1978, their book became the most influential account of linguistic politeness.", "p": ["Penelope Brown", "Stephen C. Levinson"], "k": ["Politeness theory", "Face", "Face-threatening act"], "w": "Brown, P., & Levinson, S. C. (1987). <i>Politeness: Some universals in language usage<\/i>. Cambridge University Press."}, {"y": 1989, "c": "analysis", "t": "Fairclough’s <i>Language and Power<\/i>", "d": "Norman Fairclough showed how everyday language use helps reproduce and challenge relations of power and ideology. The book helped establish critical discourse analysis.", "p": ["Norman Fairclough", "Ruth Wodak", "Teun A. van Dijk"], "k": ["Critical discourse analysis", "Language ideology"], "w": "Fairclough, N. (1989). <i>Language and power<\/i>. Longman."}, {"y": 1989, "c": "testing", "t": "IELTS is launched", "d": "The International English Language Testing System replaced the earlier English Language Testing Service (ELTS) and assessed all four skills. It became a leading test for study and migration purposes.", "p": [], "k": ["High-stakes testing", "Proficiency test"], "w": "Davies, A. (2008). <i>Assessing academic English: Testing English proficiency, 1950–1989: The IELTS solution<\/i>. Cambridge University Press."}, {"y": 1990, "c": "sla", "t": "Schmidt’s Noticing Hypothesis", "d": "Richard Schmidt argued that learners must consciously notice features in the input for them to become intake. The hypothesis put attention and awareness at the center of SLA research.", "p": ["Richard Schmidt"], "k": ["Noticing Hypothesis", "Attention", "Intake"], "w": "Schmidt, R. W. (1990). The role of consciousness in second language learning. <i>Applied Linguistics<\/i>, <i>11<\/i>(2), 129–158."}, {"y": 1990, "c": "testing", "t": "Bachman’s communicative language ability", "d": "Lyle Bachman proposed a model of language ability made up of language knowledge and strategic competence, and stressed construct validity in test design. In 1996, with Adrian Palmer, he added the framework of test usefulness.", "p": ["Lyle F. Bachman", "Adrian S. Palmer"], "k": ["Communicative language ability", "Construct validity", "Test usefulness"], "w": "Bachman, L. F. (1990). <i>Fundamental considerations in language testing<\/i>. Oxford University Press."}, {"y": 1990, "c": "analysis", "t": "Swales’s <i>Genre Analysis<\/i>", "d": "John Swales analyzed academic and research genres and proposed the CARS (Create a Research Space) model of research article introductions. The book became a cornerstone of English for academic purposes.", "p": ["John M. Swales"], "k": ["Genre", "CARS model", "Discourse community", "English for academic purposes (EAP)"], "w": "Swales, J. M. (1990). <i>Genre analysis: English in academic and research settings<\/i>. Cambridge University Press."}, {"y": 1991, "c": "teaching", "t": "Long’s focus on form", "d": "Michael Long distinguished focus on form, briefly drawing attention to language features during meaning-focused activity, from traditional focus on forms. The idea became central to research on instructed SLA and task-based teaching.", "p": ["Michael H. Long"], "k": ["Focus on form", "Focus on forms"], "w": "Long, M. H. (1991). Focus on form: A design feature in language teaching methodology. In K. de Bot, R. Ginsberg, & C. Kramsch (Eds.), <i>Foreign language research in cross-cultural perspective<\/i> (pp. 39–52). John Benjamins."}, {"y": 1991, "c": "society", "t": "Communities of practice", "d": "Jean Lave and Etienne Wenger described learning as increasing participation in a community of practice, moving from legitimate peripheral participation toward full membership. The idea became influential in research on language learning and identity.", "p": ["Jean Lave", "Etienne Wenger"], "k": ["Community of practice", "Legitimate peripheral participation"], "w": "Lave, J., & Wenger, E. (1991). <i>Situated learning: Legitimate peripheral participation<\/i>. Cambridge University Press."}, {"y": 1992, "c": "society", "t": "Phillipson’s <i>Linguistic Imperialism<\/i>", "d": "Robert Phillipson argued that the global spread of English is maintained by structural and cultural inequalities that favor English over other languages. The book launched debates about the politics of English language teaching.", "p": ["Robert Phillipson"], "k": ["Linguistic imperialism", "Linguicism"], "w": "Phillipson, R. (1992). <i>Linguistic imperialism<\/i>. Oxford University Press."}, {"y": 1993, "c": "teaching", "t": "Lewis’s Lexical Approach", "d": "Michael Lewis argued that language consists largely of prefabricated chunks and collocations, and that teaching should focus on them rather than on grammar rules plus single words.", "p": ["Michael Lewis"], "k": ["Lexical Approach", "Lexical chunk", "Collocation"], "w": "Lewis, M. (1993). <i>The lexical approach: The state of ELT and a way forward<\/i>. Language Teaching Publications."}, {"y": 1994, "c": "teaching", "t": "Kumaravadivelu’s postmethod condition", "d": "B. Kumaravadivelu argued that the search for the best method should give way to principled, context-sensitive teaching guided by macrostrategies. Postmethod pedagogy emphasizes teachers’ autonomy and local knowledge.", "p": ["B. Kumaravadivelu"], "k": ["Postmethod pedagogy"], "w": "Kumaravadivelu, B. (1994). The postmethod condition: (E)merging strategies for second/foreign language teaching. <i>TESOL Quarterly<\/i>, <i>28<\/i>(1), 27–48."}, {"y": 1994, "c": "analysis", "t": "The British National Corpus", "d": "The British National Corpus, 100 million words of written and spoken British English, was completed. Large corpora like it allowed systematic study of grammar, vocabulary and variation across registers.", "p": ["Geoffrey Leech"], "k": ["Corpus linguistics", "Reference corpus", "Register"], "w": "Aston, G., & Burnard, L. (1998). <i>The BNC handbook: Exploring the British National Corpus with SARA<\/i>. Edinburgh University Press."}, {"y": 1994, "c": "society", "t": "The term translanguaging", "d": "Cen Williams used the Welsh term <i>trawsieithu<\/i>, translated as translanguaging, for a teaching practice in which pupils receive input in one language and produce output in another. The concept was later broadened by Ofelia García and others.", "p": ["Cen Williams", "Ofelia García"], "k": ["Translanguaging"], "w": "García, O., & Li Wei. (2014). <i>Translanguaging: Language, bilingualism and education<\/i>. Palgrave Macmillan."}, {"y": 1995, "c": "society", "t": "Norton’s identity and investment", "d": "Bonny Norton (Peirce) argued that motivation should be understood as investment in a language, tied to learners’ changing identities and the power relations they face. The paper opened a major strand of identity research.", "p": ["Bonny Norton"], "k": ["Investment", "Identity", "Right to speak"], "w": "Norton Peirce, B. (1995). Social identity, investment, and language learning. <i>TESOL Quarterly<\/i>, <i>29<\/i>(1), 9–31."}, {"y": 1997, "c": "sla", "t": "Firth and Wagner’s challenge", "d": "Alan Firth and Johannes Wagner criticized SLA for treating learners as deficient communicators and ignoring social context. Their article sparked the “social turn” in second language research.", "p": ["Alan Firth", "Johannes Wagner"], "k": ["Social turn", "Conversation analysis"], "w": "Firth, A., & Wagner, J. (1997). On discourse, communication, and (some) fundamental concepts in SLA research. <i>The Modern Language Journal<\/i>, <i>81<\/i>(3), 285–300."}, {"y": 1997, "c": "sla", "t": "Complexity theory enters SLA", "d": "Diane Larsen-Freeman proposed that language and its acquisition can be understood as complex, dynamic, nonlinear systems. This opened the way for complex dynamic systems approaches to language development.", "p": ["Diane Larsen-Freeman", "Kees de Bot"], "k": ["Complex Dynamic Systems Theory"], "w": "Larsen-Freeman, D. (1997). Chaos/complexity science and second language acquisition. <i>Applied Linguistics<\/i>, <i>18<\/i>(2), 141–165."}, {"y": 1997, "c": "sla", "t": "Lyster and Ranta on corrective feedback", "d": "Roy Lyster and Leila Ranta classified teachers’ corrective feedback in French immersion classrooms and found that recasts, the most common type, rarely led to student repair. Their study launched a large body of feedback research.", "p": ["Roy Lyster", "Leila Ranta"], "k": ["Corrective feedback", "Recast", "Uptake", "Negotiation of form"], "w": "Lyster, R., & Ranta, L. (1997). Corrective feedback and learner uptake: Negotiation of form in communicative classrooms. <i>Studies in Second Language Acquisition<\/i>, <i>19<\/i>(1), 37–66."}, {"y": 1998, "c": "sla", "t": "Pienemann’s Processability Theory", "d": "Manfred Pienemann explained developmental stages by the processing procedures learners can handle at each point. The theory predicts that learners cannot skip stages in acquiring structures such as word order.", "p": ["Manfred Pienemann"], "k": ["Processability Theory", "Developmental sequence"], "w": "Pienemann, M. (1998). <i>Language processing and second language development: Processability theory<\/i>. John Benjamins."}, {"y": 1999, "c": "analysis", "t": "The <i>Longman Grammar of Spoken and Written English<\/i>", "d": "Douglas Biber and colleagues produced a corpus-based grammar describing how grammatical features are used across conversation, fiction, news and academic writing. It made register variation central to grammar description.", "p": ["Douglas Biber", "Stig Johansson", "Geoffrey Leech", "Susan Conrad", "Edward Finegan"], "k": ["Register", "Corpus linguistics", "Multidimensional analysis"], "w": "Biber, D., Johansson, S., Leech, G., Conrad, S., & Finegan, E. (1999). <i>Longman grammar of spoken and written English<\/i>. Longman."}, {"y": 2000, "c": "sla", "t": "Norris and Ortega’s meta-analysis", "d": "John Norris and Lourdes Ortega statistically combined 49 studies of second language instruction and found that focused instruction was effective, with explicit instruction producing larger effects. The study brought meta-analysis into mainstream SLA research.", "p": ["John M. Norris", "Lourdes Ortega"], "k": ["Meta-analysis", "Effect size", "Explicit learning"], "w": "Norris, J. M., & Ortega, L. (2000). Effectiveness of L2 instruction: A research synthesis and quantitative meta-analysis. <i>Language Learning<\/i>, <i>50<\/i>(3), 417–528."}, {"y": 2000, "c": "sla", "t": "Sociocultural theory in SLA", "d": "James Lantolf’s edited volume brought together research applying Vygotsky’s ideas, such as mediation, private speech and the zone of proximal development, to second language learning. Sociocultural theory became a major alternative to cognitive approaches.", "p": ["James P. Lantolf", "Steven L. Thorne"], "k": ["Sociocultural theory", "Mediation", "Private speech"], "w": "Lantolf, J. P. (Ed.). (2000). <i>Sociocultural theory and second language learning<\/i>. Oxford University Press."}, {"y": 2001, "c": "testing", "t": "The Common European Framework of Reference", "d": "The Council of Europe published the CEFR, describing language proficiency at six levels from A1 to C2 with “can-do” statements. It became a global reference for curricula, textbooks and tests.", "p": ["John Trim", "Brian North"], "k": ["Common European Framework of Reference for Languages (CEFR)", "Can-do statement"], "w": "Council of Europe. (2001). <i>Common European framework of reference for languages: Learning, teaching, assessment<\/i>. Cambridge University Press."}, {"y": 2001, "c": "society", "t": "English as a lingua franca", "d": "Barbara Seidlhofer called for corpus-based description of English as used among speakers who do not share a first language. ELF research went on to question native-speaker norms in teaching and testing.", "p": ["Barbara Seidlhofer", "Jennifer Jenkins"], "k": ["English as a lingua franca (ELF)", "Native-speakerism"], "w": "Seidlhofer, B. (2001). Closing a conceptual gap: The case for a description of English as a lingua franca. <i>International Journal of Applied Linguistics<\/i>, <i>11<\/i>(2), 133–158."}, {"y": 2002, "c": "sla", "t": "Usage-based approaches and frequency", "d": "Nick Ellis reviewed evidence that language learning is shaped by the frequency of forms in experience, from sounds to constructions. The paper helped establish usage-based and emergentist approaches to SLA.", "p": ["Nick C. Ellis"], "k": ["Usage-based approaches", "Frequency", "Emergentism"], "w": "Ellis, N. C. (2002). Frequency effects in language processing: A review with implications for theories of implicit and explicit language acquisition. <i>Studies in Second Language Acquisition<\/i>, <i>24<\/i>(2), 143–188."}, {"y": 2005, "c": "sla", "t": "The L2 Motivational Self System", "d": "Zoltán Dörnyei reframed L2 motivation in terms of learners’ future selves: the ideal L2 self, the ought-to L2 self and the learning experience. It became the dominant framework in motivation research.", "p": ["Zoltán Dörnyei", "Ema Ushioda"], "k": ["L2 Motivational Self System", "Ideal L2 self", "Ought-to L2 self"], "w": "Dörnyei, Z. (2005). <i>The psychology of the language learner: Individual differences in second language acquisition<\/i>. Lawrence Erlbaum."}, {"y": 2007, "c": "society", "t": "Superdiversity", "d": "Anthropologist Steven Vertovec coined superdiversity to describe the new complexity of migration-driven diversity in cities. The term was taken up by sociolinguists studying multilingual repertoires and mobility.", "p": ["Steven Vertovec", "Jan Blommaert"], "k": ["Superdiversity", "Linguistic repertoire"], "w": "Vertovec, S. (2007). Super-diversity and its implications. <i>Ethnic and Racial Studies<\/i>, <i>30<\/i>(6), 1024–1054."}, {"y": 2009, "c": "society", "t": "García’s <i>Bilingual Education in the 21st Century<\/i>", "d": "Ofelia García presented a global view of bilingual education built around translanguaging, the flexible use of a bilingual’s full linguistic repertoire. The book helped make translanguaging a central concept in the field.", "p": ["Ofelia García", "Li Wei"], "k": ["Translanguaging", "Bilingual education", "Dynamic bilingualism"], "w": "García, O. (2009). <i>Bilingual education in the 21st century: A global perspective<\/i>. Wiley-Blackwell."}, {"y": 2012, "c": "field", "t": "The IRIS repository goes live", "d": "IRIS, a free online repository of materials and instruments used in second language research, went live in August 2012, led by Emma Marsden and Alison Mackey. It became a key resource for open science and replication in the field.", "p": ["Emma Marsden", "Alison Mackey"], "k": ["Open science", "Replication study", "Methodological transparency"], "w": "Marsden, E., Mackey, A., & Plonsky, L. (2016). The IRIS repository: Advancing research practice and methodology. In A. Mackey & E. Marsden (Eds.), <i>Advancing methodology and practice: The IRIS repository of instruments for research into second languages<\/i> (pp. 1–21). Routledge."}, {"y": 2016, "c": "field", "t": "The Douglas Fir Group framework", "d": "Fifteen scholars from different traditions proposed a transdisciplinary framework for SLA, linking learning at the micro level of social activity, the meso level of communities and the macro level of ideologies. It signaled the field’s move toward integrating cognitive and social approaches.", "p": ["Douglas Fir Group", "Dwight Atkinson", "Lourdes Ortega", "Diane Larsen-Freeman"], "k": ["Transdisciplinary SLA", "Social turn"], "w": "The Douglas Fir Group. (2016). A transdisciplinary framework for SLA in a multilingual world. <i>The Modern Language Journal<\/i>, <i>100<\/i>(S1), 19–47."}, {"y": 2018, "c": "testing", "t": "The CEFR Companion Volume", "d": "The Council of Europe published a Companion Volume to the CEFR (provisional edition 2018, final edition 2020) with new descriptors for mediation, plurilingual and pluricultural competence and online interaction. The 2020 edition also added descriptors for sign language competences.", "p": ["Brian North"], "k": ["Common European Framework of Reference for Languages (CEFR)", "Mediation", "Plurilingualism"], "w": "Council of Europe. (2020). <i>Common European framework of reference for languages: Learning, teaching, assessment. Companion volume<\/i>. Council of Europe Publishing."}, {"y": 2020, "c": "teaching", "t": "Emergency remote teaching", "d": "The COVID-19 pandemic moved language teaching online almost overnight. Researchers distinguished this “emergency remote teaching” from planned online learning and studied its effects on teachers and learners.", "p": ["Charles Hodges"], "k": ["Emergency remote teaching", "Computer-mediated communication"], "w": "Hodges, C., Moore, S., Lockee, B., Trust, T., & Bond, A. (2020, March 27). The difference between emergency remote teaching and online learning. <i>EDUCAUSE Review<\/i>."}, {"y": 2022, "c": "analysis", "t": "Generative AI arrives", "d": "The public release of ChatGPT in November 2022 brought large language models into classrooms and research almost immediately. Applied linguists began studying their use for writing, feedback, assessment and research, and their risks for academic integrity.", "p": [], "k": ["Generative AI", "Large language model (LLM)"], "w": "Kohnke, L., Moorhouse, B. L., & Zou, D. (2023). ChatGPT for language teaching and learning. <i>RELC Journal<\/i>, <i>54<\/i>(2), 537–550."}];
+window.TL_GLOSSARY={"acquisition–learning distinction": "Acquisition–learning distinction", "actfl proficiency guidelines": "ACTFL Proficiency Guidelines", "additive bilingualism": "Additive bilingualism", "adjacency pair": "Adjacency pair", "affective filter hypothesis": "Affective Filter Hypothesis", "age effects": "Age effects", "audiolingual method": "Audiolingual method", "basic interpersonal communicative skills (bics)": "Basic interpersonal communicative skills (BICS)", "bilingualism": "Bilingualism", "can-do statement": "Can-do statement", "cognitive academic language proficiency (calp)": "Cognitive academic language proficiency (CALP)", "coherence": "Coherence", "cohesion": "Cohesion", "collocation": "Collocation", "common european framework of reference for languages (cefr)": "Common European Framework of Reference for Languages (CEFR)", "communicative competence": "Communicative competence", "communicative language teaching": "Communicative language teaching", "community of practice": "Community of practice", "complex dynamic systems theory": "Complex Dynamic Systems Theory", "comprehensible input": "Comprehensible input", "computer-mediated communication": "Computer-mediated communication", "concordance": "Concordance", "construct validity": "Construct validity", "contrastive analysis hypothesis": "Contrastive Analysis Hypothesis", "conversation analysis": "Conversation analysis", "conversational implicature": "Conversational implicature", "cooperative principle": "Cooperative principle", "corpus": "Corpus", "corpus linguistics": "Corpus linguistics", "corrective feedback": "Corrective feedback", "critical discourse analysis": "Critical discourse analysis", "critical period hypothesis": "Critical Period Hypothesis", "developmental sequence": "Developmental sequence", "diglossia": "Diglossia", "direct method": "Direct method", "discourse analysis": "Discourse analysis", "effect size": "Effect size", "english as a lingua franca (elf)": "English as a lingua franca (ELF)", "english for academic purposes (eap)": "English for academic purposes (EAP)", "error analysis": "Error analysis", "error–mistake distinction": "Error–mistake distinction", "explicit learning": "Explicit learning", "face": "Face", "face-threatening act": "Face-threatening act", "focus on form": "Focus on form", "focus on forms": "Focus on forms", "fossilization": "Fossilization", "frequency": "Frequency", "general service list (gsl)": "General Service List (GSL)", "generative grammar": "Generative grammar", "genre": "Genre", "grammar-translation method": "Grammar-translation method", "gricean maxims": "Gricean maxims", "ideal l2 self": "Ideal L2 self", "identity": "Identity", "immersion education": "Immersion education", "input hypothesis": "Input Hypothesis", "instrumental motivation": "Instrumental motivation", "intake": "Intake", "integrative motivation": "Integrative motivation", "interaction hypothesis": "Interaction Hypothesis", "interlanguage": "Interlanguage", "interlingual identification": "Interlingual identification", "international phonetic alphabet (ipa)": "International Phonetic Alphabet (IPA)", "investment": "Investment", "l2 motivational self system": "L2 Motivational Self System", "language acquisition device": "Language acquisition device", "language aptitude": "Language aptitude", "language ideology": "Language ideology", "language policy": "Language policy", "language transfer": "Language transfer", "lateralization": "Lateralization", "linguicism": "Linguicism", "linguistic imperialism": "Linguistic imperialism", "linguistic repertoire": "Linguistic repertoire", "mediation": "Mediation", "meta-analysis": "Meta-analysis", "methodological transparency": "Methodological transparency", "modern language aptitude test": "Modern Language Aptitude Test", "monitor model": "Monitor Model", "morpheme order studies": "Morpheme order studies", "native-speakerism": "Native-speakerism", "nativism": "Nativism", "natural order hypothesis": "Natural Order Hypothesis", "negative transfer": "Negative transfer", "negotiation of form": "Negotiation of form", "negotiation of meaning": "Negotiation of meaning", "noticing hypothesis": "Noticing Hypothesis", "open science": "Open science", "ought-to l2 self": "Ought-to L2 self", "output hypothesis": "Output Hypothesis", "phonetic transcription": "Phonetic transcription", "phonetics": "Phonetics", "plurilingualism": "Plurilingualism", "politeness theory": "Politeness theory", "poverty of the stimulus": "Poverty of the stimulus", "private speech": "Private speech", "processability theory": "Processability Theory", "proficiency test": "Proficiency test", "pushed output": "Pushed output", "recast": "Recast", "reference corpus": "Reference corpus", "register": "Register", "replication study": "Replication study", "right to speak": "Right to speak", "scaffolding": "Scaffolding", "socio-educational model": "Socio-educational model", "sociocultural theory": "Sociocultural theory", "style": "Style", "superdiversity": "Superdiversity", "systemic functional linguistics (sfl)": "Systemic Functional Linguistics (SFL)", "task": "Task", "task-based language teaching": "Task-based language teaching", "transformation": "Transformation", "translanguaging": "Translanguaging", "turn-taking": "Turn-taking", "uptake": "Uptake", "usage-based approaches": "Usage-based approaches", "variationist sociolinguistics": "Variationist sociolinguistics", "world englishes": "World Englishes", "zone of proximal development (zpd)": "Zone of proximal development (ZPD)", "word frequency": "Frequency", "sociolinguistic variable": "Linguistic variable"};
+window.TL_REFS=["Davies, A. (2007). <i>An introduction to applied linguistics: From practice to theory<\/i> (2nd ed.). Edinburgh University Press.", "de Bot, K. (2015). <i>A history of applied linguistics: From 1980 to the present<\/i>. Routledge.", "Howatt, A. P. R., & Widdowson, H. G. (2004). <i>A history of English language teaching<\/i> (2nd ed.). Oxford University Press.", "Kaplan, R. B. (Ed.). (2010). <i>The Oxford handbook of applied linguistics<\/i> (2nd ed.). Oxford University Press.", "Mitchell, R., Myles, F., & Marsden, E. (2019). <i>Second language learning theories<\/i> (4th ed.). Routledge.", "Ortega, L. (2014). <i>Understanding second language acquisition<\/i>. Routledge.", "Richards, J. C., & Rodgers, T. S. (2014). <i>Approaches and methods in language teaching<\/i> (3rd ed.). Cambridge University Press.", "Smith, R. (2016). Building ‘applied linguistic historiography’: Rationale, scope, and methods. <i>Applied Linguistics<\/i>, <i>37<\/i>(1), 71–87.", "Spolsky, B. (1995). <i>Measured words: The development of objective language testing<\/i>. Oxford University Press."];
+</script>
+<script>
+(function () {
+  var EV = window.TL_EVENTS, GL = window.TL_GLOSSARY, REFS = window.TL_REFS;
+  var THEMES = [
+    ['field', 'Field & institutions', '<path d="M3 21h18M5 21v-9M9.7 21v-9M14.3 21v-9M19 21v-9M2.5 10 12 4l9.5 6z"/>'],
+    ['teaching', 'Language teaching', '<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20l4-4 4 4M7 9h6M7 12h9"/>'],
+    ['sla', 'Second language acquisition', '<path d="M12 21v-9M12 12c0-4.2 3-7 8-7 0 4.2-3 7-8 7zM12 15c0-3.4-2.4-5.6-7-5.6 0 3.4 2.4 5.6 7 5.6z"/>'],
+    ['society', 'Language & society', '<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-5.6 6-5.6s6 2.2 6 5.6M16 4.9a3.2 3.2 0 0 1 0 6.2M18 14.6c1.9.6 3 2.4 3 5.4"/>'],
+    ['testing', 'Assessment', '<rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 3h6v3H9zM9 13.5l2 2 4-4.5"/>'],
+    ['analysis', 'Language analysis & technology', '<path d="M3 20h18M6 20v-7M11 20V5M16 20v-10M20.5 20v-4"/>']
+  ];
+  var TNAME = {}, TIC = {}, SHORT = { field: 'Field', teaching: 'Teaching', sla: 'SLA', society: 'Society', testing: 'Assessment', analysis: 'Analysis & tech' };
+  THEMES.forEach(function (t) { TNAME[t[0]] = t[1]; TIC[t[0]] = '<svg viewBox="0 0 24 24" aria-hidden="true">' + t[2] + '</svg>'; });
+  var ERAS = [
+    { from: 0, k: '1870s–1930s', h: 'Foundations' },
+    { from: 1940, k: '1940s–1950s', h: 'A field is born' },
+    { from: 1960, k: '1960s', h: 'Growth and new questions' },
+    { from: 1970, k: '1970s', h: 'The communicative turn' },
+    { from: 1980, k: '1980s', h: 'Theories of acquisition' },
+    { from: 1990, k: '1990s', h: 'Cognitive, social and critical turns' },
+    { from: 2000, k: '2000s–today', h: 'Multilingual, digital and open' }
+  ];
+  var $ = function (id) { return document.getElementById(id); };
+  var on = {}; THEMES.forEach(function (t) { on[t[0]] = true; });
+  var path = $('tl-path'), modal = $('tl-modal'), mInner = $('tl-m-inner'), bar = $('tl-bar');
+  var cur = -1, mobile = false, heads = [];
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function slug(s) { return 'term-' + s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  function plain(s) { return String(s).replace(/<[^>]+>/g, ''); }
+  function norm(s) { return plain(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function eraOf(y) { for (var i = ERAS.length - 1; i >= 0; i--) if (y >= ERAS[i].from) return i; return 0; }
+  function ec(ei) { return 'er-' + (ERAS.length - 1 - ei); }   /* er-0 = today (blue) … er-6 = foundations (brown) */
+  EV.forEach(function (e, i) { e.i = i; e.era = eraOf(e.y); e.hay = norm([e.y, e.t, e.d, e.p.join(' '), e.k.join(' '), e.w, TNAME[e.c]].join(' ')); });
+  /* newest first */
+  var ORDER = EV.slice().reverse();
+  function visList() { return ORDER.filter(function (e) { return on[e.c]; }); }
+
+  function cardHTML(e) {
+    return '<button type="button" class="tl-card th-' + e.c + ' ' + ec(e.era) + '" data-i="' + e.i + '" id="card-' + e.i + '">' +
+      '<span class="c-head"><span class="c-ic" title="' + esc(TNAME[e.c]) + '">' + TIC[e.c] + '</span><span><span class="c-year">' + e.y + '</span><span class="c-t">' + e.t + '</span></span></span>' +
+      '<p>' + plain(e.d) + '</p><span class="c-more">Read more</span></button>';
+  }
+  function headHTML(ei, n) {
+    return '<div class="tl-era-h ' + ec(ei) + '" data-era="' + ei + '"><small>' + ERAS[ei].k + '</small><h2>' + ERAS[ei].h + '</h2></div>';
+  }
+  function groups() {
+    var v = visList(), out = [];
+    for (var ei = ERAS.length - 1; ei >= 0; ei--) {
+      var evs = v.filter(function (e) { return e.era === ei; });
+      if (evs.length) out.push({ ei: ei, evs: evs });
+    }
+    return out;
+  }
+
+  /* ---------- build ---------- */
+  function build() {
+    mobile = window.innerWidth < 700;
+    var g = groups();
+    path.classList.toggle('m', mobile);
+    path.style.height = '';
+    if (!g.length) { path.innerHTML = '<p class="tl-empty">No events to show.</p>'; heads = []; return; }
+    if (mobile) {
+      path.innerHTML = g.map(function (x) { return headHTML(x.ei, x.evs.length) + x.evs.map(cardHTML).join(''); }).join('');
+    } else {
+      buildPath(g);
+    }
+    heads = [].slice.call(path.querySelectorAll('.tl-era-h'));
+    drawEras();
+    onScroll();
+  }
+
+  function buildPath(g) {
+    var W = path.clientWidth, cols = W >= 980 ? 3 : 2;
+    var EDGE = 6, R = 40, inL = EDGE + R + 8, inR = W - EDGE - R - 8, cw = (inR - inL) / cols;
+    var cardW = Math.min(cw - 20, 360);
+    var html = '', rows = [];
+    g.forEach(function (x) {
+      html += headHTML(x.ei, x.evs.length);
+      for (var s = 0; s < x.evs.length; s += cols) rows.push({ ei: x.ei, evs: x.evs.slice(s, s + cols), first: s === 0 });
+      x.evs.forEach(function (e) { html += cardHTML(e) + '<span class="tl-node ' + ec(e.era) + '" id="node-' + e.i + '"></span>'; });
+    });
+    path.innerHTML = html;
+    var hd = path.querySelectorAll('.tl-era-h'), hk = 0;
+    /* place cards (width first, so heights are real) */
+    rows.forEach(function (r, ri) {
+      var ltr = ri % 2 === 0;
+      r.ltr = ltr;
+      r.xs = r.evs.map(function (e, j) {
+        var col = ltr ? j : cols - 1 - j, x = inL + cw * (col + 0.5), c = $('card-' + e.i);
+        c.style.width = cardW + 'px'; c.style.left = (x - cardW / 2) + 'px';
+        return x;
+      });
+    });
+    var y = 0;
+    rows.forEach(function (r) {
+      if (r.first) {
+        var h = hd[hk++]; h.style.top = (y + (y ? 6 : 0)) + 'px';
+        y += h.offsetHeight + (y ? 6 : 0) + 34;
+      }
+      r.y = y;
+      var hmax = 0;
+      r.evs.forEach(function (e, j) {
+        var c = $('card-' + e.i), n = $('node-' + e.i);
+        c.style.top = (y + 20) + 'px';
+        n.style.left = r.xs[j] + 'px'; n.style.top = y + 'px';
+        hmax = Math.max(hmax, c.offsetHeight);
+      });
+      y += 20 + hmax + 44;
+    });
+    var H = y;
+    /* the line */
+    var d = '', L = EDGE, Rt = W - EDGE;
+    rows.forEach(function (r, ri) {
+      var nx = rows[ri + 1];
+      if (ri === 0) d += 'M' + (r.xs[0] - cw / 2 + 14) + ' ' + r.y;
+      if (!nx) { d += ' L' + r.xs[r.xs.length - 1] + ' ' + r.y; return; }
+      if (r.ltr) d += ' L' + (Rt - R) + ' ' + r.y + ' A' + R + ' ' + R + ' 0 0 1 ' + Rt + ' ' + (r.y + R) + ' L' + Rt + ' ' + (nx.y - R) + ' A' + R + ' ' + R + ' 0 0 1 ' + (Rt - R) + ' ' + nx.y;
+      else d += ' L' + (L + R) + ' ' + r.y + ' A' + R + ' ' + R + ' 0 0 0 ' + L + ' ' + (r.y + R) + ' L' + L + ' ' + (nx.y - R) + ' A' + R + ' ' + R + ' 0 0 0 ' + (L + R) + ' ' + nx.y;
+    });
+    /* colour changes by era, blending on the bends between eras */
+    var stops = '';
+    g.forEach(function (x) {
+      var rs = rows.filter(function (r) { return r.ei === x.ei; }), v = 'var(--e' + (ERAS.length - 1 - x.ei) + ')';
+      stops += '<stop offset="' + (rs[0].y / H) + '" style="stop-color:' + v + '"/><stop offset="' + (rs[rs.length - 1].y / H) + '" style="stop-color:' + v + '"/>';
+    });
+    var first = rows[0], sx = first.xs[0] - cw / 2 + 14;
+    var svg = '<svg class="tl-svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true"><defs><linearGradient id="tl-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="' + H + '">' + stops + '</linearGradient></defs>' +
+      '<path d="' + d + '" stroke="url(#tl-grad)"/></svg>';
+    path.insertAdjacentHTML('afterbegin', svg);
+    path.insertAdjacentHTML('beforeend',
+      '<span class="tl-node big ' + ec(first.ei) + '" style="left:' + sx + 'px;top:' + first.y + 'px"></span>' +
+      '<span class="tl-cap ' + ec(first.ei) + '" style="left:' + sx + 'px;top:' + first.y + 'px">Today</span>');
+    path.style.height = (H - 20) + 'px';
+  }
+
+  /* ---------- era jump + active era ---------- */
+  var erasEl = $('tl-eras');
+  function drawEras() {
+    erasEl.innerHTML = heads.map(function (h, n) {
+      var ei = +h.dataset.era;
+      return '<button type="button" class="' + ec(ei) + '" data-h="' + n + '" title="' + esc(ERAS[ei].h) + '"><i></i>' + ERAS[ei].k + '</button>';
+    }).join('');
+  }
+  function offsetTop() { return 64 + (mobile ? 0 : bar.offsetHeight) + 16; }
+  function goTo(el, smooth) {
+    var t = el.getBoundingClientRect().top + window.scrollY - offsetTop();
+    window.scrollTo({ top: Math.max(0, t), behavior: smooth ? 'smooth' : 'auto' });
+  }
+  erasEl.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-h]'); if (b) goTo(heads[+b.dataset.h], true);
+  });
+  var ticking = false;
+  function onScroll() {
+    ticking = false;
+    var lim = offsetTop() + 80, act = 0;
+    heads.forEach(function (h, n) { if (h.getBoundingClientRect().top <= lim) act = n; });
+    erasEl.querySelectorAll('button').forEach(function (b, n) {
+      var was = b.classList.contains('on'); b.classList.toggle('on', n === act);
+      if (n === act && !was && erasEl.scrollWidth > erasEl.clientWidth) erasEl.scrollTo({ left: b.offsetLeft - 20, behavior: 'smooth' });
+    });
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+
+  /* ---------- cards ---------- */
+  path.addEventListener('click', function (ev) { var c = ev.target.closest('.tl-card'); if (c) open(+c.dataset.i); });
+  path.addEventListener('mouseover', function (ev) {
+    var c = ev.target.closest('.tl-card'); path.querySelectorAll('.tl-node.hov').forEach(function (n) { n.classList.remove('hov'); });
+    if (c) { var n = $('node-' + c.dataset.i); if (n) n.classList.add('hov'); }
+  });
+  function reveal(i, flash, smooth) {
+    var c = $('card-' + i); if (!c) return;
+    var r = c.getBoundingClientRect(), top = offsetTop(), vis = r.top >= top && r.bottom <= window.innerHeight - 10;
+    if (!vis) {
+      var t = r.top + window.scrollY - top - (mobile ? 10 : 40);
+      window.scrollTo({ top: Math.max(0, t), behavior: smooth === false ? 'auto' : 'smooth' });
+    }
+    if (flash) { c.classList.remove('flash'); void c.offsetWidth; c.classList.add('flash'); }
+  }
+
+  /* ---------- modal ---------- */
+  function open(i) {
+    cur = i;
+    var e = EV[i], v = visList(), gi = v.indexOf(e), later = v[gi - 1], earlier = v[gi + 1];
+    var people = e.p.length ? '<div class="tl-row"><b>People</b>' + e.p.map(function (p) { return '<button type="button" class="tl-person" data-person="' + esc(p) + '" title="Find other events with ' + esc(p) + '">' + esc(p) + '</button>'; }).join('') + '</div>' : '';
+    var terms = e.k.length ? '<div class="tl-row"><b>Terms</b>' + e.k.map(function (k) {
+      var g = GL[k.toLowerCase()];
+      return g ? '<a class="tl-term" href="glossary.html#' + slug(g) + '" title="Open in the glossary">' + esc(k) + '</a>' : '<span class="tl-term">' + esc(k) + '</span>';
+    }).join('') + '</div>' : '';
+    function nav(x, cls, label, arrow) {
+      var inner = '<span><small>' + label + '</small>' + (x ? x.y + ' · ' + esc(plain(x.t)) : '') + '</span>';
+      return '<button type="button" class="tl-m-nav ' + cls + '" data-go="' + (x ? x.i : '') + '"' + (x ? '' : ' disabled') + '>' +
+        (cls === 'pv' ? arrow + inner : inner + arrow) + '</button>';
+    }
+    mInner.className = 'tl-m-inner th-' + e.c + ' ' + ec(e.era);
+    mInner.innerHTML = '<button type="button" class="tl-m-close" data-close aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+      '<div class="tl-m-year">' + e.y + '</div><div class="tl-m-era">' + ERAS[e.era].k + ' · ' + ERAS[e.era].h + '</div>' +
+      '<span class="tl-tag">' + TIC[e.c] + esc(TNAME[e.c]) + '</span><h3 id="tl-m-title">' + e.t + '</h3><p>' + e.d + '</p>' +
+      '<div class="tl-meta">' + people + terms + '</div>' +
+      '<div class="tl-src"><b>Key source</b>' + e.w + '</div>' +
+      '<div class="tl-m-foot">' +
+      nav(later, 'pv', 'Later', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>') +
+      nav(earlier, 'nx', 'Earlier', '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>') +
+      '</div>';
+    mInner.scrollTop = 0;
+    if (!modal.open) { if (modal.showModal) modal.showModal(); else modal.setAttribute('open', ''); }
+    try { history.replaceState(null, '', '#event-' + (i + 1)); } catch (err) {}
+  }
+  function close() { if (modal.open) { if (modal.close) modal.close(); else modal.removeAttribute('open'); } }
+  modal.addEventListener('close', function () {
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {}
+    if (cur > -1) { var c = $('card-' + cur); if (c) { c.focus({ preventScroll: true }); reveal(cur, true); } }
+  });
+  modal.addEventListener('click', function (ev) {
+    if (ev.target === modal) { close(); return; }
+    if (ev.target.closest('[data-close]')) { close(); return; }
+    var g = ev.target.closest('[data-go]'); if (g && g.dataset.go !== '') { open(+g.dataset.go); return; }
+    var p = ev.target.closest('[data-person]');
+    if (p) { close(); q.value = p.dataset.person; q.focus(); search(); }
+  });
+  function step(dir) { var v = visList(), n = v[v.indexOf(EV[cur]) + dir]; if (n) open(n.i); }
+  modal.addEventListener('keydown', function (ev) {
+    if (ev.target.closest('input')) return;
+    if (ev.key === 'ArrowRight') { step(1); ev.preventDefault(); }
+    if (ev.key === 'ArrowLeft') { step(-1); ev.preventDefault(); }
+  });
+  var tx = null;
+  modal.addEventListener('touchstart', function (ev) { tx = [ev.touches[0].clientX, ev.touches[0].clientY]; }, { passive: true });
+  modal.addEventListener('touchend', function (ev) {
+    if (!tx) return;
+    var dx = ev.changedTouches[0].clientX - tx[0], dy = ev.changedTouches[0].clientY - tx[1];
+    tx = null;
+    if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    step(dx < 0 ? 1 : -1);
+  });
+
+  /* ---------- themes ---------- */
+  var themesEl = $('tl-themes');
+  function drawThemes() {
+    var all = THEMES.every(function (t) { return on[t[0]]; });
+    themesEl.innerHTML = '<button type="button" class="tl-theme tl-all" data-all aria-pressed="' + all + '" title="Show all ' + EV.length + ' events"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>All</button>' + THEMES.map(function (t) {
+      var n = EV.filter(function (e) { return e.c === t[0]; }).length;
+      return '<button type="button" class="tl-theme th-' + t[0] + '" data-t="' + t[0] + '" aria-pressed="' + on[t[0]] + '" title="' + esc(t[1]) + ' · ' + n + ' events">' + TIC[t[0]] + esc(SHORT[t[0]]) + '</button>';
+    }).join('');
+  }
+  themesEl.addEventListener('click', function (ev) {
+    if (ev.target.closest('[data-all]')) {
+      THEMES.forEach(function (x) { on[x[0]] = true; });
+      drawThemes(); build();
+      if (path.getBoundingClientRect().top < offsetTop()) goTo(path, false);
+      return;
+    }
+    var b = ev.target.closest('[data-t]'); if (!b) return;
+    var t = b.dataset.t, count = THEMES.filter(function (x) { return on[x[0]]; }).length;
+    if (on[t] && count === 1) THEMES.forEach(function (x) { on[x[0]] = true; });
+    else if (count === THEMES.length) THEMES.forEach(function (x) { on[x[0]] = x[0] === t; });
+    else on[t] = !on[t];
+    drawThemes(); build();
+    if (path.getBoundingClientRect().top < offsetTop()) goTo(path, false);
+  });
+
+  /* ---------- search ---------- */
+  var q = $('tl-q'), res = $('tl-results'), sel = -1;
+  function search() {
+    var t = norm(q.value.trim());
+    if (!t) { res.hidden = true; return; }
+    var hits = ORDER.filter(function (e) { return e.hay.indexOf(t) > -1; });
+    sel = hits.length ? 0 : -1;
+    res.innerHTML = hits.length ? hits.slice(0, 30).map(function (e, k) {
+      var who = e.p.filter(function (p) { return norm(p).indexOf(t) > -1; });
+      return '<button type="button" role="option" class="th-' + e.c + ' ' + ec(e.era) + (k === sel ? ' on' : '') + '" data-i="' + e.i + '"><b>' + e.y + '</b><span>' + plain(e.t) + '<small>' + esc(who.length ? who.join(', ') : TNAME[e.c]) + '</small></span></button>';
+    }).join('') : '<div class="none">No events match. Try a name, a year or a shorter word.</div>';
+    res.hidden = false;
+  }
+  function pick(i) {
+    var e = EV[i];
+    if (!on[e.c]) { on[e.c] = true; drawThemes(); build(); }
+    res.hidden = true;
+    reveal(i, true);
+  }
+  q.addEventListener('input', search);
+  q.addEventListener('focus', function () { if (q.value.trim()) search(); });
+  q.addEventListener('keydown', function (ev) {
+    var btns = res.querySelectorAll('button[data-i]');
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+      if (!btns.length) return; ev.preventDefault();
+      sel = (sel + (ev.key === 'ArrowDown' ? 1 : -1) + btns.length) % btns.length;
+      btns.forEach(function (b, k) { b.classList.toggle('on', k === sel); });
+      btns[sel].scrollIntoView({ block: 'nearest' });
+    } else if (ev.key === 'Enter' && sel > -1 && btns[sel]) { ev.preventDefault(); pick(+btns[sel].dataset.i); }
+    else if (ev.key === 'Escape') { res.hidden = true; }
+  });
+  res.addEventListener('click', function (ev) { var b = ev.target.closest('[data-i]'); if (b) pick(+b.dataset.i); });
+  document.addEventListener('click', function (ev) { if (!ev.target.closest('.tl-search')) res.hidden = true; });
+
+  /* ---------- start ---------- */
+  $('tl-refs').innerHTML = REFS.map(function (r) { return '<li>' + r + '</li>'; }).join('');
+  drawThemes(); build();
+  var rw, lastW = path.clientWidth;
+  window.addEventListener('resize', function () {
+    clearTimeout(rw);
+    rw = setTimeout(function () { if (path.clientWidth !== lastW) { lastW = path.clientWidth; build(); } }, 150);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (!mobile) build(); });
+  var m = /^#event-(\d+)$/.exec(location.hash);
+  if (m) { var i = Math.min(Math.max(+m[1] - 1, 0), EV.length - 1); setTimeout(function () { reveal(i, false, false); open(i); }, 80); }
+})();
+</script>
+</body>
+</html>
