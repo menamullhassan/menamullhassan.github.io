@@ -22,20 +22,21 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=25">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=26">
 <link rel="icon" href="favicon.ico?v=7" sizes="48x48">
 <link rel="icon" href="icon-192.png?v=7" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
 </head>
-<body>
+<body class="site">
 
-<header class="nav">
-  <div class="wrap">
-    <a href="index.html" class="logo">M Enam Ull Hassan</a>
-    <nav>
-      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
-      <ul id="menu">
+<aside class="panel">
+  <div class="panel-head">
+    <a href="index.html" class="logo"><span>M Enam</span> <span>Ull Hassan</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+  <nav class="panel-nav" aria-label="Main">
+    <ul id="menu">
         <li><a href="about.html">About</a></li>
         <li><a href="teaching.html">Teaching</a></li>
         <li><a href="research.html">Research</a></li>
@@ -46,13 +47,16 @@
         <li><a href="resources.html" aria-current="page">Resources</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-    </nav>
+  </nav>
+  <div class="panel-foot">
+    <a class="panel-cta" href="contact.html">Get in touch<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
     <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
       <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
       <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
     </button>
   </div>
-</header>
+</aside>
+<div class="site-main">
 
 <main>
   <div class="wrap page-hero tl-hero">
@@ -93,6 +97,7 @@
 <footer>
   <div class="wrap"><nav class="legal-links" aria-label="Site info"><a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a><a href="cookies.html">Cookies Policy</a><a href="cookie-settings.html">Cookie Settings</a><a href="copyright.html">Copyright Notice</a></nav><span class="copy">Copyright © <span id="yr"></span> M Enam Ull Hassan · Boston, MA</span></div>
 </footer>
+</div>
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
@@ -118,21 +123,21 @@
     --t-society: #4d4e93; --t-society-bg: #e5e5f3;
     --t-testing: #7a6500; --t-testing-bg: #faf1c4;
     --t-analysis: #1f6b5c; --t-analysis-bg: #dcefe9;
-    --e0: #3d7fd6; --e1: #5a6fd0; --e2: #2f9a8a; --e3: #4aa36b; --e4: #d39a2f; --e5: #d4743a; --e6: #a77b5f;
+    --e0: #141414; --e1: #3A3A38; --e2: #5E5E5A; --e3: #85857F; --e4: #A8780F; --e5: #C88A10; --e6: #E0A537;
   }
   @media (prefers-color-scheme: dark) {
     :root:where(:not([data-theme="light"])) {
       --t-field: #8fb6de; --t-field-bg: #1c2a3b; --t-teaching: #f0a77a; --t-teaching-bg: #3a2519;
       --t-sla: #d4ab97; --t-sla-bg: #33251e; --t-society: #a9aae0; --t-society-bg: #25264a;
       --t-testing: #f0d65c; --t-testing-bg: #3a3414; --t-analysis: #7fd1bd; --t-analysis-bg: #173129;
-      --e0: #7fb0f0; --e1: #9aa4f0; --e2: #6fd0bf; --e3: #86d39f; --e4: #f0c56a; --e5: #f0a77a; --e6: #cfa58b;
+      --e0: #EDEDEA; --e1: #CFCFCA; --e2: #ADADA8; --e3: #8C8C86; --e4: #C9A04A; --e5: #E0AA3C; --e6: #F2B441;
     }
   }
   :root:where([data-theme="dark"]) {
     --t-field: #8fb6de; --t-field-bg: #1c2a3b; --t-teaching: #f0a77a; --t-teaching-bg: #3a2519;
     --t-sla: #d4ab97; --t-sla-bg: #33251e; --t-society: #a9aae0; --t-society-bg: #25264a;
     --t-testing: #f0d65c; --t-testing-bg: #3a3414; --t-analysis: #7fd1bd; --t-analysis-bg: #173129;
-    --e0: #7fb0f0; --e1: #9aa4f0; --e2: #6fd0bf; --e3: #86d39f; --e4: #f0c56a; --e5: #f0a77a; --e6: #cfa58b;
+    --e0: #EDEDEA; --e1: #CFCFCA; --e2: #ADADA8; --e3: #8C8C86; --e4: #C9A04A; --e5: #E0AA3C; --e6: #F2B441;
   }
   .th-field { --tc: var(--t-field); --tb: var(--t-field-bg); }
   .th-teaching { --tc: var(--t-teaching); --tb: var(--t-teaching-bg); }

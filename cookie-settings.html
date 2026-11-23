@@ -22,20 +22,21 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=25">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=26">
 <link rel="icon" href="favicon.ico?v=7" sizes="48x48">
 <link rel="icon" href="icon-192.png?v=7" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
 </head>
-<body>
+<body class="site">
 
-<header class="nav">
-  <div class="wrap">
-    <a href="index.html" class="logo">M Enam Ull Hassan</a>
-    <nav>
-      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
-      <ul id="menu">
+<aside class="panel">
+  <div class="panel-head">
+    <a href="index.html" class="logo"><span>M Enam</span> <span>Ull Hassan</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+  <nav class="panel-nav" aria-label="Main">
+    <ul id="menu">
         <li><a href="about.html">About</a></li>
         <li><a href="teaching.html">Teaching</a></li>
         <li><a href="research.html">Research</a></li>
@@ -46,13 +47,16 @@
         <li><a href="resources.html">Resources</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-    </nav>
+  </nav>
+  <div class="panel-foot">
+    <a class="panel-cta" href="contact.html">Get in touch<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
     <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
       <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
       <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
     </button>
   </div>
-</header>
+</aside>
+<div class="site-main">
 
 <main>
   <div class="wrap page-hero">
@@ -104,6 +108,7 @@
 <footer>
   <div class="wrap"><nav class="legal-links" aria-label="Site info"><a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a><a href="cookies.html">Cookies Policy</a><a href="cookie-settings.html">Cookie Settings</a><a href="copyright.html">Copyright Notice</a></nav><span class="copy">Copyright © <span id="yr"></span> M Enam Ull Hassan · Boston, MA</span></div>
 </footer>
+</div>
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
