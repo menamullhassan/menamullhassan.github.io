@@ -96,6 +96,7 @@
 /* ---------- base ---------- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { background: linear-gradient(90deg, var(--panel) 0 var(--panel-w), var(--page) var(--panel-w)); }
 body {
   background: var(--page); color: var(--ink);
   font-family: var(--sans); font-size: var(--fs-body); line-height: 1.65;
@@ -179,10 +180,11 @@ body.site { display: grid; grid-template-columns: var(--panel-w) minmax(0, 1fr);
 
 .site-main { min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
 .site-main > main { flex: 1; padding-bottom: 40px; }
-.wrap { max-width: calc(var(--max) + 2 * var(--gutter)); margin: 0; padding-left: var(--gutter); padding-right: var(--gutter); }
+.wrap { max-width: calc(var(--max) + 2 * var(--gutter)); margin-left: auto; margin-right: auto; padding-left: var(--gutter); padding-right: var(--gutter); }
 
 /* phone + tablet: panel becomes a black top bar with a menu */
 @media (max-width: 1080px) {
+  html { background: var(--panel); }
   body.site { display: block; }
   .panel {
     position: sticky; top: 0; z-index: 50; height: auto; max-height: 100dvh; overflow-y: auto;
@@ -703,9 +705,19 @@ input[type="search"]:focus, input[type="text"]:focus, input[type="number"]:focus
   .course ol { grid-template-columns: 1fr; }
   footer .wrap { flex-direction: column; align-items: flex-start; }
 }
+/* wide and ultrawide screens: content stays centred in the page column and grows a little */
 @media (min-width: 1800px) {
-  :root { --max: 1180px; --panel-w: 340px; }
+  :root { --max: 1180px; --panel-w: 340px; --fs-body: 17px; --fs-lead: 21px; }
 }
+@media (min-width: 2400px) {
+  :root { --max: 1320px; --panel-w: 380px; --fs-body: 18px; --fs-lead: 22px; --fs-display: 76px; }
+  .panel { padding: 56px 48px 40px; }
+  .panel .logo { font-size: 46px; }
+  .panel-nav li a { font-size: 21px; padding: 13px 0; }
+  .panel-nav li a[aria-current="page"]::before { left: -48px; }
+}
+.sm-section .wrap { max-width: 1760px; }
+.wc-section .wrap, .ps-section .wrap { margin-left: auto; margin-right: auto; }
 
 /* Education: journey map recoloured to the site palette */
 main .journey-map { background: #FAFAF8; }
