@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#1A1A1A">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Waveform Maker | M Enam Ull Hassan</title>
+<link rel="canonical" href="https://enamhassan.com/waveform.html">
+<meta name="description" content="Turn a voice recording or audio file into a waveform. Choose a style and colors, then download it as a PNG, SVG, or a video with sound.">
+<script>
+  (function () {
+    var d = document.documentElement;
+    try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') d.setAttribute('data-theme', t); } catch (e) {}
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.theme-toggle');
+      if (!b) return;
+      var cur = d.getAttribute('data-theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      d.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=27">
+<link rel="icon" href="favicon.ico?v=7" sizes="48x48">
+<link rel="icon" href="icon-192.png?v=7" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+</head>
+<body class="site">
+
+<aside class="panel">
+  <div class="panel-head">
+    <a href="index.html" class="logo"><span>M Enam Ull</span> <span>Hassan</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+  <nav class="panel-nav" aria-label="Main">
+    <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+  </nav>
+  <div class="panel-foot">
+    <a class="panel-cta" href="contact.html">Get in touch<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+    </button>
+  </div>
+</aside>
+<div class="site-main">
+
+<main>
+  <div class="wrap page-hero wf-hero">
+    <p class="eyebrow reveal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11 3h2v18h-2zM7 7h2v10H7zM15 6h2v12h-2zM3 10h2v4H3zM19 9h2v6h-2z"/></svg><a class="crumb" href="resources.html">Resources</a> · Design tool</p>
+    <h1 class="reveal">Voice <em>Waveform</em> Maker</h1>
+    <p class="lead reveal">Record a voice note or open an audio file, and turn it into a waveform. Pick a style and colors, then download it as an image or a video with sound.</p>
+  </div>
+
+  <section class="wf-section">
+    <div class="wrap">
+      <div class="wf-app" id="wf-app">
+        <div class="wf-main">
+          <aside class="wf-panel" aria-label="Waveform settings">
+            <div class="wf-tabs" role="tablist">
+              <button type="button" role="tab" data-tab="audio" aria-selected="true">Audio</button>
+              <button type="button" role="tab" data-tab="style" aria-selected="false">Style</button>
+            </div>
+
+            <div class="wf-pane" data-pane="audio">
+              <p class="wf-h">Your audio</p>
+              <div class="wf-drop" id="wf-drop">
+                <button type="button" class="wf-rec" id="wf-rec" aria-label="Start recording"><span></span></button>
+                <div>
+                  <b id="wf-rec-label">Record your voice</b>
+                  <small id="wf-rec-sub">Uses your microphone</small>
+                </div>
+              </div>
+              <div class="wf-row">
+                <button type="button" class="wf-btn" id="wf-upload"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>Open audio file</button>
+                <input type="file" id="wf-file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.opus,.webm,.aac,.flac" hidden>
+                <button type="button" class="wf-btn ghost" id="wf-example">Example</button>
+              </div>
+              <p class="wf-filemsg" id="wf-msg" role="status" aria-live="polite" hidden></p>
+              <p class="wf-note">MP3, M4A, WAV, OGG, or a voice message saved from your phone. You can also drop a file on the box above.</p>
+
+              <div id="wf-trimbox" hidden>
+                <label class="wf-h" for="wf-start">Start <output id="wf-start-out">0:00</output></label>
+                <input type="range" id="wf-start" min="0" max="1000" step="1" value="0">
+                <label class="wf-h" for="wf-end">End <output id="wf-end-out">0:00</output></label>
+                <input type="range" id="wf-end" min="0" max="1000" step="1" value="1000">
+                <p class="wf-note">Trim the start and end to keep only the part you want.</p>
+              </div>
+
+              <label class="wf-h" for="wf-title">Title <output>optional</output></label>
+              <input type="text" id="wf-title" placeholder="e.g. Interview excerpt, Bangla vowels" autocomplete="off" maxlength="80">
+              <div class="wf-checks">
+                <label class="wf-check"><input type="checkbox" id="wf-showtime" checked><span>Show the length</span></label>
+              </div>
+            </div>
+
+            <div class="wf-pane" data-pane="style" hidden>
+              <p class="wf-h">Shape</p>
+              <div class="wf-shapes" id="wf-shapes"></div>
+              <p class="wf-h">Colors</p>
+              <div class="wf-pals" id="wf-pals"></div>
+              <div class="wf-colors">
+                <label><input type="color" id="wf-c-wave" value="#15161b"><span>Wave</span></label>
+                <label><input type="color" id="wf-c-play" value="#d2622a"><span>Played</span></label>
+                <label><input type="color" id="wf-c-bg" value="#f4f2ee"><span>Background</span></label>
+              </div>
+              <label class="wf-h" for="wf-bars">Number of bars <output id="wf-bars-out">90</output></label>
+              <input type="range" id="wf-bars" min="20" max="240" step="2" value="90">
+              <label class="wf-h" for="wf-gap">Space between bars <output id="wf-gap-out">Normal</output></label>
+              <input type="range" id="wf-gap" min="0" max="8" step="1" value="4">
+              <label class="wf-h" for="wf-round">Rounded ends <output id="wf-round-out">Full</output></label>
+              <input type="range" id="wf-round" min="0" max="4" step="1" value="4">
+              <label class="wf-h" for="wf-amp">Height <output id="wf-amp-out">100%</output></label>
+              <input type="range" id="wf-amp" min="40" max="160" step="5" value="100">
+            </div>
+          </aside>
+
+          <div class="wf-stagewrap">
+            <div class="wf-bar">
+              <div class="wf-seg" id="wf-format" role="group" aria-label="Image size">
+                <button type="button" data-v="wide">Wide</button>
+                <button type="button" data-v="banner">Banner</button>
+                <button type="button" data-v="square">Square</button>
+                <button type="button" data-v="story">Story</button>
+              </div>
+              <div class="wf-bargroup">
+                <button type="button" class="wf-btn" id="wf-play" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M7 4.5v15l12-7.5z"/><path class="i-pause" d="M7 5v14M17 5v14"/></svg><span>Play</span></button>
+                <div class="wf-dl">
+                  <button type="button" class="wf-btn primary" id="wf-dlbtn" aria-haspopup="true" aria-expanded="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg>Download</button>
+                  <div class="wf-menu" id="wf-menu" hidden>
+                    <button type="button" data-dl="png">PNG image <small id="wf-dim1"></small></button>
+                    <button type="button" data-dl="png2">Large PNG, for print <small id="wf-dim2"></small></button>
+                    <button type="button" data-dl="svg">SVG <small>Sharp at any size, editable</small></button>
+                    <button type="button" data-dl="video">Video with sound <small id="wf-vidnote">Plays the wave as the audio plays</small></button>
+                    <button type="button" data-dl="copy">Copy image <small>Paste into slides or a doc</small></button>
+                    <label class="wf-check"><input type="checkbox" id="wf-transparent"><span>Transparent background</span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wf-stage" id="wf-stage">
+              <canvas id="wf-canvas" role="img" aria-label="Waveform"></canvas>
+              <div class="wf-busy" id="wf-busy" hidden><span></span><em id="wf-busy-t">Working…</em><button type="button" id="wf-busy-stop" hidden>Stop</button></div>
+            </div>
+            <p class="wf-note wf-tip" id="wf-tip">Tip: click the waveform to play from that point.</p>
+            <p class="wf-note wf-tip">Bars show relative loudness and are styled for display. For phonetic analysis, use <a href="https://www.fon.hum.uva.nl/praat/" target="_blank" rel="noopener">Praat</a>.</p>
+          </div>
+        </div>
+      </div>
+      <p class="wf-foot">Everything happens in your browser. Your recording is not uploaded or saved anywhere.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><nav class="legal-links" aria-label="Site info"><a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a><a href="cookies.html">Cookies Policy</a><a href="cookie-settings.html">Cookie Settings</a><a href="copyright.html">Copyright Notice</a></nav><span class="copy">Copyright © <span id="yr"></span> M Enam Ull Hassan · Boston, MA</span></div>
+</footer>
+</div>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<style>
+  .wf-hero { padding-bottom: 36px; }
+  .wf-section { padding-top: 0; }
+  .wf-section .wrap { max-width: 1400px; }
+  .wf-app { border-radius: 22px; background: var(--bg); box-shadow: var(--neu-out); padding: 26px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .wf-looks { min-width: 0; }
+  .wf-app button { font: inherit; cursor: pointer; }
+  .wf-app [hidden] { display: none !important; }
+  .wf-h { display: flex; justify-content: space-between; align-items: baseline; font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--label); margin: 22px 0 10px; }
+  .wf-h output { letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 500; font-size: .8125rem; }
+  .wf-note { font-size: .8125rem; line-height: 1.5; color: var(--muted); margin: 8px 0 0; }
+  .wf-note code { font-size: .8125rem; padding: 1px 6px; border-radius: 6px; box-shadow: var(--neu-in); }
+  .wf-foot { margin-top: 14px; font-size: .875rem; color: var(--muted); }
+
+  .wf-btn { display: inline-flex; align-items: center; gap: 7px; height: 40px; padding: 0 14px; border: 0; border-radius: 12px; background: var(--bg); color: var(--ink); font-size: .875rem; font-weight: 600; box-shadow: var(--neu-out-sm); white-space: nowrap; }
+  .wf-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .wf-btn:active { box-shadow: var(--neu-in); }
+  .wf-btn.ghost { box-shadow: none; color: var(--muted); padding: 0 10px; }
+  .wf-btn.primary { background: #15161b; color: #f4f2ee; box-shadow: none; }
+  .wf-seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 999px; box-shadow: var(--neu-in); }
+  .wf-seg button { height: 34px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: .8125rem; font-weight: 600; }
+  .wf-seg button[aria-pressed="true"] { background: #15161b; color: #f4f2ee; }
+  .wf-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+  /* main */
+  .wf-main { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 26px; align-items: start; }
+  .wf-panel { border-radius: 18px; padding: 16px 18px 22px; box-shadow: var(--neu-in); max-height: 820px; overflow-y: auto; }
+  .wf-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 999px; box-shadow: var(--neu-out-sm); position: sticky; top: 0; background: var(--bg); z-index: 2; }
+  .wf-tabs button { flex: 1; height: 36px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-weight: 600; font-size: .875rem; }
+  .wf-tabs button[aria-selected="true"] { background: #15161b; color: #f4f2ee; }
+  .wf-pane textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 150px; padding: 12px 14px; border-radius: 14px; font: inherit; font-size: .875rem; line-height: 1.55; color: var(--ink); }
+  .wf-pane input[type="text"] { width: 100%; box-sizing: border-box; height: 42px; padding: 0 14px; border-radius: 12px; font: inherit; font-size: .875rem; color: var(--ink); }
+  .wf-pane input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .wf-filemsg { margin: 10px 0 0; padding: 9px 12px; border-radius: 10px; font-size: .8125rem; line-height: 1.5; color: var(--muted); box-shadow: var(--neu-in); }
+  .wf-filemsg.err { color: #b42318; box-shadow: none; background: rgba(180,35,24,.08); border: 1px solid rgba(180,35,24,.3); }
+  :where(html[data-theme="dark"]) .wf-filemsg.err { color: #ff9b8f; }
+  @media (prefers-color-scheme: dark) { :where(html:not([data-theme="light"])) .wf-filemsg.err { color: #ff9b8f; } }
+  .wf-pane textarea.drop { outline: 2px dashed var(--accent); outline-offset: 2px; }
+  .wf-hlrow { display: flex; gap: 8px; align-items: center; }
+  .wf-hlrow input[type="text"] { flex: 1; min-width: 0; }
+  .wf-hlrow input[type="color"] { flex: none; width: 46px; height: 42px; padding: 4px; border: 0; border-radius: 12px; background: var(--bg); box-shadow: var(--neu-out-sm); cursor: pointer; }
+  .wf-hlrow input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+  .wf-hlrow input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 8px; }
+  .wf-hlrow input[type="color"]::-moz-color-swatch { border: 0; border-radius: 8px; }
+  .wf-list li .wf-star { font-size: 1.05rem; }
+  .wf-list li.hl span { font-weight: 700; }
+  .wf-checks { display: grid; gap: 8px; margin-top: 18px; }
+  .wf-check { display: flex; align-items: center; gap: 10px; font-size: .875rem; cursor: pointer; }
+  .wf-check input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
+  .wf-check small { color: var(--muted); }
+  .wf-listhead { display: flex; justify-content: space-between; align-items: baseline; }
+  .wf-listhead .wf-note { margin: 22px 0 10px; }
+  .wf-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: w; }
+  .wf-list li { display: grid; grid-template-columns: 26px 1fr auto 30px 30px; align-items: center; gap: 6px; font-size: .875rem; padding: 3px 0; counter-increment: w; }
+  .wf-list li::before { content: counter(w); color: var(--muted); font-size: .75rem; }
+  .wf-list li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .wf-list li em { font-style: normal; color: var(--muted); font-size: .8125rem; font-variant-numeric: tabular-nums; }
+  .wf-list li button, .wf-hidden button { border: 0; background: transparent; color: var(--muted); width: 30px; height: 28px; border-radius: 8px; font-size: 1rem; line-height: 1; }
+  .wf-list li button:hover { color: var(--ink); box-shadow: var(--neu-out-sm); }
+  .wf-list li.wf-more { display: block; counter-increment: none; color: var(--muted); font-size: .8125rem; padding-top: 6px; }
+  .wf-list li.wf-more::before { content: none; }
+  .wf-hidden { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: .8125rem; color: var(--muted); }
+  .wf-hidden button { width: auto; height: 30px; padding: 0 10px; border-radius: 999px; box-shadow: var(--neu-out-sm); color: var(--ink); font-size: .8125rem; }
+
+  .wf-fonts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .wf-fonts button { height: 54px; border: 0; border-radius: 12px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); font-size: 1.25rem; line-height: 1; overflow: hidden; }
+  .wf-pals { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .wf-pals button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; height: 76px; border: 0; border-radius: 14px; box-shadow: var(--neu-out-sm), inset 0 0 0 1px rgba(128,128,128,.25); }
+  .wf-pals b { font-family: "Bricolage Grotesque", var(--sans); font-weight: 800; font-size: 1.4rem; line-height: 1; }
+  .wf-pals small { font-size: .75rem; font-weight: 600; }
+  .wf-app .wf-pals [aria-pressed="true"].wf-opt { box-shadow: 0 0 0 3px var(--accent); }
+  .wf-angles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .wf-angles button { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 6px 7px; border: 0; border-radius: 12px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); font-size: .75rem; font-weight: 600; }
+  .wf-angles svg { width: 40px; height: 32px; fill: currentColor; opacity: .8; }
+  .wf-angles svg { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; }
+  .wf-app [aria-pressed="true"].wf-opt { box-shadow: var(--neu-in), 0 0 0 2px var(--accent); }
+
+  /* stage */
+  .wf-stagewrap { min-width: 0; }
+  .wf-bar { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .wf-bargroup { display: flex; gap: 10px; }
+  .wf-dl { position: relative; }
+  .wf-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 20; width: 270px; padding: 8px; border-radius: 16px; background: var(--bg); box-shadow: var(--neu-out), 0 16px 40px rgba(0,0,0,.12); display: grid; gap: 2px; }
+  .wf-menu button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 12px; border: 0; border-radius: 10px; background: transparent; color: var(--ink); font-size: .875rem; font-weight: 600; text-align: left; }
+  .wf-menu button:hover, .wf-menu button:focus-visible { box-shadow: var(--neu-in); }
+  .wf-menu small { color: var(--muted); font-weight: 400; font-size: .75rem; }
+  .wf-menu .wf-check { padding: 10px 12px 6px; border-top: 1px solid var(--line); margin-top: 4px; }
+  .wf-stage { position: relative; display: flex; justify-content: center; align-items: center; min-height: 300px; padding: 22px; border-radius: 18px; box-shadow: var(--neu-in); }
+  .wf-stage canvas { display: block; max-width: 100%; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 12px 34px rgba(27,29,36,.16); cursor: pointer; }
+  .wf-busy { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 8px 16px; border-radius: 999px; background: #15161b; color: #f4f2ee; font-size: .8125rem; font-weight: 600; }
+  .wf-busy span { width: 12px; height: 12px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: wfspin .7s linear infinite; }
+  @keyframes wfspin { to { transform: rotate(360deg); } }
+  .wf-tip { text-align: center; }
+  .wf-toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 50; padding: 10px 18px; border-radius: 999px; background: #15161b; color: #f4f2ee; font-size: .875rem; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+
+  @media (max-width: 960px) {
+    .wf-main { grid-template-columns: 1fr; }
+    .wf-stagewrap { order: -1; }
+    .wf-panel { max-height: none; }
+  }
+  @media (max-width: 560px) {
+    .wf-app { padding: 16px; border-radius: 18px; }
+    .wf-stage { padding: 12px; min-height: 200px; }
+    .wf-bar { flex-direction: column; align-items: stretch; }
+    .wf-bargroup { justify-content: space-between; }
+    .wf-seg { justify-content: center; }
+    .wf-seg button { padding: 0 11px; }
+  }
+  .wf-pane input[type="text"] { width: 100%; box-sizing: border-box; height: 42px; padding: 0 14px; border-radius: 12px; font: inherit; font-size: .875rem; color: var(--ink); }
+  .wf-drop { display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; box-shadow: var(--neu-out-sm); }
+  .wf-drop.drop { outline: 2px dashed var(--accent); outline-offset: 3px; }
+  .wf-drop b { display: block; font-size: .9375rem; }
+  .wf-drop small { display: block; color: var(--muted); font-size: .8125rem; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .wf-rec { flex: none; width: 54px; height: 54px; border: 0; border-radius: 50%; background: var(--bg); box-shadow: var(--neu-out-sm); display: grid; place-items: center; }
+  .wf-rec span { width: 20px; height: 20px; border-radius: 50%; background: #d23b3b; transition: border-radius .15s, transform .15s; }
+  .wf-rec.on { box-shadow: var(--neu-in); }
+  .wf-rec.on span { border-radius: 4px; transform: scale(.85); animation: wfpulse 1.2s ease-in-out infinite; }
+  @keyframes wfpulse { 50% { opacity: .55; } }
+  .wf-shapes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .wf-shapes button { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 4px 8px; border: 0; border-radius: 12px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); font-size: .75rem; font-weight: 600; }
+  .wf-shapes svg { width: 52px; height: 26px; fill: currentColor; stroke: currentColor; opacity: .85; }
+  .wf-pals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .wf-pals button { display: flex; flex-direction: column; justify-content: center; gap: 6px; height: 62px; padding: 0 10px; border: 0; border-radius: 12px; box-shadow: var(--neu-out-sm), inset 0 0 0 1px rgba(128,128,128,.25); }
+  .wf-pals i { display: block; height: 14px; background-size: 100% 100%; }
+  .wf-pals small { font-size: .6875rem; font-weight: 600; text-align: left; }
+  .wf-app [aria-pressed="true"].wf-opt { box-shadow: var(--neu-in), 0 0 0 2px var(--accent); }
+  .wf-colors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+  .wf-colors label { display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: .75rem; font-weight: 600; color: var(--muted); cursor: pointer; }
+  .wf-colors input { width: 100%; height: 36px; padding: 4px; border: 0; border-radius: 10px; background: var(--bg); box-shadow: var(--neu-out-sm); cursor: pointer; }
+  .wf-colors input::-webkit-color-swatch-wrapper { padding: 0; }
+  .wf-colors input::-webkit-color-swatch { border: 0; border-radius: 7px; }
+  .wf-colors input::-moz-color-swatch { border: 0; border-radius: 7px; }
+  .wf-btn:disabled { opacity: .45; cursor: default; }
+  .wf-btn .i-pause { display: none; }
+  .wf-btn.playing .i-play { display: none; }
+  .wf-btn.playing .i-pause { display: inline; }
+  .wf-btn .i-play { fill: currentColor; stroke: none; }
+  .wf-stage canvas { cursor: default; }
+  .wf-stage canvas.live { cursor: pointer; }
+  .wf-busy em { font-style: normal; font-variant-numeric: tabular-nums; }
+  .wf-busy button { margin-left: 6px; border: 0; border-radius: 999px; padding: 3px 10px; background: #f4f2ee; color: #15161b; font-size: .75rem; font-weight: 700; }
+  .wf-menu button:disabled { opacity: .45; }
+  .wf-stage canvas { width: auto; height: auto; max-height: 72vh; }
+  .wf-tip a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+</style>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var FORMATS = { wide: [1600, 600], banner: [1500, 500], square: [1080, 1080], story: [1080, 1920] };
+  var PALS = [
+    { n: 'Ink', bg: '#f4f2ee', wave: '#15161b', play: '#d2622a' },
+    { n: 'Night', bg: '#15161b', wave: '#f4f2ee', play: '#ffb547' },
+    { n: 'Ocean', bg: '#e9f1f8', wave: '#0f4c81', play: '#3fa7d6' },
+    { n: 'Sunset', bg: '#fff4ec', wave: ['#f59e0b', '#db2777'], play: '#7c2d12', text: '#7c2d12' },
+    { n: 'Forest', bg: '#edf5ef', wave: '#1f6b5c', play: '#e0a43a' },
+    { n: 'Violet', bg: '#201a35', wave: ['#a78bfa', '#60a5fa'], play: '#fde68a', text: '#ede9fe' }
+  ];
+  var SHAPES = [
+    ['bars', 'Bars', '<rect x="4" y="9" width="4" height="8" rx="2"/><rect x="12" y="4" width="4" height="18" rx="2"/><rect x="20" y="7" width="4" height="12" rx="2"/><rect x="28" y="2" width="4" height="22" rx="2"/><rect x="36" y="8" width="4" height="10" rx="2"/><rect x="44" y="10" width="4" height="6" rx="2"/>'],
+    ['bottom', 'Rising', '<rect x="4" y="14" width="4" height="10" rx="1"/><rect x="12" y="6" width="4" height="18" rx="1"/><rect x="20" y="11" width="4" height="13" rx="1"/><rect x="28" y="2" width="4" height="22" rx="1"/><rect x="36" y="12" width="4" height="12" rx="1"/><rect x="44" y="17" width="4" height="7" rx="1"/>'],
+    ['wave', 'Smooth', '<path d="M2 13C8 13 8 5 14 5S20 11 26 8 32 2 38 7 44 13 50 13 44 13 38 19 32 24 26 18 20 21 14 21 8 13 2 13z"/>'],
+    ['classic', 'Classic', '<path fill="none" stroke-width="1.6" d="M3 13v0M6 11v4M9 8v10M12 10v6M15 5v16M18 9v8M21 3v20M24 7v12M27 10v6M30 4v18M33 8v10M36 11v4M39 9v8M42 12v2M45 10v6M48 12v2"/>'],
+    ['dots', 'Dots', '<circle cx="6" cy="13" r="2"/><circle cx="14" cy="9" r="2"/><circle cx="14" cy="13" r="2"/><circle cx="14" cy="17" r="2"/><circle cx="22" cy="5" r="2"/><circle cx="22" cy="9" r="2"/><circle cx="22" cy="13" r="2"/><circle cx="22" cy="17" r="2"/><circle cx="22" cy="21" r="2"/><circle cx="30" cy="9" r="2"/><circle cx="30" cy="13" r="2"/><circle cx="30" cy="17" r="2"/><circle cx="38" cy="13" r="2"/><circle cx="46" cy="13" r="2"/>'],
+    ['note', 'Voice note', '<rect x="1" y="3" width="50" height="20" rx="10" opacity=".25"/><circle cx="11" cy="13" r="6"/><rect x="21" y="10" width="2" height="6" rx="1"/><rect x="25" y="7" width="2" height="12" rx="1"/><rect x="29" y="9" width="2" height="8" rx="1"/><rect x="33" y="6" width="2" height="14" rx="1"/><rect x="37" y="10" width="2" height="6" rx="1"/><rect x="41" y="11" width="2" height="4" rx="1"/>']
+  ];
+  var GAPS = ['None', 'Tiny', 'Small', 'Small', 'Normal', 'Normal', 'Wide', 'Wide', 'Widest'];
+  var ROUNDS = ['Square', 'Slight', 'Soft', 'Round', 'Full'];
+
+  var S = { shape: 'bars', pal: 0, wave: PALS[0].wave, play: PALS[0].play, bg: PALS[0].bg, format: 'wide', bars: 90, gap: 4, round: 4, amp: 100, title: '', showTime: true, transparent: false };
+  var buf = null, srcName = '', t0 = 0, t1 = 0, peakCache = {};
+  var ac = null, player = null, playFrom = 0, playStartAt = 0, progress = -1, raf = 0;
+  var canvas = $('wf-canvas'), ctx = canvas.getContext('2d');
+
+  function getAC() {
+    if (!ac) { var C = window.AudioContext || window.webkitAudioContext; ac = new C(); }
+    return ac;
+  }
+  function fmt(t) { t = Math.max(0, Math.round(t)); return Math.floor(t / 60) + ':' + ('0' + t % 60).slice(-2); }
+  function msg(t, err) { var m = $('wf-msg'); m.textContent = t; m.hidden = !t; m.classList.toggle('err', !!err); }
+  function textColor() { return S.text || (Array.isArray(S.wave) ? S.wave[0] : S.wave); }
+
+  /* ---------- audio in ---------- */
+  function decode(ab) {
+    var a = getAC();
+    return new Promise(function (res, rej) {
+      var p = a.decodeAudioData(ab, res, rej);
+      if (p && p.then) p.then(res, rej);
+    });
+  }
+  function setBuffer(b, name) {
+    stop();
+    buf = b; srcName = name || '';
+    t0 = 0; t1 = b.duration; peakCache = {};
+    $('wf-start').max = $('wf-end').max = Math.round(b.duration * 100);
+    $('wf-start').value = 0; $('wf-end').value = $('wf-end').max;
+    $('wf-trimbox').hidden = b.duration < 1;
+    updTrimOut();
+    ['wf-play', 'wf-dlbtn'].forEach(function (id) { $(id).disabled = false; });
+    canvas.classList.add('live');
+    draw();
+  }
+  function loadFile(f) {
+    if (!f) return;
+    msg('Opening ' + f.name + '…');
+    f.arrayBuffer().then(decode).then(function (b) {
+      setBuffer(b, f.name.replace(/\.[^.]+$/, ''));
+      msg(f.name + ' · ' + fmt(b.duration));
+    }).catch(function () {
+      msg('This file could not be opened as audio. Try MP3, M4A, or WAV.', true);
+    });
+  }
+  $('wf-upload').addEventListener('click', function () { $('wf-file').click(); });
+  $('wf-file').addEventListener('change', function () { loadFile(this.files[0]); this.value = ''; });
+  var drop = $('wf-drop');
+  ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('drop'); }); });
+  ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function () { drop.classList.remove('drop'); }); });
+  drop.addEventListener('drop', function (e) { e.preventDefault(); if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+
+  /* example: a made-up, voice-like sound */
+  function example() {
+    var sr = 22050, dur = 7.2, n = Math.floor(sr * dur), a = getAC();
+    var b = a.createBuffer(1, n, sr), d = b.getChannelData(0);
+    var seed = 7; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    var t = 0.25;
+    while (t < dur - 0.4) {
+      var words = 1 + Math.floor(rnd() * 3);
+      for (var w = 0; w < words && t < dur - 0.4; w++) {
+        var syl = 1 + Math.floor(rnd() * 3);
+        for (var s = 0; s < syl; s++) {
+          var len = 0.1 + rnd() * 0.2, f0 = 115 + rnd() * 70, amp = 0.25 + rnd() * 0.7;
+          var i0 = Math.floor(t * sr), i1 = Math.min(n, Math.floor((t + len) * sr));
+          for (var i = i0; i < i1; i++) {
+            var x = (i - i0) / (i1 - i0), env = Math.sin(Math.PI * x) * Math.sin(Math.PI * x), tt = i / sr, f = f0 * (1 - 0.15 * x);
+            var v = Math.sin(2 * Math.PI * f * tt) + 0.5 * Math.sin(4 * Math.PI * f * tt) + 0.3 * Math.sin(6 * Math.PI * f * tt) + 0.15 * (rnd() - 0.5);
+            d[i] += v * env * amp * 0.3;
+          }
+          t += len * 0.9;
+        }
+        t += 0.06 + rnd() * 0.1;
+      }
+      t += 0.3 + rnd() * 0.45;
+    }
+    return b;
+  }
+  $('wf-example').addEventListener('click', function () {
+    setBuffer(example(), 'example');
+    msg('Showing an example sound. Record or open your own audio to replace it.');
+  });
+
+  /* recording */
+  var rec = null, recChunks = [], recT = 0, recTimer = 0, recStream = null;
+  $('wf-rec').addEventListener('click', function () {
+    if (rec && rec.state === 'recording') { rec.stop(); return; }
+    if (!navigator.mediaDevices || !window.MediaRecorder) { msg('Recording is not available in this browser. You can open an audio file instead.', true); return; }
+    stop();
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+      recStream = stream; recChunks = [];
+      rec = new MediaRecorder(stream);
+      rec.ondataavailable = function (e) { if (e.data.size) recChunks.push(e.data); };
+      rec.onstop = function () {
+        clearInterval(recTimer);
+        recStream.getTracks().forEach(function (t) { t.stop(); });
+        $('wf-rec').classList.remove('on'); $('wf-rec').setAttribute('aria-label', 'Start recording');
+        $('wf-rec-label').textContent = 'Record again'; $('wf-rec-sub').textContent = 'Uses your microphone';
+        new Blob(recChunks, { type: rec.mimeType }).arrayBuffer().then(decode).then(function (b) {
+          setBuffer(b, 'recording'); msg('Your recording · ' + fmt(b.duration));
+        }).catch(function () { msg('The recording could not be read. Please try again.', true); });
+      };
+      rec.start(250);
+      recT = Date.now();
+      $('wf-rec').classList.add('on'); $('wf-rec').setAttribute('aria-label', 'Stop recording');
+      $('wf-rec-label').textContent = 'Recording… click to stop';
+      $('wf-rec-sub').textContent = '0:00';
+      recTimer = setInterval(function () {
+        var s = (Date.now() - recT) / 1000;
+        $('wf-rec-sub').textContent = fmt(s);
+        if (s > 600) rec.stop();
+      }, 250);
+      msg('');
+    }).catch(function () {
+      msg('The microphone could not be used. Check that this site is allowed to use it, or open an audio file instead.', true);
+    });
+  });
+
+  /* trim */
+  function updTrimOut() { $('wf-start-out').textContent = fmt(t0); $('wf-end-out').textContent = fmt(t1); }
+  function onTrim(e) {
+    var a = +$('wf-start').value / 100, b = +$('wf-end').value / 100;
+    if (b - a < 0.3) {
+      if (e.target.id === 'wf-start') { a = Math.max(0, b - 0.3); $('wf-start').value = Math.round(a * 100); }
+      else { b = Math.min(buf.duration, a + 0.3); $('wf-end').value = Math.round(b * 100); }
+    }
+    t0 = a; t1 = b; peakCache = {}; stop(); updTrimOut(); draw();
+  }
+  $('wf-start').addEventListener('input', onTrim);
+  $('wf-end').addEventListener('input', onTrim);
+
+  /* ---------- peaks ---------- */
+  function peaks(n) {
+    var key = n;
+    if (peakCache[key]) return peakCache[key];
+    var sr = buf.sampleRate, i0 = Math.floor(t0 * sr), i1 = Math.min(buf.length, Math.floor(t1 * sr)), len = i1 - i0;
+    var chans = []; for (var c = 0; c < buf.numberOfChannels; c++) chans.push(buf.getChannelData(c));
+    var rms = new Float32Array(n), mn = new Float32Array(n), mx = new Float32Array(n), top = 0, topA = 0;
+    for (var k = 0; k < n; k++) {
+      var a = i0 + Math.floor(len * k / n), b = i0 + Math.floor(len * (k + 1) / n), step = Math.max(1, Math.floor((b - a) / 2000)), sum = 0, cnt = 0, lo = 0, hi = 0;
+      for (var i = a; i < b; i += step) {
+        var v = 0; for (c = 0; c < chans.length; c++) v += chans[c][i]; v /= chans.length;
+        sum += v * v; cnt++; if (v < lo) lo = v; if (v > hi) hi = v;
+      }
+      rms[k] = cnt ? Math.sqrt(sum / cnt) : 0; mn[k] = lo; mx[k] = hi;
+      if (rms[k] > top) top = rms[k]; if (Math.max(hi, -lo) > topA) topA = Math.max(hi, -lo);
+    }
+    for (k = 0; k < n; k++) {
+      rms[k] = top ? Math.pow(rms[k] / top, 0.8) : 0;
+      mn[k] = topA ? mn[k] / topA : 0; mx[k] = topA ? mx[k] / topA : 0;
+    }
+    return (peakCache[key] = { v: rms, mn: mn, mx: mx });
+  }
+
+  /* ---------- rendering (shared by canvas and SVG) ---------- */
+  function layout(W, H) {
+    var m = Math.min(W, H), pad = Math.round(m * 0.09), fs = Math.round(Math.max(22, Math.min(64, m * 0.075)));
+    var head = (S.title || (S.showTime && S.shape !== 'note')) ? Math.round(fs * 1.9) : 0;
+    var ax = pad, aw = W - 2 * pad, top = pad + head, ah = H - pad - top;
+    var maxH = S.shape === 'note' ? Math.max(90, Math.min(ah, aw * 0.2)) : Math.min(ah, Math.max(aw * 0.55, H * 0.2));
+    if (W / H < 1.2 && S.shape !== 'note') maxH = Math.min(ah, aw * 0.6);
+    var ay = top + (ah - maxH) / 2;
+    if (head && ah - maxH > 0) ay = top + (ah - maxH) / 2;
+    return { pad: pad, fs: fs, head: head, ax: ax, ay: ay, aw: aw, ah: maxH, W: W, H: H };
+  }
+
+  function rr(p, x, y, w, h, r) {
+    r = Math.max(0, Math.min(r, w / 2, h / 2));
+    p.rect(x, y, w, h, r);
+  }
+
+  function renderWave(p, L, paint) {
+    var n = S.bars, gapR = S.gap * 0.075, roundF = S.round / 4, amp = S.amp / 100;
+    var ax = L.ax, aw = L.aw, ay = L.ay, ah = L.ah, mid = ay + ah / 2;
+    if (S.shape === 'note') {
+      var bx = ax, bh = ah, bw = aw, r = bh / 2, cr = bh * 0.32, cx = bx + bh / 2, ts = Math.round(bh * 0.26);
+      p.save(); p.alpha(0.12); rr(p, bx, ay, bw, bh, r); p.fill(paint.base); p.restore();
+      p.circle(cx, mid, cr); p.fill(paint.accent);
+      var tri = cr * 0.42;
+      p.poly([[cx - tri * 0.6, mid - tri], [cx - tri * 0.6, mid + tri], [cx + tri * 0.95, mid]]); p.fill(paint.bg === 'none' ? '#ffffff' : paint.bg);
+      var timeW = S.showTime ? ts * 3.2 : 0, wx0 = bx + bh + bh * 0.1, wx1 = bx + bw - bh * 0.35 - timeW, ww = wx1 - wx0;
+      var nn = Math.max(10, Math.round(n * ww / aw)), pk = peaks(nn), slot = ww / nn, w = Math.max(1, slot * (1 - gapR)), hmax = bh * 0.5;
+      p.clipStart(wx0, ay, ww, bh, paint);
+      for (var k = 0; k < nn; k++) {
+        var h = Math.max(w * 0.9, Math.min(hmax, pk.v[k] * hmax * amp));
+        rr(p, wx0 + k * slot + (slot - w) / 2, mid - h / 2, w, h, w / 2 * roundF); p.fill(paint.wave, k / nn);
+      }
+      p.clipEnd();
+      if (S.showTime) p.text(fmt(t1 - t0), bx + bw - bh * 0.35, mid + ts * 0.36, ts, 600, 'end', paint.text, 0.75);
+      return;
+    }
+    var pk;
+    if (S.shape === 'classic') {
+      var cols = Math.min(Math.round(aw), n * 4); pk = peaks(cols);
+      var sw = Math.max(1, aw / cols * 0.7), d = '';
+      for (var k = 0; k < cols; k++) {
+        var x = ax + (k + 0.5) * aw / cols, y1 = mid - pk.mx[k] * ah / 2 * amp, y2 = mid - pk.mn[k] * ah / 2 * amp;
+        y1 = Math.max(ay, y1); y2 = Math.min(ay + ah, y2); if (y2 - y1 < sw) { y1 = mid - sw / 2; y2 = mid + sw / 2; }
+        d += 'M' + x.toFixed(1) + ' ' + y1.toFixed(1) + 'V' + y2.toFixed(1);
+      }
+      p.stroke(d, paint.wave, sw);
+      return;
+    }
+    pk = peaks(n);
+    var slot = aw / n, w = Math.max(1, slot * (1 - gapR));
+    if (S.shape === 'wave') {
+      var pts = [];
+      for (var k = 0; k < n; k++) pts.push([ax + (k + 0.5) * slot, Math.max(0.015, Math.min(1, pk.v[k] * amp)) * ah / 2]);
+      var top = 'M' + ax + ' ' + mid + 'L' + pts[0][0].toFixed(1) + ' ' + (mid - pts[0][1]).toFixed(1);
+      for (k = 1; k < n; k++) {
+        var xm = (pts[k - 1][0] + pts[k][0]) / 2;
+        top += 'C' + xm.toFixed(1) + ' ' + (mid - pts[k - 1][1]).toFixed(1) + ' ' + xm.toFixed(1) + ' ' + (mid - pts[k][1]).toFixed(1) + ' ' + pts[k][0].toFixed(1) + ' ' + (mid - pts[k][1]).toFixed(1);
+      }
+      top += 'L' + (ax + aw) + ' ' + mid;
+      for (k = n - 1; k >= 0; k--) {
+        if (k === n - 1) { top += 'L' + pts[k][0].toFixed(1) + ' ' + (mid + pts[k][1]).toFixed(1); continue; }
+        var xm2 = (pts[k + 1][0] + pts[k][0]) / 2;
+        top += 'C' + xm2.toFixed(1) + ' ' + (mid + pts[k + 1][1]).toFixed(1) + ' ' + xm2.toFixed(1) + ' ' + (mid + pts[k][1]).toFixed(1) + ' ' + pts[k][0].toFixed(1) + ' ' + (mid + pts[k][1]).toFixed(1);
+      }
+      top += 'L' + ax + ' ' + mid + 'Z';
+      p.path(top); p.fill(paint.wave);
+      return;
+    }
+    if (S.shape === 'dots') {
+      var dr = w / 2, stepY = w * (1 + Math.max(0.25, gapR));
+      for (var k = 0; k < n; k++) {
+        var x = ax + (k + 0.5) * slot, hh = Math.min(1, pk.v[k] * amp) * ah / 2, m = Math.max(0, Math.floor(hh / stepY));
+        p.circle(x, mid, dr); p.fill(paint.wave);
+        for (var j = 1; j <= m; j++) { p.circle(x, mid - j * stepY, dr); p.fill(paint.wave); p.circle(x, mid + j * stepY, dr); p.fill(paint.wave); }
+      }
+      return;
+    }
+    for (var k = 0; k < n; k++) {
+      var v = Math.min(1, pk.v[k] * amp), x = ax + k * slot + (slot - w) / 2, rad = w / 2 * roundF;
+      if (S.shape === 'bottom') {
+        var h = Math.max(w * 0.6, v * ah);
+        rr(p, x, ay + ah - h, w, h, rad);
+      } else {
+        var h2 = Math.max(w * 0.9, v * ah);
+        rr(p, x, mid - h2 / 2, w, h2, rad);
+      }
+      p.fill(paint.wave);
+    }
+  }
+
+  function renderHead(p, L, paint) {
+    if (!L.head) return;
+    var y = L.pad + L.fs;
+    if (S.title) p.text(S.title, L.ax, y, L.fs, 600, 'start', paint.text, 1, L.aw * (S.showTime && S.shape !== 'note' ? 0.78 : 1));
+    if (S.showTime && S.shape !== 'note') p.text(fmt(t1 - t0), L.ax + L.aw, y, Math.round(L.fs * 0.8), 500, 'end', paint.text, 0.6);
+  }
+
+  /* canvas painter */
+  function canvasPainter(c, L) {
+    var path = null, alpha = 1;
+    function grad(col) {
+      if (!Array.isArray(col)) return col;
+      var g = c.createLinearGradient(L.ax, 0, L.ax + L.aw, 0); g.addColorStop(0, col[0]); g.addColorStop(1, col[1]); return g;
+    }
+    var clipped = false;
+    return {
+      save: function () { c.save(); }, restore: function () { c.restore(); },
+      alpha: function (a) { c.globalAlpha = a; },
+      rect: function (x, y, w, h, r) {
+        path = new Path2D();
+        if (r <= 0.01) path.rect(x, y, w, h);
+        else { path.moveTo(x + r, y); path.arcTo(x + w, y, x + w, y + h, r); path.arcTo(x + w, y + h, x, y + h, r); path.arcTo(x, y + h, x, y, r); path.arcTo(x, y, x + w, y, r); path.closePath(); }
+      },
+      circle: function (x, y, r) { path = new Path2D(); path.arc(x, y, r, 0, Math.PI * 2); },
+      poly: function (pts) { path = new Path2D(); pts.forEach(function (q, i) { i ? path.lineTo(q[0], q[1]) : path.moveTo(q[0], q[1]); }); path.closePath(); },
+      path: function (d) { path = new Path2D(d); },
+      fill: function (col) { c.fillStyle = grad(col); c.fill(path); },
+      stroke: function (d, col, sw) { c.strokeStyle = grad(col); c.lineWidth = sw; c.lineCap = 'round'; c.stroke(new Path2D(d)); },
+      text: function (t, x, y, size, weight, align, col, a, maxW) {
+        c.save(); c.globalAlpha = a == null ? 1 : a; c.fillStyle = col; c.textAlign = align === 'end' ? 'right' : 'left';
+        c.font = weight + ' ' + size + 'px "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
+        var s = t; if (maxW) { while (s.length > 1 && c.measureText(s).width > maxW) s = s.slice(0, -2) + '…'; }
+        c.fillText(s, x, y); c.restore();
+      },
+      clipStart: function () {}, clipEnd: function () {}
+    };
+  }
+
+  function paintFor(transparent) {
+    return { wave: S.wave, base: textColor(), accent: S.play, bg: transparent ? 'none' : S.bg, text: textColor() };
+  }
+
+  function drawTo(c, W, H, prog, transparent, scale) {
+    scale = scale || 1;
+    c.setTransform(scale, 0, 0, scale, 0, 0);
+    c.clearRect(0, 0, W, H);
+    if (!transparent) { c.fillStyle = S.bg; c.fillRect(0, 0, W, H); }
+    var L = layout(W, H), paint = paintFor(transparent), p = canvasPainter(c, L);
+    renderHead(p, L, paint);
+    if (!buf) return;
+    renderWave(p, L, paint);
+    if (prog >= 0) {
+      var wx0 = L.ax, ww = L.aw;
+      if (S.shape === 'note') { wx0 = L.ax + L.ah * 1.1; ww = L.aw - L.ah * 1.45 - (S.showTime ? Math.round(L.ah * 0.26) * 3.2 : 0); }
+      c.save(); c.beginPath(); c.rect(wx0 - 2, 0, ww * prog + 2, H); c.clip();
+      var p2 = canvasPainter(c, L), pp = { wave: S.play, base: 'transparent', accent: S.play, bg: paint.bg, text: paint.text };
+      if (S.shape === 'note') {
+        /* only recolor the bars */
+        var save = S.shape; renderNoteBars(p2, L, pp); S.shape = save;
+      } else renderWave(p2, L, pp);
+      c.restore();
+    }
+  }
+  function renderNoteBars(p, L, paint) {
+    var n = S.bars, gapR = S.gap * 0.075, roundF = S.round / 4, amp = S.amp / 100;
+    var bh = L.ah, mid = L.ay + bh / 2, ts = Math.round(bh * 0.26), timeW = S.showTime ? ts * 3.2 : 0;
+    var wx0 = L.ax + bh + bh * 0.1, ww = L.ax + L.aw - bh * 0.35 - timeW - wx0;
+    var nn = Math.max(10, Math.round(n * ww / L.aw)), pk = peaks(nn), slot = ww / nn, w = Math.max(1, slot * (1 - gapR)), hmax = bh * 0.5;
+    for (var k = 0; k < nn; k++) {
+      var h = Math.max(w * 0.9, Math.min(hmax, pk.v[k] * hmax * amp));
+      rr(p, wx0 + k * slot + (slot - w) / 2, mid - h / 2, w, h, w / 2 * roundF); p.fill(paint.wave);
+    }
+  }
+
+  function draw() {
+    var f = FORMATS[S.format];
+    if (canvas.width !== f[0] || canvas.height !== f[1]) { canvas.width = f[0]; canvas.height = f[1]; }
+    drawTo(ctx, f[0], f[1], progress, false);
+    $('wf-dim1').textContent = f[0] + ' × ' + f[1] + ' px';
+    $('wf-dim2').textContent = f[0] * 2 + ' × ' + f[1] * 2 + ' px';
+  }
+
+  /* ---------- SVG ---------- */
+  function svgString(transparent) {
+    var f = FORMATS[S.format], W = f[0], H = f[1], L = layout(W, H), out = [], defs = '', gid = 0, cur = '', alpha = 1;
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function col(c) {
+      if (!Array.isArray(c)) return c;
+      var id = 'g' + (gid++);
+      defs += '<linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="' + L.ax + '" y1="0" x2="' + (L.ax + L.aw) + '" y2="0"><stop offset="0" stop-color="' + c[0] + '"/><stop offset="1" stop-color="' + c[1] + '"/></linearGradient>';
+      return 'url(#' + id + ')';
+    }
+    var waveFill = null;
+    var p = {
+      save: function () {}, restore: function () { alpha = 1; }, alpha: function (a) { alpha = a; },
+      rect: function (x, y, w, h, r) { cur = '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + h.toFixed(1) + '"' + (r > 0.01 ? ' rx="' + r.toFixed(1) + '"' : '') + ' fill="F"/>'; },
+      circle: function (x, y, r) { cur = '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + r.toFixed(1) + '" fill="F"/>'; },
+      poly: function (pts) { cur = '<polygon points="' + pts.map(function (q) { return q[0].toFixed(1) + ',' + q[1].toFixed(1); }).join(' ') + '" fill="F"/>'; },
+      path: function (d) { cur = '<path d="' + d + '" fill="F"/>'; },
+      fill: function (c) {
+        var v = c === S.wave ? (waveFill || (waveFill = col(c))) : col(c);
+        out.push(cur.replace('fill="F"', 'fill="' + v + '"' + (alpha < 1 ? ' fill-opacity="' + alpha + '"' : '')));
+      },
+      stroke: function (d, c, sw) { out.push('<path d="' + d + '" fill="none" stroke="' + (c === S.wave ? (waveFill || (waveFill = col(c))) : col(c)) + '" stroke-width="' + sw.toFixed(2) + '" stroke-linecap="round"/>'); },
+      text: function (t, x, y, size, weight, align, c, a) {
+        out.push('<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" font-family="Hanken Grotesk, Helvetica Neue, Arial, sans-serif" font-size="' + size + '" font-weight="' + weight + '"' + (align === 'end' ? ' text-anchor="end"' : '') + ' fill="' + c + '"' + (a != null && a < 1 ? ' fill-opacity="' + a + '"' : '') + '>' + esc(t) + '</text>');
+      },
+      clipStart: function () {}, clipEnd: function () {}
+    };
+    var paint = paintFor(transparent);
+    renderHead(p, L, paint);
+    renderWave(p, L, paint);
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">\n' +
+      (defs ? '<defs>' + defs + '</defs>\n' : '') +
+      (transparent ? '' : '<rect width="100%" height="100%" fill="' + S.bg + '"/>\n') + out.join('\n') + '\n</svg>\n';
+  }
+
+  /* ---------- playback ---------- */
+  function trimmed() {
+    var a = getAC(), sr = buf.sampleRate, i0 = Math.floor(t0 * sr), i1 = Math.min(buf.length, Math.floor(t1 * sr));
+    var b = a.createBuffer(buf.numberOfChannels, Math.max(1, i1 - i0), sr);
+    for (var c = 0; c < buf.numberOfChannels; c++) b.getChannelData(c).set(buf.getChannelData(c).subarray(i0, i1));
+    return b;
+  }
+  function play(fromFrac) {
+    var a = getAC(); if (a.state === 'suspended') a.resume();
+    stop(true);
+    var tb = trimmed(); player = a.createBufferSource(); player.buffer = tb; player.connect(a.destination);
+    playFrom = (fromFrac || 0) * tb.duration; playStartAt = a.currentTime;
+    player.start(0, playFrom);
+    player.onended = function () { if (this === player) stop(); };
+    $('wf-play').classList.add('playing'); $('wf-play').querySelector('span').textContent = 'Pause';
+    (function tick() {
+      if (!player) return;
+      progress = Math.min(1, (playFrom + a.currentTime - playStartAt) / tb.duration);
+      draw(); raf = requestAnimationFrame(tick);
+    })();
+  }
+  function stop(keep) {
+    cancelAnimationFrame(raf);
+    if (player) { var pl = player; player = null; try { pl.stop(); } catch (e) {} }
+    $('wf-play').classList.remove('playing'); $('wf-play').querySelector('span').textContent = 'Play';
+    if (!keep) { progress = -1; if (buf) draw(); }
+  }
+  $('wf-play').addEventListener('click', function () { if (player) stop(); else if (buf) play(0); });
+  canvas.addEventListener('click', function (e) {
+    if (!buf) return;
+    var r = canvas.getBoundingClientRect(), f = FORMATS[S.format], L = layout(f[0], f[1]);
+    var x = (e.clientX - r.left) * f[0] / r.width, x0 = L.ax, w = L.aw;
+    if (S.shape === 'note') { x0 = L.ax + L.ah * 1.1; w = L.aw - L.ah * 1.45 - (S.showTime ? Math.round(L.ah * 0.26) * 3.2 : 0); }
+    play(Math.max(0, Math.min(0.999, (x - x0) / w)));
+  });
+
+  /* ---------- downloads ---------- */
+  function fname(ext) {
+    var base = (S.title || srcName || 'voice').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'voice';
+    return base + '-waveform.' + ext;
+  }
+  function save(blob, name) {
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  }
+  function toast(t) {
+    var el = document.createElement('div'); el.className = 'wf-toast'; el.textContent = t; document.body.appendChild(el);
+    setTimeout(function () { el.remove(); }, 2200);
+  }
+  function pngBlob(scale) {
+    var f = FORMATS[S.format], c = document.createElement('canvas'); c.width = f[0] * scale; c.height = f[1] * scale;
+    drawTo(c.getContext('2d'), f[0], f[1], -1, S.transparent, scale);
+    return new Promise(function (res) { c.toBlob(res, 'image/png'); });
+  }
+  var menu = $('wf-menu'), dlbtn = $('wf-dlbtn');
+  dlbtn.addEventListener('click', function (e) { e.stopPropagation(); var o = menu.hidden; menu.hidden = !o; dlbtn.setAttribute('aria-expanded', o); });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.wf-dl')) { menu.hidden = true; dlbtn.setAttribute('aria-expanded', 'false'); } });
+  $('wf-transparent').addEventListener('change', function () { S.transparent = this.checked; });
+  var canVideo = !!(window.MediaRecorder && HTMLCanvasElement.prototype.captureStream);
+  if (!canVideo) { menu.querySelector('[data-dl="video"]').disabled = true; $('wf-vidnote').textContent = 'Not available in this browser'; }
+  menu.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-dl]'); if (!b || !buf) return;
+    var k = b.dataset.dl; menu.hidden = true; dlbtn.setAttribute('aria-expanded', 'false');
+    if (k === 'png') pngBlob(1).then(function (bl) { save(bl, fname('png')); });
+    else if (k === 'png2') pngBlob(2).then(function (bl) { save(bl, fname('png')); });
+    else if (k === 'svg') save(new Blob([svgString(S.transparent)], { type: 'image/svg+xml' }), fname('svg'));
+    else if (k === 'copy') {
+      if (!navigator.clipboard || !window.ClipboardItem) { toast('Copying is not available here. Use Download instead.'); return; }
+      navigator.clipboard.write([new ClipboardItem({ 'image/png': pngBlob(1) })]).then(function () { toast('Image copied'); }, function () { toast('Could not copy. Use Download instead.'); });
+    } else if (k === 'video') makeVideo();
+  });
+
+  var vidStop = null;
+  function makeVideo() {
+    stop();
+    var types = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4;codecs=avc1,mp4a.40.2', 'video/mp4;codecs=avc1', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm', 'video/mp4'];
+    var mime = types.filter(function (t) { return MediaRecorder.isTypeSupported(t); })[0];
+    if (!mime) { toast('Video is not available in this browser.'); return; }
+    var f = FORMATS[S.format], W = f[0], H = f[1], vs = Math.min(1, 1920 / Math.max(W, H));
+    var vw = Math.round(W * vs / 2) * 2, vh = Math.round(H * vs / 2) * 2;
+    var c = document.createElement('canvas'); c.width = vw; c.height = vh;
+    var cx = c.getContext('2d');
+    var a = getAC(); if (a.state === 'suspended') a.resume();
+    var tb = trimmed(), src = a.createBufferSource(), dest = a.createMediaStreamDestination();
+    src.buffer = tb; src.connect(dest);
+    var stream = c.captureStream(30);
+    dest.stream.getAudioTracks().forEach(function (t) { stream.addTrack(t); });
+    var chunks = [], mr = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 6000000 });
+    mr.ondataavailable = function (e) { if (e.data.size) chunks.push(e.data); };
+    var cancelled = false, start = 0, raf2 = 0;
+    mr.onstop = function () {
+      cancelAnimationFrame(raf2);
+      busy(false);
+      if (cancelled) { toast('Video stopped'); return; }
+      save(new Blob(chunks, { type: mime.split(';')[0] }), fname(mime.indexOf('mp4') > -1 ? 'mp4' : 'webm'));
+    };
+    drawTo(cx, W, H, 0, false, vs);
+    busy(true, 'Making video… 0:00 / ' + fmt(tb.duration), true);
+    vidStop = function () { cancelled = true; try { src.stop(); } catch (e) {} if (mr.state !== 'inactive') mr.stop(); };
+    mr.start(500);
+    start = a.currentTime + 0.15;
+    src.start(start);
+    src.onended = function () { drawTo(cx, W, H, 1, false, vs); setTimeout(function () { if (mr.state !== 'inactive') mr.stop(); }, 400); };
+    (function tick() {
+      var t = Math.max(0, a.currentTime - start);
+      drawTo(cx, W, H, Math.min(1, t / tb.duration), false, vs);
+      $('wf-busy-t').textContent = 'Making video… ' + fmt(t) + ' / ' + fmt(tb.duration);
+      if (mr.state !== 'inactive') raf2 = requestAnimationFrame(tick);
+    })();
+  }
+  function busy(on, t, stoppable) {
+    $('wf-busy').hidden = !on; if (t) $('wf-busy-t').textContent = t;
+    $('wf-busy-stop').hidden = !stoppable;
+  }
+  $('wf-busy-stop').addEventListener('click', function () { if (vidStop) vidStop(); });
+
+  /* ---------- controls ---------- */
+  document.querySelectorAll('.wf-tabs [role="tab"]').forEach(function (t) {
+    t.addEventListener('click', function () {
+      document.querySelectorAll('.wf-tabs [role="tab"]').forEach(function (x) { x.setAttribute('aria-selected', x === t); });
+      document.querySelectorAll('.wf-pane').forEach(function (p) { p.hidden = p.dataset.pane !== t.dataset.tab; });
+    });
+  });
+  $('wf-shapes').innerHTML = SHAPES.map(function (s) {
+    return '<button type="button" class="wf-opt" data-s="' + s[0] + '" aria-pressed="' + (S.shape === s[0]) + '"><svg viewBox="0 0 52 26" aria-hidden="true">' + s[2] + '</svg>' + s[1] + '</button>';
+  }).join('');
+  $('wf-shapes').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-s]'); if (!b) return;
+    S.shape = b.dataset.s; this.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); draw();
+  });
+  function hex(c) { return Array.isArray(c) ? c[0] : c; }
+  $('wf-pals').innerHTML = PALS.map(function (p, i) {
+    var w = Array.isArray(p.wave) ? 'linear-gradient(90deg,' + p.wave[0] + ',' + p.wave[1] + ')' : p.wave;
+    return '<button type="button" class="wf-opt" data-p="' + i + '" aria-pressed="' + (i === S.pal) + '" style="background:' + p.bg + ';color:' + hex(p.wave) + '"><i style="background:' + w + ';-webkit-mask:repeating-linear-gradient(90deg,#000 0 3px,transparent 3px 6px);mask:repeating-linear-gradient(90deg,#000 0 3px,transparent 3px 6px)"></i><small>' + p.n + '</small></button>';
+  }).join('');
+  $('wf-pals').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-p]'); if (!b) return;
+    var p = PALS[+b.dataset.p]; S.pal = +b.dataset.p; S.wave = p.wave; S.text = p.text || null; S.play = p.play; S.bg = p.bg;
+    $('wf-c-wave').value = hex(p.wave); $('wf-c-play').value = p.play; $('wf-c-bg').value = p.bg;
+    this.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); draw();
+  });
+  function custom() { S.text = null; $('wf-pals').querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); }); S.pal = -1; }
+  $('wf-c-wave').addEventListener('input', function () { S.wave = this.value; custom(); draw(); });
+  $('wf-c-play').addEventListener('input', function () { S.play = this.value; custom(); draw(); });
+  $('wf-c-bg').addEventListener('input', function () { S.bg = this.value; custom(); draw(); });
+  function slider(id, key, label) {
+    $(id).addEventListener('input', function () { S[key] = +this.value; $(id + '-out').textContent = label(S[key]); draw(); });
+  }
+  slider('wf-bars', 'bars', function (v) { return v; });
+  slider('wf-gap', 'gap', function (v) { return GAPS[v]; });
+  slider('wf-round', 'round', function (v) { return ROUNDS[v]; });
+  slider('wf-amp', 'amp', function (v) { return v + '%'; });
+  $('wf-title').addEventListener('input', function () { S.title = this.value.trim(); draw(); });
+  $('wf-showtime').addEventListener('change', function () { S.showTime = this.checked; draw(); });
+  var fmtBtns = $('wf-format').querySelectorAll('button');
+  function setFormat(v) { S.format = v; fmtBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.v === v); }); draw(); }
+  fmtBtns.forEach(function (b) { b.addEventListener('click', function () { setFormat(b.dataset.v); }); });
+
+  setFormat('wide');
+  setBuffer(example(), 'example');
+  msg('Showing an example sound. Record or open your own audio to replace it.');
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+})();
+</script>
+</body>
+</html>
