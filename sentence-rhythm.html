@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#1A1A1A">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentence Rhythm | M Enam Ull Hassan</title>
+<link rel="canonical" href="https://enamhassan.com/sentence-rhythm.html">
+<meta name="description" content="See the rhythm of your writing. Paste a draft to see every sentence as a bar sized by its length, find long or choppy stretches, and download the chart.">
+<script>
+  (function () {
+    var d = document.documentElement;
+    try { var t = localStorage.getItem('theme'); if (t === 'dark' || t === 'light') d.setAttribute('data-theme', t); } catch (e) {}
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.theme-toggle');
+      if (!b) return;
+      var cur = d.getAttribute('data-theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      d.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=27">
+<link rel="icon" href="favicon.ico?v=7" sizes="48x48">
+<link rel="icon" href="icon-192.png?v=7" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
+</head>
+<body class="site">
+
+<aside class="panel">
+  <div class="panel-head">
+    <a href="index.html" class="logo"><span>M Enam Ull</span> <span>Hassan</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+  <nav class="panel-nav" aria-label="Main">
+    <ul id="menu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="grants.html">Grants</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+  </nav>
+  <div class="panel-foot">
+    <a class="panel-cta" href="contact.html">Get in touch<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+    </button>
+  </div>
+</aside>
+<div class="site-main">
+
+<main>
+  <div class="wrap page-hero sr-hero">
+    <p class="eyebrow reveal"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 5h12v2.6H3zM3 10.7h18v2.6H3zM3 16.4h8v2.6H3z"/></svg><a class="crumb" href="resources.html">Resources</a> · Writing tool</p>
+    <h1 class="reveal">Sentence <em>Rhythm</em></h1>
+    <p class="lead reveal">Paste your writing to see every sentence as a bar sized by its length. Spot long stretches, choppy runs, and places where the rhythm could change.</p>
+  </div>
+
+  <section class="sr-section">
+    <div class="wrap">
+      <div class="sr-app" id="sr-app">
+        <div class="sr-main">
+          <aside class="sr-panel" aria-label="Your text">
+            <label class="sr-h" for="sr-text">Your text</label>
+            <textarea id="sr-text" rows="12" spellcheck="false" placeholder="Paste a paragraph, an essay, or a chapter. Leave a blank line between paragraphs."></textarea>
+            <div class="sr-row">
+              <button type="button" class="sr-btn" id="sr-upload"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>Open file</button>
+              <input type="file" id="sr-file" accept=".txt,.md,.docx,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+              <button type="button" class="sr-btn ghost" id="sr-example">Example</button>
+              <button type="button" class="sr-btn ghost" id="sr-clear">Clear</button>
+            </div>
+            <p class="sr-filemsg" id="sr-msg" role="status" aria-live="polite" hidden></p>
+            <p class="sr-note">Open a .txt or Word (.docx) file, or drop it on the box. Dots in abbreviations (e.g., et al., U.S.), initials, decimals like <code>p &lt; .05</code>, web addresses, and numbered lists are not counted as sentence ends.</p>
+
+            <p class="sr-h">Length groups</p>
+            <ul class="sr-legend" id="sr-legend"></ul>
+            <label class="sr-h" for="sr-long">A sentence is long from <output id="sr-long-out">25 words</output></label>
+            <input type="range" id="sr-long" min="15" max="40" step="1" value="25">
+            <p class="sr-note">Academic writing often runs longer than everyday prose. Set the point where a sentence starts to feel long for your readers.</p>
+          </aside>
+
+          <div class="sr-out">
+            <div class="sr-stats" id="sr-stats"></div>
+            <div class="sr-bar">
+              <div class="sr-seg" id="sr-view" role="group" aria-label="View">
+                <button type="button" data-v="bars" aria-pressed="true">Rhythm</button>
+                <button type="button" data-v="text" aria-pressed="false">Your text</button>
+              </div>
+              <div class="sr-bargroup">
+                <button type="button" class="sr-btn" id="sr-copy" title="Copy a short summary">Copy summary</button>
+                <button type="button" class="sr-btn primary" id="sr-png"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg>Download image</button>
+              </div>
+            </div>
+            <div class="sr-stage" id="sr-stage">
+              <div id="sr-bars"></div>
+              <div id="sr-textview" hidden></div>
+              <p class="sr-empty" id="sr-empty" hidden>Paste some text to see its rhythm.</p>
+            </div>
+            <div class="sr-notes" id="sr-notes"></div>
+          </div>
+        </div>
+      </div>
+      <p class="sr-foot">Everything happens in your browser. Your text is not uploaded or saved anywhere. Sentence breaks are found automatically, so check the Your text view if a count looks off.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><nav class="legal-links" aria-label="Site info"><a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a><a href="cookies.html">Cookies Policy</a><a href="cookie-settings.html">Cookie Settings</a><a href="copyright.html">Copyright Notice</a></nav><span class="copy">Copyright © <span id="yr"></span> M Enam Ull Hassan · Boston, MA</span></div>
+</footer>
+</div>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.tool[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<style>
+  .sr-hero { padding-bottom: 36px; }
+  .sr-section { padding-top: 0; }
+  .sr-section .wrap { max-width: 1400px; }
+  .sr-app { border-radius: 22px; background: var(--bg); box-shadow: var(--neu-out); padding: 26px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .sr-looks { min-width: 0; }
+  .sr-app button { font: inherit; cursor: pointer; }
+  .sr-app [hidden] { display: none !important; }
+  .sr-h { display: flex; justify-content: space-between; align-items: baseline; font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--label); margin: 22px 0 10px; }
+  .sr-h output { letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 500; font-size: .8125rem; }
+  .sr-note { font-size: .8125rem; line-height: 1.5; color: var(--muted); margin: 8px 0 0; }
+  .sr-note code { font-size: .8125rem; padding: 1px 6px; border-radius: 6px; box-shadow: var(--neu-in); }
+  .sr-foot { margin-top: 14px; font-size: .875rem; color: var(--muted); }
+
+  .sr-btn { display: inline-flex; align-items: center; gap: 7px; height: 40px; padding: 0 14px; border: 0; border-radius: 12px; background: var(--bg); color: var(--ink); font-size: .875rem; font-weight: 600; box-shadow: var(--neu-out-sm); white-space: nowrap; }
+  .sr-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .sr-btn:active { box-shadow: var(--neu-in); }
+  .sr-btn.ghost { box-shadow: none; color: var(--muted); padding: 0 10px; }
+  .sr-btn.primary { background: #15161b; color: #f4f2ee; box-shadow: none; }
+  .sr-seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 999px; box-shadow: var(--neu-in); }
+  .sr-seg button { height: 34px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: .8125rem; font-weight: 600; }
+  .sr-seg button[aria-pressed="true"] { background: #15161b; color: #f4f2ee; }
+  .sr-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+  /* main */
+  .sr-main { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 26px; align-items: start; }
+  .sr-panel { border-radius: 18px; padding: 16px 18px 22px; box-shadow: var(--neu-in); max-height: 820px; overflow-y: auto; }
+  .sr-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 999px; box-shadow: var(--neu-out-sm); position: sticky; top: 0; background: var(--bg); z-index: 2; }
+  .sr-tabs button { flex: 1; height: 36px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-weight: 600; font-size: .875rem; }
+  .sr-tabs button[aria-selected="true"] { background: #15161b; color: #f4f2ee; }
+  .sr-pane textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 150px; padding: 12px 14px; border-radius: 14px; font: inherit; font-size: .875rem; line-height: 1.55; color: var(--ink); }
+  .sr-pane input[type="text"] { width: 100%; box-sizing: border-box; height: 42px; padding: 0 14px; border-radius: 12px; font: inherit; font-size: .875rem; color: var(--ink); }
+  .sr-pane input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .sr-filemsg { margin: 10px 0 0; padding: 9px 12px; border-radius: 10px; font-size: .8125rem; line-height: 1.5; color: var(--muted); box-shadow: var(--neu-in); }
+  .sr-filemsg.err { color: #b42318; box-shadow: none; background: rgba(180,35,24,.08); border: 1px solid rgba(180,35,24,.3); }
+  :where(html[data-theme="dark"]) .sr-filemsg.err { color: #ff9b8f; }
+  @media (prefers-color-scheme: dark) { :where(html:not([data-theme="light"])) .sr-filemsg.err { color: #ff9b8f; } }
+  .sr-pane textarea.drop { outline: 2px dashed var(--accent); outline-offset: 2px; }
+  .sr-hlrow { display: flex; gap: 8px; align-items: center; }
+  .sr-hlrow input[type="text"] { flex: 1; min-width: 0; }
+  .sr-hlrow input[type="color"] { flex: none; width: 46px; height: 42px; padding: 4px; border: 0; border-radius: 12px; background: var(--bg); box-shadow: var(--neu-out-sm); cursor: pointer; }
+  .sr-hlrow input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+  .sr-hlrow input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 8px; }
+  .sr-hlrow input[type="color"]::-moz-color-swatch { border: 0; border-radius: 8px; }
+  .sr-list li .sr-star { font-size: 1.05rem; }
+  .sr-list li.hl span { font-weight: 700; }
+  .sr-checks { display: grid; gap: 8px; margin-top: 18px; }
+  .sr-check { display: flex; align-items: center; gap: 10px; font-size: .875rem; cursor: pointer; }
+  .sr-check input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; }
+  .sr-check small { color: var(--muted); }
+  .sr-listhead { display: flex; justify-content: space-between; align-items: baseline; }
+  .sr-listhead .sr-note { margin: 22px 0 10px; }
+  .sr-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: w; }
+  .sr-list li { display: grid; grid-template-columns: 26px 1fr auto 30px 30px; align-items: center; gap: 6px; font-size: .875rem; padding: 3px 0; counter-increment: w; }
+  .sr-list li::before { content: counter(w); color: var(--muted); font-size: .75rem; }
+  .sr-list li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sr-list li em { font-style: normal; color: var(--muted); font-size: .8125rem; font-variant-numeric: tabular-nums; }
+  .sr-list li button, .sr-hidden button { border: 0; background: transparent; color: var(--muted); width: 30px; height: 28px; border-radius: 8px; font-size: 1rem; line-height: 1; }
+  .sr-list li button:hover { color: var(--ink); box-shadow: var(--neu-out-sm); }
+  .sr-list li.sr-more { display: block; counter-increment: none; color: var(--muted); font-size: .8125rem; padding-top: 6px; }
+  .sr-list li.sr-more::before { content: none; }
+  .sr-hidden { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: .8125rem; color: var(--muted); }
+  .sr-hidden button { width: auto; height: 30px; padding: 0 10px; border-radius: 999px; box-shadow: var(--neu-out-sm); color: var(--ink); font-size: .8125rem; }
+
+  .sr-fonts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .sr-fonts button { height: 54px; border: 0; border-radius: 12px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); font-size: 1.25rem; line-height: 1; overflow: hidden; }
+  .sr-pals { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .sr-pals button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; height: 76px; border: 0; border-radius: 14px; box-shadow: var(--neu-out-sm), inset 0 0 0 1px rgba(128,128,128,.25); }
+  .sr-pals b { font-family: "Bricolage Grotesque", var(--sans); font-weight: 800; font-size: 1.4rem; line-height: 1; }
+  .sr-pals small { font-size: .75rem; font-weight: 600; }
+  .sr-app .sr-pals [aria-pressed="true"].sr-opt { box-shadow: 0 0 0 3px var(--accent); }
+  .sr-angles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .sr-angles button { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 6px 7px; border: 0; border-radius: 12px; background: var(--bg); color: var(--ink); box-shadow: var(--neu-out-sm); font-size: .75rem; font-weight: 600; }
+  .sr-angles svg { width: 40px; height: 32px; fill: currentColor; opacity: .8; }
+  .sr-angles svg { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; }
+  .sr-app [aria-pressed="true"].sr-opt { box-shadow: var(--neu-in), 0 0 0 2px var(--accent); }
+
+  /* stage */
+  .sr-stagewrap { min-width: 0; }
+  .sr-bar { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .sr-bargroup { display: flex; gap: 10px; }
+  .sr-dl { position: relative; }
+  .sr-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 20; width: 270px; padding: 8px; border-radius: 16px; background: var(--bg); box-shadow: var(--neu-out), 0 16px 40px rgba(0,0,0,.12); display: grid; gap: 2px; }
+  .sr-menu button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 12px; border: 0; border-radius: 10px; background: transparent; color: var(--ink); font-size: .875rem; font-weight: 600; text-align: left; }
+  .sr-menu button:hover, .sr-menu button:focus-visible { box-shadow: var(--neu-in); }
+  .sr-menu small { color: var(--muted); font-weight: 400; font-size: .75rem; }
+  .sr-menu .sr-check { padding: 10px 12px 6px; border-top: 1px solid var(--line); margin-top: 4px; }
+  .sr-stage { position: relative; display: flex; justify-content: center; align-items: center; min-height: 300px; padding: 22px; border-radius: 18px; box-shadow: var(--neu-in); }
+  .sr-stage canvas { display: block; max-width: 100%; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 12px 34px rgba(27,29,36,.16); cursor: pointer; }
+  .sr-busy { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 8px 16px; border-radius: 999px; background: #15161b; color: #f4f2ee; font-size: .8125rem; font-weight: 600; }
+  .sr-busy span { width: 12px; height: 12px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: srspin .7s linear infinite; }
+  @keyframes srspin { to { transform: rotate(360deg); } }
+  .sr-tip { text-align: center; }
+  .sr-toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 50; padding: 10px 18px; border-radius: 999px; background: #15161b; color: #f4f2ee; font-size: .875rem; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+
+  @media (max-width: 960px) {
+    .sr-main { grid-template-columns: 1fr; }
+    .sr-stagewrap { order: -1; }
+    .sr-panel { max-height: none; }
+  }
+  @media (max-width: 560px) {
+    .sr-app { padding: 16px; border-radius: 18px; }
+    .sr-stage { padding: 12px; min-height: 200px; }
+    .sr-bar { flex-direction: column; align-items: stretch; }
+    .sr-bargroup { justify-content: space-between; }
+    .sr-seg { justify-content: center; }
+    .sr-seg button { padding: 0 11px; }
+  }
+  .sr-main { grid-template-columns: 330px minmax(0, 1fr); }
+  .sr-panel textarea { min-height: 240px; }
+  .sr-panel input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .sr-panel textarea { width: 100%; box-sizing: border-box; resize: vertical; padding: 12px 14px; border-radius: 14px; font: inherit; font-size: .875rem; line-height: 1.55; color: var(--ink); }
+  .sr-panel textarea.drop { outline: 2px dashed var(--accent); outline-offset: 2px; }
+  .sr-panel .sr-h:first-child { margin-top: 4px; }
+  :root { --b-short: #2a9d8f; --b-medium: #5a6fd0; --b-long: #d39a2f; --b-vlong: #c2410c; }
+  @media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) { --b-short: #5fd0bf; --b-medium: #9aa4f0; --b-long: #f0c56a; --b-vlong: #ff8a5c; } }
+  :root:where([data-theme="dark"]) { --b-short: #5fd0bf; --b-medium: #9aa4f0; --b-long: #f0c56a; --b-vlong: #ff8a5c; }
+  .b-short { --bc: var(--b-short); } .b-medium { --bc: var(--b-medium); } .b-long { --bc: var(--b-long); } .b-vlong { --bc: var(--b-vlong); }
+  .sr-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .sr-legend li { display: grid; grid-template-columns: 14px 78px 1fr; align-items: center; gap: 8px; font-size: .8125rem; }
+  .sr-legend i { width: 14px; height: 14px; border-radius: 4px; background: var(--bc); }
+  .sr-legend span { color: var(--muted); }
+
+  .sr-out { min-width: 0; }
+  .sr-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .sr-tile { padding: 12px 14px; border-radius: 14px; box-shadow: var(--neu-out-sm); min-width: 0; }
+  .sr-tile b { display: block; font-size: 1.375rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .sr-tile span { display: block; font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--label); margin-top: 3px; }
+  .sr-tile small { display: block; font-size: .75rem; color: var(--muted); margin-top: 2px; }
+  .sr-mix { grid-column: 1 / -1; display: flex; height: 24px; border-radius: 8px; overflow: hidden; gap: 2px; }
+  .sr-mix span { display: grid; place-items: center; min-width: 22px; background: var(--bc); color: #fff; font-size: .75rem; font-weight: 700; }
+  :where(html[data-theme="dark"]) .sr-mix span { color: #15161b; }
+  @media (prefers-color-scheme: dark) { :where(html:not([data-theme="light"])) .sr-mix span { color: #15161b; } }
+  .sr-stage { display: block; padding: 18px 20px; max-height: 640px; overflow-y: auto; }
+  .sr-par + .sr-par { margin-top: 14px; }
+  .sr-ptag { margin: 0 0 6px; font-size: .6875rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--label); }
+  .sr-headrow { padding: 4px 0 6px 36px; font-size: .8125rem; font-style: italic; color: var(--muted); }
+  .sr-line { display: grid; grid-template-columns: 28px 1fr 34px; align-items: center; gap: 8px; width: 100%; padding: 3px 0; border: 0; background: none; color: var(--ink); text-align: left; border-radius: 8px; }
+  .sr-num { font-size: .75rem; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+  .sr-track { display: block; height: 18px; }
+  .sr-fill { display: block; height: 100%; border-radius: 6px; background: var(--bc); transition: width .25s ease; }
+  .sr-w { font-size: .8125rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .sr-line:hover .sr-fill, .sr-line[aria-expanded="true"] .sr-fill { filter: brightness(1.08); box-shadow: 0 0 0 2px color-mix(in srgb, var(--bc) 35%, transparent); }
+  .sr-line.flash, .sr-s.flash { animation: srflash 1.6s ease; }
+  @keyframes srflash { 0%, 40% { background: color-mix(in srgb, var(--bc) 22%, transparent); } 100% { background: transparent; } }
+  .sr-sent { margin: 2px 0 8px 36px; padding: 8px 12px; border-left: 3px solid var(--line); font-size: .875rem; line-height: 1.55; color: var(--ink); }
+  #sr-textview p { margin: 0 0 14px; font-size: .9375rem; line-height: 1.9; }
+  .sr-s { padding: 2px 0; border-bottom: 3px solid var(--bc); background: color-mix(in srgb, var(--bc) 10%, transparent); cursor: pointer; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .sr-s sup { font-size: .6875rem; font-weight: 700; color: var(--bc); margin-left: 3px; }
+  .sr-thead { display: block; font-size: .875rem; }
+  .sr-empty { color: var(--muted); text-align: center; padding: 40px 0; }
+  .sr-notes ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .sr-notes li { position: relative; padding: 9px 12px 9px 30px; border-radius: 12px; box-shadow: var(--neu-in); font-size: .875rem; line-height: 1.5; }
+  .sr-notes li::before { content: ""; position: absolute; left: 12px; top: 15px; width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+  .sr-notes li.n-vlong::before { background: var(--b-vlong); } .sr-notes li.n-long::before { background: var(--b-long); }
+  .sr-notes li.n-short::before { background: var(--b-short); } .sr-notes li.n-same::before { background: var(--b-medium); }
+  .sr-notes li.n-good::before { background: #2f9a5a; }
+  .sr-notes button { border: 0; background: none; padding: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  .sr-notes button:hover { text-decoration: underline; text-underline-offset: 2px; }
+  .sr-btn:disabled { opacity: .45; cursor: default; }
+  @media (max-width: 960px) { .sr-main { grid-template-columns: 1fr; } .sr-out { order: -1; } }
+  @media (max-width: 640px) { .sr-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .sr-stage { padding: 12px; } }
+  .sr-notes { margin-top: 6px; }
+  .sr-panel { max-height: none; overflow: visible; }
+  .sr-row .sr-btn { flex: none; }
+  .sr-bargroup { flex-wrap: wrap; }
+  @media (max-width: 560px) { .sr-bargroup .sr-btn { flex: 1 1 auto; justify-content: center; } }
+</style>
+<script>
+/* Sentence splitter that ignores dots that do not end sentences:
+   abbreviations, initials, decimals, numbered lists, URLs, emails, file names, ellipses mid-sentence. */
+var SR = (function () {
+  // abbreviations that never end a sentence (unless the text ends there)
+  var NEVER = ('e.g i.e cf vs viz al dr mr mrs ms prof st nos vol vols pp p ed eds fig figs eq eqs ch chs sec secs ' +
+    'approx ca para paras trans rev esp ibid op mt ave dept univ assoc gen gov sgt capt col lt rep sen ' +
+    'jan feb mar apr jun jul aug sep sept oct nov dec mon tue tues wed thu thur thurs fri sat sun ' +
+    'est min max ref refs n.b p.s ps tbl app apps pt pts ex exs id incl').split(' ');
+  // abbreviations that can also end a sentence
+  var MAYBE = ('etc inc ltd co corp jr sr a.m p.m u.s u.k u.n e.u n.d ph.d m.a m.s b.a b.s ed.d d.c').split(' ');
+  var STARTERS = ('the this that these those it its in on at we our they their there he she his her i you a an ' +
+    'however but and so as for although though while when then thus therefore also finally first second third ' +
+    'next one some many most such after before because if since what why how who which yet still moreover ' +
+    'furthermore overall similarly instead meanwhile here today in addition nevertheless consequently').split(' ');
+  var NEVER_SET = {}, MAYBE_SET = {}, START_SET = {};
+  NEVER.forEach(function (w) { NEVER_SET[w] = 1; });
+  MAYBE.forEach(function (w) { MAYBE_SET[w] = 1; });
+  STARTERS.forEach(function (w) { START_SET[w] = 1; });
+
+  var CLOSERS = '"\'”’)]}»';
+  var OPENERS = '"\'“‘([{«¿¡';
+
+  function isUpper(ch) { return !!ch && ch !== ch.toLowerCase() && ch === ch.toUpperCase(); }
+  function isLower(ch) { return !!ch && ch !== ch.toUpperCase() && ch === ch.toLowerCase(); }
+  function isDigit(ch) { return ch >= '0' && ch <= '9'; }
+
+  // mask spans that contain dots but are never sentence ends: URLs, emails, file names, domains, decimals, versions
+  function mask(text) {
+    var m = text.split('').map(function () { return false; });
+    var res = [
+      /\b(?:https?:\/\/|www\.)[^\s<>"]*[^\s<>".,;:!?)\]'”’]/gi,          // URLs (trailing punctuation left alone)
+      /\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b/g,                                // emails
+      /\b[\w-]+(?:\.[\w-]+)*\.(?:com|org|net|edu|gov|io|ai|co|uk|us|info|html?|pdf|docx?|xlsx?|pptx?|csv|txt|png|jpe?g|gif|svg|mp3|mp4|wav|zip|js|py|r)\b/gi, // domains, file names
+      /\d*\.\d+(?:\.\d+)*/g,                                              // decimals .05, 3.14, 1.2.3
+      /\b\d+(?:\.\d+)+\b/g                                                // section numbers 2.1.3
+    ];
+    res.forEach(function (re) {
+      var r; while ((r = re.exec(text))) { for (var i = r.index; i < r.index + r[0].length; i++) m[i] = true; }
+    });
+    return m;
+  }
+
+  // the "word" right before position i (the dot), including inner dots, e.g. "e.g", "U.S", "al"
+  function wordBefore(text, i) {
+    var j = i - 1;
+    while (j >= 0 && /[A-Za-z.À-ɏ]/.test(text[j])) j--;
+    return text.slice(j + 1, i).replace(/^\.+/, '');
+  }
+  function nextWord(text, k) {
+    var r = /^[A-Za-zÀ-ɏ']+/.exec(text.slice(k));
+    return r ? r[0].toLowerCase() : '';
+  }
+
+  // decide whether the terminal punctuation run [i, endP) ends a sentence
+  function isBoundary(text, i, endP, masked, lineStart) {
+    // skip closing quotes/brackets
+    var k = endP;
+    while (k < text.length && CLOSERS.indexOf(text[k]) > -1) k++;
+    if (k >= text.length) return k;                     // end of text
+    if (!/\s/.test(text[k])) return 0;                  // "a.b" or "3.5" or "U.S.A" — no space, no break
+    var hadNewline = false, n = k;
+    while (n < text.length && /\s/.test(text[n])) { if (text[n] === '\n') hadNewline = true; n++; }
+    if (n >= text.length) return k;
+    // first visible char of the next sentence (skip opening quotes/brackets)
+    var f = n; while (f < text.length && OPENERS.indexOf(text[f]) > -1) f++;
+    var nc = text[f];
+    if (isLower(nc)) return 0;                          // "e.g. the", "et al. found", "... and"
+    var punct = text.slice(i, endP);
+    if (punct.indexOf('.') === -1 && punct.indexOf('…') === -1) return k;   // ? or ! followed by non-lowercase
+    if (/^(\.{2,}|…)$/.test(punct) && !(isUpper(nc) || isDigit(nc))) return 0;
+    if (masked[i]) return 0;
+    if (punct === '.') {
+      var w = wordBefore(text, i), lw = w.toLowerCase();
+      // numbered list marker at line start: "1. Introduction", "a. First"
+      if (lineStart && /^\s*(\d{1,3}|[a-z]|[ivxlc]+)$/i.test(text.slice(lineStart.pos, i))) return 0;
+      if (lw === 'no' || lw === 'nos') return isDigit(nc) ? 0 : k;     // "No. 5" vs the answer "No."
+      if (/^[a-z]$/i.test(w) && isDigit(nc)) return 0;                // "c. 1900", "p. 12", "v. 2"
+      if (NEVER_SET[lw]) return hadNewline ? k : 0;
+      var startsLikeSentence = START_SET[nextWord(text, f)] || hadNewline;
+      if (MAYBE_SET[lw]) return startsLikeSentence ? k : 0;
+      // single initial "J." or dotted acronym "U.S.A."
+      if (/^[A-Z]$/.test(w) || /^([A-Za-z]\.)+[A-Za-z]$/.test(w)) return startsLikeSentence ? k : 0;
+      // other short capitalised abbreviations followed by a name, e.g. "Mt. Everest" handled above; "St. Louis"
+    }
+    return k;
+  }
+
+  // split one paragraph into sentences
+  function sentences(par) {
+    var masked = mask(par), out = [], start = 0, i = 0, lineStartPos = 0;
+    while (i < par.length) {
+      var ch = par[i];
+      if (ch === '\n') {
+        // a line with no end punctuation followed by a new line (headings, list items) is its own segment
+        var before = par.slice(start, i).trim();
+        var nxt = par.slice(i + 1).trimStart()[0];
+        var lastLine = before.split('\n').pop();
+        if (before && countWords(lastLine) <= 10 && !/\b(a|an|the|of|on|in|to|for|with|by|and|or|but|was|were|is|are|be|that|which|as|at|from|into|than|its|their|this|these)$/i.test(lastLine) && !/[.!?…:;,"'”’)\]]$/.test(before) && (isUpper(nxt) || isDigit(nxt) || /[-•*–]/.test(nxt || ''))) {
+          out.push({ t: before, open: true }); start = i + 1;
+        }
+        lineStartPos = i + 1; i++; continue;
+      }
+      if ((ch === '.' || ch === '!' || ch === '?' || ch === '…') && !masked[i]) {
+        var e = i; while (e < par.length && /[.!?…]/.test(par[e])) e++;
+        var b = isBoundary(par, i, e, masked, { pos: lineStartPos });
+        if (b) { var s = par.slice(start, b).trim(); if (s) out.push({ t: s }); start = b; i = b; continue; }
+        i = e; continue;
+      }
+      i++;
+    }
+    var rest = par.slice(start).trim();
+    if (rest) out.push({ t: rest, open: !/[.!?…]["'”’)\]]*$/.test(rest) });
+    return out;
+  }
+
+  function countWords(s) {
+    var m = s.replace(/https?:\/\/\S+|www\.\S+/g, 'URL').match(/[A-Za-z0-9À-ɏͰ-ϿЀ-ӿঀ-৿؀-ۿ一-鿿]+(?:['’.\-][A-Za-z0-9À-ɏ]+)*/g);
+    return m ? m.length : 0;
+  }
+
+  function analyse(text) {
+    var pars = text.replace(/\r\n?/g, '\n').split(/\n[ \t]*\n+/).map(function (p) { return p.replace(/[ \t]+/g, ' ').trim(); }).filter(Boolean);
+    return pars.map(function (p) {
+      return sentences(p).map(function (s) { s.w = countWords(s.t); return s; }).filter(function (s) { return s.w > 0; });
+    }).filter(function (p) { return p.length; });
+  }
+  return { analyse: analyse, sentences: sentences, countWords: countWords };
+})();
+</script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var EXAMPLE = 'Multilingual students bring rich language resources to the writing classroom. Yet many first-year writing programs in the U.S. still treat these resources as problems to fix. Work by Canagarajah (2013) and García et al. (2017) suggests a different view: students’ full linguistic repertoires can support, rather than block, academic writing. This matters.\n\n' +
+    'In a small pilot study, we asked 24 students (M = 19.6 years, SD = 1.2) to write two short essays. One essay was written in English only. For the other, students could plan in any language they chose, e.g., Bangla, Spanish, or Arabic, before drafting in English. Essays written after multilingual planning were rated higher on organization (p < .05), though the difference in grammar scores was small and, given the sample size and the short time between the two tasks, it should be read with some caution rather than as firm evidence of a lasting effect.\n\n' +
+    'The results were clear. Students wrote more. They planned better. They felt more confident. Next, we will test a larger group of M.A. and Ph.D. students over a full semester.';
+  var BANDS = [
+    { k: 'short', n: 'Short' },
+    { k: 'medium', n: 'Medium' },
+    { k: 'long', n: 'Long' },
+    { k: 'vlong', n: 'Very long' }
+  ];
+  var IMG = { short: '#2a9d8f', medium: '#5a6fd0', long: '#d39a2f', vlong: '#c2410c', head: '#9a9a9a' };
+  var LONG = 25, SHORT = 8, view = 'bars', data = [], flat = [];
+
+  function vlong() { return LONG + 15; }
+  function band(w) { return w <= SHORT ? 'short' : w < LONG ? 'medium' : w < vlong() ? 'long' : 'vlong'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function plural(n, a, b) { return n + ' ' + (n === 1 ? a : (b || a + 's')); }
+  var NUM = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  function word(n) { return n <= 10 ? NUM[n] : String(n); }
+
+  function legend() {
+    var r = ['1–' + SHORT + ' words', (SHORT + 1) + '–' + (LONG - 1) + ' words', LONG + '–' + (vlong() - 1) + ' words', vlong() + '+ words'];
+    $('sr-legend').innerHTML = BANDS.map(function (b, i) { return '<li class="b-' + b.k + '"><i></i><b>' + b.n + '</b><span>' + r[i] + '</span></li>'; }).join('');
+  }
+
+  function analyse() {
+    var text = $('sr-text').value;
+    data = SR.analyse(text);
+    flat = []; var n = 0;
+    data.forEach(function (p, pi) {
+      p.forEach(function (s, si) {
+        s.head = !!(s.open && s.w <= 10 && p.length > 1 && si === 0) || !!(s.open && s.w <= 10 && p.length === 1);
+        s.p = pi; s.si = si;
+        if (!s.head) { s.n = ++n; s.b = band(s.w); flat.push(s); }
+      });
+    });
+    render();
+  }
+
+  function stats() {
+    if (!flat.length) { $('sr-stats').innerHTML = ''; return null; }
+    var ws = flat.map(function (s) { return s.w; }), sum = ws.reduce(function (a, b) { return a + b; }, 0), avg = sum / ws.length;
+    var sd = Math.sqrt(ws.reduce(function (a, w) { return a + (w - avg) * (w - avg); }, 0) / ws.length);
+    var min = Math.min.apply(null, ws), max = Math.max.apply(null, ws);
+    var variety = ws.length < 3 ? 'Too few sentences' : sd < 5 ? 'Even' : sd < 9 ? 'Some variety' : 'Varied';
+    var counts = {}; BANDS.forEach(function (b) { counts[b.k] = 0; }); flat.forEach(function (s) { counts[s.b]++; });
+    $('sr-stats').innerHTML =
+      tile(flat.length, plural(flat.length, 'sentence').replace(/^\d+ /, ''), plural(sum, 'word') + ' in ' + plural(data.length, 'paragraph')) +
+      tile(avg.toFixed(1), 'average words', 'per sentence') +
+      tile(min + '–' + max, 'shortest–longest', 'words') +
+      tile(variety, 'length variety', ws.length < 3 ? '' : 'spread of ' + sd.toFixed(1) + ' words') +
+      '<div class="sr-mix" aria-label="Mix of sentence lengths">' + BANDS.map(function (b) {
+        return counts[b.k] ? '<span class="b-' + b.k + '" style="flex:' + counts[b.k] + '" title="' + b.n + ': ' + counts[b.k] + '">' + counts[b.k] + '</span>' : '';
+      }).join('') + '</div>';
+    return { n: flat.length, avg: avg, sd: sd, min: min, max: max, sum: sum, counts: counts, variety: variety };
+  }
+  function tile(big, label, small) { return '<div class="sr-tile"><b>' + big + '</b><span>' + label + '</span>' + (small ? '<small>' + small + '</small>' : '') + '</div>'; }
+
+  function render() {
+    legend();
+    var st = stats(), empty = !flat.length;
+    $('sr-empty').hidden = !empty;
+    $('sr-bars').hidden = empty || view !== 'bars';
+    $('sr-textview').hidden = empty || view !== 'text';
+    $('sr-png').disabled = $('sr-copy').disabled = empty;
+    if (empty) { $('sr-notes').innerHTML = ''; return; }
+    var scale = Math.max(45, st.max);
+    $('sr-bars').innerHTML = data.map(function (p, pi) {
+      return '<div class="sr-par"><p class="sr-ptag">Paragraph ' + (pi + 1) + '</p>' + p.map(function (s) {
+        if (s.head) return '<div class="sr-headrow">' + esc(s.t) + '</div>';
+        return '<button type="button" class="sr-line b-' + s.b + '" id="row-' + s.n + '" data-n="' + s.n + '" aria-expanded="false">' +
+          '<span class="sr-num">' + s.n + '</span><span class="sr-track"><span class="sr-fill" style="width:' + Math.max(2.5, s.w / scale * 100).toFixed(2) + '%"></span></span>' +
+          '<span class="sr-w">' + s.w + '</span></button><p class="sr-sent" id="sent-' + s.n + '" hidden>' + esc(s.t) + '</p>';
+      }).join('') + '</div>';
+    }).join('');
+    $('sr-textview').innerHTML = data.map(function (p) {
+      return '<p>' + p.map(function (s) {
+        if (s.head) return '<strong class="sr-thead">' + esc(s.t) + '</strong> ';
+        return '<span class="sr-s b-' + s.b + '" id="ts-' + s.n + '" data-n="' + s.n + '">' + esc(s.t) + '<sup>' + s.w + '</sup></span> ';
+      }).join('') + '</p>';
+    }).join('');
+    notes(st);
+  }
+
+  function notes(st) {
+    var out = [];
+    flat.filter(function (s) { return s.b === 'vlong'; }).forEach(function (s) {
+      out.push(['vlong', 'Sentence ' + s.n + ' has ' + s.w + ' words. Think about splitting it or moving some detail into a new sentence.', s.n]);
+    });
+    data.forEach(function (p, pi) {
+      var ss = p.filter(function (s) { return !s.head; }), i = 0;
+      while (i < ss.length) {
+        var j = i, kind = null;
+        if (ss[i].b === 'long' || ss[i].b === 'vlong') { while (j + 1 < ss.length && (ss[j + 1].b === 'long' || ss[j + 1].b === 'vlong')) j++; if (j - i + 1 >= 3) kind = 'long'; }
+        else if (ss[i].b === 'short') { while (j + 1 < ss.length && ss[j + 1].b === 'short') j++; if (j - i + 1 >= 4) kind = 'short'; }
+        if (kind) {
+          var cnt = j - i + 1, rng = 'sentences ' + ss[i].n + '–' + ss[j].n;
+          out.push([kind, 'Paragraph ' + (pi + 1) + ', ' + rng + ': ' + word(cnt) + (kind === 'long' ? ' long sentences in a row. A short sentence here can give readers a pause.' : ' short sentences in a row. This can feel choppy; try joining two of them.'), ss[i].n]);
+          i = j + 1; continue;
+        }
+        // similar lengths in a row
+        j = i; while (j + 1 < ss.length && Math.abs(ss[j + 1].w - ss[i].w) <= 3) j++;
+        if (j - i + 1 >= 4) { out.push(['same', 'Paragraph ' + (pi + 1) + ', sentences ' + ss[i].n + '–' + ss[j].n + ': ' + word(j - i + 1) + ' sentences of about the same length. Changing one can make the rhythm less flat.', ss[i].n]); i = j + 1; continue; }
+        i++;
+      }
+    });
+    if (st.n >= 4 && st.sd >= 5 && !out.length) out.push(['good', 'Nice mix: your sentence lengths vary and no stretch runs too long or too choppy.', 0]);
+    if (st.n >= 3 && st.avg >= LONG) out.unshift(['avg', 'Your average sentence (' + st.avg.toFixed(1) + ' words) is above your “long” setting of ' + LONG + ' words.', 0]);
+    $('sr-notes').innerHTML = out.length ? '<p class="sr-h">What stands out</p><ul>' + out.map(function (o) {
+      return '<li class="n-' + o[0] + '">' + (o[2] ? '<button type="button" data-go="' + o[2] + '">' + esc(o[1]) + '</button>' : esc(o[1])) + '</li>';
+    }).join('') + '</ul>' : '';
+  }
+
+  function go(n) {
+    var el = view === 'bars' ? $('row-' + n) : $('ts-' + n); if (!el) return;
+    if (view === 'bars') { var s = $('sent-' + n); s.hidden = false; el.setAttribute('aria-expanded', 'true'); }
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  }
+
+  /* events */
+  var t = 0;
+  $('sr-text').addEventListener('input', function () { clearTimeout(t); t = setTimeout(analyse, 200); });
+  $('sr-bars').addEventListener('click', function (e) {
+    var b = e.target.closest('.sr-line'); if (!b) return;
+    var s = $('sent-' + b.dataset.n), open = s.hidden; s.hidden = !open; b.setAttribute('aria-expanded', open);
+  });
+  $('sr-textview').addEventListener('click', function (e) {
+    var s = e.target.closest('.sr-s'); if (!s) return;
+    setView('bars'); go(+s.dataset.n);
+  });
+  $('sr-notes').addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) go(+b.dataset.go); });
+  function setView(v) {
+    view = v; $('sr-view').querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.v === v); });
+    render();
+  }
+  $('sr-view').addEventListener('click', function (e) { var b = e.target.closest('[data-v]'); if (b) setView(b.dataset.v); });
+  $('sr-long').addEventListener('input', function () { LONG = +this.value; $('sr-long-out').textContent = LONG + ' words'; analyse(); });
+  $('sr-example').addEventListener('click', function () { $('sr-text').value = EXAMPLE; msg('Example text, written for this demo.'); analyse(); });
+  $('sr-clear').addEventListener('click', function () { $('sr-text').value = ''; msg(''); analyse(); $('sr-text').focus(); });
+
+  function msg(text, err) { var m = $('sr-msg'); m.textContent = text; m.hidden = !text; m.classList.toggle('err', !!err); }
+
+  /* files: .txt, .md, .docx */
+  function unzipEntry(buf, want) {
+    var dv = new DataView(buf), u8 = new Uint8Array(buf), i, eocd = -1;
+    for (i = buf.byteLength - 22; i >= Math.max(0, buf.byteLength - 66000); i--) if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+    if (eocd < 0) return Promise.reject(new Error('docx'));
+    var n = dv.getUint16(eocd + 10, true), p = dv.getUint32(eocd + 16, true), dec = new TextDecoder();
+    for (i = 0; i < n; i++) {
+      if (dv.getUint32(p, true) !== 0x02014b50) break;
+      var method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true), nl = dv.getUint16(p + 28, true), el = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true), off = dv.getUint32(p + 42, true);
+      var name = dec.decode(u8.subarray(p + 46, p + 46 + nl));
+      if (name === want) {
+        var start = off + 30 + dv.getUint16(off + 26, true) + dv.getUint16(off + 28, true), d = u8.slice(start, start + csize);
+        if (method === 0) return Promise.resolve(dec.decode(d));
+        if (method !== 8 || typeof DecompressionStream === 'undefined') return Promise.reject(new Error('docx'));
+        return new Response(new Blob([d]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text();
+      }
+      p += 46 + nl + el + cl;
+    }
+    return Promise.reject(new Error('docx'));
+  }
+  function readDocx(file) {
+    return file.arrayBuffer().then(function (buf) { return unzipEntry(buf, 'word/document.xml'); }).then(function (xml) {
+      var doc = new DOMParser().parseFromString(xml, 'application/xml');
+      if (doc.getElementsByTagName('parsererror').length) throw new Error('docx');
+      var out = [];
+      Array.prototype.forEach.call(doc.getElementsByTagName('w:p'), function (p) {
+        var line = '', w = doc.createTreeWalker(p, NodeFilter.SHOW_ELEMENT), node;
+        while ((node = w.nextNode())) {
+          if (node.nodeName === 'w:t') line += node.textContent;
+          else if (node.nodeName === 'w:tab') line += ' ';
+          else if (node.nodeName === 'w:br' || node.nodeName === 'w:cr') line += '\n';
+        }
+        if (line.trim()) out.push(line);
+      });
+      return out.join('\n\n');
+    });
+  }
+  function openFile(f) {
+    var name = (f.name || '').toLowerCase(), job;
+    if (/\.docx$/.test(name)) job = readDocx(f);
+    else if (/\.doc$/.test(name)) { msg('Older .doc files can’t be opened. In Word, choose File › Save As and pick .docx, then try again.', true); return; }
+    else if (/\.(txt|md|text)$/.test(name) || /^text\//.test(f.type)) job = f.text();
+    else { msg('This file type can’t be opened. Use a .txt or .docx file, or paste your text.', true); return; }
+    msg('Opening ' + f.name + '…');
+    job.then(function (text) {
+      text = String(text || '').replace(/\r\n?/g, '\n').trim();
+      if (!text) throw new Error('empty');
+      $('sr-text').value = text; msg(f.name); analyse();
+    }).catch(function () { msg('This file could not be read. Try pasting the text instead.', true); });
+  }
+  $('sr-upload').addEventListener('click', function () { $('sr-file').click(); });
+  $('sr-file').addEventListener('change', function () { if (this.files[0]) openFile(this.files[0]); this.value = ''; });
+  var ta = $('sr-text');
+  ['dragenter', 'dragover'].forEach(function (ev) { ta.addEventListener(ev, function (e) { if (e.dataTransfer && [].indexOf.call(e.dataTransfer.types, 'Files') > -1) { e.preventDefault(); ta.classList.add('drop'); } }); });
+  ['dragleave', 'drop'].forEach(function (ev) { ta.addEventListener(ev, function () { ta.classList.remove('drop'); }); });
+  ta.addEventListener('drop', function (e) { if (e.dataTransfer.files[0]) { e.preventDefault(); openFile(e.dataTransfer.files[0]); } });
+
+  /* summary + image */
+  function summary() {
+    var st = stats();
+    return st.n + ' sentences, ' + st.sum + ' words. Average ' + st.avg.toFixed(1) + ' words per sentence (shortest ' + st.min + ', longest ' + st.max + '). ' +
+      BANDS.map(function (b) { return b.n + ': ' + st.counts[b.k]; }).join(', ') + '. Length variety: ' + st.variety.toLowerCase() + '.';
+  }
+  function toast(text) { var el = document.createElement('div'); el.className = 'sr-toast'; el.textContent = text; document.body.appendChild(el); setTimeout(function () { el.remove(); }, 2200); }
+  $('sr-copy').addEventListener('click', function () {
+    var s = summary();
+    (navigator.clipboard ? navigator.clipboard.writeText(s) : Promise.reject()).then(function () { toast('Summary copied'); }, function () { toast('Could not copy'); });
+  });
+  $('sr-png').addEventListener('click', function () {
+    var st = stats(), scale = Math.max(45, st.max), W = 1200, padX = 56, rowH = 22, gap = 6, top = 150, y = top;
+    var rows = 0; data.forEach(function (p) { rows += p.length; });
+    var H = top + rows * (rowH + gap) + data.length * 40 + 70;
+    var c = document.createElement('canvas'), k = 2; c.width = W * k; c.height = H * k;
+    var x = c.getContext('2d'); x.scale(k, k);
+    var font = '"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif';
+    x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H);
+    x.fillStyle = '#15161b'; x.font = '700 30px ' + font; x.fillText('Sentence rhythm', padX, 64);
+    x.fillStyle = '#5c5f68'; x.font = '500 16px ' + font;
+    x.fillText(st.n + ' sentences · average ' + st.avg.toFixed(1) + ' words · shortest ' + st.min + ' · longest ' + st.max, padX, 94);
+    var lx = padX; x.font = '600 13px ' + font;
+    BANDS.forEach(function (b) { x.fillStyle = IMG[b.k]; x.fillRect(lx, 112, 12, 12); x.fillStyle = '#3d3f46'; x.fillText(b.n, lx + 18, 123); lx += x.measureText(b.n).width + 44; });
+    var barX = padX + 40, barW = W - barX - padX - 40;
+    data.forEach(function (p, pi) {
+      y += 22; x.fillStyle = '#8a8d96'; x.font = '600 12px ' + font; x.fillText(('Paragraph ' + (pi + 1)).toUpperCase(), padX, y); y += 12;
+      p.forEach(function (s) {
+        if (s.head) { x.fillStyle = '#8a8d96'; x.font = 'italic 500 13px ' + font; x.fillText(s.t.slice(0, 80), barX, y + 15); y += rowH + gap; return; }
+        x.fillStyle = '#8a8d96'; x.font = '500 12px ' + font; x.textAlign = 'right'; x.fillText(String(s.n), barX - 10, y + 15); x.textAlign = 'left';
+        var w = Math.max(6, s.w / scale * barW);
+        x.fillStyle = IMG[s.b]; roundRect(x, barX, y, w, rowH, 6); x.fill();
+        x.fillStyle = '#3d3f46'; x.font = '600 12px ' + font; x.fillText(String(s.w), barX + w + 8, y + 15);
+        y += rowH + gap;
+      });
+    });
+    x.fillStyle = '#a0a3ab'; x.font = '500 12px ' + font; x.fillText('Made with Sentence Rhythm · enamhassan.com', padX, H - 24);
+    c.toBlob(function (b) {
+      var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'sentence-rhythm.png';
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    }, 'image/png');
+  });
+  function roundRect(x, l, t, w, h, r) { r = Math.min(r, w / 2, h / 2); x.beginPath(); x.moveTo(l + r, t); x.arcTo(l + w, t, l + w, t + h, r); x.arcTo(l + w, t + h, l, t + h, r); x.arcTo(l, t + h, l, t, r); x.arcTo(l, t, l + w, t, r); x.closePath(); }
+
+  $('sr-text').value = EXAMPLE;
+  msg('Example text, written for this demo. Paste your own to replace it.');
+  analyse();
+})();
+</script>
+</body>
+</html>
