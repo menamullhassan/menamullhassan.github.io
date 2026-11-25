@@ -116,7 +116,6 @@ p + p { margin-top: 16px; }
 body.site { display: grid; grid-template-columns: var(--panel-w) minmax(0, 1fr); min-height: 100vh; }
 /* Mac trackpad bounce: keep the panel side black when the page is pulled past its top or bottom */
 @media (min-width: 1081px) {
-  html, body { overscroll-behavior-y: none; }
   body.site::before { content: ""; position: fixed; left: 0; top: -100vh; bottom: -100vh; width: var(--panel-w); background: var(--panel); z-index: -1; pointer-events: none; }
 }
 
