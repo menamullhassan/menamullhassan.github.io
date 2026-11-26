@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="ARGU Daily: a drag-and-drop argument puzzle for English learners.">
 <title>ARGU Daily</title>
-<link rel="canonical" href="https://enamhassan.com/argu-daily-game.html">
+<link rel="canonical" href="https://enamhassan.com/argu-daily.html">
 <link rel="icon" href="favicon.ico?v=7" sizes="48x48">
 <link rel="icon" href="icon-192.png?v=7" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=7">
@@ -319,7 +319,7 @@ const STAGES=[
  {t:"On a freezing morning, one gentle puff of fire could heat the whole room in seconds.",c:{o:["For example,","However,","Therefore,"]}},
  {t:"Dragons can be dangerous around paper and books.",c:{o:["However,","As a result,","For instance,"]}},
  {t:"Schools could build fireproof classrooms so that everyone stays safe.",c:{o:["Nevertheless,","Similarly,","Because"]}}]},
-{ch:0,q:"Should Mondays be cancelled forever?",cards:[
+{ch:0,q:"Should Mondays be canceled forever?",cards:[
  {t:"Mondays should be removed from the calendar."},
  {t:"Most people feel tired and unhappy at the start of the week."},
  {t:"Coffee shops are often at their busiest on Monday mornings.",c:{o:["For instance,","Nevertheless,","Instead,"]}},
@@ -356,7 +356,7 @@ const STAGES=[
  {t:"Students would rush to the window every afternoon to see what had arrived.",c:{o:["For example,","However,","Therefore,"]}},
  {t:"Pigeons sometimes get lost in bad weather.",c:{o:["Critics point out that","As a result,","Similarly,"]}},
  {t:"A lost pigeon simply means one free day without homework.",c:{o:["Nevertheless,","For instance,","Moreover,"]}}],
- decoy:{t:"Pigeons are birds, and birds can fly.",why:"True, but it doesn't explain why pigeons are better for homework."}},
+ decoy:{t:"Pigeons are birds, and birds can fly.",why:"True, but it doesn’t explain why pigeons are better for homework."}},
 {ch:1,q:"Should cities replace stairs with giant slides?",cards:[
  {t:"Cities should replace some public stairs with giant slides."},
  {t:"Slides would make getting around faster and more fun."},
@@ -384,16 +384,16 @@ CHAPTERS.push(
  {name:"Chapter 3 · Tricky links",note:"Four linking words to choose from, and the reason needs one too."},
  {name:"Chapter 4 · Name the flaw",note:"The decoy sounds smart, but it has a flaw. Leave it out, then name the flaw."},
  {name:"Chapter 5 · Stronger evidence",note:"You get two support cards. Only one is strong evidence."},
- {name:"Chapter 6 · Double trouble",note:"Two decoys are hiding, and the boxes won't tell you what goes where."}
+ {name:"Chapter 6 · Double trouble",note:"Two decoys are hiding, and the boxes won’t tell you what goes where."}
 );
 // Reasoning flaws, taught one at a time in Chapter 4.
 const FLAWS={
- bandwagon:{n:"Everyone's doing it",f:"bandwagon",d:"It says something is right just because many people like it or do it.",ex:"“Everyone in my class eats glue, so glue must be healthy.”"},
- slope:{n:"One small step leads to disaster",f:"slippery slope",d:"It claims one small change will cause a chain of terrible events, without proof.",ex:"“If you eat one cookie, soon you'll eat the whole bakery.”"},
- person:{n:"Attacks the person, not the idea",f:"personal attack",d:"It criticizes the people who disagree instead of answering their reasons.",ex:"“Don't listen to Sam's idea. Sam wears socks with sandals.”"},
- cause:{n:"Just because it came first doesn't mean it caused it",f:"false cause",d:"It assumes that one thing caused another only because it happened first.",ex:"“I wore my lucky hat, and then it rained. My hat makes it rain.”"},
+ bandwagon:{n:"Everyone’s doing it",f:"bandwagon",d:"It says something is right just because many people like it or do it.",ex:"“Everyone in my class eats glue, so glue must be healthy.”"},
+ slope:{n:"One small step leads to disaster",f:"slippery slope",d:"It claims one small change will cause a chain of terrible events, without proof.",ex:"“If you eat one cookie, soon you’ll eat the whole bakery.”"},
+ person:{n:"Attacks the person, not the idea",f:"personal attack",d:"It criticizes the people who disagree instead of answering their reasons.",ex:"“Don’t listen to Sam’s idea. Sam wears socks with sandals.”"},
+ cause:{n:"Just because it came first doesn’t mean it caused it",f:"false cause",d:"It assumes that one thing caused another only because it happened first.",ex:"“I wore my lucky hat, and then it rained. My hat makes it rain.”"},
  hasty:{n:"Too big a claim from one example",f:"hasty generalization",d:"It makes a claim about all cases from just one or two examples.",ex:"“One goose chased me, so all birds are dangerous.”"},
- none:{n:"No flaw. It's a fair reason",f:"",d:""}
+ none:{n:"No flaw. It’s a fair reason",f:"",d:""}
 };
 STAGES.push(
 /* ---- Chapter 3 · Tricky links ---- */
@@ -432,9 +432,9 @@ STAGES.push(
  {t:"Unicorns should be allowed to ride public buses."},
  {t:"Unicorns need a safe way to get to work in the city."},
  {t:"Most unicorns live in forests more than fifty kilometers from the nearest city.",c:{o:["For example,","However,","Therefore,"]}},
- {t:"A unicorn's horn could poke other passengers.",c:{o:["Opponents argue that","As a result,","Similarly,"]}},
+ {t:"A unicorn’s horn could poke other passengers.",c:{o:["Opponents argue that","As a result,","Similarly,"]}},
  {t:"Bus companies could give each unicorn a soft foam cover for its horn.",c:{o:["However,","For example,","Moreover,"]}}],
- extras:[{id:"D",kind:"decoy",flaw:"bandwagon",t:"Everyone online wants unicorns on buses, so it must be a good idea.",why:"Lots of people wanting something doesn't prove it's a good idea."}]},
+ extras:[{id:"D",kind:"decoy",flaw:"bandwagon",t:"Everyone online wants unicorns on buses, so it must be a good idea.",why:"Lots of people wanting something doesn’t prove it’s a good idea."}]},
 {ch:3,q:"Should weddings serve pizza instead of cake?",newFlaw:"slope",flawOpts:["slope","bandwagon"],cards:[
  {t:"Weddings should serve pizza instead of cake."},
  {t:"Pizza is easier to share with a large group of guests."},
@@ -448,16 +448,16 @@ STAGES.push(
  {t:"Their black-and-white feathers stand out clearly against a gray road.",c:{o:["For example,","However,","As a result,"]}},
  {t:"Penguins walk too slowly to cross a busy street.",c:{o:["Critics argue that","Therefore,","For instance,"]}},
  {t:"Slow walking makes drivers stop and wait, which keeps children safer.",c:{o:["However,","Similarly,","For example,"]}}],
- extras:[{id:"D",kind:"decoy",flaw:"person",t:"People who disagree with this idea are just jealous of penguins' tuxedos.",why:"It attacks the people who disagree instead of answering their reasons."}]},
+ extras:[{id:"D",kind:"decoy",flaw:"person",t:"People who disagree with this idea are just jealous of penguins’ tuxedos.",why:"It attacks the people who disagree instead of answering their reasons."}]},
 {ch:3,q:"Should the school principal be a golden retriever?",newFlaw:"cause",flawOpts:["cause","person","bandwagon"],cards:[
  {t:"A golden retriever should be the school principal."},
  {t:"Golden retrievers are friendly, loyal, and always happy to see students."},
  {t:"Therapy dogs already help people feel calm in many hospitals and schools.",c:{o:["For instance,","In contrast,","Therefore,"]}},
  {t:"A dog cannot read reports or sign important papers.",c:{o:["Opponents point out that","As a result,","Similarly,"]}},
  {t:"A human vice principal could handle the paperwork while the dog handles the tail wags.",c:{o:["Nevertheless,","For example,","In addition,"]}}],
- extras:[{id:"D",kind:"decoy",flaw:"cause",t:"Our test scores went up the week a dog visited, so dogs must make students smarter.",why:"Scores going up after the visit doesn't prove the dog caused it."}]},
-{ch:3,q:"Should cats run the city's lost-and-found office?",newFlaw:"hasty",flawOpts:["hasty","cause","slope"],cards:[
- {t:"Cats should run the city's lost-and-found office."},
+ extras:[{id:"D",kind:"decoy",flaw:"cause",t:"Our test scores went up the week a dog visited, so dogs must make students smarter.",why:"Scores going up after the visit doesn’t prove the dog caused it."}]},
+{ch:3,q:"Should cats run the city’s lost-and-found office?",newFlaw:"hasty",flawOpts:["hasty","cause","slope"],cards:[
+ {t:"Cats should run the city’s lost-and-found office."},
  {t:"Cats are curious and love searching in small, hidden places."},
  {t:"Cats can squeeze into tiny gaps behind sofas, where lost keys often end up.",c:{o:["For example,","However,","Therefore,"]}},
  {t:"Cats might keep the shiniest items for themselves.",c:{o:["Critics argue that","Consequently,","For instance,"]}},
@@ -470,7 +470,7 @@ STAGES.push(
  {t:"In one office study, workers who took short play breaks solved puzzles faster than workers who did not.",c:{o:["For example,","However,","Instead,"]}},
  {t:"It would be hard to type on a laptop while sinking into plastic balls.",c:{o:["On the other hand,","Therefore,","For instance,"]}},
  {t:"Offices could keep a few desks at the edge of the pit for serious typing.",c:{o:["However,","Similarly,","As a result,"]}}],
- extras:[{id:"W",kind:"weak",t:"My cousin sat in a ball pit once and said it felt amazing.",why:"One person's feeling is a story, not strong evidence."}]},
+ extras:[{id:"W",kind:"weak",t:"My cousin sat in a ball pit once and said it felt amazing.",why:"One person’s feeling is a story, not strong evidence."}]},
 {ch:4,q:"Should teachers wear pajamas on Mondays?",cards:[
  {t:"Teachers should be allowed to wear pajamas on Mondays."},
  {t:"Comfortable teachers are calmer and more patient."},
@@ -506,7 +506,7 @@ STAGES.push(
  {t:"A robot can search thousands of poems in one second to find the perfect rhyme.",c:{o:["For example,","However,","Therefore,","In contrast,"]}},
  {t:"A letter from a robot might not feel sincere.",c:{o:["Critics argue that","As a result,","For instance,","Similarly,"]}},
  {t:"The sender could still add a personal note in their own handwriting.",c:{o:["However,","Moreover,","For example,","Because"]}}],
- extras:[{id:"D",kind:"decoy",flaw:"bandwagon",t:"Everyone uses robots for everything now, so robots should write love letters too.",why:"Lots of people using robots doesn't prove robots should write love letters."},
+ extras:[{id:"D",kind:"decoy",flaw:"bandwagon",t:"Everyone uses robots for everything now, so robots should write love letters too.",why:"Lots of people using robots doesn’t prove robots should write love letters."},
   {id:"D2",kind:"decoy",t:"Robots are shiny and look great in photos.",why:"Looking shiny has nothing to do with writing love letters."}]},
 {ch:5,q:"Should ducks get their own lane at the swimming pool?",hideAsk:true,cards:[
  {t:"Ducks should get their own lane at the swimming pool."},
@@ -515,22 +515,22 @@ STAGES.push(
  {t:"Pools would have less space for human swimmers.",c:{o:["Opponents point out that","Consequently,","For example,","In addition,"]}},
  {t:"The duck lane could be very narrow, since ducks only need a little room.",c:{o:["However,","For instance,","As a result,","Similarly,"]}}],
  extras:[{id:"D",kind:"decoy",flaw:"slope",t:"If ducks get a lane, next the geese will demand the whole pool and a hot tub.",why:"One small change will not automatically lead to geese taking over."},
-  {id:"D2",kind:"decoy",t:"Ducks are some of the best swimmers in the bird world.",why:"True or not, it doesn't explain why they need their own lane."}]},
+  {id:"D2",kind:"decoy",t:"Ducks are some of the best swimmers in the bird world.",why:"True or not, it doesn’t explain why they need their own lane."}]},
 {ch:5,q:"Should lunch last three hours if you eat spaghetti?",hideAsk:true,cards:[
  {t:"Lunch breaks should last three hours for anyone eating spaghetti."},
  {t:"Spaghetti is very hard to eat quickly without making a mess."},
  {t:"A single plate of spaghetti can have more than a hundred slippery strands to twirl.",c:{o:["For example,","However,","Instead,","Therefore,"]}},
  {t:"Workers might start ordering spaghetti every single day.",c:{o:["Critics argue that","Similarly,","For instance,","As a result,"]}},
  {t:"Offices could still finish the same amount of work by starting earlier in the morning.",c:{o:["Nevertheless,","For example,","Because","Moreover,"]}}],
- extras:[{id:"D",kind:"decoy",flaw:"person",t:"People who eat sandwiches for lunch are boring, so their opinion doesn't count.",why:"It attacks sandwich eaters instead of answering their reasons."},
-  {id:"D2",kind:"decoy",t:"Spaghetti was my grandfather's favorite food.",why:"A family memory doesn't support longer lunch breaks."}]},
+ extras:[{id:"D",kind:"decoy",flaw:"person",t:"People who eat sandwiches for lunch are boring, so their opinion doesn’t count.",why:"It attacks sandwich eaters instead of answering their reasons."},
+  {id:"D2",kind:"decoy",t:"Spaghetti was my grandfather’s favorite food.",why:"A family memory doesn’t support longer lunch breaks."}]},
 {ch:5,q:"Should dinosaurs be brought back as school mascots?",hideAsk:true,cards:[
  {t:"Scientists should bring dinosaurs back to be school mascots."},
  {t:"A real dinosaur would make students excited about science."},
  {t:"Dinosaur museums are some of the most popular places for school trips.",c:{o:["For instance,","In contrast,","Therefore,","Otherwise,"]}},
  {t:"The T. rex might eat the school band.",c:{o:["Some people worry that","Consequently,","For example,","Likewise,"]}},
  {t:"Schools could choose a gentle, plant-eating dinosaur instead.",c:{o:["However,","For instance,","In addition,","As a result,"]}}],
- extras:[{id:"D",kind:"decoy",flaw:"cause",t:"Our team won a game the day we hung up a dinosaur poster, so dinosaurs bring good luck.",why:"Winning after the poster went up doesn't prove the poster caused the win."},
+ extras:[{id:"D",kind:"decoy",flaw:"cause",t:"Our team won a game the day we hung up a dinosaur poster, so dinosaurs bring good luck.",why:"Winning after the poster went up doesn’t prove the poster caused the win."},
   {id:"D2",kind:"decoy",t:"Dinosaurs are old, and old things are always valuable.",why:"A vague, sweeping claim, not a reason about mascots."}]},
 {ch:5,q:"Should Earth have a snow day every year, even in the desert?",hideAsk:true,cards:[
  {t:"Earth should have one official snow day every year, even in the desert."},
@@ -538,7 +538,7 @@ STAGES.push(
  {t:"Many workers say a surprise day off helps them come back with more energy.",c:{o:["For example,","However,","Therefore,","Instead,"]}},
  {t:"It is impossible to make snow fall in a hot desert.",c:{o:["Critics point out that","As a result,","For instance,","Similarly,"]}},
  {t:"Desert towns could celebrate with snow machines and ice-cream fights instead.",c:{o:["Nevertheless,","For example,","Because","Moreover,"]}}],
- extras:[{id:"D",kind:"decoy",flaw:"hasty",t:"I had fun on one snow day, so every person in the world loves snow.",why:"One fun day for one person can't prove what everyone in the world loves."},
+ extras:[{id:"D",kind:"decoy",flaw:"hasty",t:"I had fun on one snow day, so every person in the world loves snow.",why:"One fun day for one person can’t prove what everyone in the world loves."},
   {id:"D2",kind:"decoy",t:"Snow is white, and white is a very calm color.",why:"The color of snow says nothing about why we need a snow day."}]}
 );
 const ROLES=[
@@ -610,7 +610,7 @@ function start(i){
   $("#stagechip").textContent=`Stage ${i+1}${nd===1?" · Decoy hidden":nd>1?` · ${nd} decoys hidden`:""}${nw?" · Weaker evidence hidden":""}`;
   $("#q").textContent=p.q;
   if(i===0&&!SV.stars[0])G.fb={cls:"info",html:"Drag each card into the box where it belongs. Tip: start with the <b>claim</b>, the sentence that says what the writer wants."};
-  else if(p.decoy&&i===STAGES.findIndex(s=>s.decoy)&&!SV.stars[i])G.fb={cls:"info",html:"New: one card in your hand is a <b>decoy</b>, a weak sentence that doesn't belong. Leave it out."};
+  else if(p.decoy&&i===STAGES.findIndex(s=>s.decoy)&&!SV.stars[i])G.fb={cls:"info",html:"New: one card in your hand is a <b>decoy</b>, a weak sentence that doesn’t belong. Leave it out."};
   else if(p.ch>=2&&i===STAGES.findIndex(s=>s.ch===p.ch)&&!SV.stars[i])G.fb={cls:"info",html:CH_TIPS[p.ch]};
   renderIntro();
   render();window.scrollTo(0,0);
@@ -714,9 +714,9 @@ function drop(payload,k,el){
     if(typeof id==="string"){
       const ex=G.p.extras.find(e=>e.id===id);G.hand=G.hand.filter(x=>x!==id);G.out[id]="caught";
       const nd=G.p.extras.filter(e=>e.kind==="decoy").length;
-      const msg=ex.kind==="weak"?`That's the <b>weaker evidence</b>. ${esc(ex.why)} It's gone from your hand now.`
-        :G.flawAsk?`That's the <b>decoy</b>. It sounds convincing, but it has a flaw. You'll name the flaw at the end. It's gone from your hand now.`
-        :`That's ${nd>1?"a":"the"} <b>decoy</b>. ${esc(ex.why)} It's gone from your hand now.`;
+      const msg=ex.kind==="weak"?`That’s the <b>weaker evidence</b>. ${esc(ex.why)} It’s gone from your hand now.`
+        :G.flawAsk?`That’s the <b>decoy</b>. It sounds convincing, but it has a flaw. You’ll name the flaw at the end. It’s gone from your hand now.`
+        :`That's ${nd>1?"a":"the"} <b>decoy</b>. ${esc(ex.why)} It’s gone from your hand now.`;
       mistake(null,{cls:"bad",html:msg});
       if(G.lives>0)setTimeout(render,50);return;
     }
@@ -727,14 +727,14 @@ function drop(payload,k,el){
         const lx=left.map(x=>G.p.extras.find(e=>e.id===x));
         if(!lx.length)G.fb={cls:"good",html:"All in place. Now drag in the linking words that connect the ideas."};
         else if(lx[0].kind==="weak")G.fb={cls:"good",html:`Nice, you chose the stronger evidence and left out: “${esc(lx[0].t)}” ${esc(lx[0].why)} Now add the linking words.`};
-        else if(G.flawAsk)G.fb={cls:"good",html:"Nice, you left out the decoy. Now add the linking words. Then you'll name the decoy's flaw."};
+        else if(G.flawAsk)G.fb={cls:"good",html:"Nice, you left out the decoy. Now add the linking words. Then you’ll name the decoy’s flaw."};
         else if(lx.length>1)G.fb={cls:"good",html:"Nice, you left out both decoys. Now add the linking words."};
         else G.fb={cls:"good",html:`Nice, you left out the decoy: “${esc(lx[0].t)}” ${esc(lx[0].why)} Now add the linking words.`};
         G.hand=[];G.phase="connect";G.optOrder=null;
       }
       render(k);
     }else{
-      mistake(el,{cls:"bad",html:`That card isn't the <b>${ROLES[k].n.toLowerCase()}</b>. ${ROLES[k].hint}`});
+      mistake(el,{cls:"bad",html:`That card isn’t the <b>${ROLES[k].n.toLowerCase()}</b>. ${ROLES[k].hint}`});
     }
   }else if(payload.type==="conn"&&G.phase==="connect"){
     const kk=G.connSteps[G.ci];if(k!==kk)return;const o=payload.o,right=G.p.cards[kk].c.o[0];
@@ -742,11 +742,11 @@ function drop(payload,k,el){
       G.filled[kk]=o;G.ci++;G.optOrder=null;G.glow=false;
       G.fb={cls:"good",html:`<b>${esc(o)}</b> ${ROLES[kk].conn}.`};
       if(G.ci>=G.connSteps.length){
-        if(G.flawAsk){G.phase="flaw";G.fb={cls:"good",html:`<b>${esc(o)}</b> ${ROLES[kk].conn}. Last step: name the decoy's flaw.`};render(-1,kk)}
+        if(G.flawAsk){G.phase="flaw";G.fb={cls:"good",html:`<b>${esc(o)}</b> ${ROLES[kk].conn}. Last step: name the decoy’s flaw.`};render(-1,kk)}
         else{G.phase="done";render(-1,kk);setTimeout(()=>finish(true),900)}}
       else render(-1,kk);
     }else{
-      mistake(el,{cls:"bad",html:`<b>${esc(o)}</b> doesn't fit here. The ${ROLES[kk].n.toLowerCase()} needs a word that ${ROLES[kk].conn}.`});
+      mistake(el,{cls:"bad",html:`<b>${esc(o)}</b> doesn’t fit here. The ${ROLES[kk].n.toLowerCase()} needs a word that ${ROLES[kk].conn}.`});
     }
   }
 }
@@ -801,9 +801,9 @@ function finish(won){
 /* ============ FLAWS ============ */
 const CH_TIPS={
  2:"New: each blank has <b>four</b> linking words, and the <b>reason</b> needs one too.",
- 3:"New: the decoy sounds smart, but it has a <b>flaw</b>. Leave it out. At the end, you'll name the flaw.",
+ 3:"New: the decoy sounds smart, but it has a <b>flaw</b>. Leave it out. At the end, you’ll name the flaw.",
  4:"New: you have <b>two support cards</b>. Only one is strong evidence, like a fact or a study. Put that one in the Support box.",
- 5:"New: <b>two decoys</b> are hiding, and the boxes only show their names. You've got this!"
+ 5:"New: <b>two decoys</b> are hiding, and the boxes only show their names. You’ve got this!"
 };
 const flawsLearned=()=>{const L=[];STAGES.slice(0,G.i+1).forEach(s=>{if(s.newFlaw&&!L.includes(s.newFlaw))L.push(s.newFlaw)});return L};
 function renderIntro(){
@@ -849,7 +849,7 @@ function openHelp(){
       <li style="${rc(1)}"><span class="n">★</span><span><b>You start with 3 stars.</b> Each wrong drop or hint costs one star, and a wrong drop tells you why. Finish with at least one star to unlock the next stage.</span></li>
       <li style="${rc(3)}"><span class="n">+</span><span><b>New twists appear as you go.</b> Each one is explained the first time you meet it.</span></li>
     </ul>
-    <button class="btn" data-close>Let's play</button></div></div>`;
+    <button class="btn" data-close>Let’s play</button></div></div>`;
   o.querySelector("#scrim").onclick=e=>{if(e.target.id==="scrim"||e.target.closest("[data-close]"))o.innerHTML=""};
   SV.seenHelp=true;save();
 }
