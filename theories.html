@@ -833,5 +833,37 @@ TH = TH.concat([
   if (location.hash) { var el = document.getElementById(location.hash.slice(1)); if (el) setTimeout(function () { el.scrollIntoView(); }, 0); }
 })();
 </script>
+<button type="button" class="to-search" id="to-search" aria-label="Back to search" title="Back to search (press / anywhere)" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span>Search</span></button>
+<style>
+  .gl-search { scroll-margin-top: 96px; }
+  .to-search { position: fixed; right: 24px; bottom: 24px; z-index: 40; display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 18px 0 15px; border: 0; border-radius: 999px; background: var(--ink); color: var(--bg); font: inherit; font-size: 0.9375rem; font-weight: 600; box-shadow: 0 6px 20px rgba(0,0,0,.22); cursor: pointer; opacity: 0; transform: translateY(12px); transition: opacity .2s, transform .2s; }
+  .to-search.show { opacity: 1; transform: none; }
+  .to-search svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+  .to-search:hover { background: var(--accent); color: #1a1a1a; }
+  .to-search:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  @media (max-width: 600px) { .to-search { right: 16px; bottom: 16px; padding: 0 14px; } .to-search span { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .to-search { transition: none; } }
+</style>
+<script>
+(function () {
+  var btn = document.getElementById('to-search'), box = document.querySelector('.gl-search'), q = box && box.querySelector('input');
+  if (!btn || !box || !q) return;
+  btn.hidden = false;
+  new IntersectionObserver(function (e) { btn.classList.toggle('show', !e[0].isIntersecting && e[0].boundingClientRect.top < 0); btn.tabIndex = btn.classList.contains('show') ? 0 : -1; }).observe(box);
+  function go() {
+    var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var target = box.getBoundingClientRect().top + window.scrollY - 96;
+    if (smooth && window.scrollY - target > window.innerHeight * 1.5) window.scrollTo({ top: target + window.innerHeight, behavior: 'instant' });
+    box.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+    q.focus({ preventScroll: true }); q.select();
+  }
+  btn.addEventListener('click', go);
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target.tagName; if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT' || e.target.isContentEditable) return;
+    e.preventDefault(); go();
+  });
+})();
+</script>
 </body>
 </html>
